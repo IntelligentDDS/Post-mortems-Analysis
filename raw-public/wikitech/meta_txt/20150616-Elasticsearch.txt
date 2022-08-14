@@ -1,0 +1,4 @@
+Elasticsearch service (on elastic*.eqiad.wmnet nodes) backing the search functionality on all wikis was partially down for approx. 85 minutes (starting at 4:35 UTC) and fully unavailable for half an hour (starting 5:37).
+• 04:35: Icinga starts to report the first failures on elastic1029 and shortly after several others (14 in total by 4:48)
+• Initial investigation reveals the same outage type as in https://wikitech.wikimedia.org/w/index.php?title=Incident_documentation/20150615 (but with the master elastic1000 still working)
+• 05:11: Filippo restarts elastic1031, which it fails to rejoin the cluster with a MasterNotDiscovered exception being thrown

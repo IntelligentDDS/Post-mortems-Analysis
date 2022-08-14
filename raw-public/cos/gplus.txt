@@ -1,0 +1,39 @@
+
+[01/24/2014][Gmail And Google+ Go Down Across The World, Service Returns After Roughly 50 Minutes]
+http://googleblog.blogspot.com/2014/01/todays-outage-for-several-google.html
+http://techcrunch.com/2014/01/24/gmail-goes-down-across-the-world/
+r-config
+r-bug
+i-down
+t-30m
+f-fix
+p-no
+
+[02/15/2013][Google+ experiencing outage, temporarily the anti-social network]
+http://www.engadget.com/2013/02/15/google-plus-outage/
+http://www.cio.com/article/2388283/internet/google--suffers-outage-friday-morning.html
+r-unk
+i-down
+t-20m
+p-no
+
+[03/17/2014][Google Apps Incident Report]
+http://static.googleusercontent.com/media/www.google.com/en/us/appsstatus/ir/foyrkcdqoojjapj.pdf
+http://www.theepochtimes.com/n3/567037-google-drive-down-google-docs-outage-suffered-by-many/
+http://www.infoworld.com/article/2606209/cloud-computing/162288-The-worst-cloud-outages-of-2014-so-far.html#slide5
+r-config
+t-3h
+i-down
+f-fix
+f-add
+p-no
+
+[10/22/2014][Gmail, Google Docs and Google+ Suffer Service Outages Around the World]
+http://www.ibtimes.co.uk/gmail-google-docs-google-suffering-service-outages-around-world-1471188
+http://news.softpedia.com/news/Google-plus-Is-Down-Error-500-October-22-2014-462784.shtml
+http://9to5google.com/2014/10/22/google-plus-hangouts-youtube-comments-outage/
+r-unk
+i-down
+t-unk
+p-no
+

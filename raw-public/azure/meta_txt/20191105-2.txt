@@ -1,0 +1,13 @@
+RCA - Azure Databricks - Unable to connect to workspaces (Tracking ID KM9W-1T0)
+Summary of Impact
+Between 14:19 and 15:34 UTC on 05 Nov 2019, you were identified as a customer using Azure Databricks who may have intermittently experienced the error "This URL is temporarily unavailable. Please try again later." when connecting to Databricks workspaces.
+Root Cause and Mitigation
+Root Cause: Engineers determined that a backend service responsible for user management and access control experienced a service restart on one of its three service replicas. This restart was caused by high CPU usage attributed to other unrelated services sharing the same node. Once one of the replicas restarted, all pending requests were distributed to the remaining two replicas. Eventually, the remaining replicas were throttled by the overflow of requests and restarted.
+Mitigation: Azure Databricks engineering mitigated the issue by reducing the load on the replicas by temporarily disabling internal jobs and services. In addition, the replicas were migrated to nodes that had additional CPU availability.
+Next Steps
+We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Increasing CPU and memory resource allocations for all service replicas based on additional load tests Improving on-call detection and remediation time
+Increasing the number of replicas to provide additional redundancy
+Providing isolation between service replica requests made from users and internal services
+Provide Feedback
+Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/KM9W-1T0

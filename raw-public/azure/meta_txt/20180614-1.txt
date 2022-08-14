@@ -1,0 +1,2 @@
+Azure Bot Services - Mitigated
+Summary of impact: Between 07:15 and 10:06 UTC on 14 Jun 2018, a subset of customers using Azure Bot Service may have experienced difficulties while trying to connect to bot resources. Preliminary root cause: Engineers identified a code defect with a recent deployment task as the potential root cause. Mitigation: Engineers performed a rollback of the recent deployment task to mitigate the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

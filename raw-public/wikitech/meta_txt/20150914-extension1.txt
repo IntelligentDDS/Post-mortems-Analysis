@@ -1,0 +1,10 @@
+On 2015-09-14 from about 09:47 UTC until 09:59 UTC, the x1 master was saturated with slow queries caused by a missing index. This caused all Flow boards to be inaccessible: trying to view a Flow board displayed a database error message.
+• 09:43 Jaime runs the last ALTER statements for a complex schema change for Flow
+• 09:47 Matthias notices that every Flow page view dies with
+• 09:51 Jaime figures out this is because all queries are now unindexed: the ALTERs dropped the indexes that were being used
+• 09:56 Roan retrieves the old index definitions from git history
+• 09:59 Jaime recreates the old indexes; Flow comes back up immediately
+
+The commit message of the change contained detailed instructions about how to carry out the migration. It instructed that patch3.sql (setting the field to NOT NULL and dropping the old indexes) be run before turning off . However, this was incorrect: as long as was turned on, the old indexes would be used, so the correct order was to create the new indexes, turn off the setting, then remove the old indexes. This mistake was missed in code review and missed again by the Flow devs who were present when the schema change was executed. The other statements in phase3.sql (setting the fields to NOT NULL, and DROP INDEX statements for temporary indexes that were added later) were appropriate to run at that stage, further hiding the incorrectly placed DROP INDEX statements.
+• Do we have (or should we develop) something that tells us which indexes are used and which aren't? That would have allowed us to verify each index was unused before dropping it. Create a debug mode for MW that blows in your face when an unindexed query is run and enable it by default in Vagrant and betalabs? maxsem (talk) 20:06, 18 September 2015 (UTC)
+• Better monitoring for connections reaching max_connections and query performance:

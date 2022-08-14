@@ -1,0 +1,8 @@
+A change in service-runner was deployed on Nov 22th which caused an ever-increase amount of metrics to be sent to statsd, eventually overwhelming the machine with UDP traffic.
+• 20171125T1117 The "carbon frontend relay drops" alarm starts going off
+• 20171125T1340 statsd traffic from scb machines is banned to let statsd recover
+• 20171125T1410 cxserver and cpjobqueue are roll-restarted to alleviate the metrics "leak"
+• 20171125T1545 root cause is found and Petr rollbacks service-runner for cpjobqueue
+• 20171125T1609 Kartik rolls back cxserver with the previous version of service-runner
+
+Services sending statsd UDP traffic receive no feedback from the aggregation server, thus the client needs to do self-pacing in order to avoid overwhelming the aggregation server. Also the aggregation server had alerts for its graphite carbon traffic, i.e. after statsd aggregation has happened. Said alerts fired only when the machine was overwhelmed with network traffic and carbon traffic (over tcp) was impacted too.

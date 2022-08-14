@@ -1,0 +1,315 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+June 17, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google App Engine](/incident/appengine/17006)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google App Engine Incident #17006
+
+Network issue in asia-northeast1
+
+Incident began at **2017-06-08 08:51** and ended at **2017-06-08 10:00** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jun 17, 2017 | 07:17 |
+
+ISSUE SUMMARY
+
+On Thursday 8 June 2017, from 08:24 to 09:26 US/Pacific Time, datacenters in
+the asia-northeast1 region experienced a loss of network connectivity for a
+total of 62 minutes. We apologize for the impact this issue had on our
+customers, and especially to those customers with deployments across multiple
+zones in the asia-northeast1 region. We recognize we failed to deliver the
+regional reliability that multiple zones are meant to achieve.
+
+We recognize the severity of this incident and have completed an extensive
+internal postmortem. We thoroughly understand the root causes and no
+datacenters are at risk of recurrence. We are at work to add mechanisms to
+prevent and mitigate this class of problem in the future. We have prioritized
+this work and in the coming weeks, our engineering team will complete the
+action items we have generated from the postmortem.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 8 June 2017, from 08:24 to 09:26 US/Pacific Time, network
+connectivity to and from Google Cloud services running in the asia-northeast1
+region was unavailable for 62 minutes. This issue affected all Google Cloud
+Platform services in that region, including Compute Engine, App Engine, Cloud
+SQL, Cloud Datastore, and Cloud Storage. All external connectivity to the
+region was affected during this time frame, while internal connectivity within
+the region was not affected.
+
+In addition, inbound requests from external customers originating near
+Google’s Tokyo point of presence intended for Compute or Container Engine HTTP
+Load Balancing were lost for the initial 12 minutes of the outage. Separately,
+Internal Load Balancing within asia-northeast1 remained degraded until 10:23.
+
+ROOT CAUSE
+
+At the time of incident, Google engineers were upgrading the network topology
+and capacity of the region; a configuration error caused the existing links to
+be decommissioned before the replacement links could provide connectivity,
+resulting in a loss of connectivity for the asia-northeast1 region. Although
+the replacement links were already commissioned and appeared to be ready to
+serve, a network-routing protocol misconfiguration meant that the routes
+through those links were not able to carry traffic.
+
+As Google's global network grows continuously, we make upgrades and updates
+reliably by using automation for each step and, where possible, applying
+changes to only one zone at any time. The topology in asia-northeast1 was the
+last region unsupported by automation; manual work was required to be
+performed to align its topology with the rest of our regional deployments
+(which would, in turn, allow automation to function properly in the future).
+This manual change mistakenly did not follow the same per-zone restrictions as
+required by standard policy or automation, which meant the entire region was
+affected simultaneously.
+
+In addition, some customers with deployments across multiple regions that
+included asia-northeast1 experienced problems with HTTP Load Balancing due to
+a failure to detect that the backends were unhealthy. When a network partition
+occurs, HTTP Load Balancing normally detects this automatically within a few
+seconds and routes traffic to backends in other regions. In this instance, due
+to a performance feature being tested in this region at the time, the
+mechanism that usually detects network partitions did not trigger, and
+continued to attempt to assign traffic until our on-call engineers responded.
+Lastly, the Internal Load Balancing outage was exacerbated due to a software
+defined networking component which was stuck in a state where it was not able
+to provide network resolution for instances in the load balancing group.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were paged by automated monitoring within one minute of the
+start of the outage, at 08:24 PDT. They began troubleshooting and declared an
+emergency incident 8 minutes later at 08:32. The issue was resolved when
+engineers reconnected the network path and reverted the configuration back to
+the last known working state at 09:22. Our monitoring systems worked as
+expected and alerted us to the outage promptly.
+
+The time-to-resolution for this incident was extended by the time taken to
+perform the rollback of the network change, as the rollback had to be
+performed manually. We are implementing a policy change that any manual work
+on live networks be constrained to a single zone. This policy will be enforced
+automatically by our change management software when changes are planned and
+scheduled. In addition, we are building automation to make these types of
+changes in future, and to ensure the system can be safely rolled back to a
+previous known-good configuration at any time during the procedure.
+
+The fix for the HTTP Load Balancing performance feature that caused it to
+incorrectly believe zones within asia-northeast1 were healthy will be rolled
+out shortly.
+
+SUPPORT COMMUNICATIONS
+
+During the incident, customers who had originally contacted Google Cloud
+Support in Japanese did not receive periodic updates from Google as the event
+unfolded. This was due to a software defect in the support tooling — unrelated
+to the incident described earlier.
+
+We have already fixed the software defect, so all customers who contact
+support will receive incident updates. We apologize for the communications gap
+to our Japanese-language customers.
+
+RELIABILITY SUMMARY
+
+One of our biggest pushes in GCP reliability at Google is a focus on careful
+isolation of zones from each other. As we encourage users to build reliable
+services using multiple zones, we also treat zones separately in our
+production practices, and we enforce this isolation with software and policy.
+Since we missed this mark—and affecting all zones in a region is an especially
+serious outage—we apologize. We intend for this incident report to accurately
+summarize the detailed internal post-mortem that includes final assessment of
+impact, root cause, and steps we are taking to prevent an outage of this form
+occurring again. We hope that this incident report demonstrates the work we do
+to learn from our mistakes to deliver on this commitment. We will do better.
+
+Sincerely,
+
+Benjamin Lutch | VP Site Reliability Engineering | Google  
+  
+|
+
+ISSUE SUMMARY
+
+On Thursday 8 June 2017, from 08:24 to 09:26 US/Pacific Time, datacenters in
+the asia-northeast1 region experienced a loss of network connectivity for a
+total of 62 minutes. We apologize for the impact this issue had on our
+customers, and especially to those customers with deployments across multiple
+zones in the asia-northeast1 region. We recognize we failed to deliver the
+regional reliability that multiple zones are meant to achieve.
+
+We recognize the severity of this incident and have completed an extensive
+internal postmortem. We thoroughly understand the root causes and no
+datacenters are at risk of recurrence. We are at work to add mechanisms to
+prevent and mitigate this class of problem in the future. We have prioritized
+this work and in the coming weeks, our engineering team will complete the
+action items we have generated from the postmortem.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 8 June 2017, from 08:24 to 09:26 US/Pacific Time, network
+connectivity to and from Google Cloud services running in the asia-northeast1
+region was unavailable for 62 minutes. This issue affected all Google Cloud
+Platform services in that region, including Compute Engine, App Engine, Cloud
+SQL, Cloud Datastore, and Cloud Storage. All external connectivity to the
+region was affected during this time frame, while internal connectivity within
+the region was not affected.
+
+In addition, inbound requests from external customers originating near
+Google’s Tokyo point of presence intended for Compute or Container Engine HTTP
+Load Balancing were lost for the initial 12 minutes of the outage. Separately,
+Internal Load Balancing within asia-northeast1 remained degraded until 10:23.
+
+ROOT CAUSE
+
+At the time of incident, Google engineers were upgrading the network topology
+and capacity of the region; a configuration error caused the existing links to
+be decommissioned before the replacement links could provide connectivity,
+resulting in a loss of connectivity for the asia-northeast1 region. Although
+the replacement links were already commissioned and appeared to be ready to
+serve, a network-routing protocol misconfiguration meant that the routes
+through those links were not able to carry traffic.
+
+As Google's global network grows continuously, we make upgrades and updates
+reliably by using automation for each step and, where possible, applying
+changes to only one zone at any time. The topology in asia-northeast1 was the
+last region unsupported by automation; manual work was required to be
+performed to align its topology with the rest of our regional deployments
+(which would, in turn, allow automation to function properly in the future).
+This manual change mistakenly did not follow the same per-zone restrictions as
+required by standard policy or automation, which meant the entire region was
+affected simultaneously.
+
+In addition, some customers with deployments across multiple regions that
+included asia-northeast1 experienced problems with HTTP Load Balancing due to
+a failure to detect that the backends were unhealthy. When a network partition
+occurs, HTTP Load Balancing normally detects this automatically within a few
+seconds and routes traffic to backends in other regions. In this instance, due
+to a performance feature being tested in this region at the time, the
+mechanism that usually detects network partitions did not trigger, and
+continued to attempt to assign traffic until our on-call engineers responded.
+Lastly, the Internal Load Balancing outage was exacerbated due to a software
+defined networking component which was stuck in a state where it was not able
+to provide network resolution for instances in the load balancing group.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were paged by automated monitoring within one minute of the
+start of the outage, at 08:24 PDT. They began troubleshooting and declared an
+emergency incident 8 minutes later at 08:32. The issue was resolved when
+engineers reconnected the network path and reverted the configuration back to
+the last known working state at 09:22. Our monitoring systems worked as
+expected and alerted us to the outage promptly.
+
+The time-to-resolution for this incident was extended by the time taken to
+perform the rollback of the network change, as the rollback had to be
+performed manually. We are implementing a policy change that any manual work
+on live networks be constrained to a single zone. This policy will be enforced
+automatically by our change management software when changes are planned and
+scheduled. In addition, we are building automation to make these types of
+changes in future, and to ensure the system can be safely rolled back to a
+previous known-good configuration at any time during the procedure.
+
+The fix for the HTTP Load Balancing performance feature that caused it to
+incorrectly believe zones within asia-northeast1 were healthy will be rolled
+out shortly.
+
+SUPPORT COMMUNICATIONS
+
+During the incident, customers who had originally contacted Google Cloud
+Support in Japanese did not receive periodic updates from Google as the event
+unfolded. This was due to a software defect in the support tooling — unrelated
+to the incident described earlier.
+
+We have already fixed the software defect, so all customers who contact
+support will receive incident updates. We apologize for the communications gap
+to our Japanese-language customers.
+
+RELIABILITY SUMMARY
+
+One of our biggest pushes in GCP reliability at Google is a focus on careful
+isolation of zones from each other. As we encourage users to build reliable
+services using multiple zones, we also treat zones separately in our
+production practices, and we enforce this isolation with software and policy.
+Since we missed this mark—and affecting all zones in a region is an especially
+serious outage—we apologize. We intend for this incident report to accurately
+summarize the detailed internal post-mortem that includes final assessment of
+impact, root cause, and steps we are taking to prevent an outage of this form
+occurring again. We hope that this incident report demonstrates the work we do
+to learn from our mistakes to deliver on this commitment. We will do better.
+
+Sincerely,
+
+Benjamin Lutch | VP Site Reliability Engineering | Google  
+  
+| Jun 08, 2017 | 10:05 |
+
+Network connectivity in asia-northeast1 has been restored for all affected
+users as of 10:00 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+|
+
+Network connectivity in asia-northeast1 has been restored for all affected
+users as of 10:00 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+| Jun 08, 2017 | 09:20 |
+
+Google Cloud Platform services in region asia-northeast1 are experiencing
+connectivity issues. We will provide another status update by 10:00 US/Pacific
+with current details.  
+  
+|
+
+Google Cloud Platform services in region asia-northeast1 are experiencing
+connectivity issues. We will provide another status update by 10:00 US/Pacific
+with current details.  
+  
+| Jun 08, 2017 | 09:04 |
+
+Google Cloud Platform services in region asia-northeast1 are experiencing
+connectivity issues. We will provide another status update by 9:30 US/Pacific
+with current details.  
+  
+|
+
+Google Cloud Platform services in region asia-northeast1 are experiencing
+connectivity issues. We will provide another status update by 9:30 US/Pacific
+with current details.  
+  
+| Jun 08, 2017 | 08:51 |
+
+Google Cloud Platform services in region asia-northeast1 are experiencing
+connectivity issues. We will provide another status update by 10:00 US/Pacific
+with current details.  
+  
+|
+
+Google Cloud Platform services in region asia-northeast1 are experiencing
+connectivity issues. We will provide another status update by 10:00 US/Pacific
+with current details.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

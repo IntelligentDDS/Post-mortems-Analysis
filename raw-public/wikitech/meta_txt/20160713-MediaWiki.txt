@@ -1,0 +1,21 @@
+This is a template for an Incident Report. Replace notes with your own description.
+
+On any request that used the PoolCounter feature (search, rendering of pages on view), users experienced a 503 due to a HHVM fatal error.
+
+This was caused the because the duplicate PoolCounterClient.php entry point referenced in the MediaWiki configuration was removed in favor of the properly named PoolCounter.php one and extension.json. Reedy had prepared a patch to do the switch, but it hadn't been deployed yet, and the wmf.10 train went ahead. Furthermore, the entry point was using PHP's "include" and not "require", meaning that PHP would not fatal if the file was missing, so we didn't notice it immediately. It would only fatal when something actually invoked PoolCounter, leading to intermittent user facing errors, depending on which articles they were viewing.
+
+After checking fatal.log and seeing the error, Legoktm fixed up Reedy's patch and deployed it.
+
+This is a step by step outline of what happened to cause the incident and how it was remedied.
+• 17:48 First report by Steinsplitter in #wikimedia-operations about getting 503s
+• 17:50 Confirmed by others in channel on the <https://www.mediawiki.org/wiki/Help:Extension:ParserFunctions> page
+• 17:53 legoktm looks at fatal.log on fluorine and sees errors like:
+• 17:57 legoktm syncs to mw1017 and tests using X-Wikimedia-Debug
+
+What weakness did we learn about and how can we address them?
+
+This should have been noticed much sooner. We should have noticed in beta that the file was missing, and then again when wmf.10 was first deployed
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+• Status: Unresolved Audit configuration to make sure all extensions are being loaded using "require" and not "include" ( )
+• Status: Unresolved The proper canary deploy stuff that would notice fatals earlier...

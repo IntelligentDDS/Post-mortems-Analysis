@@ -1,0 +1,22 @@
+The main (gallery) namespace on Wikimedia Commons became uneditable for some 19 hours.
+
+Editors on Wikimedia Commons were affected, though the gallery namespace is not as frequently edited as others (file uploads and categorization were unaffected, for instance).
+
+End users reported the error on-wiki fairly soon after it became effective, and a Phabricator task was created as well. However, it took over half a day for operations to become aware of the task.
+• 2019-03-27 16:44 last edit in the gallery namespace (according to recent changes)
+• 2019-03-27 20:43 second report on Commons’ Help desk
+• 2019-03-28 11:26 User:Yann mentions on the Phabricator task that this affects all NS0 edits, not just "some" as the task had been filed
+
+What went well?
+• Once the bug was reported in #wikimedia-operations, response was relatively quick
+• The bug was not detected on Test Commons or Beta Cluster Commons over months of testing.
+• Wikibase in production (for Wikidata) uses NS0 for entities, but this is not true by default or on most development machines. This area of the code is thus not well-tested.
+• A ticket about an UBN! situation had no response from the technical community for several hours, no escalation or notification method is in place for it.
+
+Where did we get lucky?
+• The main namespace is not frequently used on Commons, so work on files, categories etc. was unhindered
+• I followed SWAT deploys/Deployers when deploying the revert
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.
+• Fix the underlying bug and deploy the config again while testing *all* namespaces ( )
+• [task management] The largest issue was not the time between deployment and notice, but the time between the a ticket was first filed (untriaged, no tags) and it was acted on. Analyze what failed and either change Phabricator usage recommendations/reporting best practices, or something else (if considered necessary) when a clear outage is happening. ( )

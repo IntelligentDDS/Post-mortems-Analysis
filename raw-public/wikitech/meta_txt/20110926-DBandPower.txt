@@ -1,0 +1,32 @@
+Chris, our Tampa data center contractor, was replacing the broken management switch msw-d2-sdtpa in sdtpa rack D2. Our management network is completely unrelated to our production network, and doesn't carry any important, production traffic. However, the management switch is mounted directly under the production network access switch (asw-d2-sdtpa). During the replacement, at 14:12 UTC, the power cable of asw-d2-sdtpa came slightly loose, as it was very close to the switch and cables being replaced. Chris didn't notice this, as all LEDs of the switch are on the other side.
+
+As a result, the entire rack, consisting of about 40 MediaWiki application servers, lost network connectivity. Nagios complained about all servers in the rack, and due to all kinds of second order effects, many other services were (briefly) disrupted or overloaded, leading to many other Nagios downtime reports. Several Ops and Engineering members were looking at the downtime, but had difficulty pinpointing exactly what was going down.
+
+After a few minutes, I noticed that all application servers being reported down were located in the same rack D2 (as I checked in Racktables), and that asw-d2-sdtpa was reported down by Observium (e-mail to root@ and the web interface). A quick check revealed that indeed this switch had gone down. I asked Chris on IRC if this was related to his work, which it was indeed. As soon as Chris restored power, all network connectivity and services were restored within a minute at 14:30 UTC.
+
+The main problem with a rack of application servers going down, besides the significant reduction in capacity, is the loss of memcached caching - meaning that MediaWiki on the remaining servers will be parsing/regenerating many pages and objects, resulting in a much higher load at reduced capacity for a while. memcached redundancy/resiliency is definitely something that could need improvement for this reason.
+
+In our newer racks and data centers, we also have better redundancy of the network, including redundant power and uplinks for access switches, so this doesn't happen so easily. If we do not intend to move Tampa any time soon, we should look at retrofitting our older racks with that setup as well.
+
+For the schema changes of the MediaWiki 1.18 release, Asher has been master changes for all core db clusters. Usually this goes automatically without incidents, but cluster s7 also contains the CentralAuth database, used by all wikis. Before changing masters, Asher set cluster s7 to read-only in the MediaWiki db configuration. As soon as he changed the s7 master to a new database server at 18:23, the new master got bombarded with MediaWiki "slave lag" queries, i.e. MediaWiki instances trying to determine the replication lag of the slaves compared to the master, to select which db slave to use. Normally, this check is disabled when MediaWiki is in database read-only mode, but as was discovered later, this does not apply to CentralAuth queries - possibly because these are also issued by wikis outside the s7 cluster. Therefore, the new master was immediately overloaded with these queries, and interrupted normal queries and replication traffic, bringing down the sites.
+
+Asher investigated the situation, and killed all outstanding queries on the new master, which fixed the problem at 18:32. He also filed a bugzilla ticket #31170 to improve MediaWiki's behavior during db read-only situations. Additional measures to avoid this problem in the future could be to split off CentralAuth into its dedicated cluster on dedicated hardware (we could use some old DB servers for that.
+
+Apparently there was another master switch related outage at this time with db cluster s5, but I was not around at that time, and haven't had an opportunity to discuss this incident with Asher yet. As far as I understand from the IRC backlog, the MySQL instances unexpectedly hung after Asher issued the "STOP SLAVE" command to stop replication, but I don't yet know the details.
+
+Asher, could you give us a summary on that?
+
+Our master switch scripts starts off with the following course of action:
+• set the old (still current) master to read-only
+• in the case of MasterSwitch.php, kill queries on the old master running for more than 10 seconds
+• in the case of both sets of switch scripts, run "flush tables" against it, to ensure that pending transactions are committed. Unless sql_bin_log is disabled for a session, running "flush tables" on a master is replicated to the slaves.
+
+db44, one of the two dewiki slaves had the following long running queries in the "copying to tmp table" state:
+
+It looks like this ~11 hour long query is being run against dewiki every several hours, with the same values in the where clause. It should be returning the same 684 rows each time after apparently examining ~100 billion (!). At the time of the attempted switch, three of these had been running for between 2-8 hours:
+
+When flush tables ran on this host, it locked all tables and essentially hung there, waiting for the multi-hour temp table writes to complete. Mysql will still happily accept connections and queries, which will be locked in "waiting for table" status. After 5 minutes, things looked like:
+
+A large number of apache workers were tied up by sending blocked queries to this db, resulting in the actual site outage. A running flush tables cannot truly be killed directly (http://bugs.mysql.com/bug.php?id=44884) - the site was restored by sending mysql on this host a sigterm, preventing it from accepting additional incoming connections and killing everything off. Mysql on db43 was then restarted, and the rest of the replication changes went smoothly.
+
+Modifying the switch scripts to prevent the "flush tables" statement on the master from replicating, as well as automated killing of long running queries on the slaves (instead of just the old master) should prevent a recurrence of this scenario.

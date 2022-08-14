@@ -1,0 +1,4 @@
+A storm of WikiEditor Edit schema events (several hundred per second) caused EventLogging to occasionally drop client-side events.
+
+Server-side events were not affected, but they only constitute about 30% of the pipeline. Client-side events were not entered in the database at all during this outage.
+• We need throttling in eventlogging so in cases like this we can "shed" a stream of events. We have had this item in our backlog for a while: phab:T69470

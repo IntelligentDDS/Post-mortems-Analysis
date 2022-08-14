@@ -1,0 +1,6 @@
+RCA - Azure Map
+Summary of impact: Between 04:35 and 11:00 UTC on 02 May 2019, a subset of customers using Azure Maps may have experienced 500 errors when attempting to make calls to Azure Maps Rest APIs.
+Root cause and mitigation: Engineers were notified by internal monitoring that connectivity between internal components/services required by Azure Maps were disrupted. This lead to the failure to fulfill incoming customer requests. Upon investigation, engineers found that the authentication application was inadvertently removed in error during regular maintenance operations. Restoration of authentication application was performed manually, which led to the mitigation of this incident.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Moving the authentication applications to a more protected repository, and setting up fail safes to prevent future incidents. Augmenting monitoring for authentication issues and improving troubleshooting guides for faster response.
+Longer term, engineers are planning to move to a different authentication platform which will provide better insights earlier.

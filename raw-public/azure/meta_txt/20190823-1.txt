@@ -1,0 +1,12 @@
+RCA - Service Management Operations - West/North Europe
+Summary of Impact: Between 06:20 and 10:46 UTC on 23 Aug 2019, a subset of customers in North Europe and West Europe may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in these regions.
+Root Cause: During this incident, the memory consumption on Azure Resource Manager’s (ARM) worker roles exceeded operational thresholds. This should have initiated a clearing process which attempts to recover additional memory when thresholds are reached. However, the memory cache was unrecoverable at the time given that it was referenced by other (active) objects in the system. CPU utilization on the affected worker roles also increased, which in turn prevented certain processes from completing.
+Analysis has indicated that all threads on the affected worker roles were busy during the impact window, thus manifesting in impact to service management operations to ARM-dependent services and/or resources.
+In addition, worker roles recycle on a weekly cadence which, in this scenario, further contributed to thresholds being reached. The nature of the issue required manual intervention to fully mitigate, which further delayed mitigation.
+Mitigation: Engineers performed a manual restart of the affected worker roles to mitigate the issue.
+Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our
+processes to help ensure such incidents do not occur in the future. In this case, this included (but was not limited to):
+Automatically recycling worker roles on a more frequent cadence [In Progress]
+Separating distinct cache types [In Progress]
+Adding enhanced logging information to understand memory cache usage in worker roles [In Progress] Reducing cache footprint [In Progress]
+Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/HT4G-PC0.

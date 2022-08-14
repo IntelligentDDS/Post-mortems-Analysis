@@ -1,0 +1,99 @@
+
+[01/24/2014][Today's outage for several Google services]
+http://googleblog.blogspot.com/2014/01/todays-outage-for-several-google.html
+http://www.datacenterknowledge.com/archives/2014/01/24/gmail-go-january-2014-edition/
+http://techcrunch.com/2014/01/24/gmail-goes-down-across-the-world/
+http://mashable.com/2014/01/24/google-gmail-outage-response/
+r-config
+r-bug
+t-28m
+i-down
+f-fix
+p-no
+
+[03/01/2011][Google Apps and Gmail outage outrage: Problem NOT resolved]
+http://blogs.computerworld.com/17897/google_apps_and_gmail_outage_outrage_problem_resolved
+r-upgrade
+t-unk
+i-down
+f-restore
+p-no
+
+[03/17/2014][Google Apps Incident Report]
+http://static.googleusercontent.com/media/www.google.com/en/us/appsstatus/ir/foyrkcdqoojjapj.pdf
+http://www.pocketables.com/2014/03/just-google-sheets-voice-hangouts.html
+http://boundary.com/blog/2014/03/28/google-downtime-two-hours-really-cost/
+http://venturebeat.com/2014/03/17/google-docs-and-gchat-down-productivity-plummeting/
+http://techcrunch.com/2014/03/17/google-hangouts-and-gmail-chat-go-down/
+http://googledrive.blogspot.co.id/2014/03/save-more-with-google-drive.html
+r-config
+t-2h
+i-down
+p-no
+f-add
+
+[04/17/2013][Gmail, Google Drive And Docs Currently Experiencing Partial Outage]
+http://techcrunch.com/2013/04/17/gmail-google-drive-and-docs-currently-experiencing-partial-outage/
+http://mashable.com/2013/04/17/google-apps-down-again/#aS2lH8Hdtiqa
+r-unk
+t-30m
+i-op
+p-no
+
+[04/21/2010][Google Docs Just Picked A Bad Time To Fail (But There's A Fix)]
+http://techcrunch.com/2010/04/21/google-docs-just-picked-a-bad-time-to-fail-but-theres-a-fix/
+r-unk
+t-unk
+i-op
+p-no
+
+[05/10/2013][Google Docs Outage: Google Documents Have Disappeared for Users]
+http://bostinno.streetwise.co/2013/05/10/google-docs-outage-google-documents-have-disappeared-for-users/
+http://stech2.firstpost.com/wp-content/uploads/gallery/2013/may/googleappsstatus_640x360.jpg
+http://www.thefullsignal.com/android/14498/google-drive-down-some
+http://www.cnet.com/news/google-drive-documents-list-goes-empty-for-users/
+http://www.buzzfeed.com/charliewarzel/google-drive-is-down#45p6xeu
+t-25m
+r-unk
+i-down
+p-no
+
+[07/10/2013][Google outage takes down Gmail, Docs, Calendar]
+http://www.computerworld.com/article/2483733/web-apps/google-outage-takes-down-gmail--docs--calendar.html
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide3
+http://storageservers.wordpress.com/2013/07/11/google-outage-caused-due-to-backlash-at-us-nsa-prism/
+r-unk
+t-40m
+i-down
+p-no
+
+[09/07/2011][What Happened to Google Docs on Wednesday]
+http://googleforwork.blogspot.co.id/2011/09/what-happened-to-google-docs-on.html
+http://arstechnica.com/business/2011/09/office-365-google-docs-go-down-again-could-give-pause-to-the-cloud-wary/
+http://googledocs.blogspot.com/2011/09/what-happened-wednesday.html
+http://techcrunch.com/2011/09/09/google-explains-its-google-docs-outage/
+http://techcrunch.com/2011/09/07/google-docs-stumbles-goes-down/
+r-upgrade
+r-bug
+t-1h
+i-down
+p-no
+f-roll
+
+[10/09/2015][The Dog Ate Our Homework, Google Drive Is Down]
+http://mashable.com/2015/10/09/google-docs-sheets-down/#Q_DXVyVntaqW
+http://techcrunch.com/2015/10/09/the-dog-ate-our-homework-google-drive-is-down/
+http://venturebeat.com/2015/10/09/google-docs-is-having-issues-what-are-we-going-to-do-you-guys/
+http://www.techtimes.com/articles/93822/20151011/google-docs-outage-was-the-perfect-excuse-for-workers-to-slack-around-and-create-these-hilarious-memes.htm
+r-upgrade
+t-1h9m
+i-down
+p-no
+
+[10/22/2014][Google Drive and Docs are down for some users, company is investigating]
+http://thenextweb.com/google/2014/10/27/google-drive-docs-users-company-investigating/
+r-unk
+t-5h30m
+i-down
+p-no
+

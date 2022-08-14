@@ -1,0 +1,8 @@
+RCA - Virtual Machines and Azure Databricks (Tracking ID 1V2C-NZ0)
+Summary of Impact: Between 23:40 UTC on 29 Oct 2019 and 06:15 UTC on 30 Oct 2019, a limited subset of customers using Virtual Machines and/or Azure Databricks may have received failure notifications or experienced increased latency when performing service management operations - such as create, update, delete - for these resources.
+Root Cause: An incorrect network configuration change was rolled out via an automated workflow which unintentionally targeted multiple production regions. The configuration change took effect over a period of hours, as Software Load Balancer (SLB) instances in each region were automatically restarted. Eventually, multiple Azure backend services experienced failures while attempting to establish outbound network connectivity.
+Mitigation: Engineers rolled back the configuration change and manually restarted the affected SLB services to mitigate the issue.
+Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure
+such incidents do not occur in the future. In this case, this included (but was not limited to):
+Removing this network configuration change step in the automated workflow Adding strict validation for similar kinds of network configuration changes
+Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/1V2C-NZ0

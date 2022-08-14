@@ -1,0 +1,9 @@
+Due to the concurrent failure of 3 different network links across two different carriers, our connectivity between our San Francisco ulsfo data center and the rest of our network was briefly severed for a few times, resulting in downtime for the US west coast and parts of Asia until traffic was rerouted.
+• 05:38 - Link between ulsfo and codfw went down and started flapping
+• 08:17 - Links eqord and ulsfo, and between eqord and codfw went down for planned maintenance. Due to 3 links being down or flapping, connectivity between ulsfo and the rest of our network became intermittent. Traffic to public services from US west coast states and parts of asia was be impacted.
+• 08:24 - Traffic was rerouted from ulsfo, removing impact from users
+• 08:45 - A matching maintenance announcement for the ulsfo-codfw link was discovered to be sent to the wrong address
+• 13:36 - Several hours after the completion of both maintenance windows and the links were confirmed stable, traffic was routed back to ulsfo
+
+All 3 links, which were from two different vendors, had overlapping maintenance windows. The maintenance announcement from one of the two vendors was sent to the wrong e-mail address and therefore not processed by Clinic Duty and put in our vendor maintenance calendar.
+• Establish a more rigid process for evaluating maintenance announcements with particular attention for potential overlap for redundant links

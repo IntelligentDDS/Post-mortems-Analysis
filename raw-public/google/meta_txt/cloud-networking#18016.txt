@@ -1,0 +1,253 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+October 13, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Networking](/incident/cloud-networking/18016)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Networking Incident #18016
+
+Networking issues in us-central1-c impacting multiple GCP products (Bigtable,
+Cloud SQL, Datastore, VMs)
+
+Incident began at **2018-10-11 16:13** and ended at **2018-10-11 16:54** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Oct 12, 2018 | 21:07 |
+
+ISSUE SUMMARY
+
+On Thursday 11 October 2018, a section of Google's network that includes part
+of us-central1-c lost connectivity to the Google network backbone that
+connects to the public internet for a duration of 41 minutes.
+
+We apologize if your service or application was impacted by this incident. We
+are following our postmortem process to ensure we fully understand what caused
+this incident and to determine the exact steps we can take to prevent
+incidents of this type from recurring. Our engineering team is committed to
+prioritizing fixes for the most critical findings that result from our
+postmortem.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 11 October 2018 from 16:13 to 16:54 PDT, a section of Google's
+network that includes part of us-central1-c lost connectivity to the Google
+network backbone that connects to the public internet.
+
+The us-central1-c zone is composed of two separate physical clusters. 61% of
+the VMs in us-central1-c were in the cluster impacted by this incident.
+Projects that create VMs in this zone have all of their VMs assigned to a
+single cluster. Customers with VMs in the zone were either impacted for all of
+their VMs in a project or for none.
+
+Impacted VMs could not communicate with VMs outside us-central1 during the
+incident. VM-to-VM traffic using an internal IP address within us-central1 was
+not affected.
+
+Traffic through the network load balancer was not able to reach impacted VMs
+in us-central1-c, but customers with VMs spread between multiple zones
+experienced the network load balancer shifting traffic to unaffected zones.
+
+Traffic through the HTTP(S), SSL Proxy, and TCP proxy load balancers was not
+significantly impacted by this incident.
+
+Other Google Cloud Platform services that experienced significant impact
+include the following:
+
+30% of Cloud Bigtable clusters located in us-central1-c became unreachable.
+
+10% of Cloud SQL instances in us-central lost external connectivity.
+
+ROOT CAUSE
+
+The incident occurred while Google's network operations team was replacing the
+routers that link us-central1-c to Google's backbone that connects to the
+public internet. Google engineers paused the router replacement process after
+determining that additional cabling would be required to complete the process
+and decided to start a rollback operation. The rollout and rollback operations
+utilized a version of workflow that was only compatible with the newer
+routers. Specifically, rollback was not supported on the older routers. When a
+configuration change was pushed to the older routers during the rollback, it
+deleted the Border Gateway Protocol (BGP) control plane sessions connecting
+the datacenter routers to the backbone routers resulting in a loss of external
+connectivity.
+
+REMEDIATION AND PREVENTION
+
+The BGP sessions were deleted in two tranches. The first deletion was at 15:43
+and caused traffic to failover to other routers. The second set of BGP
+sessions were deleted at 16:13. The first alert for Google engineers fired at
+16:16. We identified that the BGP sessions had been deleted at 16:41 and
+rolled back the configuration change at 16:52, ending the incident shortly
+thereafter.
+
+The preventative action items identified so far include the following:
+
+Fix the automated workflows for router replacements to ensure the correct
+version of workflows are utilized for both types of routers.
+
+Alert when BGP sessions are deleted and traffic fails off, so that we can
+detect and mitigate problems before they impact customers.  
+  
+|
+
+ISSUE SUMMARY
+
+On Thursday 11 October 2018, a section of Google's network that includes part
+of us-central1-c lost connectivity to the Google network backbone that
+connects to the public internet for a duration of 41 minutes.
+
+We apologize if your service or application was impacted by this incident. We
+are following our postmortem process to ensure we fully understand what caused
+this incident and to determine the exact steps we can take to prevent
+incidents of this type from recurring. Our engineering team is committed to
+prioritizing fixes for the most critical findings that result from our
+postmortem.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 11 October 2018 from 16:13 to 16:54 PDT, a section of Google's
+network that includes part of us-central1-c lost connectivity to the Google
+network backbone that connects to the public internet.
+
+The us-central1-c zone is composed of two separate physical clusters. 61% of
+the VMs in us-central1-c were in the cluster impacted by this incident.
+Projects that create VMs in this zone have all of their VMs assigned to a
+single cluster. Customers with VMs in the zone were either impacted for all of
+their VMs in a project or for none.
+
+Impacted VMs could not communicate with VMs outside us-central1 during the
+incident. VM-to-VM traffic using an internal IP address within us-central1 was
+not affected.
+
+Traffic through the network load balancer was not able to reach impacted VMs
+in us-central1-c, but customers with VMs spread between multiple zones
+experienced the network load balancer shifting traffic to unaffected zones.
+
+Traffic through the HTTP(S), SSL Proxy, and TCP proxy load balancers was not
+significantly impacted by this incident.
+
+Other Google Cloud Platform services that experienced significant impact
+include the following:
+
+30% of Cloud Bigtable clusters located in us-central1-c became unreachable.
+
+10% of Cloud SQL instances in us-central lost external connectivity.
+
+ROOT CAUSE
+
+The incident occurred while Google's network operations team was replacing the
+routers that link us-central1-c to Google's backbone that connects to the
+public internet. Google engineers paused the router replacement process after
+determining that additional cabling would be required to complete the process
+and decided to start a rollback operation. The rollout and rollback operations
+utilized a version of workflow that was only compatible with the newer
+routers. Specifically, rollback was not supported on the older routers. When a
+configuration change was pushed to the older routers during the rollback, it
+deleted the Border Gateway Protocol (BGP) control plane sessions connecting
+the datacenter routers to the backbone routers resulting in a loss of external
+connectivity.
+
+REMEDIATION AND PREVENTION
+
+The BGP sessions were deleted in two tranches. The first deletion was at 15:43
+and caused traffic to failover to other routers. The second set of BGP
+sessions were deleted at 16:13. The first alert for Google engineers fired at
+16:16. We identified that the BGP sessions had been deleted at 16:41 and
+rolled back the configuration change at 16:52, ending the incident shortly
+thereafter.
+
+The preventative action items identified so far include the following:
+
+Fix the automated workflows for router replacements to ensure the correct
+version of workflows are utilized for both types of routers.
+
+Alert when BGP sessions are deleted and traffic fails off, so that we can
+detect and mitigate problems before they impact customers.  
+  
+| Oct 11, 2018 | 17:52 |
+
+The issue with Cloud Networking impacting multiple GCP products (CloudSQL,
+Cloud Spanner, Cloud Storage, Cloud BigTable, App Engine) in us-central1-c has
+been resolved for all affected projects as of Thursday, 2018-10-11 16:55
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to help prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+|
+
+The issue with Cloud Networking impacting multiple GCP products (CloudSQL,
+Cloud Spanner, Cloud Storage, Cloud BigTable, App Engine) in us-central1-c has
+been resolved for all affected projects as of Thursday, 2018-10-11 16:55
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to help prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+| Oct 11, 2018 | 17:25 |
+
+Cloud Network is now working and the mitigation work to restore the impacted
+services is currently underway by our Engineering Team. We will provide
+another status update by Thursday, 2018-10-11 18:00 US/Pacific with current
+details.  
+  
+|
+
+Cloud Network is now working and the mitigation work to restore the impacted
+services is currently underway by our Engineering Team. We will provide
+another status update by Thursday, 2018-10-11 18:00 US/Pacific with current
+details.  
+  
+| Oct 11, 2018 | 17:04 |
+
+Our engineers have applied a mitigation and the error rate is now decreasing.
+We will provide another status update by Thursday, 2018-10-11 17:20 US/Pacific
+with current details.  
+  
+|
+
+Our engineers have applied a mitigation and the error rate is now decreasing.
+We will provide another status update by Thursday, 2018-10-11 17:20 US/Pacific
+with current details.  
+  
+| Oct 11, 2018 | 16:50 |
+
+We are investigating an issue with networking issues in us-central1-c. This
+issue is impacting multiple Google Cloud Platform products. We will provide
+more information by Thursday, 2018-10-11 17:15 US/Pacific  
+  
+|
+
+We are investigating an issue with networking issues in us-central1-c. This
+issue is impacting multiple Google Cloud Platform products. We will provide
+more information by Thursday, 2018-10-11 17:15 US/Pacific  
+  
+| Oct 11, 2018 | 16:50 |
+
+Networking issues in us-central1-c impacting multiple GCP products  
+  
+|
+
+Networking issues in us-central1-c impacting multiple GCP products  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

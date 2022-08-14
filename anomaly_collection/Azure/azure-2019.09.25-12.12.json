@@ -1,0 +1,1244 @@
+{
+    "azure-20190925-1": {
+        "title": "RCA - Azure Kubernetes Service (AKS) - Provisioning Failures (Tracking ID GK3M-5D8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "09/25/2019",
+        "summary": "Summary of Impact: Between 20:50 UTC on 25 Sep 2019 and 04:25 UTC on 26 Sep 2019, a subset of customers using Azure Kubernetes Service (AKS) may have received failure notifications when performing create and/or update operations for their resources.",
+        "details": "Root Cause: An update to a backend service responsible for processing different service management requests for AKS was enabled by a recent configuration change that had been rolled out. This update exposed a code defect for the service and a fix for the defect had yet to complete in the impacted regions. This resulted in failures for the service, preventing it from processing requests. Internal monitoring systems for this issue also did not initially correlate to complete scope of impact, which delayed the investigation. Mitigation: Engineers reverted the configuration change which mitigated the issue. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this included (but was not limited to): Monitoring the completion of the fix for the defect in all regions. Updating the monitoring systems to improve alerting accuracy for these types of scenarios. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/GK3M-5D8",
+        "service_name": [
+            "Azure Kubernetes Service (AKS)"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 455,
+        "detection": {
+            "method": "automate",
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "failure notification"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "An update to a backend service responsible for processing different service management requests for AKS was enabled by a recent configuration change that had been rolled out. This update exposed a code defect for the service and a fix for the defect had yet to complete in the impacted regions. This resulted in failures for the service, preventing it from processing requests. Internal monitoring systems for this issue also did not initially correlate to complete scope of impact, which delayed the investigation."
+        },
+        "operation": [
+            "update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "reverted the configuration change"
+            ],
+            "details": "Engineers reverted the configuration change which mitigated the issue.",
+            "troubleshooting": {
+                "1": "Internal monitoring systems for this issue also did not initially correlate to complete scope of impact, which delayed the investigation.",
+                "2": "Engineers reverted the configuration change which mitigated the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "backend services",
+            "2": "Azure Kubernetes Service (AKS)"
+        },
+        "refined path": {
+            "1": "backend services",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190930-1": {
+        "title": "RCA - Storage - Unable to access Azure file share with Azure Active Directory Domain Services joined machines (Tracking ID HSXX-1P8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "09/30/2019",
+        "summary": "Between 18:00 UTC on 30 Sep 2019, and 05:00 UTC on 03 Oct 2019, customers may have experienced failures when accessing Azure file shares from Azure Active Directory Domain Services (AAD DS) joined machines.",
+        "details": "Root Cause: Azure Files communication with Azure Active Directory Domain Services (AAD DS) was in the process of upgrading from a manually configured backend authentication system to an automatically configured backend authentication system. However, a step was missed in this change which caused Azure Files to fail when authenticating with Azure Active Directory Domain Services. This caused clients accessing the Azure file share using AAD DS authentication to fail. The outage was automatically detected by our system, but it took the team longer than desired to diagnose and roll back the changes. Mitigation: Once the issue was fully understood, engineers rolled back the changes which mitigated the issue for all customers. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): The configuration has now been rolled back globally, and the team is doing further work to ensure the move to the automated system can be completed without any further customer impact. We will also follow up to determine what tools and processes can be improved to reduce the time needed to investigate and mitigate similar incidents in the future. Provide Feedback Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/HSXX-1P8",
+        "service_name": [
+            "Azure Active Directory Domain Services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 3540,
+        "detection": {
+            "method": "automate",
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "Azure Files communication with Azure Active Directory Domain Services (AAD DS) was in the process of upgrading from a manually configured backend authentication system to an automatically configured backend authentication system. However, a step was missed in this change which caused Azure Files to fail when authenticating with Azure Active Directory Domain Services. This caused clients accessing the Azure file share using AAD DS authentication to fail. The outage was automatically detected by our system, but it took the team longer than desired to diagnose and roll back the changes."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back the changes"
+            ],
+            "details": "Once the issue was fully understood, engineers rolled back the changes which mitigated the issue for all customers.",
+            "troubleshooting": {
+                "1": "The outage was automatically detected by our system",
+                "2": "Once the issue was fully understood, engineers rolled back the changes which mitigated the issue for all customers."
+            }
+        },
+        "propagation pass": {
+            "1": "Azure Active Directory Domain Services",
+            "2": "Azure Files"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191002-1": {
+        "title": "Log Analytics - USGov Virginia - Mitigated (Tracking ID 1KNJ-LD8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "10/02/2019",
+        "summary": "Summary of Impact: Between 19:45 EDT on 02 Oct 2019 and 23:45 EDT on 03 Oct 2019 a subset of customers using Log Analytics in USGov Virginia may have received 500-level errors when performing queries on log analytics data.",
+        "details": "Preliminary root cause: Engineers determined that instances of a back-end service responsible for middle-tier authentication became unhealthy, preventing data queries from completing. Mitigation: Engineers deployed a platform hotfix to mitigate the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.",
+        "service_name": [
+            "Log Analytics"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 1680,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "HTTP 500-level errors"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "Engineers determined that instances of a back-end service responsible for middle-tier authentication became unhealthy, preventing data queries from completing."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy a platform hotfix"
+            ],
+            "details": "Engineers deployed a platform hotfix to mitigate the issue.",
+            "troubleshooting": {
+                "1": "determined that instances of a back-end service responsible for middle-tier authentication became unhealthy,",
+                "2": "deployed a platform hotfix"
+            }
+        },
+        "propagation pass": {
+            "1": "backend service",
+            "2": "Log Analytics"
+        },
+        "refined path": {
+            "1": "backend services",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191016-1": {
+        "title": "RCA - Azure Portal (Tracking ID 0_0D-VP8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "10/16/2019",
+        "summary": "Summary of Impact: Between 13:45 and 14:59 UTC (approx.) on 16 Oct 2019, a subset of customers may have experienced latency issues with the Azure Portal, Command Line, and Azure PowerShell. Services already running would not have experienced impact during this issue.",
+        "details": "Root Cause: Azure Resource Manager (ARM) is the underlying deployment and management service for Azure, providing the management layer that allows create, update, delete, etc. functions for the platform. Customers interact with ARM every time they use the platform, but the primary interaction points are via PowerShell, Command line, APIs and/or the Azure Portal. During this incident a number of scale units in one of our UK South data centers responsible for processing ARM requests became overloaded. This caused intermittent latency for some customers in this region as they would have been directed to their nearest ARM endpoints. As retry logic and customer initiated retries ensued, this added to the load for these scale units, and impact to customers became more prevalent. The underlying cause was twofold: A routine deployment update for the ARM backend service had taken place overnight in UK South. The update was successful, but as it deployed, it reduced the number of ARM instances, as the code branch for this deployment had not been updated to the new value required in this region. The resources in UK South are normally over-scaled versus demand, and thus they were not aligned with the same auto-scale functionality as other regions that ARM uses. Following the above deployment, there was no immediate impact to ARM workloads in the region. However, as requests to ARM began to climb during the business day, the lower number of instances, and the lack of an immediate auto-scale response caused this to manifest as customer-impacting latency. Mitigation: Initially engineers manually scaled-out the service to ensure adequate resources were available. There were some delays in the application of these steps, as this is a highly secure environment, and the change-approvals process had recently been updated. Subsequently, engineers applied a mitigation to ensure the auto-scale functionality was restored to prevent this issue reoccurring. Engineers then monitored the service for an extended period following mitigation to ensure all requests backlogs cleared, and that auto-scale functionality was correctly enabled. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Review of monitoring and alerting relating to resource consumption, and requests success rates in ARM Review of alerting for scale-up functionality underpinning the ARM platform Investigation of auto-mitigation options to prevent this scenario from reoccurring Verifying that all on-call engineers are aware of the updated processes for change requests in this environment Update of the process regarding change of minimum instance thresholds for regions to ensure deployments do not revert to previous values Provide feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/0_0D-VP8",
+        "service_name": [
+            "Azure Portal",
+            "Command Line",
+            "Azure PowerShell",
+            "Azure Resource Manager"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 74,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "high latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource"
+                }
+            ],
+            "details": "Azure Resource Manager (ARM) is the underlying deployment and management service for Azure, providing the management layer that allows create, update, delete, etc. functions for the platform. Customers interact with ARM every time they use the platform, but the primary interaction points are via PowerShell, Command line, APIs and/or the Azure Portal. During this incident a number of scale units in one of our UK South data centers responsible for processing ARM requests became overloaded. This caused intermittent latency for some customers in this region as they would have been directed to their nearest ARM endpoints. As retry logic and customer initiated retries ensued, this added to the load for these scale units, and impact to customers became more prevalent. The underlying cause was twofold: A routine deployment update for the ARM backend service had taken place overnight in UK South. The update was successful, but as it deployed, it reduced the number of ARM instances, as the code branch for this deployment had not been updated to the new value required in this region. The resources in UK South are normally over-scaled versus demand, and thus they were not aligned with the same auto-scale functionality as other regions that ARM uses. Following the above deployment, there was no immediate impact to ARM workloads in the region. However, as requests to ARM began to climb during the business day, the lower number of instances, and the lack of an immediate auto-scale response caused this to manifest as customer-impacting latency. "
+        },
+        "operation": [
+            "deployment",
+            "update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "manually scaled-out the service"
+            ],
+            "details": "Initially engineers manually scaled-out the service to ensure adequate resources were available. There were some delays in the application of these steps, as this is a highly secure environment, and the change-approvals process had recently been updated. Subsequently, engineers applied a mitigation to ensure the auto-scale functionality was restored to prevent this issue reoccurring. Engineers then monitored the service for an extended period following mitigation to ensure all requests backlogs cleared, and that auto-scale functionality was correctly enabled.",
+            "troubleshooting": {
+                "1": "manually scaled-out the service",
+                "2": "update change-approvals process",
+                "3": "engineers applied a mitigation to ensure the auto-scale functionality was restored to prevent this issue reoccurring. ",
+                "4": "Engineers then monitored the service for an extended period following mitigation to ensure all requests backlogs cleared, and that auto-scale functionality was correctly enabled."
+            }
+        },
+        "propagation pass": {
+            "1": "Azure Resource Manager instances",
+            "2": "Azure Reousrce Mangager backend services",
+            "3": "Azure Resource Manager",
+            "4": "PowerShell, Command line, APIs and/or the Azure Portal."
+        },
+        "refined path": {
+            "1": "backend instances",
+            "2": "backend services",
+            "3": "app",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20201018-1": {
+        "title": "RCA - Authentication issues with Azure MFA in North America (Tracking ID 1TP8-PS0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "10/18/2019",
+        "summary": "Summary of impact: Between 13:30 UTC and 15:57 UTC on 18 October 2019, customers in North America experienced issues receiving multi-factor authentication (MFA) challenges. Users who had valid MFA claims during the incident were not impacted. However, users who were required to perform an MFA challenge during this incident were unable to complete the challenge. This represented 0.51% of users in North American tenants using the service during the incident.",
+        "details": "Root cause: At 13:30 UTC, severe packet loss was experienced on an external network route between Microsoft and the Apple Push Notification Service (APNS). The packet loss was greater in severity and duration than previously encountered. It also coincided with morning peak traffic in North America. This combination of events caused a build-up of unprocessed requests in the MFA service, leading to service degradation and failures in MFA requests. Mitigation: Service monitors detected the build-up of unprocessed requests in the MFA service at 13:38 UTC and engineers were fully engaged by 13:48 UTC. Engineering confirmed the issue was a loss of network connectivity and began troubleshooting within the Microsoft datacenter networks. Engineering determined that the datacenter networks did not experience loss of connectivity and pinpointed the issue as external to the Microsoft datacenter networks. While further troubleshooting was underway to identify the most impacted network routes, engineering prepared a hotfix to bypass the impacted external service altogether, and to restore MFA functionality. The hotfix was rolled out to one region to validate the effectiveness of the fix. In the meantime, the external network recovered, and packet loss was reduced to normal rates. Engineering paused further rollout of the hotfix. The network issue was confirmed to be mitigated at 15:57 UTC, and the MFA service functionality recovered. The hotfix, which was then redundant, was rolled back. Following mitigation, engineering immediately performed the below tasks to harden the service against a similar degradation in the future: The impacted network path was pinpointed, and traffic was reconfigured to bypass the failure path. Three hotfixes to the service were immediately rolled out to rebalance network traffic and increase resiliency to network failures Precise alerts were setup to monitor for the specific network condition which triggered the issue. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure platform and our processes to help ensure such incidents do not occur in the future, including, but not limited to: 1. Fine-grained fault domain isolation work has been accelerated. This work builds on the previous fault domain isolation work which limited this incident to North American tenants. This includes: Additional physical partitioning within each Azure region. Logical partitioning between authentication types. Improved partitioning between service tiers. 2. Additional hardening and redundancy within each granular fault domain to make them more resilient to network connectivity loss. This includes: Improved resilience to request build-up. Optimizing network traffic to decrease load on network links. Improved instructions to users for self-service in case notifications are not delivered. Service restructuring to decrease service impact of network packet loss. 3. Enhanced monitoring for networking latency and various resource usage thresholds. This includes: Multi-region and multi-cloud targeted monitoring for the specific type of packet loss encountered. Improved monitors for additional types of resource usage. Other categories and action items are being actively identified. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/1TP8-PS0",
+        "service_name": [
+            "multi-factor authentication"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 147,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "services monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate",
+                    "degraded performance"
+                ]
+            },
+            {
+                "system kpi": [
+                    "severe packet loss"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "third-party failures"
+                }
+            ],
+            "details": "At 13:30 UTC, severe packet loss was experienced on an external network route between Microsoft and the Apple Push Notification Service (APNS). The packet loss was greater in severity and duration than previously encountered. It also coincided with morning peak traffic in North America. This combination of events caused a build-up of unprocessed requests in the MFA service, leading to service degradation and failures in MFA requests."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "prepared a hotfix to bypass the impacted external service altogether",
+                "rollout a hot fix",
+                "bypass the failure path"
+            ],
+            "details": "Service monitors detected the build-up of unprocessed requests in the MFA service at 13:38 UTC and engineers were fully engaged by 13:48 UTC. Engineering confirmed the issue was a loss of network connectivity and began troubleshooting within the Microsoft datacenter networks. Engineering determined that the datacenter networks did not experience loss of connectivity and pinpointed the issue as external to the Microsoft datacenter networks. While further troubleshooting was underway to identify the most impacted network routes, engineering prepared a hotfix to bypass the impacted external service altogether, and to restore MFA functionality. The hotfix was rolled out to one region to validate the effectiveness of the fix. In the meantime, the external network recovered, and packet loss was reduced to normal rates. Engineering paused further rollout of the hotfix. The network issue was confirmed to be mitigated at 15:57 UTC, and the MFA service functionality recovered. The hotfix, which was then redundant, was rolled back. Following mitigation, engineering immediately performed the below tasks to harden the service against a similar degradation in the future: The impacted network path was pinpointed, and traffic was reconfigured to bypass the failure path. Three hotfixes to the service were immediately rolled out to rebalance network traffic and increase resiliency to network failures Precise alerts were setup to monitor for the specific network condition which triggered the issue.",
+            "troubleshooting": {
+                "1": "detected the build-up of unprocessed requests in the MFA service ",
+                "2": "confirmed the issue was a loss of network connectivity and began troubleshooting within the Microsoft datacenter networks. ",
+                "3": "determined that the datacenter networks did not experience loss of connectivity and pinpointed the issue as external to the Microsoft datacenter networks",
+                "4": "While further troubleshooting was underway to identify the most impacted network routes, engineering prepared a hotfix to bypass the impacted external service altogether, and to restore MFA functionality",
+                "5": "The hotfix was rolled out to one region to validate the effectiveness of the fix.",
+                "6": " the external network recovered, and packet loss was reduced to normal rates.",
+                "7": "paused further rollout of the hotfix. "
+            }
+        },
+        "propagation pass": {
+            "1": "external network routes",
+            "2": "multi-factor authentication"
+        },
+        "refined path": {
+            "1": "third-party",
+            "2": "app"
+        },
+        "detection time": 8,
+        "fix time": 139,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20201021-1": {
+        "title": "RCA - Service Management Errors - East US 2 (Tracking ID 4_69-3D8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "03/14/2019",
+        "summary": "Summary of Impact: Between 10:08 and 23:37 UTC on 21 Oct 2019, a subset of customers in East US 2 may have received error notifications or experienced high latency when performing service management operations - such as create, update, or delete - for resources hosted in this region. Additionally, customers using Azure Databricks and/or Data Factory v2 may have encountered service management errors in multiple regions. A very limited subset of customers using Virtual Machines with SQL Server images, or other SQL IaaS offerings, may have also encountered errors performing service management operations on resources hosted in East US 2.",
+        "details": "Root Cause: Engineers had investigated and found that an internal service, “service fabric cluster manager”, was near capacity due to the legacy hardware that was being used. Around 9:00 UTC on 21 Oct 2019, a regular operation spike caused the cluster manager to reach its capacity limit, resulting in queueing and increased latency. The increased latency triggered retries on the Regional Network control plane service (RNM), which then went into a feedback loop, causing operations to queue up and forced the Regional Network Manager (RNM) into a state where it was not able to recover. Mitigation: Engineers moved the cluster manager from the legacy hardware to new Gen5 hardware to mitigate. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Moving the cluster manager to the latest Gen5 hardware in all regions. Implementing caching on the gateway to reduce frequent calls to the cluster manager, which will help with reducing the load. Improving the Regional Network Manager (RNM) operation feedback loops to no longer queue up operations indefinitely. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/4_69-3D8",
+        "service_name": [
+            "Azure Databricks", "Data Factory v2"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 809,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "high latency",
+                    "failure notification"
+                ]
+            },
+            {
+                "system kpi": [
+                    "high resource utilization"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource",
+                    "layer-3": "service capacity"
+                }
+            ],
+            "details": "Engineers had investigated and found that an internal service, “service fabric cluster manager”, was near capacity due to the legacy hardware that was being used. Around 9:00 UTC on 21 Oct 2019, a regular operation spike caused the cluster manager to reach its capacity limit, resulting in queueing and increased latency. The increased latency triggered retries on the Regional Network control plane service (RNM), which then went into a feedback loop, causing operations to queue up and forced the Regional Network Manager (RNM) into a state where it was not able to recover."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "migrate cluster manager"
+            ],
+            "details": "Engineers moved the cluster manager from the legacy hardware to new Gen5 hardware to mitigate.",
+            "troubleshooting": {
+                "1": "Engineers had investigated and found that an internal service, “service fabric cluster manager”, was near capacity due to the legacy hardware that was being used.",
+                "2": "Engineers moved the cluster manager from the legacy hardware to new Gen5 hardware to mitigate."
+            }
+        },
+        "propagation pass": {
+            "1": "service fabric cluster manager",
+            "2": "Service Management"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191021-2": {
+        "title": "RCA - Storage - West Europe (Tracking ID GV6D-998)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "10/21/2019",
+        "summary": "Summary of impact: Between 23:20 UTC on 21 Oct 2019 and 04:32 UTC on 22 Oct 2019, a subset of customers using Storage in West Europe may have experienced service availability issues. In addition, resources with dependencies on the impacted storage unit may have experienced downstream impact in the form of availability issues or high latency.",
+        "details": "Root cause: The Azure Storage service uses an automatic load balancing system to partition and balance customer workloads across different servers within a storage scale unit. A partition master role maintains the map of how the partitions are distributed across the different partition servers. A routine maintenance operation on one of the partitions caused an inconsistency in the partition map due to a bug. This caused the servers handling the inconsistent state to crash and resulted in a single storage scale unit in West Europe becoming unhealthy. Downstream availability impact was then seen to several dependent services in the region. Mitigation: Engineers developed a tool to correct the inconsistency in the partition map on the impacted scale unit. The time taken to develop and test this tool resulted in a higher than expected recovery time. Engineers also blocked the backend operation that triggered the inconsistent state until the underlying bug is fixed. Once service health was restored to the backend Storage scale unit, all dependent services automatically recovered. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Engineers understand the root cause of the bug which triggered the inconsistent system state and have rolled out a fix across production to help ensure the triggering functionality has been disabled from all entry-points. Engineers are hardening the load-balancing system to detect and reject inconsistencies in the partition map in a safe manner to prevent impact on system health. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/GV6D-998 ",
+        "service_name": [
+            "Storage"
+        ],
+        "impact symptom": [
+            "availability",
+            "consistency"
+        ],
+        "duration": 312,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "high latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "The Azure Storage service uses an automatic load balancing system to partition and balance customer workloads across different servers within a storage scale unit. A partition master role maintains the map of how the partitions are distributed across the different partition servers. A routine maintenance operation on one of the partitions caused an inconsistency in the partition map due to a bug. This caused the servers handling the inconsistent state to crash and resulted in a single storage scale unit in West Europe becoming unhealthy. Downstream availability impact was then seen to several dependent services in the region."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "developed a tool to correct the inconsistency",
+                "blocked the backend operation",
+                "fix bug"
+            ],
+            "details": "Engineers developed a tool to correct the inconsistency in the partition map on the impacted scale unit. The time taken to develop and test this tool resulted in a higher than expected recovery time. Engineers also blocked the backend operation that triggered the inconsistent state until the underlying bug is fixed. Once service health was restored to the backend Storage scale unit, all dependent services automatically recovered.",
+            "troubleshooting": {
+                "1": "developed a tool to correct the inconsistency",
+                "2": "blocked the backend operation that triggered the inconsistent state until the underlying bug is fixed"
+            }
+        },
+        "propagation pass": {
+            "1": "A partition master role",
+            "2": "storage server",
+            "3": "storage scale unit",
+            "4": "Storage services"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "2": "storage server",
+            "3": "storage scale unit",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191022-1": {
+        "title": "Azure Portal Sign In Failure - West Europe - Mitigated (Tracking ID 5S38-5P0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "10/22/2019",
+        "summary": "Summary of Impact: Between 06:40 UTC and 09:54 UTC on 22 Oct 2019 a subset of customers were identified as having experienced issues signing in to the Azure Portal in West Europe. Customers would have seen failure notifications when trying to sign in. Accessing the preview Portal here would have been successful.",
+        "details": "Preliminary Root Cause: Engineers determined that a recent deployment task increased traffic to a backend service, in this case AAD, which in turn reached operational threshold, preventing requests from completing. Mitigation: Engineers performed a change to the service configuration to mitigate the issue. Engineers also rolled back the recent deployment task to further mitigate the issue. Next Steps: Engineers will review deployment procedures to prevent future occurrences. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.",
+        "service_name": [
+            "Azure Portal"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 194,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate",
+                    "failure notification"
+                ]
+            },
+            {
+                "system kpi": [
+                    "increased traffic"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource"
+                }
+            ],
+            "details": "Engineers determined that a recent deployment task increased traffic to a backend service, in this case AAD, which in turn reached operational threshold, preventing requests from completing."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "perform a change",
+                "roll back the recent deployment task"
+            ],
+            "details": "Engineers performed a change to the service configuration to mitigate the issue. Engineers also rolled back the recent deployment task to further mitigate the issue.",
+            "troubleshooting": {
+                "1": "determined that a recent deployment task increased traffic to a backend service",
+                "2": "performed a change to the service configuration to mitigate the issue.",
+                "3": "rolled back the recent deployment task"
+            }
+        },
+        "propagation pass": {
+            "1": "backend service",
+            "2": "AAD",
+            "3": "Azure Portal"
+        },
+        "refined path": {
+            "1": "backend service",
+            "2": "middleware",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191022-2": {
+        "title": "RCA - Service Availability - West Europe (Tracking ID 0_N8-DT8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "10/22/2019",
+        "summary": "Summary of impact: Between 21:15 UTC on 22 Oct 2019 and 00:23 UTC on 23 Oct 2019, a subset of customers using Storage in West Europe may have experienced service availability issues. In addition, resources with dependencies on the impacted storage unit may have experienced downstream impact in the form of availability issues or high latency.",
+        "details": "Root cause: Azure Storage service uses an automatic load balancing system to partition and balance customer workloads across different servers within a storage scale unit. A partition master role maintains the map of how the partitions are distributed across the different partition servers. A routine maintenance operation on one of the partitions caused an inconsistency in the partition map due to a bug. This caused the servers handling the inconsistent state to crash and resulted in a single storage scale unit in West Europe becoming unhealthy. This also resulted in downstream availability impact to several dependent services in the region. Note: On 21 Oct 2019, a different storage scale unit in the region was first impacted by this bug. Some customers may have been impacted by both incidents if their workloads were spread across both of the storage scale units. As part of mitigating the first incident, we had blocked the backend operation that triggered the bug until the fix was deployed. However, we did not identify a second entry point which could trigger the bug resulting in the incident on 22 Oct 2019. Mitigation: Engineers modified the tool that was created during the incident on 21 Oct 2019 to correct the inconsistency in the partition map specific to the impacted scale unit. Engineers also blocked all backend operations that can trigger the inconsistent state until the fix was deployed globally. Once the storage backend service health was restored, all dependent services automatically recovered. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Engineers understand the root cause of the bug which triggered the inconsistent system state and have rolled out a fix across production to help ensure the triggering functionality has been disabled from all entry-points. Engineers are hardening the load-balancing system to detect and reject inconsistencies in the partition map in a safe manner to prevent impact on system health. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/0_N8-DT8 ",
+        "service_name": [
+            "Storage"
+        ],
+        "impact symptom": [
+            "availability",
+            "consistency"
+        ],
+        "duration": 188,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "high latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "The Azure Storage service uses an automatic load balancing system to partition and balance customer workloads across different servers within a storage scale unit. A partition master role maintains the map of how the partitions are distributed across the different partition servers. A routine maintenance operation on one of the partitions caused an inconsistency in the partition map due to a bug. This caused the servers handling the inconsistent state to crash and resulted in a single storage scale unit in West Europe becoming unhealthy. Downstream availability impact was then seen to several dependent services in the region."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "developed a tool to correct the inconsistency",
+                "blocked the backend operation",
+                "fix bug"
+            ],
+            "details": "Engineers developed a tool to correct the inconsistency in the partition map on the impacted scale unit. The time taken to develop and test this tool resulted in a higher than expected recovery time. Engineers also blocked the backend operation that triggered the inconsistent state until the underlying bug is fixed. Once service health was restored to the backend Storage scale unit, all dependent services automatically recovered.",
+            "troubleshooting": {
+                "1": "developed a tool to correct the inconsistency",
+                "2": "blocked the backend operation that triggered the inconsistent state until the underlying bug is fixed"
+            }
+        },
+        "propagation pass": {
+            "1": "A partition master role",
+            "2": "storage server",
+            "3": "storage scale unit",
+            "4": "Storage"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "2": "storage server",
+            "3": "storage scale unit",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191025-1": {
+        "title": "Azure Databricks and Data Factory v2 - Workspace and Data Flow Errors (Tracking ID KNQ8-BP0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "03/14/2019",
+        "summary": "Summary of impact: Between approximately 11:00 and 14:40 UTC on 25 Oct 2019, a subset of customers using Azure Databricks may have received 'No Web App available' error notifications when logging into a Databricks workspace. Related API calls may have also not returned a response. Additionally, a very limited subset of customers using Data Factory v2 may have received failure notifications for Data Flow jobs.",
+        "details": "Preliminary root cause: Engineers determined that a backend database used to process workspace access requests became unhealthy, causing requests to fail. As this database supports the control plane for the East US, East US 2, Central US, and North Central US regions, only customers in these regions would have seen impact. Additionally, a small number of Data Factory v2 customers in these regions would have seen downstream impact from this issue. Mitigation: Engineers redeployed the affected backend database to mitigate the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.",
+        "service_name": [
+            "Azure Databricks",
+            "Data Factory v2"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 220,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate",
+                    "failure notification"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "Engineers determined that a backend database used to process workspace access requests became unhealthy, causing requests to fail. As this database supports the control plane for the East US, East US 2, Central US, and North Central US regions, only customers in these regions would have seen impact. Additionally, a small number of Data Factory v2 customers in these regions would have seen downstream impact from this issue."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "redeploy the affected backend database"
+            ],
+            "details": "Engineers redeployed the affected backend database to mitigate the issue.",
+            "troubleshooting": {
+                "1": "Engineers determined that a backend database used to process workspace access requests became unhealthy,",
+                "2": "Engineers redeployed the affected backend database to mitigate the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "backend database",
+            "2": "Azure Databricks and Data Factory v2"
+        },
+        "refined path": {
+            "1": "database",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191029-1": {
+        "title": "RCA - Virtual Machines and Azure Databricks (Tracking ID 1V2C-NZ0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "10/29/2019",
+        "summary": "Summary of Impact: Between 23:40 UTC on 29 Oct 2019 and 06:15 UTC on 30 Oct 2019, a limited subset of customers using Virtual Machines and/or Azure Databricks may have received failure notifications or experienced increased latency when performing service management operations - such as create, update, delete - for these resources. ",
+        "details": "Root Cause: An incorrect network configuration change was rolled out via an automated workflow which unintentionally targeted multiple production regions. The configuration change took effect over a period of hours, as Software Load Balancer (SLB) instances in each region were automatically restarted. Eventually, multiple Azure backend services experienced failures while attempting to establish outbound network connectivity. Mitigation: Engineers rolled back the configuration change and manually restarted the affected SLB services to mitigate the issue. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this included (but was not limited to): Removing this network configuration change step in the automated workflow Adding strict validation for similar kinds of network configuration changes Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/1V2C-NZ0",
+        "service_name": [
+            "Virtual Machines",
+            "Azure Databricks"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 455,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "increased latency",
+                    "failure notification"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "An incorrect network configuration change was rolled out via an automated workflow which unintentionally targeted multiple production regions. The configuration change took effect over a period of hours, as Software Load Balancer (SLB) instances in each region were automatically restarted. Eventually, multiple Azure backend services experienced failures while attempting to establish outbound network connectivity."
+        },
+        "operation": [
+            "rollout"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back the configuration change",
+                "manually restart the affected SLB services"
+            ],
+            "details": "Engineers rolled back the configuration change and manually restarted the affected SLB services to mitigate the issue.",
+            "troubleshooting": {
+                "1": "rolled back the configuration change",
+                "2": "manually restarted the affected SLB services"
+            }
+        },
+        "propagation pass": {
+            "1": "multiple Azure backend services",
+            "2": "Virtual Machines and Azure Databricks"
+        },
+        "refined path": {
+            "1": "backend services",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191030-1": {
+        "title": "RCA - Storage - West Europe (Tracking ID GKXC-PP8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "10/30/2019",
+        "summary": "Summary of Impact: Between 10:17 and 13:52 UTC on 30 Oct 2019, a subset of customers using Storage, or Azure services with Storage dependencies, in West Europe may have experienced difficulties connecting to resources hosted in this region. ",
+        "details": "Root Cause: An Azure Storage scale unit internally has a set of data nodes and metadata nodes. In normal operation, the set of metadata nodes are all able to process query requests in parallel. In this incident, a unique sequence of circumstances triggered a previously unknown software bug that impacted a single storage scale unit. This bug caused the scale unit to enter a state where all metadata query requests were directed to a single server. This caused long queue build-ups on that server, causing high latency, and also protective throttling to prevent complete failure of the metadata software role. This in turn affected other software roles within the storage scale unit, and ultimately customer requests for resources located on that scale unit. Mitigation: Once the issue was understood, a mitigation was applied to correct the system state and allow all metadata nodes to process query requests again. This reduced latency/throttling and enabled recovery. Engineers monitored the scale unit for an extended period to ensure full mitigation had occurred. Resilience options: While we always strive to prevent downtime for customers, and to mitigate quickly should impact occur, customers who are sensitive to any service interruption are also recommended to review the latest Azure guidance regarding resilience architecture, which can help prevent impact in scenarios such as this: https://aka.ms/azureresilience. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Adding additional specific high-severity alerting for this mode of degraded metadata software role state. Implement and deploy automated mitigation for this class of issue. Identify and deploy the fix for underlying the bug that caused the metadata service to fall back to a single server only. While we understand the extremely uncommon failure mode and have a rapid mitigation for it, we are continuing to thoroughly investigate all possible conditions under which the state could be triggered. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/GKXC-PP8",
+        "service_name": [
+            "Storage",
+            "Azure services with Storage dependencies"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 215,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "high latency"
+                ]
+            },
+            {
+                "system kpi": [
+                    "long queue"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "payload flood"
+                }
+            ],
+            "details": "An Azure Storage scale unit internally has a set of data nodes and metadata nodes. In normal operation, the set of metadata nodes are all able to process query requests in parallel. In this incident, a unique sequence of circumstances triggered a previously unknown software bug that impacted a single storage scale unit. This bug caused the scale unit to enter a state where all metadata query requests were directed to a single server. This caused long queue build-ups on that server, causing high latency, and also protective throttling to prevent complete failure of the metadata software role. This in turn affected other software roles within the storage scale unit, and ultimately customer requests for resources located on that scale unit. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "correct the system state",
+                "allow all metadata nodes to process query requests",
+                "monitored the scale unit"
+            ],
+            "details": "Once the issue was understood, a mitigation was applied to correct the system state and allow all metadata nodes to process query requests again. This reduced latency/throttling and enabled recovery. Engineers monitored the scale unit for an extended period to ensure full mitigation had occurred.",
+            "troubleshooting": {
+                "1": "Once the issue was understood, a mitigation was applied to correct the system state and allow all metadata nodes to process query requests again. ",
+                "2": "Engineers monitored the scale unit for an extended period to ensure full mitigation had occurred."
+            }
+        },
+        "propagation pass": {
+            "1": "a single storage scale unit",
+            "2": "Storage"
+        },
+        "refined path": {
+            "1": "storage scale unit",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191104-1": {
+        "title": "RCA - Azure SQL Database - West Europe (Tracking ID 1S1W-F88)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "11/04/2019",
+        "summary": "Summary of Impact: Between 05:00 UTC and 11:30 UTC on 04 Nov 2019 you were identified as a customer using SQL Database/ MySQL Database/ PostgresSQL Database and / or SQL Data Warehouse in West Europe who may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in this region. Existing databases would not have been impacted by this issue.",
+        "details": "Root Cause: All Azure SQL service management requests (create, update, delete, etc.) are serviced through the SQL Control Plane infrastructure. Engineers determined that during this issue, the control plane service became unhealthy after receiving a significant increase in internally generated operations and reaching an operational threshold. This led to service management requests becoming unable to complete, which in-turn resulted in timeouts and throttling. Subsequent investigation by engineers determined this issue was due service requests from an internal Azure group that triggered a bug which caused an excessive number of internally generated operations. Mitigation: Engineers performed a configuration change to reduce the number the number of internally generated operations from the bug. Engineers then de-prioritized all the requests from the internal Azure group to ensure these completed after standard workloads, thus allowing normal control plane functionality to resume, and the internal requests to complete over an extended timeframe. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Review of thresholds and throttling within SQL control plane to ensure that sufficient resources remain available to service standard control plane functionality at all times Review of monitoring and alerts to ensure engineers become aware of developing resource exhaustion issues before they become customer impacting Implement a fix to the algorithm that generated the excessive internal operations. Review of auto-mitigation option for control plane resource issues to minimize the potential for customer impact for issue related to this. ",
+        "service_name": [
+            "Azure SQL Database"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 390,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate",
+                    "failure notification",
+                    "timeout"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "payload flood"
+                }
+            ],
+            "details": "All Azure SQL service management requests (create, update, delete, etc.) are serviced through the SQL Control Plane infrastructure. Engineers determined that during this issue, the control plane service became unhealthy after receiving a significant increase in internally generated operations and reaching an operational threshold. This led to service management requests becoming unable to complete, which in-turn resulted in timeouts and throttling. Subsequent investigation by engineers determined this issue was due service requests from an internal Azure group that triggered a bug which caused an excessive number of internally generated operations."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "perform a configuration change",
+                "reduce traffic",
+                "de-prioritized all the requests from the internal Azure group"
+            ],
+            "details": "Engineers performed a configuration change to reduce the number the number of internally generated operations from the bug. Engineers then de-prioritized all the requests from the internal Azure group to ensure these completed after standard workloads, thus allowing normal control plane functionality to resume, and the internal requests to complete over an extended timeframe.",
+            "troubleshooting": {
+                "1": "determined that during this issue, the control plane service became unhealthy after receiving a significant increase in internally generated operations and reaching an operational threshold. ",
+                "2": "Subsequent investigation by engineers determined this issue was due service requests from an internal Azure group that triggered a bug which caused an excessive number of internally generated operations",
+                "3": "performed a configuration change to reduce the number the number of internally generated operations from the bug.",
+                "4": "de-prioritized all the requests from the internal Azure group to ensure these completed after standard workloads, thus allowing normal control plane functionality to resume, and the internal requests to complete over an extended timeframe."
+            }
+        },
+        "propagation pass": {
+            "1": "SQL Control Plane infrastructure",
+            "2": "Azure SQL Database"
+        },
+        "refined path": {
+            "1": "control plane",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191105-1": {
+        "title": "RCA - Virtual Machines and Storage - West US 2 (Tracking ID LVGX-DP0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "11/05/2019",
+        "summary": "Summary of Impact: Between 02:33 and 05:30 UTC on 05 Nov 2019, a subset of customers in West US 2 may have experienced service availability issues for resources hosted in this region due to an underlying Storage issue.",
+        "details": "Root Cause: The Stream layer in an Azure Storage scale unit includes a set of metadata nodes and data nodes, which together store the data on disk and are in charge of distributing and replicating the data to ensure high availability & durability. In this incident, a rare sequence of management operations occurred over several weeks creating an unexpected state on the metadata nodes in the scale unit. A software bug in the code that tracks the progress of those operations caused the processes on the metadata nodes to crash and restart. This caused customer requests for data located on that scale unit to fail. Once the metadata processes restarted, the storage services on the scale unit partially recovered until the mitigation was applied. Mitigation: Once the software bug was identified, a fix was deployed (at approximately 04:30 UTC) to correctly handle the unexpected state, and availability was fully restored for all affected storage accounts. Dependent services (e.g. Virtual Machines) may have taken additional time to recover after storage services were restored. Resilience options: While we always strive to prevent downtime for customers and to mitigate quickly should impact occur, customers who are sensitive to any service interruption are also recommended to review the latest Azure guidance regarding resilience architecture, which can help prevent impact in scenarios such as this: https://aka.ms/azureresilience. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): We are closing a gap in testing of the relevant operations that triggered the bug. We have identified improvements to enable metadata processes to restart faster after a crash. This will roll-out in a future release and will reduce mitigation time for such incidents. We have already deployed the fix to the handle the unexpected state on the impacted storage scale unit. We are rolling out the fix to all production storage scale units in accordance with safe deployment practices. In the interim, no management operations of the type required to trigger the bug will be performed. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/LVGX-DP0",
+        "service_name": [
+            "Virtual Machines",
+            "Storage"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 177,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "The Stream layer in an Azure Storage scale unit includes a set of metadata nodes and data nodes, which together store the data on disk and are in charge of distributing and replicating the data to ensure high availability & durability. In this incident, a rare sequence of management operations occurred over several weeks creating an unexpected state on the metadata nodes in the scale unit. A software bug in the code that tracks the progress of those operations caused the processes on the metadata nodes to crash and restart. This caused customer requests for data located on that scale unit to fail. Once the metadata processes restarted, the storage services on the scale unit partially recovered until the mitigation was applied. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy a fix to correctly handle the unexpected state"
+            ],
+            "details": "Once the software bug was identified, a fix was deployed (at approximately 04:30 UTC) to correctly handle the unexpected state, and availability was fully restored for all affected storage accounts. Dependent services (e.g. Virtual Machines) may have taken additional time to recover after storage services were restored. ",
+            "troubleshooting": {
+                "1": "Once the software bug was identified, a fix was deployed (at approximately 04:30 UTC) to correctly handle the unexpected state, and availability was fully restored for all affected storage accounts.",
+                "2": "Dependent services (e.g. Virtual Machines) may have taken additional time to recover after storage services were restored."
+            }
+        },
+        "propagation pass": {
+            "1": "metadata nodes",
+            "2": "scale unit",
+            "3": "Virtual Machines and Storage "
+        },
+        "refined path": {
+            "1": "storage servers",
+            "2": "storage scale unit",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191105-2": {
+        "title": "RCA - Azure Databricks - Unable to connect to workspaces (Tracking ID KM9W-1T0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "11/05/2019",
+        "summary": "Summary of Impact Between 14:19 and 15:34 UTC on 05 Nov 2019, you were identified as a customer using Azure Databricks who may have intermittently experienced the error 'This URL is temporarily unavailable. Please try again later.' when connecting to Databricks workspaces. ",
+        "details": "Root Cause: Engineers determined that a backend service responsible for user management and access control experienced a service restart on one of its three service replicas. This restart was caused by high CPU usage attributed to other unrelated services sharing the same node. Once one of the replicas restarted, all pending requests were distributed to the remaining two replicas. Eventually, the remaining replicas were throttled by the overflow of requests and restarted. Mitigation: Azure Databricks engineering mitigated the issue by reducing the load on the replicas by temporarily disabling internal jobs and services. In addition, the replicas were migrated to nodes that had additional CPU availability. Next Steps We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Increasing CPU and memory resource allocations for all service replicas based on additional load tests Improving on-call detection and remediation time Increasing the number of replicas to provide additional redundancy Providing isolation between service replica requests made from users and internal services Provide Feedback Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/KM9W-1T0",
+        "service_name": [
+            "Azure Databricks"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 75,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "high CPU usage",
+                    "error message"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "resource race"
+                } 
+            ],
+            "details": "Root Cause: Engineers determined that a backend service responsible for user management and access control experienced a service restart on one of its three service replicas. This restart was caused by high CPU usage attributed to other unrelated services sharing the same node. Once one of the replicas restarted, all pending requests were distributed to the remaining two replicas. Eventually, the remaining replicas were throttled by the overflow of requests and restarted"
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "reduce load",
+                "the replicas were migrated to nodes that had additional CPU availability."
+            ],
+            "details": "Mitigation: Azure Databricks engineering mitigated the issue by reducing the load on the replicas by temporarily disabling internal jobs and services. In addition, the replicas were migrated to nodes that had additional CPU availability.",
+            "troubleshooting": {
+                "1": "reduce the load on the replicas by temporarily disabling internal jobs and services",
+                "2": "the replicas were migrated to nodes that had additional CPU availability."
+            }
+        },
+        "propagation pass": {
+            "1": "backend service",
+            "2": "Azure Databricks"
+        },
+        "refined path": {
+            "1": "backend services",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191107-1": {
+        "title": "RCA - Storage - West Europe (Tracking ID 1_TX-5D8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "11/07/2019",
+        "summary": "Summary of Impact: Between 02:40 and 10:55 UTC on 07 Nov 2019, a subset of customers using Storage in West Europe experienced service availability issues. In addition, resources with dependencies on the impacted storage scale units may have experienced downstream impact in the form of availability issues, connection failures, or high latency. ",
+        "details": "Root Cause: Every Azure region has multiple storage scale units that serve customer traffic. We distribute and balance load across the different scale units and add new scale units as needed. The automated load-balancing operations occur in the background to ensure all the scale units are running at healthy utilization levels and are designed to be impactless for customer facing operations. During this incident, we had just enabled three storage scale units to balance the load between them, to keep up with changing utilization on the scale units. A bug in this process resulted in backend roles crashing across the scale units participating in the load balancing operations, causing them to become unhealthy. It also impacted services dependent on storage in the region. Mitigation: Engineers mitigated the impact to all but one scale unit by deploying a platform hotfix. Mitigation to the remaining scale unit was delayed due to compatibility issues identified when applying the fix but has since been completed. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): The fix has already been deployed to the impacted scale units in the region. We are currently deploying the fix globally to our fleet. We have been performing cross-scale-unit load-balancing operations numerous times before without any adverse effect. In the wake of this incident, we are reviewing our procedures, tooling and service again for such load balancing operation. We have paused further load balancing actions in this region until this review is completed. We are rigorously reviewing all our background management processes and deployments to prevent any further impact to customers in this region. We are reviewing our validation procedures gaps to catch these issues in our validation environment. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/1_TX-5D8",
+        "service_name": [
+            "Storage"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 495,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection failure",
+                    "high latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Root Cause: Every Azure region has multiple storage scale units that serve customer traffic. We distribute and balance load across the different scale units and add new scale units as needed. The automated load-balancing operations occur in the background to ensure all the scale units are running at healthy utilization levels and are designed to be impactless for customer facing operations. During this incident, we had just enabled three storage scale units to balance the load between them, to keep up with changing utilization on the scale units. A bug in this process resulted in backend roles crashing across the scale units participating in the load balancing operations, causing them to become unhealthy. It also impacted services dependent on storage in the region. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy a platform hotfix"
+            ],
+            "details": "Engineers mitigated the impact to all but one scale unit by deploying a platform hotfix. Mitigation to the remaining scale unit was delayed due to compatibility issues identified when applying the fix but has since been completed. ",
+            "troubleshooting": {
+                "1": "deploying a platform hotfix."
+            }
+        },
+        "propagation pass": {
+            "1": "backend role",
+            "2": "storage scale unit",
+            "3": "Storage"
+        },
+        "refined path": {
+            "1": "backend",
+            "2": "storage scale unit",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191120-1": {
+        "title": "RCA - Multiple Services - Downstream impact from Azure Front Door (Tracking ID HLMF-R88)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "11/20/2019",
+        "summary": "Summary of Impact: Between 00:56 and 03:40 UTC on 20 Nov 2019, multiple services across Microsoft including Azure, Microsoft 365 and Microsoft Power Platform leveraging the Azure Front Door (AFD) service experienced availability issues resulting from high request failure rates. During this event, some impacted services were able to divert traffic away from the AFD service to mitigate impact for them. One of the impacted services was the Azure Status Page at https://status.azure.com. Engineering executed the failover plan to the secondary hosting location, but this resulted in a delay in status communication changes. Communications were successfully delivered via Azure Service Health, available within the Azure management portal. ",
+        "details": "Root Cause: Azure Front Door services provide network edge caching and web acceleration services to many of Microsoft’s SaaS services, in addition to the optimization offering direct to Azure customers. A routine, periodic deployment was released through our validation pipeline that, when combined with specific traffic patterns, caused service-wide, intermittent HTTP request failures for all services utilizing the AFD service. Investigation into the faulting behavior revealed that the combination of a sequenced code deployment, a configuration deployment and specific traffic patterns triggered a dormant code bug that instigated the platform to crash. These deployed changes were tested before being shipped to the broader cloud; however, the specific traffic pattern was not observed during test and pilot phases. Azure Front Door deploys to over one hundred points of presence (PoPs) around the globe and deploys customer configuration globally to each of these PoPs, enabling customers to quickly make changes to their service. This is done to ensure customers are able to promptly remove regional components out of specification and update configuration for network security services to mitigate attacks. Through a staged deployment, these changes passed validation and service health-checks. Having passed these validations, propagation to global PoPs was quick, by design, to meet the aforementioned service objectives. After propagation, the fault triggering behavior was instigated only by specific traffic patterns, that occurred after the deployment had completed. This resulted in impacted customers experiencing a high, but intermittent, rate of web request failures globally while accessing shared services across the Azure and Office platforms. Mitigation: Global monitoring detected the issue and engaged engineers at 01:04 UTC. Engineers confirmed the multiple sources of the issue to be primarily triggered by the configuration deployment and identified a fix for the issue by 01:27 UTC. Engineers immediately initiated deployment rollback procedures to return the service to a healthy state; this rolled out quickly, progressively and completely to all global platforms by 02:40 UTC. Many of the Microsoft SaaS impacted services were able to initiate failover away from the AFD service, providing mitigation to customers while the underlying AFD mitigation was deployed. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Verify that the fix deployed globally to AFD, during mitigation, is a stable release and will remain in place until all internal reviews of this issue have been completed. Review all service change management processes and practices to help ensure appropriate deployment methods are used. Review the change validation process to identify components and implement changes, required to increase test traffic diversity, improving the scope of trigger and test code paths. Prioritize deployment of a component independent automated recovery process so impacted deployments, like that experienced during this incident, are automatically returned to the last-known-good (LKG) state at a component layer, quickly and without manual intervention, to help reduce time to mitigate and scope of impact. Investigate and remediate the delay experienced with publishing communications to the Azure Status Page during the impact window. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/HLMF-R88",
+        "service_name": [
+            "Multiple Services",
+            "Azure Front Door"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 164,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "Global monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Azure Front Door services provide network edge caching and web acceleration services to many of Microsoft’s SaaS services, in addition to the optimization offering direct to Azure customers. A routine, periodic deployment was released through our validation pipeline that, when combined with specific traffic patterns, caused service-wide, intermittent HTTP request failures for all services utilizing the AFD service. Investigation into the faulting behavior revealed that the combination of a sequenced code deployment, a configuration deployment and specific traffic patterns triggered a dormant code bug that instigated the platform to crash. These deployed changes were tested before being shipped to the broader cloud; however, the specific traffic pattern was not observed during test and pilot phases. Azure Front Door deploys to over one hundred points of presence (PoPs) around the globe and deploys customer configuration globally to each of these PoPs, enabling customers to quickly make changes to their service. This is done to ensure customers are able to promptly remove regional components out of specification and update configuration for network security services to mitigate attacks. Through a staged deployment, these changes passed validation and service health-checks. Having passed these validations, propagation to global PoPs was quick, by design, to meet the aforementioned service objectives. After propagation, the fault triggering behavior was instigated only by specific traffic patterns, that occurred after the deployment had completed. This resulted in impacted customers experiencing a high, but intermittent, rate of web request failures globally while accessing shared services across the Azure and Office platforms."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "rollback deployment",
+                "initiate failover away from the AFD service"
+            ],
+            "details": "Global monitoring detected the issue and engaged engineers at 01:04 UTC. Engineers confirmed the multiple sources of the issue to be primarily triggered by the configuration deployment and identified a fix for the issue by 01:27 UTC. Engineers immediately initiated deployment rollback procedures to return the service to a healthy state; this rolled out quickly, progressively and completely to all global platforms by 02:40 UTC. Many of the Microsoft SaaS impacted services were able to initiate failover away from the AFD service, providing mitigation to customers while the underlying AFD mitigation was deployed.",
+            "troubleshooting": {
+                "1": "detected the issue and engaged engineers at 01:04 UTC. ",
+                "2": "Engineers confirmed the multiple sources of the issue to be primarily triggered by the configuration deployment and identified a fix for the issue by 01:27 UTC. ",
+                "3": "initiated deployment rollback procedures to return the service to a healthy state",
+                "4": "rolled out quickly, progressively and completely to all global platforms by 02:40 UTC.",
+                "5": "Many of the Microsoft SaaS impacted services were able to initiate failover away from the AFD service, providing mitigation to customers while the underlying AFD mitigation was deployed."
+            }
+        },
+        "propagation pass": {
+            "1": "Azure Front Door",
+            "2": "Multiple Services"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app"
+        },
+        "detection time": 8,
+        "fix time": 96,
+        "identification time": 23,
+        "verification": "lixy, yugb"
+    }
+}

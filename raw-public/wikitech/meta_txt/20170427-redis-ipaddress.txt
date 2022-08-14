@@ -1,0 +1,13 @@
+A Puppet change was deployed that renamed the temporary fact ipaddress_primary to ipaddress, overriding the stock fact, as part of the work on Task T163196. The ipaddress_primary fact was already being used in the Redis manifest (and only there), which was missed during the preparation for the merge of that change. This, in combination with the structure and code of the Redis manifests, resulted into the Redis servers failing to respond and cascading into a user-visible login/session outage.
+• 12:25 Faidon merges Change 8bf0cbda12e910f921367b055d86773c2a415c1a. puppet is deliberately left to gradually roll the change over its regular cycle of 30 minutes.
+• --:-- Puppet starts to runs via crontab on mc2* hosts where it was removing the ferm rule to allow the connection on the specified port, causing the connections to them to fail.
+• 12:34 Puppet run via crontab on rdb2001, that is one of the master hosts in codfw, active datacenter at this time. The puppet run didn't fail, but failed to retrieve the value of ipaddress_primary, that will later make the rdb slaves fail puppet runs and make them alert on IRC.
+• 12:38 Catalog fetch failed alert for rdb1008. Riccardo beings investigating. Faidon has a look as well but misjudges the issue as a low priority one since there was no user-visible impact and catalog failures are usually non-impacting.
+• 12:57 Giuseppe finds the root cause of the puppet failure and merges a change.
+• 12:58 First user report of users unable to login.
+• The severity of the issue was misjudged, especially since there was no page at the time.
+• The Redis manifests were perhaps a little too brittle, causing a widespread outage due to what it really was a fact not resolving.
+• The call to a fact that doesn't exists do not trigger an error as it should.
+• The ferm rule that open the port for redis depends indirectly on a call to a fact
+• The hosts that caused the user-facing outage di not alert in any way, only the rdb* hosts started alerting for puppet failures on the slaves.
+• Make sure to validate every call to facts, considering to add an helper function to ensure this behaviour.

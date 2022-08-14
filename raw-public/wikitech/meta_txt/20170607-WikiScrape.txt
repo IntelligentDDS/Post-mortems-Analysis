@@ -1,0 +1,20 @@
+A high request rate from a single bot (same UA/IP) of some specific queries on the API caused high concurrency for such queries on the database for enwiki. As a consequence, those requests were served very slowly. The slowness then propagated to the non-API mediawiki servers due to lagging on the API databases, and those caused an increased load on both the API and standard appserver cluster, see: https://grafana.wikimedia.org/dashboard/db/prometheus-apache-hhvm-dc-stats?panelId=17&fullscreen&orgId=1&from=1496806612437&to=1496818165547
+• 04:44 A first, smaller spike of 5xx happens on text caches
+• 05:08 Icinga sends the first alarm to IRC < icinga-wm> PROBLEM - Text HTTP 5xx reqs/min on graphite1001 is CRITICAL: CRITICAL: 11.11% of data above the critical threshold [1000.0]
+• 05:29 time correlation with a l10-update is suggested by mutante, but is determined to be a red herring
+• 05:31 Investigation on the varnish layer starts. _joe_ notices there are no icinga alarms for mailbox lag and that most 5xx are evenly distributed on all caches
+• 05:39 Varnish is ruled out as source of the issue
+• 05:43 Investigation on logstash and oxygen is inconclusive.
+• 05:53 The problem seems to happen for APIs only, mostly concentrated on enwiki. HHVM and apache logs at a first glance do not indicate any issue at the appserver level
+• 05:56 A sudden shower of ProxyFetch failures from pybal is noticed for all appserver pools (not just API):
+
+since pybal is fetching Special:BlankPage on both clusters, a problem with s1 is suggested. marostegui is investigating
+• 08:02 _joe_ finds evidence of slowness in the API apache logs, in short bursts of a few seconds around the time of the pybal alerts
+• 08:01 All service send out recoveries, and the issue doesn't seem to be repeating on the load balancers
+• 08:20 After more digging in the logs, _joe_ notices a bot, coming from a single ip at Michigan State University with UA is doing tons of requests in short bursts to the API for enwiki.
+• 08:25 ema confirms that UA/ip combination made huge bursts of requests to the API between 04:44 and 05:56 resulting in 503s. Peak requests were at 1200 req/s
+• 09:40 jynus narrows the issue down to the fact that , normally taking 1 second to execute (already slow), at the time was taking >10 seconds to execute on S1 because of the extra load
+
+It seems clear that this partial outage was caused by db resources starvation due to a heavy hitter on the APIs. The only way to solve this would be to have a good rate-limiting solution on the API.
+• Done Ban the UA/IP in case of need - prepare a patch
+• Implement better rate-limiting for the API

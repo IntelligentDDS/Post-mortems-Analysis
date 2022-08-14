@@ -1,0 +1,308 @@
+# [](//cloud.google.com)
+
+March 13, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google App Engine](/incident/appengine/19007)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google App Engine Incident #19007
+
+Elevated error rate with Google App Engine Blobstore API and App Engine
+Version Deployment
+
+Incident began at **2019-03-12 18:30** and ended at **2019-03-12 22:50** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Mar 14, 2019 | 11:11 |
+
+ISSUE SUMMARY
+
+On Tuesday 12 March 2019, Google's internal blob storage service experienced a
+service disruption for a duration of 4 hours and 10 minutes. We apologize to
+customers whose service or application was impacted by this incident. We know
+that our customers depend on Google Cloud Platform services and we are taking
+immediate steps to improve our availability and prevent outages of this type
+from recurring.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday 12 March 2019 from 18:40 to 22:50 PDT, Google's internal blob
+(large data object) storage service experienced elevated error rates,
+averaging 20% error rates with a short peak of 31% errors during the incident.
+User-visible Google services including Gmail, Photos, and Google Drive, which
+make use of the blob storage service also saw elevated error rates, although
+(as was the case with GCS) the user impact was greatly reduced by caching and
+redundancy built into those services. There will be a separate incident report
+for non-GCP services affected by this incident.
+
+The Google Cloud Platform services that experienced the most significant
+customer impact were the following:
+
+Google Cloud Storage experienced elevated long tail latency and an average
+error rate of 4.8%. All bucket locations and storage classes were impacted.
+GCP services that depend on Cloud Storage were also impacted.
+
+Stackdriver Monitoring experienced up to 5% errors retrieving historical time
+series data. Recent time series data was available. Alerting was not impacted.
+
+App Engine's Blobstore API experienced elevated latency and an error rate that
+peaked at 21% for fetching blob data. App Engine deployments experienced
+elevated errors that peaked at 90%. Serving of static files from App Engine
+also experienced elevated errors.
+
+ROOT CAUSE
+
+On Monday 11 March 2019, Google SREs were alerted to a significant increase in
+storage resources for metadata used by the internal blob service. On Tuesday
+12 March, to reduce resource usage, SREs made a configuration change which had
+a side effect of overloading a key part of the system for looking up the
+location of blob data. The increased load eventually lead to a cascading
+failure.
+
+REMEDIATION AND PREVENTION
+
+SREs were alerted to the service disruption at 18:56 PDT and immediately
+stopped the job that was making configuration changes. In order to recover
+from the cascading failure, SREs manually reduced traffic levels to the blob
+service to allow tasks to start up without crashing due to high load.
+
+In order to prevent service disruptions of this type, we will be improving the
+isolation between regions of the storage service so that failures are less
+likely to have global impact. We will be improving our ability to more quickly
+provision resources in order to recover from a cascading failure triggered by
+high load. We will make software measures to prevent any configuration changes
+that cause overloading of key parts of the system. We will improve load
+shedding behavior of the metadata storage system so that it degrades
+gracefully under overload.  
+  
+|
+
+ISSUE SUMMARY
+
+On Tuesday 12 March 2019, Google's internal blob storage service experienced a
+service disruption for a duration of 4 hours and 10 minutes. We apologize to
+customers whose service or application was impacted by this incident. We know
+that our customers depend on Google Cloud Platform services and we are taking
+immediate steps to improve our availability and prevent outages of this type
+from recurring.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday 12 March 2019 from 18:40 to 22:50 PDT, Google's internal blob
+(large data object) storage service experienced elevated error rates,
+averaging 20% error rates with a short peak of 31% errors during the incident.
+User-visible Google services including Gmail, Photos, and Google Drive, which
+make use of the blob storage service also saw elevated error rates, although
+(as was the case with GCS) the user impact was greatly reduced by caching and
+redundancy built into those services. There will be a separate incident report
+for non-GCP services affected by this incident.
+
+The Google Cloud Platform services that experienced the most significant
+customer impact were the following:
+
+Google Cloud Storage experienced elevated long tail latency and an average
+error rate of 4.8%. All bucket locations and storage classes were impacted.
+GCP services that depend on Cloud Storage were also impacted.
+
+Stackdriver Monitoring experienced up to 5% errors retrieving historical time
+series data. Recent time series data was available. Alerting was not impacted.
+
+App Engine's Blobstore API experienced elevated latency and an error rate that
+peaked at 21% for fetching blob data. App Engine deployments experienced
+elevated errors that peaked at 90%. Serving of static files from App Engine
+also experienced elevated errors.
+
+ROOT CAUSE
+
+On Monday 11 March 2019, Google SREs were alerted to a significant increase in
+storage resources for metadata used by the internal blob service. On Tuesday
+12 March, to reduce resource usage, SREs made a configuration change which had
+a side effect of overloading a key part of the system for looking up the
+location of blob data. The increased load eventually lead to a cascading
+failure.
+
+REMEDIATION AND PREVENTION
+
+SREs were alerted to the service disruption at 18:56 PDT and immediately
+stopped the job that was making configuration changes. In order to recover
+from the cascading failure, SREs manually reduced traffic levels to the blob
+service to allow tasks to start up without crashing due to high load.
+
+In order to prevent service disruptions of this type, we will be improving the
+isolation between regions of the storage service so that failures are less
+likely to have global impact. We will be improving our ability to more quickly
+provision resources in order to recover from a cascading failure triggered by
+high load. We will make software measures to prevent any configuration changes
+that cause overloading of key parts of the system. We will improve load
+shedding behavior of the metadata storage system so that it degrades
+gracefully under overload.  
+  
+| Mar 12, 2019 | 23:31 |
+
+The issue with App Engine Blobstore API has been resolved for all affected
+projects as of Tuesday, 2019-03-12 23:27 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+|
+
+The issue with App Engine Blobstore API has been resolved for all affected
+projects as of Tuesday, 2019-03-12 23:27 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+| Mar 12, 2019 | 23:18 |
+
+The issue with App Engine Deployment should be resolved as of Tuesday,
+2019-03-12 23:11 US/Pacific, and the issue with underlying storage of
+Blobstore API should be resolved for the majority of projects and we expect a
+full resolution in the near future. We will provide another status update by
+Tuesday, 2019-03-12 23:45 US/Pacific with current details.  
+  
+|
+
+The issue with App Engine Deployment should be resolved as of Tuesday,
+2019-03-12 23:11 US/Pacific, and the issue with underlying storage of
+Blobstore API should be resolved for the majority of projects and we expect a
+full resolution in the near future. We will provide another status update by
+Tuesday, 2019-03-12 23:45 US/Pacific with current details.  
+  
+| Mar 12, 2019 | 22:52 |
+
+The underlying storage infrastructure is gradually recovering. We will provide
+another status update by Tuesday, 2019-03-12 23:15 US/Pacific with current
+details.  
+  
+|
+
+The underlying storage infrastructure is gradually recovering. We will provide
+another status update by Tuesday, 2019-03-12 23:15 US/Pacific with current
+details.  
+  
+| Mar 12, 2019 | 22:16 |
+
+We still have an issue with App Engine Blobstore API and Version Deployment.
+Our Engineering team understands the root cause and is working to implement
+the solution. We will provide another status update by Tuesday, 2019-03-12
+22:45 US/Pacific with current details.  
+  
+|
+
+We still have an issue with App Engine Blobstore API and Version Deployment.
+Our Engineering team understands the root cause and is working to implement
+the solution. We will provide another status update by Tuesday, 2019-03-12
+22:45 US/Pacific with current details.  
+  
+| Mar 12, 2019 | 21:56 |
+
+The issue with App Engine Version Deployment should be resolved for some
+runtimes, including nodejs, python37, php72, go111, but we are still seeing
+the issue with other runtimes. We will provide another status update by
+Tuesday, 2019-03-12 22:15 US/Pacific with current details.  
+  
+|
+
+The issue with App Engine Version Deployment should be resolved for some
+runtimes, including nodejs, python37, php72, go111, but we are still seeing
+the issue with other runtimes. We will provide another status update by
+Tuesday, 2019-03-12 22:15 US/Pacific with current details.  
+  
+| Mar 12, 2019 | 21:47 |
+
+We are still working to address the root cause of the issue. We will provide
+another status update by Tuesday, 2019-03-12 22:15 US/Pacific with current
+details.  
+  
+|
+
+We are still working to address the root cause of the issue. We will provide
+another status update by Tuesday, 2019-03-12 22:15 US/Pacific with current
+details.  
+  
+| Mar 12, 2019 | 21:17 |
+
+Mitigation work with the underlying storage infrastructure is still underway
+by our Engineering Team. We will provide another status update by Tuesday,
+2019-03-12 21:45 US/Pacific with current details.  
+  
+|
+
+Mitigation work with the underlying storage infrastructure is still underway
+by our Engineering Team. We will provide another status update by Tuesday,
+2019-03-12 21:45 US/Pacific with current details.  
+  
+| Mar 12, 2019 | 20:50 |
+
+We are still working on the issue with Google App Engine Blobstore API and App
+Engine Version Deployment. Our Engineering Team believes they have identified
+the potential root causes of the errors and is working to mitigate. We will
+provide another status update by Tuesday, 2019-03-12 21:15 US/Pacific with
+current details.  
+  
+|
+
+We are still working on the issue with Google App Engine Blobstore API and App
+Engine Version Deployment. Our Engineering Team believes they have identified
+the potential root causes of the errors and is working to mitigate. We will
+provide another status update by Tuesday, 2019-03-12 21:15 US/Pacific with
+current details.  
+  
+| Mar 12, 2019 | 20:14 |
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Tuesday, 2019-03-12 20:45 US/Pacific with current
+details.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Tuesday, 2019-03-12 20:45 US/Pacific with current
+details.  
+  
+| Mar 12, 2019 | 19:58 |
+
+We are still seeing the increased error rate with Google App Engine Blobstore
+API. Our Engineering Team is investigating possible causes. We will provide
+another status update by Tuesday, 2019-03-12 20:30 US/Pacific US/Pacific with
+current details.  
+  
+|
+
+We are still seeing the increased error rate with Google App Engine Blobstore
+API. Our Engineering Team is investigating possible causes. We will provide
+another status update by Tuesday, 2019-03-12 20:30 US/Pacific US/Pacific with
+current details.  
+  
+| Mar 12, 2019 | 19:49 |
+
+We are investigating an issue with Google App Engine. We will provide more
+information by Tuesday, 2019-03-12 20:00 US/Pacific.  
+  
+|
+
+We are investigating an issue with Google App Engine. We will provide more
+information by Tuesday, 2019-03-12 20:00 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

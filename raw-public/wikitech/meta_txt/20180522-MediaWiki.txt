@@ -1,0 +1,12 @@
+MediaWiki issues cause by Translate extension Symptoms initially looked like db issues or network issues, then like a SWAT patch had caused the issue, but nothing seemed to line up that well.
+• 13:26, 22 May 2018 FuzzyBot (talk | contribs) changed the state of Russian translations of Privacy policy from Needs updating to In progress
+• 13:32, 22 May 2018 Kaganer (talk | contribs) changed the state of Russian translations of Privacy policy from In progress to Needs updating
+• 13:34 paladox@#wikimedia-operations: hmm https://meta.wikimedia.org/wiki/Privacy_policy is not loading for me
+• 13:35 NotASpy@#wikimedia-operations: yeah, en.wp is crawling along for me.
+• 13:35 addshore@#wikimedia-operations: I can see a bunch of db errors
+• 13:35 addshore@#wikimedia-operations: spike in lag or issue with replication
+• 13:37 https://phabricator.wikimedia.org/T195293 - 503 error attempting to open multiple projects (Wikipedia and meta wiki are loading very slowly)
+• 13:43 PROBLEM - MediaWiki exceptions and fatals per minute on graphite1001 is CRITICAL: CRITICAL: 90.00% of data above the critical threshold [50.0] https://grafana.wikimedia.org/dashboard/db/mediawiki-graphite-alerts?orgId=1&panelId=2&fullscreen
+• 13:47 marostegui@#wikimedia-operations: all the connection errors I am seeing are on s7
+• 13:52 __joe__@#wikimedia-operations: yes, queues on the appservers are vanishing
+• 14:11 RECOVERY - MediaWiki exceptions and fatals per minute on graphite1001 is OK: OK: Less than 70.00% above the threshold [25.0] https://grafana.wikimedia.org/dashboard/db/mediawiki-graphite-alerts?orgId=1&panelId=2&fullscreen

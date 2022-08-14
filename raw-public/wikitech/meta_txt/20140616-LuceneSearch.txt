@@ -1,0 +1,7 @@
+Lsearchd-based search is unstable, and seems to have issues from time to time that fall in the "known problem" field, so the long and short term solution seems to be to migrate to ElasticSearch.
+
+On monday Juner 16th, 08:31 UTC we got an alarm for the search pool 4 that was practically down. Upon inspection, both members of the pool were basically offline, as reported correctly by pybal. From logs, it appeared as some deadlock condition was met. Solution was simply to restart one server at a time, which resulted in a ~ 30 mins recovery cycle, which lasted around 09:30 UTC. Some users of hewiki reported they got empty search results and/or errors when searching during this time lapse.
+
+The problem with lsearchd-based search systems are multiple:
+• lsearchd is unstable and has frequent crashes, that are usually slow to recover from.
+• Pybal is probably the only thing monitoring the real health of these systems

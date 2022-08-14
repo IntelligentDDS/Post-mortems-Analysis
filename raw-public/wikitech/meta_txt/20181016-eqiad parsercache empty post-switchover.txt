@@ -1,0 +1,18 @@
+ParserCache hosts in eqiad didn't have MySQL replication enabled from codfw hosts when we switched over from codfw to eqiad, the cache was empty and/or with very old keys, which made them totally useless and making the hit ratio to drop to around 6% (being 0% at the exact moment of the failover)
+• 14:14:44 14:15:03 Internal traffic starts flowing through eqiad during this interval
+• 14:15:09 External traffic starts flowing through eqiad between 14:15:09 and 14:17:29, when it's migrated completely.
+• 14:17:49: First alert for MCS timeouts notifies on IRC at. It is conceivable the issue started 3 minutes earlier, in the exact moment of the internal switchover.
+• 14:19:20 onwards: Some degradation of service for users starts immediately. Availability for cache text fires on multiple datacenters.
+• 14:24:39: First alert for high cpu usage on an API appserver (the only ones with this check) happens at
+• 14:25:50: Alert for MediaWiki fatals appears - we know this check to lag a bit. Intermittent problems continue, in the midst of some action by the SRE team (mostly, rebalancing the load for the api and application servers at the LVS level),
+• 14:59:40 last true recovery being the logstash count of fatals on Mediawiki
+• 05:30: Manuel notices a warning for eqiad parsercache hosts getting their disk filled up and creates T206740 to investigate and initial triage starts to reduce the disk usage
+• 07:30 to 08:57: Jaime, Giuseppe and Manuel discussing how to proceed further to put all the fires down (reduce key retention, manual purging for eqiad and more aggressive binglo rotation). Replication between codfw and eqiad not enabled is discovered and we conclude it is the cause for yesterday's overload.
+• Replication codfw -> eqiad is normally disabled everywhere (parsercache, core, x1, es..) as we do maintenance in codfw and we don't want changes to be replicated to eqiad by mistake. We forgot to enable codfw replication when codfw was active, so new keys were replicated to eqiad and no old keys were purged.
+• While we do have a checklist for enabling replication codfw -> eqiad for core services, we didn't have a checklist for parsercache ones.
+• Starting with an empty cache in eqiad caused:
+• MCS (and restbase as a consequence) timing out on specific enpoints in the swagger checks
+• Very high CPU usage on the appservers
+• Sporadic 500s with timeouts related to entire web request took longer than 60 seconds and timed out in /srv/mediawiki/php-1.32.0-wmf.24/includes/parser/Preprocessor_Hash.php
+• Consequences of starting with parsercache empty task where the analysis has been done: T206841
+• Add parsercache replication enablement as a list of things to check in the DC failover DB pre steps for some days before the failover: https://wikitech.wikimedia.org/wiki/Switch_Datacenter/planned_db_maintenance#2018_Switch_Datacenter

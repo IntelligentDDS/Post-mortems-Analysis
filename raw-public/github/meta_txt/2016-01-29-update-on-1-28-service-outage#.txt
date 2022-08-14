@@ -1,0 +1,5 @@
+On Thursday, January 28, 2016 at 00:23am UTC, we experienced a severe service outage that impacted GitHub.com. We know that any disruption in our service can impact your development workflow, and are truly sorry for the outage. While our engineers are investigating the full scope of the incident, I wanted to quickly share an update on the situation with you.
+
+A brief power disruption at our primary data center caused a cascading failure that impacted several services critical to GitHub.com’s operation. While we worked to recover service, GitHub.com was unavailable for two hours and six minutes. Service was fully restored at 02:29am UTC. Last night we completed the final procedure to fully restore our power infrastructure.
+
+Millions of people and businesses depend on GitHub. We know that our community feels the effects of our site going down deeply. We’re actively taking measures to improve our resilience and response time, and will share details from these investigations.

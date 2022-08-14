@@ -1,0 +1,15 @@
+On the 27th of November
+
+1:30 am UTC sql insertion rate goes to zero, topics that are feed from outside in kafka continue to receive events, event-login-valid-mixed is receiving events but not as much as it should have
+
+At the same time we see this errors in the eventlogging_processor log:
+
+Kafka had an outage in which only one of the brokers seems to be working:
+
+
+
+ 06:50 am UTC eventlogging gets rebooted and a spike on consumption can be seen on Grafana
+
+Eventlogging consumers get stuck when there are connection problems talking to kafka. System requires a reboot to be able to recover after kafka has been brought back.
+• Status: Done Investigate whether backfilling is needed
+• Status: Done Make Eventlogging more resilient to kafka outages: [1]

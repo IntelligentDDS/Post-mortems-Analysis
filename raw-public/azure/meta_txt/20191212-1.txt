@@ -1,0 +1,12 @@
+RCA - Connectivity issue for Azure Resources in North America (Tracking ID HKZT-N88)
+Summary of Impact
+Between 09:45 and 16:26 UTC on 12 Dec 2019, a subset of customers in North America may have experienced degraded performance, network drops, or timeouts when accessing Azure resources. Customers may also have experienced downstream impact to dependent Azure services.
+Root Cause and Mitigation
+Root cause: Engineers identified a routing protocol metric change within an ISP backbone network, which resulted in network connectivity degradation for a limited subset of Azure customers. Instead of sending traffic to Microsoft to the closest interconnection point, the ISP was sending traffic from across US regions to an interconnection point in California, saturating some of the links in California.
+Mitigation: Engineers brought down the affected peerings between Azure and the ISP and failed over network traffic in order to mitigate the issue.
+Next Steps
+We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Work with the ISP to streamline the engagement process for service incidents to help reduce the time to repair issues in the future. Fine tune Azure monitoring and telemetry to more quickly detect and mitigate events of this nature.
+Create automated remediation of interconnection points suffering from network congestion
+Provide Feedback
+Please help us improve the Azure customer communications experience by taking our survey at https://aka.ms/HKZT-N88

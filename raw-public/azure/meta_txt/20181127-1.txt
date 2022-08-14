@@ -1,0 +1,21 @@
+Multi-Factor Authentication - Mitigated
+Summary of impact:
+At 14:20 UTC on November 27th, the Azure Multi-Factor Authentication (MFA) service experienced an outage that impacted cloud-based MFA customers worldwide. Service was partially restored at 14:40 UTC and fully restored at 17:39 UTC. Login scenarios requiring MFA using SMS, voice, phone app, or OATH tokens-based logins were blocked during that time. Password-based and Windows Hello-based logins were not impacted, nor were valid unexpired MFA sessions.
+From 14:20 to 14:40 UTC, any user required to perform MFA using cloud-based Azure MFA was unable to complete the MFA process and so could not sign-in. These users were shown a browser page or client app that contained an error ID.
+From 14:40 to 17:39 UTC, the problem was resolved for some users but continued for the majority. This subset of users continued to experience difficulties in authenticating via MFA. When experienced, the user would appear to begin the MFA authentication but never receive a code from the service.
+This affected all Azure MFA methods (e.g. SMS, Phone, or Authenticator) and occurred whether MFA was triggered by Conditional Access policy or per-user MFA. Conditional access policies not requiring MFA were not impacted. Windows Hello authentication was not impacted.
+Root cause and mitigation:
+This outage was caused by a Domain Name System (DNS) failure which made the MFA service temporarily undiscoverable and a subsequent traffic surge resulting from the restoration of DNS service. Microsoft detected the DNS outage when it began at 14:20 UTC when engineers were notified by monitoring alerts.
+We sincerely apologize to our customers whose business depends on Azure Multi-Factor Authentication and were impacted by these two recent MFA incidents. Immediate and medium-term remediation steps are being taken to improve performance and significantly reduce the likelihood of future occurrence to customers across Azure, O365 and Dynamics.
+As described above, there were two stages to the outage, related but with separate root causes.
+The first root cause was an operational error that caused an entry to expire in the DNS system used internally in the MFA service. This expiration occurred at 14:20 UTC, and in turn caused our MFA front-end servers to be unable to communicate with the MFA back-end.
+Once the DNS outage was resolved at 14:40 UTC, the resultant traffic patterns that were built up from the aforementioned issue caused contention and exhaustion of a resource in the MFA back-end that took an extended time to identify and mitigate. This second root cause was a previously unknown bug in the same component as the MFA incident that occurred on 19 of Nov 2018. This bug would cause the servers to freeze as they were processing the backlogged traffic.
+To prevent this bug causing servers to freeze while a sustainable mitigation was being applied, engineers recycled servers. Engineering teams continued add capacity to the MFA service to assist in alleviating the backlog.
+Draining the resultant traffic back to normal levels took until 17:39 UTC at which point the incident was mitigated.
+Next steps:
+We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Implementing the code fix to the MFA backend service to stop servers from freezing when processing high rate of backlogged requests. [COMPLETE] During the last incident we increased capacity in the Europe region, capacity is now being scaled out to all regions for MFA. [COMPLETE]
+Deploy improved throttling management system to manage traffic spikes. [COMPLETE]
+All DNS changes will be moved to an automated system [IN PROGRESS]
+Provide feedback:
+Please help us improve the Azure customer communications experience by taking our survey - https://aka.ms/AA3dtmc

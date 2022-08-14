@@ -1,0 +1,8 @@
+Around 14:55 UTC wdqs1004 was caught in GC death spiral and froze. It recovered after a restart of blazegraph.
+• 14:55 UTC: slowdown in updates can be observed for wdqs1004
+• 15:15 UTC: icinga alert: LVS HTTP IPv4 on wdqs.svc.eqiad.wmnet is CRITICAL: CRITICAL - Socket timeout after 10 seconds
+• Looking at GC logs, I can see a peak at 17GB/s of heap allocation. This looks related to the traffic received. Much more investigation will be needed to get to the bottom of this.
+• Looking at throttled requests during that period, I can see that most requests are coming from user agent "MediaWiki/1.31.0-wmf.10". This is a surprise to me.
+• modify the local icinga checks to use the same check as LVS, which do a real query and not just a call to a dummy page phab:T181989
+• new wdqs cluster, dedicated to synchronous and trusted traffic phab:T178492 (this is a goal of search backend for next quarter)
+• investigate and document clients of wdqs, a tracking page has been created.

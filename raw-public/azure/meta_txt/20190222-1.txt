@@ -1,0 +1,9 @@
+RCA - Virtual Machines (Classic)
+Summary of impact: Between 7:18 UTC and 10:50 UTC on 22 Feb 2019 a subset of customers using Virtual Machines (Classic) or Cloud Services (Classic) may have
+experienced failures or high latency when attempting service management operations. Retries would have been successful for customers. Some customers may also have experienced downstream impact to API Management and Backup.
+Root cause and mitigation: The Azure Service Management layer (ASM), that manages Classic VMs and Classic Cloud Services, is composed of multiple services and components. During this event, ASM Front ends were running low on available resources, causing some incoming requests to timeout. Engineers established that a platform service update introduced this regression that surfaced only at high incoming traffic volume. The ASM update went through the standard extensive testing and the fault did not manifest itself when the update transited through first, the pre-production environments, and later through the first Production slice where it baked for multiple days. There was no indication of such a failure in those environments during this time.
+As a mitigation, the Front Ends were scaled out which restored the service health.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Refine validation and service upgrade processes to prevent future occurrences with customer impact [complete].
+Enhance telemetry for detecting machine-level resource exhaustion to prevent impact to customer functionality [complete].
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/FDHL-VFG

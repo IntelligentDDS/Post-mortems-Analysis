@@ -1,0 +1,10 @@
+This is a template for an Incident Report. Replace notes with your own description.
+
+Phabricator service was interrupted at 09:39:04 UTC on 2017-02-01. The master (db1043) and one of the slave (db1048) database servers crashed, however, db2012 didn't crash.
+
+The Phabricator fulltext search backend combined with our current mariadb version / configuration can generate pathological queries which do not complete in a reasonable amount of time. This is compounded by user behavior: users will usually retry failed searches multiple times, generating more load on the database server, which eventually crumbles under the load of many long-running queries.
+
+We have been aware of shortcomings with the way Phabricator uses MySQL for full-text search for many months: see the main status updates on 2015-05-15 (switch to MySQL backend), 2016-12-18 (incomplete index). For this reason, Wikimedia release engineering has been working on porting our Phabricator search index over to ElasticSearch (T146843). Given various recent incidents related to Phabricator databases, we expected this particular failure to repeat itself if we simply restored service. It was thus decided to immediately switch over to using ElasticSearch back-end for Phabricator search, in order to avoid another mysql failure.
+
+After the immediate emergency was over, further investigation (with help from upstream developers, thanks epriestley!) revealed that optimizing the table that contains the fulltext index could help the situation, however, the performance after optimization was still not great. More improvement is needed and we will probably stick with ElasticSearch for now barring any problems that might cause.
+• Switch to elasticsearch back-end for Phabricator's Full Text search engine. (already done)

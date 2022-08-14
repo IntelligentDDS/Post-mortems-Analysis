@@ -1,0 +1,44 @@
+Disclaimer: This is my take on the event, which is incomplete because I am not aware of all the private channel conversations. The reports is also likely to have multiple errors in it, but those are not intentional. The point is not to blame anyone, but to explain how it happened, how it was dealt with and how we can improve to prevent similar issues from happening again.
+
+TL;DR: Changes in MW core exposed a bug in TranslationNotifications. The same bug is also present in other extensions. Many people participated in preventing further damage and fixing the issue. More work remains to be done.
+• 2012-11-27 18:05: TN sent without known problems.
+• 2012-11-28 ?/22:33/22:41: metawiki to 1.21wmf5, then wmf4 and wmf5 again.
+• 2012-12-01 06:35: A TN is sent by Tbayer to about 500 recipients.
+• 2012-12-04 19:19: Triple notifications for it in the last hour are reported, Tbayer answers but doesn't notify anyone.[3]
+• 2012-12-04 23:56: Poongothai video TN submitted by Seddon to about 1000 recipients.[4]
+• 2012-12-05 10:30/10:40: Bug 42715 linked from bug 42614, RobLa et al. added to cc etc.
+• 2012-12-06 10:22: Seddon blocks self on Meta [9] and sends another update to translators-l.
+
+We can assume that breakage has happened between Nov 27 and Dec 1, since no problems were reported for the notification sent on Nov 27. The timeline seems to confirm this, on Nov 28 Aaron enabled job retrying.
+
+There is some uncertainty on what code JobQueue runners are using, since they are long-living processes. Tim Starling had to kill some LST jobs on the 4th, and then it was talked that they had been using same code for three days. https://wikitech.wikimedia.org/index.php?title=Server_admin_log&diff=54182&oldid=54181&diffonly=yes
+
+Assuming that the root of the problem was introduced already in 1.21wmf3 we should have seen an increasing amount of failed jobs kept around in the JobQueue before the retrying started happening. I don't know whether there are graphs for this. If there are, is anyone looking at them, and if not, are those going to be added now?
+
+Also, why did we not see those very old jobs retried? Was there some other change which started keeping them around, or perhaps they were still in there, but most recent jobs were retried first?
+
+Immediately after the second broken TN, the problem is reported to Seddon and on bugzilla. Then there is only some chatter until hashar starts investigating in the morning of the next day, probably because Siebrand solicited help. In the meanwhile Seddon takes measures to prevent further damage. Hashar finds some clues of the reason and removes broken jobs from the jobqueue. On the same morning USA time Aaron gets assigned to that bug, and by evening his time a workaround is deployed. He closes the bug pointing out how to fix TN, but does not mention the deployment of the workaround.
+
+In total it took about 3 days from the very first report to "solve" the issue, though cleanup still remains. It took about 24 hours for the bug report to get any action, and that was only because Siebrand got hashar to investigate it immediately. Platform Engineering was on CC immediately after the bug was reported, but did not take any visible action until 30 hours later (assigned to Aaron) and the fix came about 12h after that.
+
+The problem was put under control in 24 hours after hashar started working on it. We also lost 14 hours in the beginning because of the first reports by users were not reported to bugzilla nor to the i18n team.
+
+The problem was not caught in code review, because nobody was aware that this even could be an issue: due to incorrect and lacking documentation, the wrong code got in in the first place. It is a mystery whether the committed workaround is there to stay (meaning that the interface should be changed since it is now redundant), or whether we are supposed to fix all the jobs (there are many similar ones, see below). I'm surprised that nobody hasn't yet done a scan of all extensions to see how many have this problem.
+
+This issue(*) was only exposed now because the changes in the JobQueue started depending on it, and only when a certain configuration was in use. Other than the commit notices, I don't remember any mentions of the JobQueue refactoring work, so I am not surprised if this came as surprise to most people, who were not expecting to see any problems here.
+
+(*) It is both a bug in TN and a regression in JobQueue. Breaking existing code is a regression even if the existing code is wrong.
+
+Job retrying is not enabled by default, so most likely we would not have detected this on our local machines, even if we had tests. There is a safety measure that every job is retried at most 3 times (meaning delivering 4 copies of the message in the worst case).
+
+In any case, I recommend fixing all the broken jobs we can find and beg for proper documentation of JobQueue system, since the latest developments have increased the technical debt in the organization by introducing new undocumented systems that only one or two developers understand properly. Since this code is used relatively often by extension developers, code example and good documentation are needed for that audience too.
+
+The only other documentation that I was able to found quickly, other than existing code, is https://www.mediawiki.org/wiki/Job_queue where you find link to https://www.mediawiki.org/wiki/Manual:Job_queue/For_developers which has a *broken* example. This should be fixed ASAP.
+
+I don't see any easy way to prevent problems like these happening in the future, since we have so much to catch up on good test coverage, dissemination of skills and comprehensive developer documentation.
+
+One particular issue is the detection and escalation of potential problems. Incoming (bug) reports are not always triaged fast and deep enough to catch problems before they go live on production. Once they are considered critical, they are fixed quickly, but that doesn't seem to lead to any changes in the process itself.
+
+Snapshot of jobs (not all extensions included)
+
+This should have been:

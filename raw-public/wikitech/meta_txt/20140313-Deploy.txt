@@ -1,0 +1,30 @@
+Several servers (mw1201,mw1202,mw1203,mw1208,mw1209,mw1210) that were recently moved into the new row D in the eqiad data center failed to update during the scap that deployed 1.23wmf18 to the cluster. The scap ran from 2014-03-13T16:49Z to 2014-03-13T17:05Z. They did however get the update to wikiversions.json switching group0 to 1.23wmf18 that ran at 2014-03-13T18:14.
+
+This mismatch in local state caused errors in the fatal log such as:
+
+I initially ignored these errors as they coincided with a typical burst of APC cache error messages that often accompany the deployment of a new branch.
+
+Chris Steipp pointed the errors out to me on irc at 2014-03-13T18:25. I logged into one of the affected hosts and verified that the php-1.23wmf18 directory was indeed missing. I ran sync-common manually to see if there were any errors. When the sync completed successfully I returned to tin and ran to determine which hosts were missing the directory. I then ran to correct the problem.
+
+This was successful and the partial outage ended. This would have affected the group0 wikis (test* and mw.o) from approximately 2014-03-13T18:15Z to 2014-03-13T18:40Z.
+
+A related issue was pointed out by Chris on irc at 2014-03-13T13:08Z. Since sync-common doesn't rebuild the l10n cache these same hosts were missing messages. I ran from tin to force the cache to rebuild. This cleared the error condition.
+
+Fundamentally the same problem occurred today while S was deploying a new extension. The same hosts (mw1201,mw1202,mw1203,mw1208,mw1209,mw1210) failed to receive the new php code but did receive the new configuration.
+
+I dug deeper this time as was able to determine that the scap rsync slave severs (mw1010 and mw1070) did not have the subnet for the new row D in their "hosts allow" configuration. Sam, Daniel Zahn and Tim were enlisted at various points in the search for the proper bit of puppet configuration to update. In the middle of this I opened an [https://rt.wikimedia.org/Ticket/Display.html?id=7080 RT ticket] to track the problem.
+
+Sam has created a patch (https://gerrit.wikimedia.org/r/#/c/119677/) to fix the permissions by putting the rsync configuration under puppet control for the first time. Apparently Tim started down this road originally (https://gerrit.wikimedia.org/r/#/c/44526/) but the configuration was never fully brought under puppet management. It would be really really really awesome to get Sam's patch reviewed, merged and applied before tomorrow's train deploy.
+
+Sam then continued on his typical fix-all-the-things path to add a followup patch (https://gerrit.wikimedia.org/r/#/c/119686/) that adds new scap rsync slaves in rows C and D.
+
+I have opened bug 62862 about the failure of scap to recognize and report the rsync failure. I also take responsibility for not digging into this deeper on 2014-03-13 when the original error was seen. I did run sync-common manually then to correct the broken sync, but it didn't run it with the exact arguments (list of slave servers) that scap uses which would have led to this discovery a week ago.
+
+S experienced a second problem during his deploy which may or may not be related. The scap process on tin appeared hang with 50 hosts left to sync. After way too long I recommended that he kill the scap process via ctrl-c and try again. The retry completed relatively quickly (7m). I will be watching for a repeat of this behavior tomorrow and will try to investigate deeper on one of the hung hosts if it occurs. (This may be me repeating the same mistake, but by the time I was fully aware of the extent of the problem S was having he had been running scap for more than an hour and I felt it was more important to get his changes out.)
+• Status: Declined - documentation update needed for when moving boxes?
+• Greg to talk to RobH and Chris FILE TICKET
+• Suggestion: Investigate sharing the same source file? Or having some minimal automatic checking?
+• Status: Declined - investigate Potential scap bug with the change of mw versions
+• Why didn't puppet pull in the latest versions of deployed mw?
+• see also: the eventual consistency requirement for deployment tooling
+• Status: Done - Add mw1161 and mw1201 as scap proxies for EQIAD row C and D

@@ -1,0 +1,133 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google App Engine](/incident/appengine/15021)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google App Engine Incident #15021
+
+App Engine increased 500 errors
+
+Incident began at **2015-09-17 12:40** and ended at **2015-09-17 14:08** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Sep 19, 2015 | 10:00 |
+
+SUMMARY:
+
+On Thursday 17 September 2015, Google App Engine experienced increased latency
+and HTTP errors for 1 hour 28 minutes. We apologize to our customers who were
+affected by this issue. This is not the level of quality and reliability we
+strive to offer you, and we are taking immediate steps to prevent similar
+issues from occurring in future.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Thursday 17 September 2015 from 12:40 to 14:08 PDT, <0.01% of applications
+using Google App Engine experienced elevated latencies, HTTP error rates, and
+failures for the memcache API. The Google Developers Console was also affected
+and experienced timeouts during the time.
+
+ROOT CAUSE:
+
+An unhealthy Managed VMs application triggered an excessive number of retries
+in the App Engine infrastructure in a single datacenter. App Engine's serving
+stack automatically detected the overload, and diverted the majority of
+traffic to an alternate datacenter. Memcache was unavailable for apps which
+were diverted in this manner; this increased latency for those apps. Latency
+was also increased by the need to create new instances to run those apps in
+the alternate datacenter. Traffic which was not diverted experienced errors
+due to the overload.
+
+REMEDIATION AND PREVENTION:
+
+At 12:47, Google engineers were automatically alerted to increasing latency,
+followed by elevated error rate, for App Engine, and started investigating the
+root cause of the issue. The incident was resolved at 14:08.
+
+Google engineers are rolling out a fix which curbs the excessive number of
+retries that caused this incident. Additionally, the team is implementing
+improved monitoring to reduce the time taken to detect and isolate problematic
+workloads.  
+  
+|
+
+SUMMARY:
+
+On Thursday 17 September 2015, Google App Engine experienced increased latency
+and HTTP errors for 1 hour 28 minutes. We apologize to our customers who were
+affected by this issue. This is not the level of quality and reliability we
+strive to offer you, and we are taking immediate steps to prevent similar
+issues from occurring in future.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Thursday 17 September 2015 from 12:40 to 14:08 PDT, <0.01% of applications
+using Google App Engine experienced elevated latencies, HTTP error rates, and
+failures for the memcache API. The Google Developers Console was also affected
+and experienced timeouts during the time.
+
+ROOT CAUSE:
+
+An unhealthy Managed VMs application triggered an excessive number of retries
+in the App Engine infrastructure in a single datacenter. App Engine's serving
+stack automatically detected the overload, and diverted the majority of
+traffic to an alternate datacenter. Memcache was unavailable for apps which
+were diverted in this manner; this increased latency for those apps. Latency
+was also increased by the need to create new instances to run those apps in
+the alternate datacenter. Traffic which was not diverted experienced errors
+due to the overload.
+
+REMEDIATION AND PREVENTION:
+
+At 12:47, Google engineers were automatically alerted to increasing latency,
+followed by elevated error rate, for App Engine, and started investigating the
+root cause of the issue. The incident was resolved at 14:08.
+
+Google engineers are rolling out a fix which curbs the excessive number of
+retries that caused this incident. Additionally, the team is implementing
+improved monitoring to reduce the time taken to detect and isolate problematic
+workloads.  
+  
+| Sep 17, 2015 | 15:17 |
+
+We are investigating reports of increased 500 errors with Google App Engine
+beginning at Thursday, 2015-09-17 12:40 US/Pacific. The issue has been
+resolved at 14:08 US/Pacific.
+
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrence. We will
+provide a more detailed analysis of this incident once we have completed our
+internal investigation.  
+  
+|
+
+We are investigating reports of increased 500 errors with Google App Engine
+beginning at Thursday, 2015-09-17 12:40 US/Pacific. The issue has been
+resolved at 14:08 US/Pacific.
+
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrence. We will
+provide a more detailed analysis of this incident once we have completed our
+internal investigation.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

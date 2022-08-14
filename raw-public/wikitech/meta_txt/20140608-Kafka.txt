@@ -1,0 +1,18 @@
+A single disk on one of the two analytics Kafka brokers failed. The second broker took over as leader for all partitions. Since we currently send more data to Kafka than a single broker can handle (bits, upload, text), messages were dropped.
+
+At 2014-06-07T23:37:04, kafka on analytics1021 shut down with a storage exception due to 'Read-only file system'. syslog at this time shows
+
+Sean was the first to respond and notice. The disk was not fixable remotely, so he disabled puppet and shut down Kafka. As far as I know, no pages for this were sent. Otto or Gage couldn't have fixed the problem remotely anyway, but others should not have been left wondering how to react.
+
+Monday morning on June 9th, Otto checked email and learned of the problem. Analytics team then met and deliberated on how to proceed.
+
+It has been known that a single broker was not enough to handle the data we are currently sending through it. Ever since we added text back in May, a single broker has not been enough. There are plans in the work to provision more Kafka brokers, but these have not yet come through. We plan to use some of the existing Hadoop DataNodes as additional Kafka brokers, and to order more new replacement DataNodes. We had planned on waiting for these new DataNodes to come in before repurposing existent DataNodes as brokers, but this past weekend's downtime has pushed that schedule forward.
+
+We plan to take DataNodes from the existing Hadoop cluster ASAP to provision as new Kafka Brokers. This will give us some time to do more failover and load testing with more brokers and more traffic, before we start relying on this service more heavily.
+• Status: Done - Decommission 2 or 3 Hadoop DataNodes and provision as Kafka Brokers.
+• Status: Done - Too complicated for partman :/
+• Status: Done - failover and load tests of Kafka Brokers with all varnish log traffic.
+• Status: Done - fix or replace this alert: https://gerrit.wikimedia.org/r/#/c/138302/
+• Faidon disabled this as it was flapping too much during the downtime.
+• Status: Done - See if we can tune a single broker to handle more traffic.
+• I.e. why is one broker not able to handle all traffic? Just curious!

@@ -1,0 +1,6 @@
+Azure Analysis Services - West Central US
+Summary of impact: Between 21:55 UTC on 12 Dec 2018 and 09:55 UTC on 13 Dec 2018, a subset of customers using Azure Analysis Services in West Central US may have experienced issues accessing existing servers, provisioning new servers, resuming new servers, or performing SKU changes for active servers.
+Preliminary root cause: Engineers determined that a recent update deployment task impacted a back-end Service Fabric instance which became unhealthy. This prevented requests to Azure Analysis servers from completing.
+Mitigation: Engineers rolled back the recent deployment task to mitigate the issue.
+Next steps: Engineers will review deployment procedures to prevent future occurrences. To stay informed on any issues, maintenance events, or advisories, create
+service health alerts (https://www.aka.ms/ash-alerts) and you will be notified via your preferred communication channel(s): email, SMS, webhook, etc.

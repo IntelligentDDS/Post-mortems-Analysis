@@ -1,0 +1,13 @@
+On 10th May, Ops noticed some IRC traffic commenting the site was slow. Mark investigated and concluded it is probably caused by a full in-memory table (CAM) in the router. As an interim measure, he performed some traffic rerouting on the routers and that alleviated the issue. However, the fix was meant to be temporary.
+
+The following day, Mark noticed there were packet losses with that router. Users were again commenting and complaining about page load lag. Upon further investigation, he decided the router software needed to be upgraded and tuned. However that would required substantial amount of work and downtime and since many of our operations engineers were either enroute or preparing for the trip to Berlin, Mark decided to perform another temporary (and unfortunately intrusive) fix, a short reboot on one of the routers. That reboot took 3 minutes. That seems to clear the problem.
+
+There were again reported long page load lag time surfacing the following week especially on 20th May. Mark investigated and found the problematic router experienced an internal network fail-over. That caused some multicasting failures. (Ganglia reporting was one of the casualties). However, there were insufficient data available to determine the fail-over root cause.
+
+The plan to address the router problem was finalized. The maintenance was scheduled on Tuesday, 24th May. The plan consists of:
+
+With this maintenance, the goals are to :
+
+Shortly after 13:00 UTC, Mark started the upgrade. It took 1 hour to perform all but 1 of the above. The Juniper EX stack was not upgraded (not a problem) because he ran out of the maintenance window. During the maintenance window, the site was intermittently unavailable because of the reboots. One of the (slave) databases went down and was taken out of the cluster. Some of the database servers did not recover gracefully and Domas determined the 'Forcedeth' driver for the NIC (network interface card) was the culprit. Together with the help of RobH and Ariel, all the impacted servers recovered.
+
+The team performed the operation successfully - the upgrades and reboots on those network gears went smoothly and the servers and sites came back up on scheduled. We believe we have also addressed the lag in the page load caused by the network routing problem. Meanwhile, we are continuing to monitor the situation.

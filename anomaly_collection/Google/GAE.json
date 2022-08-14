@@ -1,0 +1,1054 @@
+{
+    "google-GAE-#15020": {
+        "title": "Google App Engine Incident #15020",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2315020.pdf"
+        ],
+        "time": "08/12/2015",
+        "summary": "On Wednesday, 12 August 2015, the Search API for Google App Engine experienced increased latency and errors for 40 minutes.",
+        "details": "On Wednesday, 12 August 2015 from 11:05am to 11:45am PDT, the Search API service experienced an increase in latency and error rate. 8.7% of applications using the Search API received a 7.5% error rate with messages like: “Timeout: Failed to complete request in NNNNms”",
+        "service_name": [
+            "Google App Engine Search API"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 40,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "increased latency",
+                    "increased error rate"
+                ]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "A set of queries sent to a Google-owned service running on App Engine caused the Search API service to fail."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "isolate problematic workload"
+            ],
+            "details": "The Search API team is implementing mitigation and monitoring changes as a result of this incident, which include changes to the API backend to isolate the impact of similar issues and improved monitoring to reduce the time taken to detect and isolate problematic workloads for the Search API. The Search API team is implementing mitigation and monitoring changes as a result of this incident, which include changes to the API backend to isolate the impact of similar issues and improved monitoring to reduce the time taken to detect and isolate problematic workloads for the Search API. ",
+            "troubleshooting": {
+                "1": "detect problematic workloads",
+                "2": "isolate problematic workloads"
+            }
+        },
+        "propagation pass": {
+            "1": "a Google-owned service running on App Engine",
+            "2": "Google App Engine Search API"
+        },
+        "refined path": {
+            "1": "app",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": 40,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "google-GAE-#15021": {
+        "title": "Google App Engine Incident #15021",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2315021.pdf"
+        ],
+        "time": "09/19/2015",
+        "summary": "On Thursday 17 September 2015, Google App Engine experienced increased latency and HTTP errors for 1 hour 28 minutes.",
+        "details": "On Thursday 17 September 2015 from 12:40 to 14:08 PDT, <0.01% of applications using Google App Engine experienced elevated latencies, HTTP error rates, and failures for the memcache API. The Google Developers Console was also affected and experienced timeouts during the time.",
+        "service_name": [
+            "Google Cloud App Engine memcache API"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 88,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "elevated latencies",
+                    "error rates"
+                ]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "payload flood"
+                }
+            ],
+            "details": "An unhealthy Managed VMs application triggered an excessive number of retries in the App Engine infrastructure in a single datacenter. App Engine's serving stack automatically detected the overload, and diverted the majority of traffic to an alternate datacenter. Memcache was unavailable for apps which were diverted in this manner; this increased latency for those apps. Latency was also increased by the need to create new instances to run those apps in the alternate datacenter. Traffic which was not diverted experienced errors due to the overload."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll out a fix "
+            ],
+            "details": "Google engineers are rolling out a fix which curbs the excessive number of retries that caused this incident. Additionally, the team is implementing improved monitoring to reduce the time taken to detect and isolate problematic workloads. ",
+            "troubleshooting": {
+                "1": "Google engineers are rolling out a fix which curbs the excessive number of retries that caused this incident.",
+                "2": "Additionally, the team is implementing improved monitoring to reduce the time taken to detect and isolate problematic workloads."
+            }
+        },
+        "propagation pass": {
+            "1": "Managed VMs application",
+            "2": "Memcache"
+        },
+        "refined path": {
+            "1": "VM",
+            "2": "app"
+        },
+        "detection time": 7,
+        "fix time": 81,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "google-GAE-#15023": {
+        "title": "Google App Engine Incident #15023",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2315023.pdf"
+        ],
+        "time": "11/13/2015",
+        "summary": "On Tuesday, 10 November 2015, outbound traffic going through one of our European routers from both Google Compute Engine and Google App Engine experienced high latency for a duration of 6h43m minutes.",
+        "details": "On Tuesday, 10 November 2015 from 06:30 - 13:13 PST, a subset of outbound traffic from Google Compute Engine VMs and Google App Engine instances experienced high latency. The disruption to service was limited to outbound traffic through one of our European routers, and caused at peak 40% of all traffic being routed through this device to be dropped. This accounted for 1% of all Google Compute Engine traffic being routed from EMEA and <0.05% of all traffic for Google App Engine.",
+        "service_name": [
+            "Google Compute Engine VMs",
+            "Google Cloud App Engine"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 403,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": ["high latency"]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "A network component failure in one of our European routers temporarily reduced network capacity in the region causing network congestion for traffic traversing this route. Although the issue was mitigated by changing the traffic priority, the problem was only fully resolved when the affected hardware was replaced."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "divert traffic",
+                "change traffic priority",
+                "replace faulty hardware "
+            ],
+            "details": "As soon as significant traffic congestion in the network path was detected, at 09:10 PST, Google Engineers diverted a subset of traffic away from the affected path. As this only slightly decreased the congestion, Google Engineers made a change in traffic priority which fully mitigated the problem by 13:13 PST time. The replacement of the faulty hardware resolved the problem.",
+            "troubleshooting": {
+                "1": "significant traffic congestion in the network path was detected",
+                "2": "Google Engineers diverted a subset of traffic away from the affected path.",
+                "3": "As this only slightly decreased the congestion, Google Engineers made a change in traffic priority which fully mitigated the problem.",
+                "4": "The replacement of the faulty hardware resolved the problem."
+            }
+        },
+        "propagation pass": {
+            "1": "A network component",
+            "2": "GCE VMs and Google App Engine instances"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "app"
+        },
+        "detection time": 110,
+        "identification time": null,
+        "fix time": 255,
+        "verification": "lixy"
+    },
+    "google-GAE-#15025": {
+        "title": "Google App Engine Incident #15025",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2315025.pdf"
+        ],
+        "time": "12/07/2015",
+        "summary": "On Monday 7 December 2015, 1.29% of Google App Engine applications received errors when issuing authenticated calls to Google APIs over a period of 17 hours and 3 minutes. During a 45-minute period, authenticated calls to Google APIs from outside of App Engine also received errors, with the error rate peaking at 12%. We apologise for the impact of this issue on you and your",
+        "details": "Between Monday 7 December 2015 20:09 PST and Tuesday 8 December 2015 13:12, 1.29% of Google App Engine applications using service accounts received error 401 \"Access Denied\" for all requests to Google APIs requiring authentication. Unauthenticated API calls were not affected. Different applications experienced impact at different times, with few applications being affected for the full duration of the incident. In addition, between 23:05 and 23:50, an average of 7% of all requests to Google Cloud APIs failed or timed out, peaking briefly at 12%. Outside of this time only API calls from App Engine were affected.",
+        "service_name": [
+            "Google App Engine applications authentication",
+            "Google Cloud APIs"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 1023,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Google engineers have recently carried out a migration of the Google Accounts system to a new storage backend, which included copying API authentication service credentials data and redirecting API calls to the new backend. To complete this migration, credentials were scheduled to be deleted from the previous storage backend. This process started at 20: 09 PST on Monday 7 December 2015. Due to a software bug, the API authentication service continued to look up some credentials, including those used by Google App Engine service accounts, in the old storage backend. As these credentials were progressively deleted, their corresponding service accounts could no longer be authenticated."
+        },
+        "operation": [
+            "migration"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "block failing authentication credentials",
+                "stop buggy migration",
+                "roll out a fix "
+            ],
+            "details": "At 23:50 PST on Monday 8 December, Google engineers blocked certain authentication credentials that were known to be failing, preventing retries on these credentials from overloading the API authentication service. On Tuesday 9 December 08: 52 PST, the deletion process was halted, having removed 2.3% of credentials, preventing further applications from being affected. At 10: 08, Google engineers identified the root cause for the misdirected credentials lookup. After thorough testing, a fix was rolled out globally, resolving the issue for all affected Google App Engine applications by 13:12.",
+            "troubleshooting": {
+                "1": "Google engineers blocked certain authentication credentials that were known to be failing",
+                "2": "the deletion process was halted, having removed 2.3% of credentials, preventing further applications from being affected",
+                "3": "Google engineers identified the root cause for the misdirected credentials lookup. After thorough testing, a fix was rolled out globally, resolving the issue for all affected Google App Engine applications"
+            }
+        },
+        "propagation pass": {
+            "1": "API authentication service",
+            "2": "Google App Engine applications"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": 89,
+        "fix time": 763,
+        "identification time": 618,
+        "verification": "lixy"
+    },
+    "google-GAE-#16002": {
+        "title": "Google App Engine Incident #16002",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2316002.pdf"
+        ],
+        "time": "02/03/2016",
+        "summary": "On Wednesday 3 February 2016, some App Engine applications running on Java7, Go and Python runtimes served errors with HTTP response 500 for a duration of 18 minutes.",
+        "details": "On Wednesday 3 February 2016, from 18:37 PST to 18:55 PST, 1.1% of Java7, 3.1% of Go and 0.2% of all Python applications served errors with HTTP response code 500. The impact varied across applications, with less than 0.8% of all applications serving more than 100 errors during this time period. The distribution of errors was heavily tail-weighted, with a few applications receiving a large fraction of errors for their traffic during the event.",
+        "service_name": [
+            "Google App Engine applications"
+        ],
+        "impact symptom": [
+            "performance",
+            "availability"
+        ],
+        "duration": 18,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "HTTP 500 error code"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "incompatibility"
+                }
+            ],
+            "details": "An experiment meant to test a new feature on a small number of applications was inadvertently applied to Java7 and Go applications globally. Requests to these applications tripped over the incompatible experimental feature, causing the instances to shut down without serving any requests successfully, while the depletion of healthy instances caused these applications to serve HTTP requests with a 500 response. Additionally, the high rate of failure in Java and Go instances caused resource contention as the system tried to start new instances, which resulted in collateral damage to a small number of Python applications."
+        },
+        "operation": [
+            "testing"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back config"
+            ],
+            "details": "At 18:35, a configuration change was erroneously enabled globally instead of to the intended subset of applications. Within a few minutes, Google Engineers noticed a drop in global traffic to GAE applications and determined that the configuration change was the root cause. At 18:53 the configuration change was rolled back and normal operations were restored by 18:55.",
+            "troubleshooting": {
+                "1": "Within a few minutes, Google Engineers noticed a drop in global traffic to GAE applications and determined that the configuration change was the root cause. ",
+                "2": "At 18:53 the configuration change was rolled back and normal operations were restored by 18:55."
+            }
+        },
+        "propagation pass": {
+            "1": "Google App Engine"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": 18,
+        "identification time": 5,
+        "verification": "lixy"
+    },
+    "google-GAE-#16003": {
+        "title": "Google App Engine Incident #16003",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%2316003.pdf"
+        ],
+        "time": "04/25/2016",
+        "summary": "On Tuesday 19th April 2016, 1.1% of all requests to obtain new Google OAuth 2.0 tokens failed for a period of 70 minutes. Users of affected applications experienced authentication errors. This incident affected all Google services that use OAuth.",
+        "details": "On Tuesday 19 April 2016 from 06:12 to 07:22 PDT, the Google OAuth 2.0 service returned HTTP 500 errors for 1.1% of all requests. OAuth tokens are granted to applications on behalf of users. The application requesting the token is identified by its client ID. Google's OAuth service looks up the application associated with a client ID before granting the new token. If the mapping from client ID to application is not cached by Google's OAuth service, then it is fetched from a separate client ID lookup service. The client ID lookup service dropped some requests during the incident, which caused those token requests to fail.",
+        "service_name": [
+            "Google OAuth"
+        ],
+        "impact symptom": [
+            "performance",
+            "availability"
+        ],
+        "duration": 70,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "error rate",
+                    "HTTP 500 error code"
+                ]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "payload flood"
+                }
+            ],
+            "details": "Google's OAuth system depends on an internal service to lookup details of the client ID that is making the token request. During this incident, the client ID lookup service had insufficient capacity to respond to all requests to lookup client ID details. Before the incident started, the client ID lookup service had been running close to its rated capacity. In an attempt to prevent a future problem, Google SREs triggered an update to add capacity to the service at 05:30. Normally adding capacity does not cause a restart of the service. However, the update process had a misconfiguration which caused a rolling restart. While servers were restarting, the capacity of the service was reduced further. In addition, the restart triggered a bug in a specific client's code that caused its cache to be invalidated, leading to a spike in requests from that client."
+        },
+        "operation": [
+            "upgrade",
+            "recover"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "isolate overload service",
+                "add capacity"
+            ],
+            "details": "Google's internal monitoring systems detected the incident at 06:28 and our engineers isolated the root cause as an overload in the client ID lookup service at 06:47. We added additional capacity to work around the issue at 07:07 and the error rate dropped to normal levels by 07:22.",
+            "troubleshooting": {
+                "1": "Google's internal monitoring systems detected the incident at 06:28",
+                "2": "our engineers isolated the root cause as an overload in the client ID lookup service at 06:47. ",
+                "3": "our engineers isolated the root cause as an overload in the client ID lookup service at 06:47.",
+                "4": "We added additional capacity to work around the issue at 07:07 and the error rate dropped to normal levels by 07:22."
+            }
+        },
+        "propagation pass": {
+            "1": "client ID lookup service",
+            "2": "Google OAuth system"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": 54,
+        "identification time": 19,
+        "verification": "lixy"
+    },
+    "google-GAE-#16008": {
+        "title": "Google App Engine Incident #16008",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2316008.pdf"
+        ],
+        "time": "08/23/2016",
+        "summary": "On Thursday 11 August 2016, 21% of Google App Engine applications hosted in the US-CENTRAL region experienced error rates in excess of 10% and elevated latency between 13:13 and 15:00 PDT. An additional 16% of applications hosted on the same GAE instance observed lower rates of errors and latency during the same period.",
+        "details": "On Thursday 11 August 2016 from 13:13 to 15:00 PDT, 18% of applications hosted in the US-CENTRAL region experienced error rates between 10% and 50%, and 3% of applications experienced error rates in excess of 50%. Additionally, 14% experienced error rates between 1% and 10%, and 2% experienced error rate below 1% but above baseline levels. In addition, the 37% of applications which experienced elevated error rates also observed a median latency increase of just under 0.8 seconds per request. The remaining 63% of applications hosted on the same GAE instance, and applications hosted on other GAE instances, did not observe elevated error rates or increased latency. Both App Engine Standard and Flexible Environment applications in US-CENTRAL were affected by this incident. In addition, some Flexible Environment applications were unable to deploy new versions during this incident.",
+        "service_name": [
+            "Google App Engine applications"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 107,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "high error rate",
+                    "elevated latency"
+                ]
+            },
+            {
+                "system kpi": [
+                    "high CPU load"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "The incident was triggered by a periodic maintenance procedure in which Google engineers move App Engine applications between datacenters in US-CENTRAL in order to balance traffic more evenly. As part of this procedure, we first move a proportion of apps to a new datacenter in which capacity has already been provisioned. We then gracefully drain traffic from an equivalent proportion of servers in the downsized datacenter in order to reclaim resources. The applications running on the drained servers are automatically rescheduled onto different servers. During this procedure, a software update on the traffic routers was also in progress, and this update triggered a rolling restart of the traffic routers. This temporarily diminished the available router capacity. The server drain resulted in rescheduling of multiple instances of manually-scaled applications. App Engine creates new instances of manually-scaled applications by sending a startup request via the traffic routers to the server hosting the new instance. Some manually-scaled instances started up slowly, resulting in the App Engine system retrying the start requests multiple times which caused a spike in CPU load on the traffic routers. The overloaded traffic routers dropped some incoming requests. Although there was sufficient capacity in the system to handle the load, the traffic routers did not immediately recover due to retry behavior which amplified the volume of requests."
+        },
+        "operation": [
+            "maintenance",
+            "software update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back change",
+                "redirect traffic",
+                "fix miscongifigutation"
+            ],
+            "details": "Google engineers were monitoring the system during the datacenter changes and immediately noticed the problem. Although we rolled back the change that drained the servers within 11 minutes, this did not sufficiently mitigate the issue because retry requests had generated enough additional traffic to keep the system’s total load at a substantially higher-than-normal level. As designed, App Engine automatically redirected requests to other datacenters away from the overload - which reduced the error rate. Additionally, our engineers manually redirected all traffic at 13: 56 to other datacenters which further mitigated the issue. Finally, we then identified a configuration error that caused an imbalance of traffic in the new datacenters. Fixing this at 15: 00 finally fully resolved the incident. In order to prevent a recurrence of this type of incident, we have added more traffic routing capacity in order to create more capacity buffer when draining servers in this region. We will also change how applications are rescheduled so that the traffic routers are not called and also modify that the system's retry behavior so that it cannot trigger this type of failure. We know that you rely on our infrastructure to run your important workloads and that this incident does not meet our bar for reliability. For that we apologize. Your trust is important to us and we will continue to all we can to earn and keep that trust.",
+            "troubleshooting": {
+                "1": "Google engineers were monitoring the system during the datacenter changes and immediately noticed the problem. ",
+                "2": "we rolled back the change that drained the servers within 11 minutes",
+                "3": "As designed, App Engine automatically redirected requests to other datacenters away from the overload",
+                "4": "Finally, we then identified a configuration error that caused an imbalance of traffic in the new datacenters. Fixing this at 15:00 finally fully resolved the incident."
+            }
+        },
+        "propagation pass": {
+            "1": "traffic router",
+            "2": "Google App Engine"
+        },
+        "refined path": {
+            "1": "traffic router",
+            "2": "app"
+        },
+        "detection time": 1,
+        "fix time": 107,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "google-GAE-#16009": {
+        "title": "Google App Engine Incident #16009",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2316009.pdf"
+        ],
+        "time": "08/22/2016",
+        "summary": "On Monday 22 August 2016, the Google Cloud US-CENTRAL1-F zone lost network connectivity to services outside that zone for a duration of 25 minutes.",
+        "details": "On Monday 22 August 2016, the Google Cloud US-CENTRAL1-F zone lost network connectivity to services outside that zone for a duration of 25 minutes. All network traffic within the zone was also unaffected.",
+        "service_name": [
+            "Google Cloud App Engine",
+            "Google Cloud Console",
+            "Google Dataflow",
+            "Google Cloud SQL",
+            "Google Compute Engine",
+            "Google Container Engine",
+            "Google Stackdriver Logging",
+            "Google Stackdriver Monitoring"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 25,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "elevated error rates",
+                    "service delay"
+                ]
+            },
+            {
+                "system kpi": [
+                    "lost network connectivity"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "power outage"
+                }
+            ],
+            "details": "On 18 July, Google carried out a planned maintenance event to inspect and test the UPS on a power feed in one zone in the US-CENTRAL1 region. That maintenance disrupted one of the two power feeds to network devices that control routes into and out of the US-CENTRAL1-F zone. Although this did not cause any disruption in service, these devices unexpectedly and silently disabled the affected power supply modules - a previously unseen behavior. Because our monitoring systems did not notify our network engineers of this problem the power supply modules were not re-enabled after the maintenance event. The service disruption was triggered on Monday 22 August, when our engineers carried out another planned maintenance event that removed power to the second power feed of these devices, causing them to disable the other power supply module as well, and thus completely shut down. Following our standard procedure when carrying out maintenance events, we made a detailed line walk of all critical equipmentprior to, and after, making any changes. However, in this case we did not detect the disabled power supply modules. Loss of these network devices meant that machines in US-CENTRAL1-F did not have routes into and out of the zone but could still communicate to other machines within the same zone."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restore power"
+            ],
+            "details": "Our network engineers received an alert at 07:14, nine minutes after the incident started. We restored power to the devices at 07:30. The network returned to service without further intervention after power was restored.",
+            "troubleshooting": {
+                "1": "Our network engineers received an alert at 07:14, nine minutes after the incident started.",
+                "2": "We restored power to the devices at 07:30. The network returned to service without further intervention after power was restored."
+            }
+        },
+        "propagation pass": {
+            "1": "power feed",
+            "2": "network devices"
+        },
+        "refined path": {
+            "1": "hardware"
+        },
+        "detection time": 9,
+        "fix time": 16,
+        "identification time": 0,
+        "verification": "lixy"
+    },
+    "google-GAE-#17005": {
+        "title": "Google App Engine Incident #17005",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2317005.pdf"
+        ],
+        "time": "06/07/2017",
+        "summary": "On Wednesday 7 June 2017, Google App Engine experienced highly elevated serving latency and timeouts for a duration of 138 minutes.",
+        "details": "On Wednesday 7 June 2017, from 13:34 PDT to 15:52 PDT, 7.7% of active applications on the Google App Engine service experienced severely elevated latency; requests that typically take under 500ms to serve were taking many minutes. This elevated latency would have either resulted in users seeing additional latency when waiting for responses from the affected applications or 500 errors if the application handlers timed out. The individual application logs would have shown this increased latency or increases in “Request was aborted after waiting too long to attempt to service your request” error messages.",
+        "service_name": [
+            "Google App Engine"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 138,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [                    
+                    "high latency"
+                ]
+            },
+            {
+                "system kpi": [
+                    "increase memory usage",
+                    "high CPU usages"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "The incident was triggered by an increase in memory usage across all App Engine appservers in a datacenter in us-central. The increased load and memory requirement from scheduling new instances combined with rescheduling instances from appservers with high memory usage resulted in most appservers being considered “busy” by the master scheduler. User requests needed to wait for an available instance to either be transferred or created before they were able to be serviced, which results in the increased latency seen at the app level."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "limit traffic to an isolated partition"
+            ],
+            "details": "At 14:08, they were able to limit this subset of traffic to an isolated partition of the datacenter to ease the memory pressure on the remaining appservers. Latency for new requests started to improve as soon as this traffic was isolated; however, tail latency was still elevated due to the large backlog of requests that had accumulated since the incident started. This backlog was eventually cleared by 15:52 PDT. To prevent further recurrence, traffic to the affected datacenter was rebalanced with another datacenter.",
+            "troubleshooting": {
+                "1": "Latencies began to increase at 13:34 PDT",
+                "2": "Google engineers were alerted to the increase in latency at 13:45 PDT ",
+                "3": "Google engineers were able to identify a subset of traffic that was causing the increase in memory usage. ",
+                "4": "At 14:08, they were able to limit this subset of traffic to an isolated partition of the datacenter to ease the memory pressure on the remaining appservers. ",
+                "5": "This backlog was eventually cleared by 15:52 PDT."
+            }
+        },
+        "propagation pass": {
+            "1": "Google App Engine app server",
+            "2": "Google App Engine instances"
+        },
+        "refined path": {
+            "1": "app server",
+            "2": "app"
+        },
+        "detection time": 11,
+        "fix time": 127,
+        "identification time": 0,
+        "verification": "lixy"
+    },
+    "google-GAE-#17006": {
+        "title": "Google App Engine Incident #17006",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2317006.pdf"
+        ],
+        "time": "06/08/2017",
+        "summary": "On Thursday 8 June 2017, from 08:24 to 09:26 US/Pacific Time, datacenters in the asia-northeast1 region experienced a loss ofnetwork connectivity for a total of 62 minutes.",
+        "details": "On Thursday 8 June 2017, from 08:24 to 09:26 US/Pacific Time, network connectivity to and from Google Cloud services running in the asia-northeast1 region was unavailable for 62 minutes. This issue affected all Google Cloud Platform services in that region, including Compute Engine, App Engine, Cloud SQL, Cloud Datastore, and Cloud Storage. All external connectivity to the region was affected during this time frame, while internal connectivity within the region was not affected. In addition, inbound requests from external customers originating near Google’s Tokyo point of presence intended for Compute or Container Engine HTTP Load Balancing were lost for the initial 12 minutes of the outage. Separately, Internal Load Balancing within asia-northeast1 remained degraded until 10:23.",
+        "service_name": [
+            "Google Compute Engine",
+            "Google Cloud App Engine",
+            "Google Cloud SQL",
+            "Google Cloud Datasotre",
+            "Google Cloud Storage"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 62,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "loss of network connectivity"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "At the time of incident, Google engineers were upgrading the network topology and capacity of the region; a configuration error caused the existing links to be decommissioned before the replacement links could provide connectivity, resulting in a loss of connectivity for the asia-northeast1 region. Although the replacement links were already commissioned and appeared to be ready to serve, a network-routing protocol misconfiguration meant that the routes through those links were not able to carry traffic."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "reconnect network path",
+                "revert configuration"
+            ],
+            "details": "Google engineers were paged by automated monitoring within one minute of the start of the outage, at 08:24 PDT. They began troubleshooting and declared an emergency incident 8 minutes later at 08:32. The issue was resolved when engineers reconnected the network path and reverted the configuration back to the last known working state at 09:22. Our monitoring systems worked as expected and alerted us to the outage promptly.",
+            "troubleshooting": {
+                "1": "Google engineers were paged by automated monitoring within one minute of the start of the outage, at 08:24 PDT. ",
+                "2": "They began troubleshooting and declared an emergency incident 8 minutes later at 08:32.",
+                "3": "The issue was resolved when engineers reconnected the network path and reverted the configuration back to the last known working state at 09:22. "
+            }
+        },
+        "propagation pass": {
+            "1": "HTTP Load Balancer",
+            "2": "Google platform services"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "2": "app"
+        },
+        "detection time": 1,
+        "fix time": 58,
+        "identification time": 8,
+        "verification": "lixy"
+    },
+    "google-GAE-#17007": {
+        "title": "Google App Engine Incident #17007",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2317007.pdf"
+        ],
+        "time": "11/06/2017",
+        "summary": "On Monday 6 November 2017, the App Engine Memcache service experienced unavailability for applications in all regions for 1 hour and 50 minutes.",
+        "details": "Some customers experienced elevated Datastore latency and errors while Memcache was unavailable. At this time, we believe that all the Datastore issues were caused by surges of Datastore activity due to Memcache being unavailable. When Memcache failed, if an application sent a surge of Datastore operations to specific entities or key ranges, then Datastore may have experienced contention or hotspotting. Datastore experienced elevated load on its servers when the outage ended due to a surge in traffic. Some applications in the US experienced elevated latency on gets between 14:23 and 14:31, and elevated latency on puts between 14:23 and 15:04.",
+        "service_name": [
+            "Google App Engine Memcache service"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 110,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "elevated latency",
+                    "elevated error rates",
+                    "elevated load"
+                ]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "The App Engine Memcache service requires a globally consistent view of the current serving datacenter for each application in order to guarantee strong consistency when traffic fails over to alternate datacenters. The configuration which maps applications to datacenters is stored in a global database. The incident occurred when the specific database entity that holds the configuration became unavailable for both reads and writes following a configuration update. App Engine Memcache is designed in such a way that the configuration is considered invalid if it cannot be refreshed within 20 seconds. When the configuration could not be fetched by clients, Memcache became unavailable."
+        },
+        "operation": [
+            "change"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "update config"
+            ],
+            "details": "Google received an automated alert at 12:34. Following normal practices, our engineers immediately looked for recent changes that may have triggered the incident. At 12:59, we attempted to revert the latest change to the configuration file. This configuration rollback required an update to the configuration in the global database, which also failed. At 14:21, engineers were able to update the configuration by sending an update request with a sufficiently long deadline. This caused all replicas of the database to synchronize and allowed clients to read the mapping configuration.",
+            "troubleshooting": {
+                "1": "Google received an automated alert at 12:34. our engineers immediately looked for recent changes that may have triggered the incident. ",
+                "2": "At 12:59, we attempted to revert the latest change to the configuration file. This configuration rollback required an update to the configuration in the global database, which also failed. ",
+                "3": "At 14:21, engineers were able to update the configuration by sending an update request with a sufficiently long deadline. This caused all replicas of the database to synchronize and allowed clients to read the mapping configuration."
+            }
+        },
+        "propagation pass": {
+            "1": "database",
+            "2": "Google App Engine Memcache",
+            "3": "managed VMs",
+            "4": "other Google platform services"
+        },
+        "refined path": {
+            "1": "database",
+            "2": "middleware",
+            "3": "VM",
+            "4": "app"
+        },
+        "detection time": 1,
+        "identification time": null,
+        "fix time": 107,
+        "verification": "lixy"
+    },
+    "google-GAE-#18003": {
+        "title": "Google App Engine Incident #18003",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2318003.pdf"
+        ],
+        "time": "02/15/2018",
+        "summary": "On Thursday 15 February 2018, specific Google Cloud Platform services experienced elevated errors and latency for a period of 62 minutes from 11:42 to 12:44 PST. ",
+        "details": "The following services were impacted: Cloud Datastore experienced a 4% error rate for get calls and an 88% error rate for put calls. App Engine's serving infrastructure, which is responsible for routing requests to instances, experienced a 45% error rate, most of which were timeouts. App Engine Task Queues would not accept new transactional tasks, and also would not accept new tasks in regions outside us-central1 and europe-west1. Tasks continued to be dispatched during the event but saw start delays of 0-30 minutes; additionally, a fraction of tasks executed with errors due to the aforementioned Cloud Datastore and App Engine performance issues. App Engine Memcache calls experienced a 5% error rate.  App Engine Admin API write calls failed during the incident, causing unsuccessful application deployments. App Engine Admin API read calls experienced a 13% error rate. App Engine Search API index writes failed during the incident though search queries did not experience elevated errors. Stackdriver Logging experienced delays exporting logs to systems includingCloud Console Logs Viewer, BigQuery and Cloud Pub/Sub. Stackdriver Logging retries on failure so no logs were lost during the incident. Logs-based Metrics failed to post some points during the incident.",
+        "service_name": [
+            "Google Cloud Datasotre",
+            "Google App Engine serving infrastructure",
+            "App Engine Task Queues",
+            "App Engine Memcache",
+            "App Engine Search API",
+            "Stackdriver Logging"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 62,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "high error rate",
+                    "high latency"
+                ]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "layer-1": "unknown"
+        },
+        "operation": null,
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": null,
+        "propagation pass": null,
+        "refined path": null,
+        "detection time": null,
+        "fix time": 62,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "google-GAE-#19001": {
+        "title": "Google App Engine Incident #19001",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2319001.pdf"
+        ],
+        "time": "01/07/2019",
+        "summary": "On Wednesday 2 January, 2019, application creation in Google App Engine (App Engine), first-time deployment of Google Cloud Functions (Cloud Functions) per region, and project creation & API management in Cloud Console experienced elevated error rates ranging from 71% to 100% for a duration of 3 hours, 40 minutes starting at 14:40 PST. Workloads already running on App Engine and Cloud Functions, including deployment of new versions of applications and functions, as well as ongoing use of existing projects and activated APIs, were not impacted.",
+        "details": "On Wednesday 2 January, 2019 from 14:40 PST to 18:20 PST, application creation in App Engine, first-time deployments of Cloud Functions, and project creation & API auto-enablement in Cloud Console experienced elevated error rates in all regions due to a recently deployed configuration update to the underlying control plane for all impacted services. First-time deployments of new Cloud Functions failed. Redeploying existing deployments of Cloud Functions were not impacted. Workloads on already deployed Cloud Functions were not impacted. App Engine app creation experienced an error rate of 98%. Workloads for deployed App Engine applications were not impacted. Cloud API enable requests experienced a 97% average error rate while disable requests had a 71% average error rate. Affected users observed these errors when attempting to enable an API via the Cloud Console and API Console.",
+        "service_name": [
+            "Google App Engine",
+            "Google Cloud Functions"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 220,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "elevated error rates"
+                ]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "The control plane responsible for managing new app creations in App Engine, new function deployments in Cloud Functions, project creation & API management in Cloud Console utilizes a metadata store. This metadata store is responsible for persisting and processing new project creations, function deployments, App Engine applications, and API enablements. Google engineers began rolling out a new feature designed to improve the fault-tolerance of the metadata store. The rollout had been successful in test environments, but triggered an issue in production due to an unexpected difference in configuration, which triggered a bug. The bug caused writes to the metadata store to fail."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll out a fix "
+            ],
+            "details": "At 15:17, an issue with our metadata store was identified as the root cause, and mitigation work began. An initial mitigation was applied, but automation intentionally slowed the rollout of this mitigation to minimize risks to production. To reduce time to resolution, Google engineers developed and implemented a new mitigation. The metadata store became fully available at 18:20.",
+            "troubleshooting": {
+                "1": "Google engineers were automatically alerted of the elevated error rate within 3 minutes of the incident start and immediately began their investigation. ",
+                "2": "At 15:17, an issue with our metadata store was identified as the root cause, and mitigation work began. An initial mitigation was applied, but automation intentionally slowed the rollout of this mitigation to minimize risks to production. ",
+                "3": "To reduce time to resolution, Google engineers developed and implemented a new mitigation. The metadata store became fully available at 18:20.                "
+            }
+        },
+        "propagation pass": {
+            "1": "metadata store",
+            "2": "Google App Engine"
+        },
+        "refined path": {
+            "1": "database",
+            "2": "app"
+        },
+        "detection time": 3,
+        "identification time": 34,
+        "fix time": 220,
+        "verification": "lixy"
+    },
+    "google-GAE-#19007": {
+        "title": "Google App Engine Incident #19007",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2319007.pdf"
+        ],
+        "time": "03/12/2019",
+        "summary": "On Tuesday 12 March 2019, Google's internal blob storage service experienced a service disruption for a duration of 4 hours and 10 minutes.",
+        "details": "On Tuesday 12 March 2019 from 18:40 to 22:50 PDT, Google's internal blob (large data object) storage service experienced elevated error rates, averaging 20% error rates with a short peak of 31% errors during the incident. User-visible Google services including Gmail, Photos, and Google Drive, which make use of the blob storage service also saw elevated error rates, although (as was the case with GCS) the user impact was greatly reduced by caching and redundancy built into those services. There will be a separate incident report for non-GCP services affected by this incident.",
+        "service_name": [
+            "Google Cloud Storage",
+            "Stackdriver Monitoring",
+            "Google App Engine"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 250,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "elevated error rates",
+                    "elevated latency"
+                ]
+            },
+            {
+                "system kpi": ["storage resources usage increase"]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },{
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "payload flood"
+                }
+            ],
+            "details": "On Monday 11 March 2019, Google SREs were alerted to a significant increase in storage resources for metadata used by the internal blob service. On Tuesday 12 March, to reduce resource usage, SREs made a configuration change which had a side effect of overloading a key part of the system for looking up the location of blob data. The increased load eventually lead to a cascading failure."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back config",
+                "reduce traffic levels"
+            ],
+            "details": "SREs were alerted to the service disruption at 18:56 PDT and immediately stopped the job that was making configuration changes. In order to recover from the cascading failure, SREs manually reduced traffic levels to the blob service to allow tasks to start up without crashing due to high load.",
+            "troubleshooting": {
+                "1": "SREs were alerted to the service disruption at 18:56 PDT and immediately stopped the job that was making configuration changes.",
+                "2": "In order to recover from the cascading failure, SREs manually reduced traffic levels to the blob service to allow tasks to start up without crashing due to high load."
+            }
+        },
+        "propagation pass": {
+            "1": "internal blob service",
+            "2": "Google App Engine"
+        },
+        "refined path": {
+            "1": "database",
+            "2": "app"
+        },
+        "detection time": 26,
+        "fix time": 234,
+        "identification time": null,
+        "verification": "lixy"
+    }
+}

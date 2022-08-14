@@ -1,0 +1,695 @@
+{
+    "azure-20200429-1": {
+        "title": "Issues accessing resources in the Azure Portal - Mitigated (Tracking ID PMN6-7D8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+        ],
+        "time": "04/29/2020",
+        "summary": "Between 18:41 UTC on 29 Apr 2020 and 11:00 UTC on 30 Apr 2020, a subset of customers may have experienced issues accessing resources in their Azure Portal and received an 'Access Denied' error message. Programmatic methods, such as PowerShell or Azure CLI, could be used to list resources on their subscriptions and access their individual resources via resource ID. ",
+        "details": "Preliminary Root Cause: Engineers determined that a recent deployment task introduced a software bug which impacted the synchronization of Role-Based Access Control (RBAC) information for resource management services (such as Azure Resource Manager) which are leveraged by the Azure Portal to display resources. This manifested in Azure Portal call failure and resources not displayed as expected. Mitigation: Engineers first developed and deployed a hotfix to the impacted regions, forcing a refresh of all RBAC-related data for customers in the region and subsequently scalingout to handle the increased load. Next Steps: We apologize for the impact to affected customers. Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation. ",
+        "service_name": [
+            "Azure Portal"
+        ],
+        "impact symptom": [
+            "availability",
+            "inconsistency"
+        ],
+        "duration": 979,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Engineers determined that a recent deployment task introduced a software bug which impacted the synchronization of Role-Based Access Control (RBAC) information for resource management services (such as Azure Resource Manager) which are leveraged by the Azure Portal to display resources. This manifested in Azure Portal call failure and resources not displayed as expected. "
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy a hotfix",
+                "scale up"
+            ],
+            "details": "Engineers first developed and deployed a hotfix to the impacted regions, forcing a refresh of all RBAC-related data for customers in the region and subsequently scaling out to handle the increased load. ",
+            "troubleshooting": {
+                "1": "determine that a recent deployment task introduced a software bug which impacted the synchronization of Role-Based Access Control (RBAC) information for resource management services (such as Azure Resource Manager) which are leveraged by the Azure Portal to display resources.",
+                "2": "Engineers first developed and deployed a hotfix to the impacted regions, forcing a refresh of all RBAC-related data for customers in the region",
+                "3": "scaling out to handle the increased load. "
+            }
+        },
+        "propagation pass": {
+            "1": "role-based access control",
+            "2": "azure portal"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200511-1": {
+        "title": "Azure Connectivity - United Kingdom - Mitigated (Tracking ID Z_V3-FC8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+        ],
+        "time": "05/11/2020",
+        "summary": "Between 13:30 and 13:50 UTC on 11 May 2020, a limited subset of customers in the United Kingdom may have experienced connectivity issues to Azure sites and services. ",
+        "details": "Preliminary Root Cause: Engineers have confirmed the issue was caused by a power event at a regional internet service provider network exchange. Mitigation: Engineers have confirmed that power was restored, restoring access to resources from the impacted networks and mitigating the issue. Next Steps: We apologize for any inconvenience this may have caused. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation. ",
+        "service_name": [
+            "Azure sites and services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 20,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "power outage"
+                }
+            ],
+            "details": "Engineers have confirmed the issue was caused by a power event at a regional internet service provider network exchange. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restore power"
+            ],
+            "details": "Engineers have confirmed that power was restored, restoring access to resources from the impacted networks and mitigating the issue.",
+            "troubleshooting": {
+                "1": "Engineers have confirmed the issue was caused by a power event at a regional internet service provider network exchange. ",
+                "2": "Engineers have confirmed that power was restored, restoring access to resources from the impacted networks and mitigating the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "power",
+            "2": "internet service provider network exchange",
+            "3": "Azure sites and services"
+        },
+        "refined path": {
+            "1": "third-party",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200518-1": {
+        "title": "RCA - Multiple Services - Central India (Tracking ID SLN3 - HD0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+        ],
+        "time": "05/18/2020",
+        "summary": "Between 12:41 UTC on 18 May 2020 and 08:30 UTC on 19 May 2020, customers may have experienced difficulties connecting to resources hosted in Central India. A number of Storage and Compute scale units had gone offline, impacting Virtual Machines and other Azure services with dependencies on these. ",
+        "details": "Root Cause: At 11:25 UTC, a power issue with the regional utility power provider caused a Central India datacenter to transfer to generator power. This transition to generators worked as designed for all infrastructure systems except for the package air handling units (PAHU) in two of the datacenter’s colocation rooms (colos). As a result, air temperatures for these two colos rose above operational thresholds. Alerts were triggered and on-site teams began efforts to recover the PAHUs. Initial efforts to recover the PAHU’s were unsuccessful, and at 13:22 UTC, engineers began shutting down compute, network and storage resources to protect datacenter equipment from thermal damage. Mitigation: Engineers undertook various workstreams to bring back connectivity. First, technicians determined why the PAHU's all shut down. By 16:31 UTC engineers implemented a workaround for a failed component and sequentially restarted each unit to bring temperatures back into the safe operating range. In parallel, engineers prepared for equipment to come back online. By 16:48 UTC, temperatures were monitored, deemed stable, and the process of service recovery began. Some network devices and servers needed to be manually powered on due to the manner in which they were powered off. Network was recovered first, with Storage clusters recovering automatically once powered on with the network available. After Storage and Networking were restored, dependent Compute hardware recovery began and came back online by 19:59 UTC allowing Virtual Machines and other dependent Azure services to start recovery and complete by 08:30 UTC on 19 May. Currently, all colos are running on utility power and all PAHU's are running under automatic control. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Forensic investigation into the PAHU components to determine the cause of the shutdown. Once the forensic investigation is complete, the elimination of the fault from the system through replacement, engineering out, or logical changes. If the fault was component-based and systemic, ensure the replacement in other datacenters if present. Develop a comprehensive load shedding plan that will keep high priority services up longer to allow for a graceful shutdown. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/AzurePIRSurvey ",
+        "service_name": [
+            "Storage and Compute scale units",
+            "Virtual Machines",
+            "Azure services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 1189,
+        "detection": {
+            "method": "automate",
+            "tool": "alert"
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error"
+                ]
+            },
+            {
+                "system kpi": [
+                    "power down"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "power outage"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "cooling system"
+                }
+            ],
+            "details": "At 11:25 UTC, a power issue with the regional utility power provider caused a Central India datacenter to transfer to generator power. This transition to generators worked as designed for all infrastructure systems except for the package air handling units (PAHU) in two of the datacenter’s colocation rooms (colos). As a result, air temperatures for these two colos rose above operational thresholds. Alerts were triggered and on-site teams began efforts to recover the PAHUs. Initial efforts to recover the PAHU’s were unsuccessful, and at 13:22 UTC, engineers began shutting down compute, network and storage resources to protect datacenter equipment from thermal damage. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "implement a workaround for a failed component",
+                "restart each air handling unit",
+                "power network devices and servers"
+            ],
+            "details": "Engineers undertook various workstreams to bring back connectivity. First, technicians determined why the PAHU's all shut down. By 16:31 UTC engineers implemented a workaround for a failed component and sequentially restarted each unit to bring temperatures back into the safe operating range. In parallel, engineers prepared for equipment to come back online. By 16:48 UTC, temperatures were monitored, deemed stable, and the process of service recovery began. Some network devices and servers needed to be manually powered on due to the manner in which they were powered off. Network was recovered first, with Storage clusters recovering automatically once powered on with the network available. After Storage and Networking were restored, dependent Compute hardware recovery began and came back online by 19:59 UTC allowing Virtual Machines and other dependent Azure services to start recovery and complete by 08:30 UTC on 19 May. Currently, all colos are running on utility power and all PAHU's are running under automatic control. ",
+            "troubleshooting": {
+                "1": "technicians determined why the PAHU's all shut down. By 16:31 UTC engineers implemented a workaround for a failed component and sequentially restarted each unit to bring temperatures back into the safe operating range",
+                "2": "temperatures were monitored, deemed stable, and the process of service recovery began. Some network devices and servers needed to be manually powered on due to the manner in which they were powered off.",
+                "3": "Network was recovered first, with Storage clusters recovering automatically once powered on with the network available",
+                "4": "After Storage and Networking were restored, dependent Compute hardware recovery began and came back online by 19:59 UTC allowing Virtual Machines and other dependent Azure services to start recovery and complete by 08:30 UTC on 19 May"
+            }
+        },
+        "propagation pass": {
+            "1": "regional utility power provider",
+            "2": "air handling units",
+            "3": "data center",
+            "4": "Azure services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "data center",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200519-1": {
+        "title": "RCA - SQL and Open-Source Database Service Management Issues - East US (Tracking ID 8K760LZ8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+        ],
+        "time": "05/19/2020",
+        "summary": " Between 13:30 and 16:30 UTC on 19 May 2020, a subset of customers in East US may have intermittently experienced timeouts and latency issues when processing service management operations such as create, update, delete, for Azure SQL Database, Azure SQL Database Managed Instance, Azure Database for MariaDB, Azure Database for MySQL, Azure Database for PostgreSQL, and Azure Synapse Analytics services. Some customers may have also encountered issues or experienced latency when loading database management tools or expanding database resources in SQL Server Management Studio (SSMS). Retries may have been successful. ",
+        "details": "Root Cause: Engineers determined that a bug caused high resource utilization in the internal cluster service that is responsible for receiving and executing service management operations in the East US region. The bug was encountered in all the service instances of the region leading to failures and timeouts for management operations. Mitigation: Engineers mitigated the high resource consumption by identifying and addressing the trigger condition for the bug. System returned to normal after pending operations were drained from the queue. Next Steps: We apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Issuing a hotfix for the bug. Increasing the resiliency of the SQL service management plane to prevent service disruptions due to high resource utilization. Improving the early detection mechanisms for high resource utilization issues. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/AzurePIRSurvey ",
+        "service_name": [
+            "Azure SQL Database",
+            "Azure SQL Database Managed Instance",
+            "Azure Database for MariaDB",
+            "Azure Database for MySQL",
+            "Azure Database for PostgreSQL",
+            "Azure Synapse Analytics services",
+            " SQL Server Management Studio (SSMS)"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 180,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "timeout",
+                    "latency"
+                ]
+            },
+            {
+                "system kpi": [
+                    "high resource utilization"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Engineers determined that a bug caused high resource utilization in the internal cluster service that is responsible for receiving and executing service management operations in the East US region. The bug was encountered in all the service instances of the region leading to failures and timeouts for management operations."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "address the bug triggering condition"
+            ],
+            "details": "Engineers mitigated the high resource consumption by identifying and addressing the trigger condition for the bug. System returned to normal after pending operations were drained from the queue. ",
+            "troubleshooting": {
+                "1": "identifying and addressing the trigger condition for the bug"
+            }
+        },
+        "propagation pass": {
+            "1": "internal cluster service",
+            "2": "Azure SQL Database"
+        },
+        "refined path": {
+            "1": "backend service",
+            "2": "database"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200604-1": {
+        "title": "RCA - Azure Resource Manager - Failures creating or deleting resources (Tracking ID DLZG-7C0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+        ],
+        "time": "06/04/2020",
+        "summary": "Between 07:45 and 16:57 UTC on 04 Jun 2020, a subset of customers across all Public Azure regions may have experienced deployment failures when attempting to create or delete certain service based resources via Azure Resource Manager (ARM) deployment and management service due to an underlying networking issue. While the related networking resources for the impacted services were actually being created or deleted during this time, ARM was not notified of the deployment status and hence was failing the service creation or deletion. This issue may have impacted some GET or READ action on the resources. Less than .01% of users would have experienced this issue. This issue was initially detected an hour after the impact start time and was identified and escalated by an underlying service experiencing end user impact. Once detected, multiple engineering teams were engaged to investigate the cause of the issue to understand what needed to be fixed. By 11:00 UTC, the appropriate networking team was engaged and began investigating. The underlying cause was identified by 13:00 UTC. We identified the appropriate fix and rolled it out to a single region to validate success. We confirmed success of the roll out and began deploying to other regions in 3 batches. At the end of each batch we validated the success of the fix. By 16:57 UTC, the fix was rolled out to all regions and mitigation was confirmed. ",
+        "details": "Root Cause: A recent ARM deployment contained a configuration file that stores the URL endpoint that ARM connects to for operation status query calls. The configuration file had an incorrect endpoint for networking resources. Due to this wrong setting, the ARM status query for networking service management operations failed, which customers saw as failures when attempting to create or delete networking resources. The faulty configuration file was not caught prior to production because the update that caused the network resource failures was applied after testing was performed on a then healthy configuration file. When picking up the latest configuration file for deployment, the faulty file was assessed for production and not testing. The faulty configuration file was then manually rolled out without testing being performed with the newest configuration, breaking change. Mitigation: We corrected the incorrect URL endpoint within the configuration file and safely re-deployed to mitigate the issue. Next Steps: We apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Networking service will onboard to SDP (Safe Deployment Practice) endpoint configuration rollout process immediately, to ensure enough testing is done and enough time occurs between deployment batches to catch any misconfigurations or changes prior to deployment. Networking service will immediately plug-in testing and monitoring holes to make sure we immediately identify an issue like this on the networking end as failures were only seen on the ARM end. Networking service will work with ARM team to streamline configuration rollout process, to guard against errors that may occur with the current manual deployment process. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/AzurePIRSurvey ",
+        "service_name": [
+            "Azure Resource Manager (ARM) deployment and management service"
+        ],
+        "impact symptom": [
+            "correctness"
+        ],
+        "duration": 552,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            },
+            {
+                "system kpi": [
+                    "deployment failure"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "A recent ARM deployment contained a configuration file that stores the URL endpoint that ARM connects to for operation status query calls. The configuration file had an incorrect endpoint for networking resources. Due to this wrong setting, the ARM status query for networking service management operations failed, which customers saw as failures when attempting to create or delete networking resources. The faulty configuration file was not caught prior to production because the update that caused the network resource failures was applied after testing was performed on a then healthy configuration file. When picking up the latest configuration file for deployment, the faulty file was assessed for production and not testing. The faulty configuration file was then manually rolled out without testing being performed with the newest configuration, breaking change. "
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "change configuration",
+                "re-deploy"
+            ],
+            "details": "We corrected the incorrect URL endpoint within the configuration file and safely re-deployed to mitigate the issue. ",
+            "troubleshooting": {
+                "1": "This issue was initially detected an hour after the impact start time and was identified and escalated by an underlying service experiencing end user impact. ",
+                "2": "corrected the incorrect URL endpoint within the configuration file",
+                "3": "safely re-deployed"
+            }
+        },
+        "propagation pass": {
+            "1": "Azure Resource management"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": 60,
+        "fix time": 237,
+        "identification time": 255,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200611-1": {
+        "title": "RCA - Storage - East US (Tracking ID 9VHK-J80)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+        ],
+        "time": "06/11/2020",
+        "summary": "Between 11:57 and 14:20 UTC on 11 Jun 2020, a subset of Storage customers in East US may have experienced connection failures when trying to access some of their resources hosted in this region. Services with dependencies on the impacted storage resources, such as Virtual Machines, may also have experienced downstream impact during this time. ",
+        "details": "Root Cause: Engineers determined that an incident during a planned power maintenance activity at the datacenter caused an impact to a single storage scale unit, which then became unhealthy. The incident caused power to be lost to to a subset of racks comprising 60% of this single storage scale unit. The maintenance activity itself did not impact the storage scale unit, but it caused the scale unit to have reduced redundant power options at the time of the incident. All racks and network devices have two sources of power for redundancy, but it is standard procedure in some types of maintenance to isolate some resources to a single source of power for a short period. After the isolation had been completed on this scale unit, but before maintenance could begin, a distribution breaker in the redundant power source tripped open unexpectedly and the power was lost to the subset of racks. Mitigation: The site engineers paused all maintenance work and inspected the electrical distribution system to ensure there were no apparent equipment fault issues. They found the tripped breaker and determined it had failed. Power was restored by closing the other breaker that had previously been opened to commence the isolation for the scale unit, and this restored a single power source to the impacted racks. A new breaker was located and fully-tested before installation. The bad breaker on the redundant power supply was replaced with the new breaker and redundant power was then also restored to the affected racks. Once power was restored to the impacted storage racks, the automated restart process for storage resources began, and restored the scale unit to full operation. The restart process for storage clusters follows a series of structured steps to ensure full integrity of customers' data is preserved, and access to storage resources on this scale unit would have become available over a short period of time. Final mitigation was declared at 14:20, but most customers would have seen recovery prior to this time. Subsequent testing showed that the breaker had an internal failure on one phase and it has been sent to the manufacturer for full forensic analysis. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Forensic investigation into the breaker that failed. Review of breaker maintenance and testing requirements Improving monitoring and alerting visibility when in maintenance modes. Ensuring that electrical maintenance activities associated power switching are monitored closely with automated processes to manage unintended impact. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/AzurePIRSurvey ",
+        "service_name": [
+            "Virtual Machines",
+            "storage scale unit"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 143,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error"
+                ]
+            },
+            {
+                "system kpi": [
+                    "power down"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "power outage"
+                }
+            ],
+            "details": "Engineers determined that an incident during a planned power maintenance activity at the datacenter caused an impact to a single storage scale unit, which then became unhealthy. The incident caused power to be lost to to a subset of racks comprising 60% of this single storage scale unit. The maintenance activity itself did not impact the storage scale unit, but it caused the scale unit to have reduced redundant power options at the time of the incident. All racks and network devices have two sources of power for redundancy, but it is standard procedure in some types of maintenance to isolate some resources to a single source of power for a short period. After the isolation had been completed on this scale unit, but before maintenance could begin, a distribution breaker in the redundant power source tripped open unexpectedly and the power was lost to the subset of racks. "
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "pause maintenance",
+                "inspect electrical distribution system",
+                "restore power",
+                "replace bad component"
+            ],
+            "details": "The site engineers paused all maintenance work and inspected the electrical distribution system to ensure there were no apparent equipment fault issues. They found the tripped breaker and determined it had failed. Power was restored by closing the other breaker that had previously been opened to commence the isolation for the scale unit, and this restored a single power source to the impacted racks. A new breaker was located and fully-tested before installation. The bad breaker on the redundant power supply was replaced with the new breaker and redundant power was then also restored to the affected racks. Once power was restored to the impacted storage racks, the automated restart process for storage resources began, and restored the scale unit to full operation. The restart process for storage clusters follows a series of structured steps to ensure full integrity of customers' data is preserved, and access to storage resources on this scale unit would have become available over a short period of time. Final mitigation was declared at 14:20, but most customers would have seen recovery prior to this time. Subsequent testing showed that the breaker had an internal failure on one phase and it has been sent to the manufacturer for full forensic analysis. ",
+            "troubleshooting": {
+                "1": " Engineers determined that an incident during a planned power maintenance activity at the datacenter caused an impact to a single storage scale unit, which then became unhealthy.",
+                "2": "The site engineers paused all maintenance work:",
+                "3": "inspected the electrical distribution system to ensure there were no apparent equipment fault issues",
+                "4": "found the tripped breaker and determined it had failed",
+                "5": "Power was restored by closing the other breaker that had previously been opened to commence the isolation for the scale unit, and this restored a single power source to the impacted racks",
+                "6": "The bad breaker on the redundant power supply was replaced with the new breaker and redundant power was then also restored to the affected racks.",
+                "7": "Once power was restored to the impacted storage racks, the automated restart process for storage resources began, and restored the scale unit to full operation. "
+            }
+        },
+        "propagation pass": {
+            "1": "power",
+            "2": "storage scale unit",
+            "3": "services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "storage scale unit",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200614-1": {
+        "title": "RCA - Azure Active Directory - Authentication Errors (Tracking ID PMHH-NS0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+        ],
+        "time": "06/14/2020",
+        "summary": "Between 23:00 UTC on 14 Jun 2020 and 01:40 UTC on 15 Jun 2020, a subset of customers using Azure Active Directory may have experienced authentication issues when accessing resources. Customers may have received the following error message “AADSTS90033: A Transient error has occurred. Please try again.” ",
+        "details": "Root Cause: An unexpected increase in traffic volume and resource utilization of infrastructure in the region responsible for acquiring authentication tokens resulted in regional contention which exceeded operational thresholds; resulting in authentication issues for a subset of customers. Mitigation: The backend infrastructure was scaled out to increase resources and traffic was redistributed. Next Steps: We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. This includes, and is not limited to: Improvements to our systems that dynamically scale resources in this scenario accordingly with corresponding monitoring Improvements to monitoring to better detect increases in traffic for similar scenarios Review and enhance procedures to improve customer communication experience Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/AzurePIRSurvey ",
+        "service_name": [
+            "Azure Active Directory"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 160,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            },
+            {
+                "system kpi": [
+                    "high resource utilization"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "excessive flow"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource"
+                }
+            ],
+            "details": "An unexpected increase in traffic volume and resource utilization of infrastructure in the region responsible for acquiring authentication tokens resulted in regional contention which exceeded operational thresholds; resulting in authentication issues for a subset of customers. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "scale out backend infrastructure"
+            ],
+            "details": "The backend infrastructure was scaled out to increase resources and traffic was redistributed. ",
+            "troubleshooting": {
+                "1": "The backend infrastructure was scaled out to increase resources",
+                "2": "traffic was redistributed."
+            }
+        },
+        "propagation pass": {
+            "1": "backend infrastructure",
+            "2": "Azure Active Directory"
+        },
+        "refined path": {
+            "1": "backend infrastructure",
+            "2": "middleware"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200701-1": {
+        "title": "RCA - Azure SQL Database - Japan East (Tracking ID CLCK-LD0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+        ],
+        "time": "07/01/2020",
+        "summary": "Between 09:24 and 11:15 UTC on 01 Jul 2020, a subset of customers using Azure SQL Database, Azure SQL Data Warehouse/Synapse Analytics, Azure Database for MySQL, Azure Database for PostgreSQL, and Azure Database for MariaDB in Japan East may have experienced service connection failures or possible timeouts. Services utilizing SQL Databases may have also been impacted. ",
+        "details": "Root Cause: Connections to Azure SQL Database and related data services go through a load balanced set of front-end nodes (Gateways) that provide directory lookup services and reroute the incoming connections to the intended backend nodes hosting the database. For scalability and zone redundancy purposes, there are multiple active SQL Gateway clusters in a region. During this incident, one of the SQL Gateway clusters became unhealthy, having an intermittent impact on login availability. A specific network traffic pattern combined with a networking stack configuration on the SQL Gateway instances triggered an imbalance on the CPU processing of new connection requests. The persistence of such CPU imbalance over a long period of time caused high response latency and increased timeouts on connection requests. The error condition propagated across multiple instances of the SQL Gateway cluster in this region, sometimes causing a service restart. Mitigation: Multiple SQL Gateway instances became healthy upon the triggered service restart. On further investigation, we were able to isolate the specific network pattern and the configuration setting that caused this incident and were able to reconfigure the traffic to prevent a recurrence. Next Steps: We apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Fix the underlying issue that causes service restart when such a condition occurs. Improve the alerting logic and add identified telemetry to diagnose this kind of issues faster. Activate a newer SQL Gateway cluster in this region with a more efficient networking stack configuration that reduces the chances of hitting a processing imbalance. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/AzurePIRSurvey ",
+        "service_name": [
+            "Azure SQL Database",
+            "Azure SQL Data Warehouse/Synapse Analytics",
+            "Azure Database for MySQL",
+            "Azure Database for PostgreSQL",
+            "Azure Database for MariaDB"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 111,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error",
+                    "timeout",
+                    "increased latency"
+                ]
+            },
+            {
+                "system kpi": [
+                    "increase CPU"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "others"
+                }
+            ],
+            "details": "Connections to Azure SQL Database and related data services go through a load balanced set of front-end nodes (Gateways) that provide directory lookup services and reroute the incoming connections to the intended backend nodes hosting the database. For scalability and zone redundancy purposes, there are multiple active SQL Gateway clusters in a region. During this incident, one of the SQL Gateway clusters became unhealthy, having an intermittent impact on login availability. A specific network traffic pattern combined with a networking stack configuration on the SQL Gateway instances triggered an imbalance on the CPU processing of new connection requests. The persistence of such CPU imbalance over a long period of time caused high response latency and increased timeouts on connection requests. The error condition propagated across multiple instances of the SQL Gateway cluster in this region, sometimes causing a service restart. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restart service",
+                "isolate the specific network pattern",
+                "reconfigure traffic"
+            ],
+            "details": "Multiple SQL Gateway instances became healthy upon the triggered service restart. On further investigation, we were able to isolate the specific network pattern and the configuration setting that caused this incident and were able to reconfigure the traffic to prevent a recurrence. ",
+            "troubleshooting": {
+                "1": "Multiple SQL Gateway instances became healthy upon the triggered service restart.",
+                "2": "isolate the specific network pattern and the configuration setting that caused this incident ",
+                "3": "reconfigure the traffic to prevent a recurrence."
+            }
+        },
+        "propagation pass": {
+            "1": "SQL gateway instances",
+            "2": "SQL gateway clusters",
+            "3": "Azure SQL Database"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200704-1": {
+        "title": "Azure DevOps - Service Outage - Mitigated (Trackign ID SNDL-NS8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+        ],
+        "time": "07/04/2020",
+        "summary": "Between 02:26 am and 03:40 am UTC on 04 Jul 2020, customers using Azure DevOps in multiple regions may have observed connectivity errors to DevOps services. ",
+        "details": "Preliminary Root Cause: We identified an inadvertent error with a configuration change in the back-end service which caused the outage. Mitigation: We applied a configuration update which has fully mitigated the issue. Next Steps: We will continue investigations to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation. ",
+        "service_name": [
+            "Azure DevOps"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 74,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "We identified an inadvertent error with a configuration change in the back-end service which caused the outage. "
+        },
+        "operation": [
+            "configuration change"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "update configuration"
+            ],
+            "details": "We applied a configuration update which has fully mitigated the issue. ",
+            "troubleshooting": {
+                "1": "We identified an inadvertent error with a configuration change in the back-end service which caused the outage. ",
+                "2": "We applied a configuration update which has fully mitigated the issue. "
+            }
+        },
+        "propagation pass": {
+            "1": "backend service",
+            "2": "Azure DevOps"
+        },
+        "refined path": {
+            "1": "backend service",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    }
+}

@@ -1,0 +1,201 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Console](/incident/developers-console/16005)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Console Incident #16005
+
+Issue with Developers Console
+
+Incident began at **2016-06-09 21:09** and ended at **2016-06-09 22:25** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jul 06, 2016 | 04:11 |
+
+SUMMARY:
+
+On Thursday 9 June 2016, the Google Cloud Console was unavailable for a
+duration of 91 minutes, with significant performance degradation in the
+preceding half hour. Although this did not affect user resources running on
+the Google Cloud Platform, we appreciate that many of our customers rely on
+the Cloud Console to manage those resources, and we apologize to everyone who
+was affected by the incident. This report is to explain to our customers what
+went wrong, and what we are doing to make sure that it does not happen again.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Thursday 9 June 2016 from 20:52 to 22:23 PDT, the Google Cloud Console was
+unavailable. Users who attempted to connect to the Cloud Console observed high
+latency and HTTP server errors. Many users also observed increasing latency
+and error rates during the half hour before the incident.
+
+Google Cloud Platform resources were unaffected by the incident and continued
+to run normally. All Cloud Platform resource management APIs remained
+available, allowing Cloud Platform resources to be managed via the Google
+Cloud SDK or other tools.
+
+ROOT CAUSE:
+
+The Google Cloud Console runs on Google App Engine, where it uses internal
+functionality that is not used by customer applications. Google App Engine
+version 1.9.39 introduced a bug in one internal function which affected Google
+Cloud Console instances, but not customer-owned applications, and thus escaped
+detection during testing and during initial rollout. Once enough instances of
+Google Cloud Console had been switched to 1.9.39, the console was unavailable
+and internal monitoring alerted the engineering team, who restored service by
+starting additional Google Cloud Console instances on 1.9.38.
+
+During the entire incident, customer-owned applications were not affected and
+continued to operate normally.
+
+To prevent a future recurrence, Google engineers are augmenting the testing
+and rollout monitoring to detect low error rates on internal functionality,
+complementing the existing monitoring for customer applications.
+
+REMEDIATION AND PREVENTION:
+
+When the issue was provisionally identified as a specific interaction between
+Google App Engine version 1.9.39 and the Cloud Console, App Engine engineers
+brought up capacity running the previous App Engine version and transferred
+the Cloud Console to it, restoring service at 22:23 PDT.
+
+The low-level bug that triggered the error has been identified and fixed.
+
+Google engineers are increasing the fidelity of the rollout monitoring
+framework to detect error signatures that suggest negative interactions of
+individual apps with a new App Engine release, even the signatures are
+invisible in global App Engine performance statistics.
+
+We apologize again for the inconvenience this issue caused our customers.  
+  
+|
+
+SUMMARY:
+
+On Thursday 9 June 2016, the Google Cloud Console was unavailable for a
+duration of 91 minutes, with significant performance degradation in the
+preceding half hour. Although this did not affect user resources running on
+the Google Cloud Platform, we appreciate that many of our customers rely on
+the Cloud Console to manage those resources, and we apologize to everyone who
+was affected by the incident. This report is to explain to our customers what
+went wrong, and what we are doing to make sure that it does not happen again.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Thursday 9 June 2016 from 20:52 to 22:23 PDT, the Google Cloud Console was
+unavailable. Users who attempted to connect to the Cloud Console observed high
+latency and HTTP server errors. Many users also observed increasing latency
+and error rates during the half hour before the incident.
+
+Google Cloud Platform resources were unaffected by the incident and continued
+to run normally. All Cloud Platform resource management APIs remained
+available, allowing Cloud Platform resources to be managed via the Google
+Cloud SDK or other tools.
+
+ROOT CAUSE:
+
+The Google Cloud Console runs on Google App Engine, where it uses internal
+functionality that is not used by customer applications. Google App Engine
+version 1.9.39 introduced a bug in one internal function which affected Google
+Cloud Console instances, but not customer-owned applications, and thus escaped
+detection during testing and during initial rollout. Once enough instances of
+Google Cloud Console had been switched to 1.9.39, the console was unavailable
+and internal monitoring alerted the engineering team, who restored service by
+starting additional Google Cloud Console instances on 1.9.38.
+
+During the entire incident, customer-owned applications were not affected and
+continued to operate normally.
+
+To prevent a future recurrence, Google engineers are augmenting the testing
+and rollout monitoring to detect low error rates on internal functionality,
+complementing the existing monitoring for customer applications.
+
+REMEDIATION AND PREVENTION:
+
+When the issue was provisionally identified as a specific interaction between
+Google App Engine version 1.9.39 and the Cloud Console, App Engine engineers
+brought up capacity running the previous App Engine version and transferred
+the Cloud Console to it, restoring service at 22:23 PDT.
+
+The low-level bug that triggered the error has been identified and fixed.
+
+Google engineers are increasing the fidelity of the rollout monitoring
+framework to detect error signatures that suggest negative interactions of
+individual apps with a new App Engine release, even the signatures are
+invisible in global App Engine performance statistics.
+
+We apologize again for the inconvenience this issue caused our customers.  
+  
+| Jun 09, 2016 | 22:38 |
+
+The issue with Developers Console should have been resolved for all affected
+users as of 22:25 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+|
+
+The issue with Developers Console should have been resolved for all affected
+users as of 22:25 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+| Jun 09, 2016 | 21:56 |
+
+We are experiencing an issue with Developers Console beginning at Thursday,
+2016-06-09 21:09 US/Pacific.
+
+Current data indicates that all users are affected by this issue. The gcloud
+command line tool can be used as a workaround for those who need to manage
+their resources immediately.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 22:30 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an issue with Developers Console beginning at Thursday,
+2016-06-09 21:09 US/Pacific.
+
+Current data indicates that all users are affected by this issue. The gcloud
+command line tool can be used as a workaround for those who need to manage
+their resources immediately.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 22:30 US/Pacific with current
+details.  
+  
+| Jun 09, 2016 | 21:29 |
+
+We are investigating an issue with Developers Console. We will provide more
+information by 21:40 US/Pacific.  
+  
+|
+
+We are investigating an issue with Developers Console. We will provide more
+information by 21:40 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

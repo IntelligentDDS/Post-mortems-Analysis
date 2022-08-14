@@ -1,0 +1,14 @@
+Phabricator was down for approximately 8 minutes due to an unintentional/badly executed upgrade.
+• At approximately 13:18 UTC, I (User:20after4) attempted to fix a minor bug in a phabricator extension (https://phabricator.wikimedia.org/T168058) by deploying https://phabricator.wikimedia.org/rPHEX721eca9b64cc38b495a255bad46cbe11f3d5c390.
+• Instead of cherry-picking the dependent change, the code was mistakenly fast-forwarded to a version which depended on new database migrations.
+• 13:19 UTC - icinga alerts and several people notice that phabricator is displaying a setup error page instead of the normal application.
+• 13:20 UTC - I !log in #wikimedia-operations to let people know that I'm working on it.
+• Because phabricator makes it easier to roll forward than to roll back, and my experience that migrations are usually fast, I ran the storage upgrade script to apply the migrations.
+• 13:22 UTC - I acknowledged the icinga alert to prevent further paging.
+• The script (phabricator/resources/sql/autopatches/20170528.maniphestdupes.php) was moderately large and slow compared to most phabricator migration scripts so this took several minutes to complete
+• Almost every update to Phabricator requires database migrations to be applied. These are usually quite fast but not always.
+• Don't attempt code changes on friday, even trivial ones.
+• Always assume that code will have unexpected dependencies.
+• upgrades, even minor ones should be during the scheduled window.
+• jynus requested that I coordinate with him to schedule the database slave to be offline when running migrations.
+• I will file a task to remind about this (https://phabricator.wikimedia.org/T187143)

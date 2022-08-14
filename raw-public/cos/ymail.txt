@@ -1,0 +1,114 @@
+
+[01/02/2012][ Yahoo! Mail went down]
+http://iwgcr.org/yahoo-mail-went-down/
+http://www.cnet.com/news/yahoo-mail-suffers-outage-users-react/
+t-6h
+i-down
+p-no
+r-unk
+
+[02/04/2014][Yahoo, Yahoo Mail, And Flickr Hit With Temporary Service Interruption]
+http://techcrunch.com/2014/02/04/yahoo-goes-down/
+t-2h
+r-unk
+p-no
+i-down
+
+[02/10/2014][Yahoo Mail down again, users outraged]
+http://www.latimes.com/business/technology/la-fi-tn-yahoo-mail-down-again-20140210-story.html
+t-48m
+i-down
+p-no
+
+[03/13/2009][ Yahoo! Mail Outage Announced]
+http://softwarecritics.info/email-tools/yahoo-mail-outage-announced/
+t-24h
+r-unk
+p-yes
+
+[04/09/2009][ Yahoo Mail suffers 'brief' outage]
+http://www.cnet.com/news/yahoo-mail-suffers-brief-outage/
+t-20h
+p-no
+r-unk
+i-down
+
+[04/28/2011][ Yahoo! Mail Outage Supposedly Caused by Server Upgrade]
+http://news.softpedia.com/news/Yahoo-Mail-Outage-Supposedly-Caused-by-Server-Upgrade-197695.shtml
+t-unk
+r-upgrade
+p-no
+i-down
+
+[05/19/2015][Yahoo fixes earlier Yahoo Mail issue]
+http://www.cnbc.com/2015/05/19/some-yahoo-mail-users-experiencing-issues-with-ios-app.html
+http://www.product-reviews.net/2015/05/20/yahoo-mail-server-problems-testing-patience/
+r-unk
+t-unk
+p-no
+
+[06/23/2015][Yahoo Mail down in US, users can’t send email]
+http://www.product-reviews.net/2015/06/23/yahoo-mail-down-in-us-users-cant-send-email/
+r-unk
+t-unk
+i-down
+p-no
+
+[07/22/2010][ Yahoo suffers brief outage -- and I missed the whole thing]
+http://voices.washingtonpost.com/fasterforward/2010/07/yahoo_suffers_brief_outage--an.html
+http://www.huffingtonpost.com/2010/07/22/yahoo-down-yahoo-account_n_656170.html
+r-cross
+t-3h
+i-down
+p-no
+
+[07/31/2012][yahoo confirms mail messenger outage working on a fix]
+http://www.engadget.com/2012/07/31/yahoo-confirms-mail-messenger-outage-working-on-a-fix/
+t-unk
+i-down
+r-unk
+p-no
+
+[08/03/2011][ Yahoo Mail suffers outage; users react]
+http://www.cnet.com/news/yahoo-mail-suffers-outage-users-react/
+t-24h
+i-down
+p-no
+r-unk
+
+[10/26/2009][ Yahoo Mail Suffers Outage]
+http://www.ymailblog.com/blog/2009/10/yahoo-mail-update/
+http://techcrunch.com/2009/10/26/yahoo-mail-suffers-outage/
+r-unk
+t-unk
+p-no
+i-down
+
+[11/12/2012][ Resolving a Yahoo Outage Dispute]
+t-unk
+r-unk
+i-down
+p-no
+
+[11/20/2014][Yahoo Mail bounces back after 11 days of downtime]
+http://www.theinquirer.net/inquirer/news/2383013/yahoo-mail-suffers-major-outage-due-to-severed-underwater-cable
+http://www.techworm.net/2014/12/yahoo-mail-back-online-11-days-outage.html
+t-11d
+r-fail
+r-natdis
+i-down
+p-no
+f-fix
+
+[12/14/2013][Yahoo's Bad Week Ends]
+http://yahoo.tumblr.com/post/69929616860/an-update-on-yahoo-mail
+http://www.huffingtonpost.com/tag/yahoo-mail-outage/
+http://www.techworld.com.au/article/534041/yahoo_mail_still_down_some_users_after_an_attempted_fix/
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide26
+r-fail
+t-5d
+i-op
+p-no
+f-fix
+f-restore
+

@@ -1,0 +1,1307 @@
+# [](//cloud.google.com)
+
+July 19, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Infrastructure Components](/incident/zall/20003)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support-hub/). Learn more about what's
+posted on the dashboard in [ this
+FAQ](//cloud.google.com/support/docs/dashboard). For additional information on
+these services, please visit [cloud.google.com](//cloud.google.com).
+
+# Google Cloud Infrastructure Components Incident #20003
+
+Elevated error rates across multiple Google Cloud Platform services.
+
+Incident began at **2020-03-26 16:14** and ended at **2020-03-27 05:55** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Apr 01, 2020 | 17:15 |
+
+# ISSUE SUMMARY
+
+On Thursday 26 March, 2020 at 16:14 US/Pacific, Cloud IAM experienced elevated
+error rates which caused disruption across many services for a duration of 3.5
+hours, and stale data (resulting in continued disruption in administrative
+operations for a subset of services) for a duration of 14 hours. Google's
+commitment to user privacy and data security means that IAM is a common
+dependency across many GCP services. To our Cloud customers whose business was
+impacted during this disruption, we sincerely apologize – this is not the
+level of quality and reliability we strive to offer you, and we are taking
+immediate steps to improve the platform’s performance and availability. We
+have conducted an internal investigation and are taking steps to improve the
+resiliency of our service.
+
+# ROOT CAUSE
+
+Many Cloud services depend on a distributed Access Control List (ACL) in
+Identity and Access Management (IAM) for validating permissions, activating
+new APIs, or creating new cloud resources. These permissions are stored in a
+distributed database and are heavily cached. Two processes keep the database
+up-to-date; one real-time, and one batch. However, if the real-time pipeline
+falls too far behind, stale data is served which may cause impact operations
+in downstream services.
+
+The trigger of the incident was a bulk update of group memberships that
+expanded to an unexpectedly high number of modified permissions, which
+generated a large backlog of queued mutations to be applied in real-time. The
+processing of the backlog was degraded by a latent issue with the cache
+servers, which led to them running out of memory; this in turn resulted in
+requests to IAM timing out. The problem was temporarily exacerbated in various
+regions by emergency rollouts performed to mitigate the high memory usage.
+
+# REMEDIATION AND PREVENTION
+
+Once the scope of the issue became clear at 2020-03-26 16:35 US/Pacific,
+Google engineers quickly began looking for viable mitigations. At 17:06, an
+offline job to build an updated cache was manually started. Additionally, at
+17:34, cache servers were restarted with additional memory, along with a
+configuration change to allow temporarily serving stale data (a snapshot from
+before the problematic bulk update) while investigation continued; this
+mitigated the first impact window. A second window of impact began in other
+regions at 18:49. At 19:13, similar efforts to mitigate with additional memory
+began, which mitigated the second impact window by 19:42. Additional efforts
+to fix the stale data continued, and finally the latest offline backfill of
+IAM data was loaded into the cache servers. The remaining time was spent
+progressing through the backlog of changes, and live data was slowly re-
+enabled region-by-region to successfully mitigate the staleness globally at
+2020-03-27 05:55.
+
+Google is committed to quickly and continually improving our technology and
+operations to both prevent service disruptions, and to mitigate them quickly
+when they occur. In addition to ensuring that the cache servers can handle
+bulk updates of the kind which triggered this incident, efforts are underway
+to optimize the memory usage and protections on the cache servers, and allow
+emergency configuration changes without requiring restarts. To allow us to
+mitigate data staleness issues more quickly in future, we will also be
+sharding out the database batch processing to allow for parallelization and
+more frequent runs. We understand how important regional reliability is for
+our users and apologize for this incident.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 26 March, 2020 from 16:14 to Friday 27 March 2020, 06:20
+US/Pacific, Cloud IAM experienced out of date (stale) data, which had varying
+degrees of impact as described in detail below. Additionally, multiple
+services experienced bursts of Cloud IAM errors. These spikes were clustered
+around 16:35 to 17:45, 18:45 to 19:00, and 19:20 to 19:40, however the precise
+timing for each Cloud region differed. Error rates reached up to 100% in the
+later two periods as mitigations propagated globally. As a result, many Cloud
+services experienced concurrent outages in multiple regions, and most regions
+experienced some impact. Even though error rates recovered after mitigations,
+Cloud IAM members from Google Groups [1] remained stale until the full
+incident had been resolved. The staleness varied in severity throughout the
+incident as new batch processes completed, with an approximate four hour delay
+at 16:14, up to a 9 hour delay at 21:13. Users directly granted IAM roles were
+not impacted by stale permissions.
+
+[1] <https://cloud.google.com/iam/docs/overview#google_group>
+
+## Cloud IAM
+
+Experienced delays mapping IAM roles from changes in Google Groups membership
+for users and Service Accounts, which resulted in serving stale permissions
+globally from 2020-03-26 16:15 to 2020-03-27 05:55. Permissions assigned to
+individual non-service account users were not affected.
+
+## App Engine (GAE)
+
+Experienced elevated rates of deployment failures and increased timeouts on
+serving for apps with access control [2] from 16:22 to 2020-03-27 05:48 in the
+following regions: asia-east2, asia-northeast1, asia-south1, europe-west1,
+europe-west2, europe-west3,australia-southeast1, northamerica-northeast1, us-
+central1, us-east1, us-east4, and us-west2. Public apps did not have HTTP
+serving affected.
+
+[2] <https://cloud.google.com/appengine/docs/standard/python3/access-control>
+
+## AI Platform Predictions
+
+Experienced elevated error rates from 16:50 to 19:54 in the following regions:
+europe-west1, asia-northeast1, us-east4. The average error rate was <1% with a
+peak of 2.2% during the impact window.
+
+## AI Platform Notebooks
+
+Experienced elevated error rates and failure creating new instances from 16:34
+to 19:17 in the following regions: asia-east1, us-west1, us-east1.
+
+## Cloud Asset Inventory
+
+Experienced elevated error rates globally from 17:00 to 19:56. The average
+error rate during the first spike from 16:50 to 17:42 was 5%, and 40% during
+the second spike from 19:34 to 19:43, with a peak of 45%.
+
+## Cloud Composer
+
+Experienced elevated error rates for various API calls in all regions, with
+the following regions seeing up to a 100% error rate: asia-east2, europe-
+west1, us-west3. This primarily impacted environment creation, updates, and
+upgrades, and existing healthy environments should have been unaffected,
+
+## Cloud Console
+
+Experienced elevated error rates loading various pages globally from 16:40 to
+20:00. 4.2% of page views experienced degraded performance , with a spike
+between 16:40 to 18:00, and 18:50 to 20:00. Some pages may have seen up to
+100% degraded page views depending on the service requested.
+
+## Cloud Dataproc
+
+Experienced elevated cluster operation error rates from 16:30 to 19:45 in the
+following regions: asia-east, asia-east2, asia-northeast1, asia-northeast2,
+asia-northeast3, asia-south1, asia-southwest1, australia-southeast1, europe-
+north1, europe-west1, europe-west2, europe-west3, europe-west4, europe-west6,
+northamerica-northeast1, southamerica-east1, us-central1, us-east1, us-east4,
+us-west1, us-west2. The average and peak error rates were <1% in all regions.
+
+## Cloud Dataflow
+
+Experienced elevated error rates creating new jobs between 16:34 and 19:43 in
+the following regions: asia-east1, asia-northeast1, europe-west1, europe-
+west2, europe-west3, europe-west4, us-central1, us-east4, us-west1. The error
+rate varied by region over the course of the incident, averaging 70%, with
+peaks of up to 100%. Existing jobs may have seen temporarily increased
+latency.
+
+## Cloud Data Fusion
+
+Experienced elevated error rates creating new pipelines from 17:00 to
+2020-03-27 07:00 in the following regions: asia-east1, asia-east2, asia-
+northeast1, asia-northeast2, asia-northeast3, asia-south1, asia-southeast1,
+australia-southeast1, europe-north1, europe-west1, europe-west2, europe
+-west3, europe-west4, europe-west6, northamerica-northeast1, southamerica-
+east1, us-central1, us-east1, us-east4, us-west1, and us-west2. 100% of create
+operations failed during the impact window.
+
+## Cloud Dialogflow
+
+Experienced elevated API errors from 16:36 to 17:43 and from 19:36 to 19:43
+globally. The error rate averaged 2.6%, with peaks of up to 12% during the
+impact window.
+
+## Cloud Filestore
+
+Experienced elevated errors on instance operations from 16:44 to 17:53 in
+asia-east1, asia-east2, us-west1, from 18:45 to 19:10 in asia-northeast1,
+australia-southeast1, southamerica-east1, and from 19:30 to 19:45 in europe-
+west4, asia-east2, europe-north1, australia-southeast1, us-east4, and us-
+west1. Globally, projects which had recently activated the Filestore service
+were unable to create instances.
+
+## Cloud Firestore & Cloud Datastore
+
+Experienced elevated error rates and increased request latency between 16:41
+and 20:14. From 16:41 to 17:45 only europe-west1 and asia-east2 were impacted.
+On average, the availability of Firestore was 99.75% with a low of 97.3% at
+19:38. Datastore had an average <0.1% of errors, with a peak error rate of 1%
+at 19:40. From 18:45 to 19:06 the following regions were impacted: asia-east2,
+asia-northeast1, asia-northeast2, asia-northeast3, asia-south1, australia-
+southeast1, europe-west1, europe-west2, europe-west3, europe-west4, europe-
+west5, europe-west6, northamerica-northeast1, southamerica-east1, us-central1,
+us-east4, us-west2, us-west3, and us-west4. Finally, from 19:27 to 20:15 all
+regions were impacted.
+
+## Cloud Functions
+
+Experienced elevated rates of deployment failures and increased timeouts when
+serving functions with access control [3] from 16:22 to 20-03-27 05:48 in the
+following regions: asia-east2, europe-west1, europe-west2, europe-west3, asia-
+northeast1, europe-north1, and us-east4. Public services did not have HTTP
+serving affected.
+
+[3] <https://cloud.google.com/functions/docs/concepts/iam>
+
+## Cloud Healthcare API
+
+Experienced elevated error rates in the ‘us’ multi-region from 16:47 to 17:40,
+with a 12% average error rate, and a peak error rate of 25%.
+
+## Cloud KMS
+
+Experienced elevated error rates from 16:30 to 17:46 in the following regions:
+asia, asia-east1, asia-east2, europe, europe-west1, us-west1, southamerica-
+east1, europe-west3, europe-north1, europe-west4, and us-east4. The average
+error rate during the impact window was 26%, with a peak of 36%.
+
+## Cloud Memorystore
+
+Experienced failed instance operations from 16:44 to 17:53 in asia-east1,
+asia-east2, us-west1, from 18:45 to 19:10 in asia-northeast1, australia-
+southeast1, southamerica-east1, and from 19:30 to 19:45 in europe-west4, asia-
+east2, europe-north1, australia-southeast1, us-east4, us-west1. Globally,
+projects which had recently activated the Memorystore service were unable to
+create instances until 2020-03-27 06:00.
+
+## Cloud Monitoring
+
+Experienced elevated error rates for the Dashboards and Accounts API endpoints
+from 16:35 to 19:42 in the following regions: asia-west1, asia-east1, europe-
+west1, us-central1, us-west1. Rates fluctuated by region throughout the
+duration of the incident, with an average of 15% for the Accounts API, and 30%
+for the Dashboards API, and a peak of 26% and 80% respectively. The asia-east1
+region had the most significant impact.
+
+## Cloud Pub/Sub
+
+Experienced elevated error rates in all regions from 16:30 to 19:46, with the
+most significant in europe-west1, asia-east1, asia-east2, and us-central1.
+Average error rates during each impact window was 30%, with a peak of 59% at
+19:36. Operations had the following average error rates: Publish: 3.7%,
+StreamingPull: 1.9%, Pull: 1.4%.
+
+## Cloud Scheduler
+
+Experienced elevated error rates in all regions from 16:42 to 17:42, and 18:47
+to 19:42 with the most significant in asia-east2, europe-west1, and us-
+central1. The error rates varied across regions during the impact window with
+peaks of up to 100%.
+
+## Cloud Storage (GCS)
+
+Experienced elevated error rates and timeouts for various API calls from 16:34
+to 17:32 and 19:15 to 19:41. Per-region availability dropped as low as 91.4%
+for asia-east2, 98.55% for europe-west1, 99.04% for us-west1, 98.15% for the
+‘eu’ multiregion, and 98.45% for the ‘asia’ multi-region. Additionally, errors
+in the Firebase Console were seen specifically for first-time Cloud Storage
+for Firebase users trying to create a project from 17:35 to 2020-03-27 08:18.
+
+## Cloud SQL
+
+Experienced errors creating new instances globally from 2020-03-26 16:22 to
+2020-03-27 06:05.
+
+## Cloud Spanner
+
+Cloud Spanner instances experienced failures when managing or accessing
+databases from 17:03 to 20:40 in the following regions: regional-us-west1,
+regional-asia-east1, regional-asia-east2, regional-europe-west1, regional-
+asia-east2, eur3. The average error rate was 2.6% for all regions, with a peak
+of 33.3% in asia-east2.
+
+## Cloud Tasks
+
+Experienced elevated error rates on new task creations in asia-east2, asia-
+northeast1, asia-northeast2, asia-northeast3, asia-south1, australia-
+southeast1, europe-west2, europe-west3, europe-west6, northamerica-northeast1,
+southamerica-east1, us-central1, us-east4, us-west2. Delivery of existing
+tasks were unaffected, but downstream services may have experienced other
+issues as documented.
+
+## Compute Engine (GCE)
+
+Experienced elevated error rates on API operations, and elevated latency for
+disk snapshot creation from 19:35 to 19:43 in all regions. The average and
+peak error rate was 40% throughout the impact window.
+
+## Container Registry
+
+Experienced elevated error rates on the Container Analysis API. Additionally,
+there was increased latency on Container Scanning and Continuous Analysis
+requests which took up to 1 hour. Continuous Analysis was also delayed.
+
+## Cloud Run
+
+Experienced elevated rates of deployment failures and increased timeouts
+serving deployed services with access control [4] from 16:22 to 2020-03-27
+05:48 in the following regions: asia-east1, asia-northeast1, europe-north1,
+europe-west1, europe-west4, us-east4, us-west1. Public services did not have
+HTTP serving affected. Newly created Cloud projects (with new IAM permissions)
+weren't able to complete service deployments because of stale IAM reads on the
+service account's permissions.
+
+[4] <https://cloud.google.com/run/docs/securing/managing-access>
+
+## Data Catalog
+
+Experienced elevated error rates on read & write API’s in the following
+regions: ‘us’ multi-region, ‘eu’ multi-region, asia-east1, asia-east2, asia-
+south1, asia-southeast1, australia-southeast1, europe-west1, europe-west4, us-
+central1, us-west1, and us-west2. The exact error rate percentages varied by
+API method and region, but ranged from 0% to 8%. Errors began at 16:30, saw an
+initial recovery at 17:50, and were fully resolved by 19:42.
+
+## Firebase ML Kit
+
+Experienced elevated errors from 16:45 to 17:45 globally. The average error
+rate was 10% globally, with a peak of 14% globally. However, users located
+near the Pacific Northwest and Western Europe saw the most impact.
+
+## Google BigQuery
+
+Experienced significantly elevated error rates across many API methods in all
+regions. The asia-east1 and asia-east2 regions were the most impacted with
+100% of metadata dataset insertion operations failing. The following regions
+experienced multiple customers with error rates above 10%: asia-east1, asia-
+east2, asia-northeast1, australia-southeast1, ‘eu’ multi-region, europe-
+north1, europe-west2, europe-west3, us-east4, and us-west2. The first round of
+errors occurred between 16:42 and 17:42. The second round of errors occurred
+between 18:45 and 19:45 and experienced slightly higher average error rates
+than the first. The exact impact windows differed slightly between APIs.
+
+## Kubernetes Engine (GKE)
+
+Experienced elevated errors on GKE API from 16:35 - 17:40 and 19:35 - 19:40 in
+the following regions: asia-east1, asia-east2, us-west1, and europe-west1.
+This mainly affected cluster operations including creation, listing, upgrades
+and nodes changes. Existing healthy clusters remained unaffected.
+
+## Secret Manager
+
+Experienced elevated error rates from 16:44 to 17:43 on secrets stored
+globally, however the most impacted regions were in europe-west1, asia-east1,
+and us-west1, with an additional spike between 19:35 to 19:42. The average
+error rate was <1%, with a peak of 4.2%.
+
+# SLA CREDITS
+
+If you believe your paid application experienced an SLA violation as a result
+of this incident, please populate the SLA credit request:
+<https://support.google.com/cloud/contact/cloud_platform_sla>
+
+A full list of all Google Cloud Platform Service Level Agreements can be found
+at <https://cloud.google.com/terms/sla/.>
+
+For G Suite, please request an SLA credit through one of the Support channels:
+<https://support.google.com/a/answer/104721>
+
+G Suite Service Level Agreement can be found at
+<https://gsuite.google.com/intl/en/terms/sla.html>  
+  
+|
+
+# ISSUE SUMMARY
+
+On Thursday 26 March, 2020 at 16:14 US/Pacific, Cloud IAM experienced elevated
+error rates which caused disruption across many services for a duration of 3.5
+hours, and stale data (resulting in continued disruption in administrative
+operations for a subset of services) for a duration of 14 hours. Google's
+commitment to user privacy and data security means that IAM is a common
+dependency across many GCP services. To our Cloud customers whose business was
+impacted during this disruption, we sincerely apologize – this is not the
+level of quality and reliability we strive to offer you, and we are taking
+immediate steps to improve the platform’s performance and availability. We
+have conducted an internal investigation and are taking steps to improve the
+resiliency of our service.
+
+# ROOT CAUSE
+
+Many Cloud services depend on a distributed Access Control List (ACL) in
+Identity and Access Management (IAM) for validating permissions, activating
+new APIs, or creating new cloud resources. These permissions are stored in a
+distributed database and are heavily cached. Two processes keep the database
+up-to-date; one real-time, and one batch. However, if the real-time pipeline
+falls too far behind, stale data is served which may cause impact operations
+in downstream services.
+
+The trigger of the incident was a bulk update of group memberships that
+expanded to an unexpectedly high number of modified permissions, which
+generated a large backlog of queued mutations to be applied in real-time. The
+processing of the backlog was degraded by a latent issue with the cache
+servers, which led to them running out of memory; this in turn resulted in
+requests to IAM timing out. The problem was temporarily exacerbated in various
+regions by emergency rollouts performed to mitigate the high memory usage.
+
+# REMEDIATION AND PREVENTION
+
+Once the scope of the issue became clear at 2020-03-26 16:35 US/Pacific,
+Google engineers quickly began looking for viable mitigations. At 17:06, an
+offline job to build an updated cache was manually started. Additionally, at
+17:34, cache servers were restarted with additional memory, along with a
+configuration change to allow temporarily serving stale data (a snapshot from
+before the problematic bulk update) while investigation continued; this
+mitigated the first impact window. A second window of impact began in other
+regions at 18:49. At 19:13, similar efforts to mitigate with additional memory
+began, which mitigated the second impact window by 19:42. Additional efforts
+to fix the stale data continued, and finally the latest offline backfill of
+IAM data was loaded into the cache servers. The remaining time was spent
+progressing through the backlog of changes, and live data was slowly re-
+enabled region-by-region to successfully mitigate the staleness globally at
+2020-03-27 05:55.
+
+Google is committed to quickly and continually improving our technology and
+operations to both prevent service disruptions, and to mitigate them quickly
+when they occur. In addition to ensuring that the cache servers can handle
+bulk updates of the kind which triggered this incident, efforts are underway
+to optimize the memory usage and protections on the cache servers, and allow
+emergency configuration changes without requiring restarts. To allow us to
+mitigate data staleness issues more quickly in future, we will also be
+sharding out the database batch processing to allow for parallelization and
+more frequent runs. We understand how important regional reliability is for
+our users and apologize for this incident.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 26 March, 2020 from 16:14 to Friday 27 March 2020, 06:20
+US/Pacific, Cloud IAM experienced out of date (stale) data, which had varying
+degrees of impact as described in detail below. Additionally, multiple
+services experienced bursts of Cloud IAM errors. These spikes were clustered
+around 16:35 to 17:45, 18:45 to 19:00, and 19:20 to 19:40, however the precise
+timing for each Cloud region differed. Error rates reached up to 100% in the
+later two periods as mitigations propagated globally. As a result, many Cloud
+services experienced concurrent outages in multiple regions, and most regions
+experienced some impact. Even though error rates recovered after mitigations,
+Cloud IAM members from Google Groups [1] remained stale until the full
+incident had been resolved. The staleness varied in severity throughout the
+incident as new batch processes completed, with an approximate four hour delay
+at 16:14, up to a 9 hour delay at 21:13. Users directly granted IAM roles were
+not impacted by stale permissions.
+
+[1] <https://cloud.google.com/iam/docs/overview#google_group>
+
+## Cloud IAM
+
+Experienced delays mapping IAM roles from changes in Google Groups membership
+for users and Service Accounts, which resulted in serving stale permissions
+globally from 2020-03-26 16:15 to 2020-03-27 05:55. Permissions assigned to
+individual non-service account users were not affected.
+
+## App Engine (GAE)
+
+Experienced elevated rates of deployment failures and increased timeouts on
+serving for apps with access control [2] from 16:22 to 2020-03-27 05:48 in the
+following regions: asia-east2, asia-northeast1, asia-south1, europe-west1,
+europe-west2, europe-west3,australia-southeast1, northamerica-northeast1, us-
+central1, us-east1, us-east4, and us-west2. Public apps did not have HTTP
+serving affected.
+
+[2] <https://cloud.google.com/appengine/docs/standard/python3/access-control>
+
+## AI Platform Predictions
+
+Experienced elevated error rates from 16:50 to 19:54 in the following regions:
+europe-west1, asia-northeast1, us-east4. The average error rate was <1% with a
+peak of 2.2% during the impact window.
+
+## AI Platform Notebooks
+
+Experienced elevated error rates and failure creating new instances from 16:34
+to 19:17 in the following regions: asia-east1, us-west1, us-east1.
+
+## Cloud Asset Inventory
+
+Experienced elevated error rates globally from 17:00 to 19:56. The average
+error rate during the first spike from 16:50 to 17:42 was 5%, and 40% during
+the second spike from 19:34 to 19:43, with a peak of 45%.
+
+## Cloud Composer
+
+Experienced elevated error rates for various API calls in all regions, with
+the following regions seeing up to a 100% error rate: asia-east2, europe-
+west1, us-west3. This primarily impacted environment creation, updates, and
+upgrades, and existing healthy environments should have been unaffected,
+
+## Cloud Console
+
+Experienced elevated error rates loading various pages globally from 16:40 to
+20:00. 4.2% of page views experienced degraded performance , with a spike
+between 16:40 to 18:00, and 18:50 to 20:00. Some pages may have seen up to
+100% degraded page views depending on the service requested.
+
+## Cloud Dataproc
+
+Experienced elevated cluster operation error rates from 16:30 to 19:45 in the
+following regions: asia-east, asia-east2, asia-northeast1, asia-northeast2,
+asia-northeast3, asia-south1, asia-southwest1, australia-southeast1, europe-
+north1, europe-west1, europe-west2, europe-west3, europe-west4, europe-west6,
+northamerica-northeast1, southamerica-east1, us-central1, us-east1, us-east4,
+us-west1, us-west2. The average and peak error rates were <1% in all regions.
+
+## Cloud Dataflow
+
+Experienced elevated error rates creating new jobs between 16:34 and 19:43 in
+the following regions: asia-east1, asia-northeast1, europe-west1, europe-
+west2, europe-west3, europe-west4, us-central1, us-east4, us-west1. The error
+rate varied by region over the course of the incident, averaging 70%, with
+peaks of up to 100%. Existing jobs may have seen temporarily increased
+latency.
+
+## Cloud Data Fusion
+
+Experienced elevated error rates creating new pipelines from 17:00 to
+2020-03-27 07:00 in the following regions: asia-east1, asia-east2, asia-
+northeast1, asia-northeast2, asia-northeast3, asia-south1, asia-southeast1,
+australia-southeast1, europe-north1, europe-west1, europe-west2, europe
+-west3, europe-west4, europe-west6, northamerica-northeast1, southamerica-
+east1, us-central1, us-east1, us-east4, us-west1, and us-west2. 100% of create
+operations failed during the impact window.
+
+## Cloud Dialogflow
+
+Experienced elevated API errors from 16:36 to 17:43 and from 19:36 to 19:43
+globally. The error rate averaged 2.6%, with peaks of up to 12% during the
+impact window.
+
+## Cloud Filestore
+
+Experienced elevated errors on instance operations from 16:44 to 17:53 in
+asia-east1, asia-east2, us-west1, from 18:45 to 19:10 in asia-northeast1,
+australia-southeast1, southamerica-east1, and from 19:30 to 19:45 in europe-
+west4, asia-east2, europe-north1, australia-southeast1, us-east4, and us-
+west1. Globally, projects which had recently activated the Filestore service
+were unable to create instances.
+
+## Cloud Firestore & Cloud Datastore
+
+Experienced elevated error rates and increased request latency between 16:41
+and 20:14. From 16:41 to 17:45 only europe-west1 and asia-east2 were impacted.
+On average, the availability of Firestore was 99.75% with a low of 97.3% at
+19:38. Datastore had an average <0.1% of errors, with a peak error rate of 1%
+at 19:40. From 18:45 to 19:06 the following regions were impacted: asia-east2,
+asia-northeast1, asia-northeast2, asia-northeast3, asia-south1, australia-
+southeast1, europe-west1, europe-west2, europe-west3, europe-west4, europe-
+west5, europe-west6, northamerica-northeast1, southamerica-east1, us-central1,
+us-east4, us-west2, us-west3, and us-west4. Finally, from 19:27 to 20:15 all
+regions were impacted.
+
+## Cloud Functions
+
+Experienced elevated rates of deployment failures and increased timeouts when
+serving functions with access control [3] from 16:22 to 20-03-27 05:48 in the
+following regions: asia-east2, europe-west1, europe-west2, europe-west3, asia-
+northeast1, europe-north1, and us-east4. Public services did not have HTTP
+serving affected.
+
+[3] <https://cloud.google.com/functions/docs/concepts/iam>
+
+## Cloud Healthcare API
+
+Experienced elevated error rates in the ‘us’ multi-region from 16:47 to 17:40,
+with a 12% average error rate, and a peak error rate of 25%.
+
+## Cloud KMS
+
+Experienced elevated error rates from 16:30 to 17:46 in the following regions:
+asia, asia-east1, asia-east2, europe, europe-west1, us-west1, southamerica-
+east1, europe-west3, europe-north1, europe-west4, and us-east4. The average
+error rate during the impact window was 26%, with a peak of 36%.
+
+## Cloud Memorystore
+
+Experienced failed instance operations from 16:44 to 17:53 in asia-east1,
+asia-east2, us-west1, from 18:45 to 19:10 in asia-northeast1, australia-
+southeast1, southamerica-east1, and from 19:30 to 19:45 in europe-west4, asia-
+east2, europe-north1, australia-southeast1, us-east4, us-west1. Globally,
+projects which had recently activated the Memorystore service were unable to
+create instances until 2020-03-27 06:00.
+
+## Cloud Monitoring
+
+Experienced elevated error rates for the Dashboards and Accounts API endpoints
+from 16:35 to 19:42 in the following regions: asia-west1, asia-east1, europe-
+west1, us-central1, us-west1. Rates fluctuated by region throughout the
+duration of the incident, with an average of 15% for the Accounts API, and 30%
+for the Dashboards API, and a peak of 26% and 80% respectively. The asia-east1
+region had the most significant impact.
+
+## Cloud Pub/Sub
+
+Experienced elevated error rates in all regions from 16:30 to 19:46, with the
+most significant in europe-west1, asia-east1, asia-east2, and us-central1.
+Average error rates during each impact window was 30%, with a peak of 59% at
+19:36. Operations had the following average error rates: Publish: 3.7%,
+StreamingPull: 1.9%, Pull: 1.4%.
+
+## Cloud Scheduler
+
+Experienced elevated error rates in all regions from 16:42 to 17:42, and 18:47
+to 19:42 with the most significant in asia-east2, europe-west1, and us-
+central1. The error rates varied across regions during the impact window with
+peaks of up to 100%.
+
+## Cloud Storage (GCS)
+
+Experienced elevated error rates and timeouts for various API calls from 16:34
+to 17:32 and 19:15 to 19:41. Per-region availability dropped as low as 91.4%
+for asia-east2, 98.55% for europe-west1, 99.04% for us-west1, 98.15% for the
+‘eu’ multiregion, and 98.45% for the ‘asia’ multi-region. Additionally, errors
+in the Firebase Console were seen specifically for first-time Cloud Storage
+for Firebase users trying to create a project from 17:35 to 2020-03-27 08:18.
+
+## Cloud SQL
+
+Experienced errors creating new instances globally from 2020-03-26 16:22 to
+2020-03-27 06:05.
+
+## Cloud Spanner
+
+Cloud Spanner instances experienced failures when managing or accessing
+databases from 17:03 to 20:40 in the following regions: regional-us-west1,
+regional-asia-east1, regional-asia-east2, regional-europe-west1, regional-
+asia-east2, eur3. The average error rate was 2.6% for all regions, with a peak
+of 33.3% in asia-east2.
+
+## Cloud Tasks
+
+Experienced elevated error rates on new task creations in asia-east2, asia-
+northeast1, asia-northeast2, asia-northeast3, asia-south1, australia-
+southeast1, europe-west2, europe-west3, europe-west6, northamerica-northeast1,
+southamerica-east1, us-central1, us-east4, us-west2. Delivery of existing
+tasks were unaffected, but downstream services may have experienced other
+issues as documented.
+
+## Compute Engine (GCE)
+
+Experienced elevated error rates on API operations, and elevated latency for
+disk snapshot creation from 19:35 to 19:43 in all regions. The average and
+peak error rate was 40% throughout the impact window.
+
+## Container Registry
+
+Experienced elevated error rates on the Container Analysis API. Additionally,
+there was increased latency on Container Scanning and Continuous Analysis
+requests which took up to 1 hour. Continuous Analysis was also delayed.
+
+## Cloud Run
+
+Experienced elevated rates of deployment failures and increased timeouts
+serving deployed services with access control [4] from 16:22 to 2020-03-27
+05:48 in the following regions: asia-east1, asia-northeast1, europe-north1,
+europe-west1, europe-west4, us-east4, us-west1. Public services did not have
+HTTP serving affected. Newly created Cloud projects (with new IAM permissions)
+weren't able to complete service deployments because of stale IAM reads on the
+service account's permissions.
+
+[4] <https://cloud.google.com/run/docs/securing/managing-access>
+
+## Data Catalog
+
+Experienced elevated error rates on read & write API’s in the following
+regions: ‘us’ multi-region, ‘eu’ multi-region, asia-east1, asia-east2, asia-
+south1, asia-southeast1, australia-southeast1, europe-west1, europe-west4, us-
+central1, us-west1, and us-west2. The exact error rate percentages varied by
+API method and region, but ranged from 0% to 8%. Errors began at 16:30, saw an
+initial recovery at 17:50, and were fully resolved by 19:42.
+
+## Firebase ML Kit
+
+Experienced elevated errors from 16:45 to 17:45 globally. The average error
+rate was 10% globally, with a peak of 14% globally. However, users located
+near the Pacific Northwest and Western Europe saw the most impact.
+
+## Google BigQuery
+
+Experienced significantly elevated error rates across many API methods in all
+regions. The asia-east1 and asia-east2 regions were the most impacted with
+100% of metadata dataset insertion operations failing. The following regions
+experienced multiple customers with error rates above 10%: asia-east1, asia-
+east2, asia-northeast1, australia-southeast1, ‘eu’ multi-region, europe-
+north1, europe-west2, europe-west3, us-east4, and us-west2. The first round of
+errors occurred between 16:42 and 17:42. The second round of errors occurred
+between 18:45 and 19:45 and experienced slightly higher average error rates
+than the first. The exact impact windows differed slightly between APIs.
+
+## Kubernetes Engine (GKE)
+
+Experienced elevated errors on GKE API from 16:35 - 17:40 and 19:35 - 19:40 in
+the following regions: asia-east1, asia-east2, us-west1, and europe-west1.
+This mainly affected cluster operations including creation, listing, upgrades
+and nodes changes. Existing healthy clusters remained unaffected.
+
+## Secret Manager
+
+Experienced elevated error rates from 16:44 to 17:43 on secrets stored
+globally, however the most impacted regions were in europe-west1, asia-east1,
+and us-west1, with an additional spike between 19:35 to 19:42. The average
+error rate was <1%, with a peak of 4.2%.
+
+# SLA CREDITS
+
+If you believe your paid application experienced an SLA violation as a result
+of this incident, please populate the SLA credit request:
+<https://support.google.com/cloud/contact/cloud_platform_sla>
+
+A full list of all Google Cloud Platform Service Level Agreements can be found
+at <https://cloud.google.com/terms/sla/.>
+
+For G Suite, please request an SLA credit through one of the Support channels:
+<https://support.google.com/a/answer/104721>
+
+G Suite Service Level Agreement can be found at
+<https://gsuite.google.com/intl/en/terms/sla.html>  
+  
+| Mar 27, 2020 | 06:54 |
+
+The issue with Google Cloud infrastructure components has been resolved for
+all affected projects as of Friday, 2020-03-27 06:32 US/Pacific.
+
+We will publish an analysis of this incident once we have completed our
+internal investigation.
+
+We thank you for your patience while we've worked on resolving the issue.  
+  
+|
+
+The issue with Google Cloud infrastructure components has been resolved for
+all affected projects as of Friday, 2020-03-27 06:32 US/Pacific.
+
+We will publish an analysis of this incident once we have completed our
+internal investigation.
+
+We thank you for your patience while we've worked on resolving the issue.  
+  
+| Mar 27, 2020 | 05:58 |
+
+Description: The engineering team has tested a fix, which is being gradually
+rolled out to the affected services. Current data indicates that the issue has
+been resolved for the majority of users and we expect full resolution within
+the next hour (by 2020-03-27 07:00 US/Pacific). The estimate is tentative and
+is subject to change.
+
+We will provide an update by Friday, 2020-03-27 07:00 US/Pacific with current
+details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigTable, BigQuery, DialogFlow,
+Kubernetes Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud
+Monitoring, Cloud Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage,
+Cloud Composer, Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute
+Engine, Cloud IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud
+AI, Firebase Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+|
+
+Description: The engineering team has tested a fix, which is being gradually
+rolled out to the affected services. Current data indicates that the issue has
+been resolved for the majority of users and we expect full resolution within
+the next hour (by 2020-03-27 07:00 US/Pacific). The estimate is tentative and
+is subject to change.
+
+We will provide an update by Friday, 2020-03-27 07:00 US/Pacific with current
+details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigTable, BigQuery, DialogFlow,
+Kubernetes Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud
+Monitoring, Cloud Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage,
+Cloud Composer, Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute
+Engine, Cloud IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud
+AI, Firebase Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+| Mar 27, 2020 | 03:44 |
+
+Description: The engineering team has tested a fix, which is being gradually
+rolled out to the affected services. We expect full resolution within the next
+two hours (by 2020-03-27 06:00 US/Pacific). The estimate is tentative and is
+subject to change.
+
+We will provide an update by Friday, 2020-03-27 06:00 US/Pacific with current
+details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes
+Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud
+Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage, Cloud Composer,
+Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute Engine, Cloud
+IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud AI, Firebase
+Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+|
+
+Description: The engineering team has tested a fix, which is being gradually
+rolled out to the affected services. We expect full resolution within the next
+two hours (by 2020-03-27 06:00 US/Pacific). The estimate is tentative and is
+subject to change.
+
+We will provide an update by Friday, 2020-03-27 06:00 US/Pacific with current
+details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes
+Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud
+Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage, Cloud Composer,
+Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute Engine, Cloud
+IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud AI, Firebase
+Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+| Mar 27, 2020 | 01:38 |
+
+Description: The engineering team has tested a fix, which is being gradually
+rolled out to the affected services. We expect full resolution within the next
+three hours (by 2020-03-27 05:00 US/Pacific). The estimate is tentative and is
+subject to change.
+
+We will provide an update by Friday, 2020-03-27 05:00 US/Pacific with current
+details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes
+Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud
+Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage, Cloud Composer,
+Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute Engine, Cloud
+IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud AI, Firebase
+Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+|
+
+Description: The engineering team has tested a fix, which is being gradually
+rolled out to the affected services. We expect full resolution within the next
+three hours (by 2020-03-27 05:00 US/Pacific). The estimate is tentative and is
+subject to change.
+
+We will provide an update by Friday, 2020-03-27 05:00 US/Pacific with current
+details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes
+Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud
+Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage, Cloud Composer,
+Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute Engine, Cloud
+IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud AI, Firebase
+Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+| Mar 26, 2020 | 23:55 |
+
+Description: Mitigation work is still underway by our engineering team for a
+full resolution. The mitigation is expected to complete within the next few
+hours.
+
+We will provide an update by Friday, 2020-03-27 02:00 US/Pacific with current
+details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes
+Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud
+Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage, Cloud Composer,
+Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute Engine, Cloud
+IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud AI, Firebase
+Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+|
+
+Description: Mitigation work is still underway by our engineering team for a
+full resolution. The mitigation is expected to complete within the next few
+hours.
+
+We will provide an update by Friday, 2020-03-27 02:00 US/Pacific with current
+details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes
+Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud
+Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage, Cloud Composer,
+Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute Engine, Cloud
+IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud AI, Firebase
+Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+| Mar 26, 2020 | 22:58 |
+
+Description: Mitigation work is still underway by our engineering team for a
+full resolution.
+
+We will provide an update by Friday, 2020-03-27 00:00 US/Pacific with current
+details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes
+Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud
+Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage, Cloud Composer,
+Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute Engine, Cloud
+IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud AI, Firebase
+Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+|
+
+Description: Mitigation work is still underway by our engineering team for a
+full resolution.
+
+We will provide an update by Friday, 2020-03-27 00:00 US/Pacific with current
+details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes
+Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud
+Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage, Cloud Composer,
+Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute Engine, Cloud
+IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud AI, Firebase
+Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+| Mar 26, 2020 | 22:01 |
+
+Description: We believe the issue with Google Cloud infrastructure components
+is partially resolved. Restoration of IAM modifications to real-time is
+underway and Cloud IAM latency has decreased.
+
+We will provide an update by Thursday, 2020-03-26 23:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes
+Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud
+Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage, Cloud Composer,
+Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute Engine, Cloud
+IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud AI, Firebase
+Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+|
+
+Description: We believe the issue with Google Cloud infrastructure components
+is partially resolved. Restoration of IAM modifications to real-time is
+underway and Cloud IAM latency has decreased.
+
+We will provide an update by Thursday, 2020-03-26 23:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience delayed IAM modifications that
+surface across multiple Google Cloud Platform services. Currently known
+products that are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes
+Engine, Cloud Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud
+Memorystore, Cloud Filestore, Cloud Spanner, Cloud Storage, Cloud Composer,
+Cloud Dataproc, Cloud KMS, Cloud Container Registry, Compute Engine, Cloud
+IAM, Cloud SQL, Firebase Storage, Cloud Healthcare API, Cloud AI, Firebase
+Machine Learning, Data Catalog, Data Fusion, and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+| Mar 26, 2020 | 20:36 |
+
+Description: We believe the issue with Google Cloud infrastructure components
+is partially resolved. The mitigations have been rolled out globally, and the
+errors should have subsided for all affected users as of 2020-03-26 20:15.
+There remains a backlog of Cloud IAM modifications, which may still have
+increased latency before taking effect. We are currently working through the
+backlog to restore IAM applications to real-time.
+
+We will provide an update by Thursday, 2020-03-26 22:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience elevated error rates that surface
+across multiple Google Cloud Platform services. Currently known products that
+are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes Engine, Cloud
+Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud MemoryStore,
+Cloud Spanner, Cloud Storage, Cloud Composer, Cloud Dataproc, Cloud KMS, Cloud
+Container Registry, Compute Engine, Cloud IAM, Cloud SQL, Firebase Storage,
+Cloud Healthcare API, Cloud AI, Firebase Machine Learning, Data Catalog, Data
+Fusion and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+|
+
+Description: We believe the issue with Google Cloud infrastructure components
+is partially resolved. The mitigations have been rolled out globally, and the
+errors should have subsided for all affected users as of 2020-03-26 20:15.
+There remains a backlog of Cloud IAM modifications, which may still have
+increased latency before taking effect. We are currently working through the
+backlog to restore IAM applications to real-time.
+
+We will provide an update by Thursday, 2020-03-26 22:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience elevated error rates that surface
+across multiple Google Cloud Platform services. Currently known products that
+are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes Engine, Cloud
+Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud MemoryStore,
+Cloud Spanner, Cloud Storage, Cloud Composer, Cloud Dataproc, Cloud KMS, Cloud
+Container Registry, Compute Engine, Cloud IAM, Cloud SQL, Firebase Storage,
+Cloud Healthcare API, Cloud AI, Firebase Machine Learning, Data Catalog, Data
+Fusion and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+| Mar 26, 2020 | 20:02 |
+
+Description: Modifications to Cloud IAM permissions and service accounts may
+have significantly increased latency before taking effect. Existing
+permissions remain enforced. Mitigation work is still underway by our
+engineering team for the remaining services. Customers may experience
+intermittent spikes in errors while mitigations are pushed out globally.
+
+The following services have recovered at this time: App Engine, Cloud
+Functions, Cloud Run, BigQuery, Dataflow, Dialogflow, Cloud Console,
+MemoryStore, Cloud Storage, Cloud Spanner, Data Catalog, Cloud KMS, and Cloud
+Pub/Sub.
+
+Locations that saw the most impact were us-west1, europe-west1, asia-east1,
+and asia-east2.
+
+Services that may still be seeing impact include: Cloud SQL - New instance
+creation failing  
+Cloud Composer - New Composer environments are failing to be created  
+Cloud IAM - Significantly increased latency for changes to take effect
+
+We will provide an update by Thursday, 2020-03-26 21:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience elevated error rates that surface
+across multiple Google Cloud Platform services. Currently known products that
+are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes Engine, Cloud
+Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud MemoryStore,
+Cloud Spanner, Cloud Storage, Cloud Composer, Cloud Dataproc, Cloud KMS, Cloud
+Container Registry, Compute Engine, Cloud IAM, Cloud SQL, Firebase Storage,
+Cloud Healthcare API, Cloud AI, Firebase Machine Learning, Data Catalog and
+Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+|
+
+Description: Modifications to Cloud IAM permissions and service accounts may
+have significantly increased latency before taking effect. Existing
+permissions remain enforced. Mitigation work is still underway by our
+engineering team for the remaining services. Customers may experience
+intermittent spikes in errors while mitigations are pushed out globally.
+
+The following services have recovered at this time: App Engine, Cloud
+Functions, Cloud Run, BigQuery, Dataflow, Dialogflow, Cloud Console,
+MemoryStore, Cloud Storage, Cloud Spanner, Data Catalog, Cloud KMS, and Cloud
+Pub/Sub.
+
+Locations that saw the most impact were us-west1, europe-west1, asia-east1,
+and asia-east2.
+
+Services that may still be seeing impact include: Cloud SQL - New instance
+creation failing  
+Cloud Composer - New Composer environments are failing to be created  
+Cloud IAM - Significantly increased latency for changes to take effect
+
+We will provide an update by Thursday, 2020-03-26 21:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience elevated error rates that surface
+across multiple Google Cloud Platform services. Currently known products that
+are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes Engine, Cloud
+Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud MemoryStore,
+Cloud Spanner, Cloud Storage, Cloud Composer, Cloud Dataproc, Cloud KMS, Cloud
+Container Registry, Compute Engine, Cloud IAM, Cloud SQL, Firebase Storage,
+Cloud Healthcare API, Cloud AI, Firebase Machine Learning, Data Catalog and
+Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+| Mar 26, 2020 | 19:05 |
+
+Description: We believe the issue with Google Cloud infrastructure components
+is partially resolved. The following services have recovered at this time: App
+Engine, Cloud Functions, Cloud Run, BigQuery, Dataflow, Dialogflow, Cloud
+Console, MemoryStore, Cloud Storage, Cloud Spanner, Cloud KMS, and Cloud
+Pub/Sub.
+
+New service accounts are failing to propagate which is manifesting as errors
+in downstream services.
+
+Mitigation work is still underway by our engineering team for the remaining
+services.
+
+Services that may still be seeing impact include: Cloud SQL - New instance
+creation failing  
+Cloud Composer - New Composer environments are failing to be created
+
+Locations that saw the most impact were us-west1, europe-west1, asia-east1,
+and asia-east2, asia-northeast1.
+
+We will provide an update by Thursday, 2020-03-26 20:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience elevated error rates that surface
+across multiple Google Cloud Platform services. Currently known products that
+are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes Engine, Cloud
+Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud MemoryStore,
+Cloud Spanner, Cloud Storage, Cloud Composer, Cloud Dataproc, Cloud KMS, Cloud
+Container Registry, Compute Engine, Cloud IAM, Cloud SQL, Firebase Storage,
+Cloud Healthcare, Cloud AI, Firebase Machine Learning and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+|
+
+Description: We believe the issue with Google Cloud infrastructure components
+is partially resolved. The following services have recovered at this time: App
+Engine, Cloud Functions, Cloud Run, BigQuery, Dataflow, Dialogflow, Cloud
+Console, MemoryStore, Cloud Storage, Cloud Spanner, Cloud KMS, and Cloud
+Pub/Sub.
+
+New service accounts are failing to propagate which is manifesting as errors
+in downstream services.
+
+Mitigation work is still underway by our engineering team for the remaining
+services.
+
+Services that may still be seeing impact include: Cloud SQL - New instance
+creation failing  
+Cloud Composer - New Composer environments are failing to be created
+
+Locations that saw the most impact were us-west1, europe-west1, asia-east1,
+and asia-east2, asia-northeast1.
+
+We will provide an update by Thursday, 2020-03-26 20:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience elevated error rates that surface
+across multiple Google Cloud Platform services. Currently known products that
+are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes Engine, Cloud
+Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud MemoryStore,
+Cloud Spanner, Cloud Storage, Cloud Composer, Cloud Dataproc, Cloud KMS, Cloud
+Container Registry, Compute Engine, Cloud IAM, Cloud SQL, Firebase Storage,
+Cloud Healthcare, Cloud AI, Firebase Machine Learning and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+| Mar 26, 2020 | 18:18 |
+
+Description: Impact is global for some services but is primarily located in
+the following regions: us-west1, europe-west1, asia-east1, and asia-east2.
+Mitigation work is still underway by our engineering team. Error rates have
+been decreasing starting on Thursday, 2020-03-26 17:40 US/Pacific. Many
+downstream services are beginning to recover.
+
+We will provide an update by Thursday, 2020-03-26 19:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience elevated error rates that surface
+across multiple Google Cloud Platform services. Currently known products that
+are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes Engine, Cloud
+Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud MemoryStore,
+Cloud Spanner, Cloud Storage, Cloud Composer, Cloud Dataproc, Cloud KMS, Cloud
+Container Registry, Compute Engine, Cloud IAM, Cloud SQL, Firebase Storage,
+Cloud Healthcare, Cloud AI and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+|
+
+Description: Impact is global for some services but is primarily located in
+the following regions: us-west1, europe-west1, asia-east1, and asia-east2.
+Mitigation work is still underway by our engineering team. Error rates have
+been decreasing starting on Thursday, 2020-03-26 17:40 US/Pacific. Many
+downstream services are beginning to recover.
+
+We will provide an update by Thursday, 2020-03-26 19:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience elevated error rates that surface
+across multiple Google Cloud Platform services. Currently known products that
+are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes Engine, Cloud
+Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud MemoryStore,
+Cloud Spanner, Cloud Storage, Cloud Composer, Cloud Dataproc, Cloud KMS, Cloud
+Container Registry, Compute Engine, Cloud IAM, Cloud SQL, Firebase Storage,
+Cloud Healthcare, Cloud AI and Cloud Console.
+
+Workaround: Retry failed requests with exponential backoff.  
+  
+| Mar 26, 2020 | 17:50 |
+
+Description: Mitigation work is currently underway by our engineering team. We
+are beginning to see some services recover.
+
+We do not have an ETA for mitigation at this point
+
+We will provide more information by Thursday, 2020-03-26 19:00 US/Pacific.
+
+Diagnosis: Affected customers may experience elevated error rates that surface
+across multiple Google Cloud Platform services. Currently known products that
+are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes Engine, Cloud
+Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud MemoryStore,
+Cloud Spanner, Cloud Storage, Cloud Composer, Cloud Dataproc, Cloud KMS, and
+Cloud Console.
+
+Workaround: None at this time.  
+  
+|
+
+Description: Mitigation work is currently underway by our engineering team. We
+are beginning to see some services recover.
+
+We do not have an ETA for mitigation at this point
+
+We will provide more information by Thursday, 2020-03-26 19:00 US/Pacific.
+
+Diagnosis: Affected customers may experience elevated error rates that surface
+across multiple Google Cloud Platform services. Currently known products that
+are impacted are: Dataflow, BigQuery, DialogFlow, Kubernetes Engine, Cloud
+Firestore, App Engine, Cloud Functions, Cloud Monitoring, Cloud MemoryStore,
+Cloud Spanner, Cloud Storage, Cloud Composer, Cloud Dataproc, Cloud KMS, and
+Cloud Console.
+
+Workaround: None at this time.  
+  
+| Mar 26, 2020 | 17:23 |
+
+Description: We are experiencing an intermittent issue with Google Cloud
+infrastructure components beginning on Thursday, 2020-03-26 16:50 US/Pacific.
+
+Symptoms: Affected customers may experience network connectivity issues, and
+elevated error rates across multiple Google Cloud Platform services. Currently
+known products that are impacted are: Dataflow, BigQuery, DialogFlow,
+Kubernetes Engine, Firestore, App Engine, Cloud Functions, Cloud Monitoring,
+and Cloud Dataproc.
+
+Our engineering team continues to investigate the issue.
+
+We will provide an update by Thursday, 2020-03-26 18:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience network connectivity issues, and
+elevated error rates across multiple Google Cloud Platform services.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are experiencing an intermittent issue with Google Cloud
+infrastructure components beginning on Thursday, 2020-03-26 16:50 US/Pacific.
+
+Symptoms: Affected customers may experience network connectivity issues, and
+elevated error rates across multiple Google Cloud Platform services. Currently
+known products that are impacted are: Dataflow, BigQuery, DialogFlow,
+Kubernetes Engine, Firestore, App Engine, Cloud Functions, Cloud Monitoring,
+and Cloud Dataproc.
+
+Our engineering team continues to investigate the issue.
+
+We will provide an update by Thursday, 2020-03-26 18:00 US/Pacific with
+current details.
+
+Diagnosis: Affected customers may experience network connectivity issues, and
+elevated error rates across multiple Google Cloud Platform services.
+
+Workaround: None at this time.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

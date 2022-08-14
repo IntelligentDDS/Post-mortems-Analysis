@@ -1,0 +1,5 @@
+Similar Varnish 'mailbox lag' problems as many times before.
+
+This is a step by step outline of what happened to cause the incident and how it was remedied. Include the lead-up to the incident, as well as any epilogue, and clearly indicate when the user-visible outage began and ended.
+• 19:56 first Icinga alert for HTTP availability PROBLEM - HTTP availability for Nginx -SSL terminators- at ulsfo on icinga1001 is CRITICAL: cluster=cache_text site=ulsfo
+• 19:57 Varnish mailbox lag recovers on cp1083 but begins climbing on cp1085

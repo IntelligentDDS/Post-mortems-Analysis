@@ -1,0 +1,10 @@
+Wikilabels wasn't been able to do some tasks in the past ten days. It was related to CORS changes that haven't been fully tested.
+• 12:51 UTC: Amir1 deployed the new version of Wikilabels into production
+• 14:52 UTC: An issue in github created that it's not possible to request a workset.
+• 16:01 UTC: First fixes goes to production.
+• For people who were using the Wikilabels js from meta (and not using the loader from the server). It wasn't possible to do any write actions. I didn't have access to copy-paste the new wikilabels to Aaron's subpage thus I skipped this step. Won't happen again.
+• Authentication wasn't possible at all. In other words, requests to https://labels-staging.wmflabs.org/auth/ wasn't being accepted due to lack of cookies. It got solved in 08aadf590d79ba1d2b9455d24ddfe64355a1ae0b
+• Assigning tasks wasn't possible. It got solved in [1]
+
+A broad actionable item is to test every possible aspect of patches before going to prod when a big change is coming.
+• Write and deploy more CI tests, specially for oauth. A test unit for service is much more desirable. (phab:T137625)

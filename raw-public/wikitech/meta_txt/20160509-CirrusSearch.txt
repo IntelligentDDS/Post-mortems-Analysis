@@ -1,0 +1,9 @@
+At 21:43 UTC on 2016-05-09 Elasticsearch started to slow down (as seen on Grafana). Investigation showed a high CPU consumption on elastic1026. Elasticsearch service was restarted and response times went back to normal. Investigation trace the cause to a large segment merge and garbage collection going crazy on elastic1026.
+• 2016-05-09T21:43 increase in overall response time (95%-ile) on elasticsearch
+• 2016-05-09T21:51 issue with search reported on IRC by odder
+• We did not get an alert via Icinga. There is currently a check on response time, but it is done on prefix search, which now has a low volume of traffic. This shows again the fragility of Graphite checks.
+• Analysis of GC timings indicates that time was spend mainly in young GC and that memory was recollected. This is usually an indication of a too high memory throughput, not of a memory leak or a too small heap.
+• GC is strongly correlated with a large segment merge on elastic1026. This does not explain why it was an issue only this time.
+• Graphite currentAbove() function is a good tool to identify which server is under more load.
+• Task created: Enable GC logs on Elasticsearch JVM which might help in a more detailed analysis if a similar issue happens again. Note that the size of those logs might be an issue.
+• Task created: Check Icinga alert on CirrusSearch response time, which might lead to either fix this alert or remove it completely

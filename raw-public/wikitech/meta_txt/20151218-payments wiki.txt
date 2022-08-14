@@ -1,0 +1,7 @@
+On December 18 2015 at 11:15 UTC icinga started sending alerts about payments webserver timeouts. We found apache processes backing up, waiting for trivial queries to the fundraising drupal database.
+
+During the time the database was sluggish payment processing performance was degraded and donors may have seen error messages or timeouts.
+
+We appear to have overrun mysql's configured open table cache, which caused mysql to become sluggish to open and close tables for queries.
+
+Additional mysql tuning was performed after the outage to prevent similar outages.

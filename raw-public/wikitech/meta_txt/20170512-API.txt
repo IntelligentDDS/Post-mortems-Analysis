@@ -1,0 +1,22 @@
+The TextExtracts extension (which provides the prop to the MediaWiki API) was providing empty fields for queries for a period of 18 hours. This affected RESTBase and subsequently mobileapps.
+• 14:26:30: Icinga begins reporting problems with RESTBase PROBLEM - restbase endpoints health on restbase1007 is CRITICAL: /en.wikipedia.org/v1/page/random/{format} (Random title redirect) is CRITICAL: Test Random title redirect returned the unexpected status 503 (expecting: 303): /en.wikipedia.org/v1/page/summary/{title} (Get summary from storage) is WARNING: Test Get summary from storage responds with unexpected body: /extract = : /en.wikipedia.org/v1/page/title/{title} (Get rev by title
+• 15:08:14: is pinged to rollback from → since API has been pinpointed, rolls back all wikis on to and pings and to test.
+• 15:24:19: RESTBase query is tried and determined that a rollback does not fix it, but rollback + null edit does, caching is involved
+• ~15:27: Help is needed from Mediawiki devs, troubleshoots is in meeting but helps, too
+• 18:20: reports revert not working submits https://gerrit.wikimedia.org/r/#/c/353593/ to version the memcached key so that the cache will be cleared
+• 18:27: code live on , but determined not to be working, explains: 18:35:37: <MaxSem> however, due to reverts of the whole wrapping diff thing, we have corrupt cache
+• 18:43: creates https://gerrit.wikimedia.org/r/#/c/353596/ to clear parser cache and it's deployed, scap catches problem and https://gerrit.wikimedia.org/r/#/c/353597/ is created and sync to correct problem
+
+Other service impacts because of the core change
+
+Underlying cause for both of these is the extra <div> tag around Parsoid's extension output because Parsoid calls the mediawiki API (action=parse) to process extension tags. This has since been addressed in https://gerrit.wikimedia.org/r/#/c/353707/ and https://gerrit.wikimedia.org/r/#/c/354050/ so that when the core change is redeployed, Parsoid and downstream clients aren't impacted.
+• TextExtracts enables a lot of services on which we depend
+• TextExtracts can be broken by adding a div to parser output
+• There are, evidently, few alarms that catch empty textextract summaries in the API
+• This outcome may have been expected judging from a revert that was proposed before the train https://gerrit.wikimedia.org/r/#/c/352577/
+• The core patch was proposed to be reverted in master as part of https://gerrit.wikimedia.org/r/#/c/352577/ but an alternative proposal was to not revert it in master, but to revert it in 1.30.0-wmf.1 instead. But, it appears that the revert didn't happen in wmf.1 before deploy.
+• Parsoid uses the mediawiki API to process extension tags and there a number of downstream services that depend on Parsoid: VE, Flow, Content Translation, Android App (via Mobile Content Service), and Linter. This bug would have showed up in the beta cluster as reported in T165139. So, there is clearly a testing gap here.
+• Better alarm mechanism for empty textextract summaries so they don't languish for 18 hours
+• (/me is likely missing lots of subtlety, but armchair-quarterbacks anyway) Adding a div shouldn't break textextract, is there some kind of class/id (e.g., ) that can be added to parser output that can then be used by textextract that will have the single express purpose of being used by textextract? Adding a div breaking stuff makes the mechanisms by which it is extracting data seem fragile.
+• If it is likely that deploying a change will cause breakage (i.e., https://gerrit.wikimedia.org/r/#/c/352577/) let deployers/branchers know so that they can backport fixes or reverts before problems manifest.
+• Identify how to update the QA tests that are run on the beta cluster so that any potential breakage of VE, etc. is caught before changes are rolled out to production.

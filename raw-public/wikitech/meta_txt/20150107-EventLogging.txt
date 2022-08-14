@@ -1,0 +1,11 @@
+For about 12 hours 70% of event logging events did not include an schema field and thus did not validate
+
+Issue affected client side events, which are the majority of events sent. Server side events and events sent via client apps were unaffected.
+• Changeset gets deployed at 2 am UTC on January 7th to mediawiki
+• Alarms are raised on throughput of events
+• Look at logs, establish cause and send patchset to fix it
+• Fix patch is deployed on the UTC evening (morning on the west coast)
+
+Deployments should be tested on Beta Cluster, we should avoid going directly to production
+
+We actually learned about this issue via the alarms so, while we could have alarms on the database, which we do not, the alarms on throughput did their job

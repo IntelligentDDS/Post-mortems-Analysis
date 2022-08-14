@@ -1,0 +1,1676 @@
+{
+    "azure-20181011-1": {
+        "title": "App Service - East Asia",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "10/11/2018",
+        "summary": "Between 09:32 and 09:58 UTC on 11 Oct 2018, a subset of customers using App Service in East Asia may have received HTTP 500-level response codes and experienced timeouts or high latency when accessing App Service (Web, Mobile and API Apps) deployments hosted in this region. ",
+        "details": "Root cause: The Microsoft Azure team identified the issue was due to a dependency that the Web App service takes on Azure Storage. The application site content is hosted within Web App platform are backed by Azure Storage in a durable manner.  The application accesses the site contents as file shares (this model maximizes application compatibility). Additionally, the Web App platform employs a feature to improve the impact to customers when the platform detects latency issues within the hosted primary storage volume. This is accomplished by making use of read-only (R/O) replicas (standby volumes) hosted on Azure storage. Web App Engineers collaborated with the Storage team and discovered a previously unknown issue due to regional load balancing of the storage cluster the Web App primary and secondary R/O replicas that application was hosted on. Mitigation: This issue was detected and automatically resolved by the Azure platform's self-healing process. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform to help ensure such incidents do not occur in the future. In this case it includes, but is not limited to: • Fine tuning the self-heal mechanism to pro-actively identify changes due to load balancing and heal faster.",
+        "service_name": [
+            "App service",
+            "Azure Storage"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 26,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    " HTTP 500-level response codes",
+                    "timeout",
+                    "high latency"
+                ]
+            },
+            {
+                "system kpi": [
+                    "R/O latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "The Microsoft Azure team identified the issue was due to a dependency that the Web App service takes on Azure Storage. The application site content is hosted within Web App platform are backed by Azure Storage in a durable manner.  The application accesses the site contents as file shares (this model maximizes application compatibility). Additionally, the Web App platform employs a feature to improve the impact to customers when the platform detects latency issues within the hosted primary storage volume. This is accomplished by making use of read-only (R/O) replicas (standby volumes) hosted on Azure storage. Web App Engineers collaborated with the Storage team and discovered a previously unknown issue due to regional load balancing of the storage cluster the Web App primary and secondary R/O replicas that application was hosted on. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "self heal"
+            ],
+            "details": " This issue was detected and automatically resolved by the Azure platform's self-healing process. ",
+            "troubleshooting": {
+                "1": "This issue was detected and automatically resolved by the Azure platform's self-healing process. "
+            }
+        },
+        "propagation pass": {
+            "1": "primary storage volume",
+            "2": "Azure storage",
+            "3": "Azure app services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "storage",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181011-2": {
+        "title": "Azure Portal and DevOps Accessibility",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "10/11/2018",
+        "summary": "Between 15:59 UTC and 18:35 UTC on 11 Oct 2018, A subset of customers may have experienced intermittent issues when attempting to sign-in to the Azure Portal and DevOps services. ",
+        "details": "Preliminary root cause: Engineers determine that a CDN endpoint that is responsible for processing authentication requests became unreachable. Mitigation: Engineers responded to alerts and were in the process of deploying new CDN endpoints for authentication requests. This had been deployed in staging environments to validate mitigation before this was deployed to production. During the validation, engineers became aware that some customers may not have had these new endpoints whitelisted and so engineers began to troubleshoot this issue before any deployment into production. During the investigation, it was validated that the existing endpoints had become accessible and stable. Once engineers validated the stability and tested the existing CDN endpoints, engineers routed traffic back to the original CDN endpoints. Next steps: Engineering teams are closely monitoring the existing CDN endpoints for any unusual activity. They will work to understand why the CDN endpoint became unreachable and why redundant mechanisms were not invoked automatically.",
+        "service_name": [
+            "Azure Portal",
+            "DevOps services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 156,
+        "detection": {
+            "method": "automate",
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Engineers determine that a CDN endpoint that is responsible for processing authentication requests became unreachable. "
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy new CDN endpoint"
+            ],
+            "details": "Engineers responded to alerts and were in the process of deploying new CDN endpoints for authentication requests. This had been deployed in staging environments to validate mitigation before this was deployed to production. During the validation, engineers became aware that some customers may not have had these new endpoints whitelisted and so engineers began to troubleshoot this issue before any deployment into production. During the investigation, it was validated that the existing endpoints had become accessible and stable. Once engineers validated the stability and tested the existing CDN endpoints, engineers routed traffic back to the original CDN endpoints",
+            "troubleshooting": {
+                "1": "Engineers determine that a CDN endpoint that is responsible for processing authentication requests became unreachable. ",
+                "2": "Engineers responded to alerts and were in the process of deploying new CDN endpoints for authentication requests.",
+                "3": "Once engineers validated the stability and tested the existing CDN endpoints, engineers routed traffic back to the original CDN endpoints. "
+            }
+        },
+        "propagation pass": {
+            "1": "CDN endpoint",
+            "2": "services"
+        },
+        "refined path": {
+            "1": "network devices",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181013-1": {
+        "title": "Storage - East US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "10/13/2018",
+        "summary": "Between 01:00 and 06:50 UTC on 13th Oct 2018, a subset of customers in the East US region may have experienced difficulties connecting to resources hosted in this region. This would include Storage accounts and Virtual Machines. Some customers would have seen improvement starting at around 03:30 UTC, with the vast majority of impact mitigated by 06:00 UTC. Full Storage recovery occurred by 06:50 UTC. Limited impact may have been observed for a small number of customers using Azure Log Analytics, App Services, Logic Apps, HDInsight, Azure Site Recovery, Application Insights, Azure Data Factory, Azure Automation, PostgreSQL, MySQL and Azure Backup in East US. ",
+        "details": "Root cause and mitigation: At 00:10 UTC, a single busy Storage cluster in the US East region experienced a series of storage software role failures due to abnormally high resource utilization. Azure Storage has redundancy designed in, and normally roles will recover without customer impact. Unexpectedly, a small number of the failed roles did not recover automatically. This increased the load on the remaining servers in the cluster, causing further increased resource use and more failures. Customer impact began at around 01:00 UTC. Eventually the number of failed roles reached a critical point where the storage cluster was no longer able to sustain most customer traffic. Engineers made software configuration changes on the affected cluster to reduce resource utilization, and took recovery actions on Storage role instances that were failing to recover automatically. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform to help ensure such incidents do not occur in the future. In this case it includes, but is not limited to: 1. A software fix has been made to better limit resource use in scenarios where several storage roles fail.  This will be rolled out following our normal safe deployment practices. 2. Configuration changes have been made to other similar storage clusters in the fleet, prior to the code fix above being deployed. 3. Investigation into the failed automatic storage role recoveries is ongoing. 4. Additional alerting will be added to alert the engineering team to situations where roles are not recovering as expected. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/7W6C-J20",
+        "service_name": [
+            "Storage accounts",
+            "Virtual Machines",
+            "Azure Log Analytics",
+            "App Services",
+            "Logic Apps",
+            "HDInsight",
+            "Azure Site Recovery",
+            "Application Insights",
+            "Azure Data Factory",
+            "Azure Automation",
+            "PostgreSQL",
+            "MySQL",
+            "Azure Backup"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 350,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error"
+                ]
+            },
+            {
+                "system kpi": [
+                    "high resource utilization",
+                    "role failure"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource",
+                    "layer-3": "service capacity"
+                }
+            ],
+            "details": "At 00:10 UTC, a single busy Storage cluster in the US East region experienced a series of storage software role failures due to abnormally high resource utilization. Azure Storage has redundancy designed in, and normally roles will recover without customer impact. Unexpectedly, a small number of the failed roles did not recover automatically. This increased the load on the remaining servers in the cluster, causing further increased resource use and more failures. Customer impact began at around 01:00 UTC. Eventually the number of failed roles reached a critical point where the storage cluster was no longer able to sustain most customer traffic"
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "change configuration"
+            ],
+            "details": "Engineers made software configuration changes on the affected cluster to reduce resource utilization, and took recovery actions on Storage role instances that were failing to recover automatically. ",
+            "troubleshooting": {
+                "1": "Engineers made software configuration changes on the affected cluster to reduce resource utilization, and took recovery actions on Storage role instances that were failing to recover automatically."
+            }
+        },
+        "propagation pass": {
+            "1": "storage role",
+            "2": "azure storage",
+            "3": "Virtual machines",
+            "4": "services"
+        },
+        "refined path": {
+            "1": "storage",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181016-1": {
+        "title": "RCA - Azure Service Availability - France Central",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "10/16/2018",
+        "summary": "Between 13:57 and 16:45 UTC on 16 Oct 2018, a subset of customers may have experienced difficulties connecting to resources in the France Central region. This impact was related to a number of Storage and Compute resources that experienced an unexpected power-down during this time. ",
+        "details": "Root cause and mitigation: A corrective maintenance activity related to the fire alarm system was taking place in one of the isolated zones (Colos) in the datacenter at the start of this event. While working on the system, the maintenance engineer inadvertently triggered the fire alarm for this Colo, which in normal circumstances would have alerted staff, but would not have caused any impact to running services in the Colo. However in this instance a separate legacy fire suppression system, with an automated power shutdown process, was also triggered by the fire alarm. The activation of this system triggered a general power shutdown process, and a number of storage and compute resources in this single Colo became unavailable as a result. This legacy system was configured, pursuant to previous French insurance requirements, to automatically shut down power in the event of a fire suppression activation being triggered, and also to prevent backup power supplies from kicking in. This system was not supposed to be active, or able to trigger the shutdown of the power systems in this Colo. The Engineers onsite performed a manual restoration of power in the Colo, and then brought the impacted Storage and Compute resources back online in a structured manner to ensure full data resilience, and complete service restoration. Engineers actively monitored the restoration process, and full service restoration was confirmed at 16:45 UTC, although most services would have recovered before this time. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. Steps specific related to this incident include: 1. A complete review of the maintenance processes for fire systems in this region to eliminate false alarm triggers during these processes. 2. A full audit of all datacenters in this region. Looking for legacy fire suppression systems which may still be active or in existence. 3. The removal of the links to the power supply control systems from fire suppression systems removing the bridge that will allow an alert on one system impacting another. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/J2T1-PLZ",
+        "service_name": [
+            "Storage",
+            "Compute"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 168,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error"
+                ]
+            },
+            {
+                "system kpi": [
+                    "power down"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "power outage"
+                }
+            ],
+            "details": "A corrective maintenance activity related to the fire alarm system was taking place in one of the isolated zones (Colos) in the datacenter at the start of this event. While working on the system, the maintenance engineer inadvertently triggered the fire alarm for this Colo, which in normal circumstances would have alerted staff, but would not have caused any impact to running services in the Colo. However in this instance a separate legacy fire suppression system, with an automated power shutdown process, was also triggered by the fire alarm. The activation of this system triggered a general power shutdown process, and a number of storage and compute resources in this single Colo became unavailable as a result. This legacy system was configured, pursuant to previous French insurance requirements, to automatically shut down power in the event of a fire suppression activation being triggered, and also to prevent backup power supplies from kicking in. This system was not supposed to be active, or able to trigger the shutdown of the power systems in this Colo. "
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "manually restore power"
+            ],
+            "details": "The Engineers onsite performed a manual restoration of power in the Colo, and then brought the impacted Storage and Compute resources back online in a structured manner to ensure full data resilience, and complete service restoration. Engineers actively monitored the restoration process, and full service restoration was confirmed at 16:45 UTC, although most services would have recovered before this time. ",
+            "troubleshooting": {
+                "1": "The Engineers onsite performed a manual restoration of power in the Colo",
+                "2": " brought the impacted Storage and Compute resources back online and complete service restoration.",
+                "3": "Engineers actively monitored the restoration process, and full service restoration was confirmed at 16:45 UTC, although most services would have recovered before this time."
+            }
+        },
+        "propagation pass": {
+            "1": "power",
+            "2": "data center",
+            "3": "Storage and Compute resources "
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "data center",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181017-1": {
+        "title": "Latency between North Europe and North America",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "10/17/2019",
+        "summary": "Between 14:30 and 16:35 UTC on 17 Oct 2018, a subset of customers with traffic going between the North Europe datacenter and North America regions may have intermittently experienced degraded performance, and in some rare instances network drops or timeouts, when accessing Azure resources. ",
+        "details": "Preliminary root cause and mitigation: A fiber cut was determined as the underlying root cause, and engineers balanced traffic to minimize any customer impact. The affected fiber was primarily responsible for replication traffic, so customer impact would have been minimal. Next steps: Engineers are engaged as the fiber repair is underway. Once the site is stable and thorough testing has been completed, engineers will route traffic back through the existing paths. ",
+        "service_name": [
+            "Azure resources"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 125,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "degraded performance",
+                    "timeout",
+                    "network drop"
+                ]
+            },
+            {
+                "system kpi": [
+                    "network drop"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "A fiber cut was determined as the underlying root cause, and engineers balanced traffic to minimize any customer impact. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "repair fiber",
+                "balance traffic"
+            ],
+            "details": "The affected fiber was primarily responsible for replication traffic, so customer impact would have been minimal",
+            "troubleshooting": {
+                "1": "A fiber cut was determined as the underlying root cause, and engineers balanced traffic to minimize any customer impact.",
+                "2": "repair fiber"
+            }
+        },
+        "propagation pass": {
+            "1": "fiber",
+            "2": "data center",
+            "3": "Azure services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "data center",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181024-1": {
+        "title": "RCA - Networking in West US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "03/14/2019",
+        "summary": "Between 22:40 UTC on 24 Oct 2018 and 00:03 UTC on 25 Oct 2018, a subset of customers may have experienced degraded network performance and/or difficulties connecting to resources in the West US region",
+        "details": "Root cause: A network device connecting a datacenter in the West US region experienced a fault during routine fiber maintenance. Azure Networking lost a subset of capacity between the affected data center and other facilities in the West US region.  The failed network device also began silently dropping a portion of the flows that traversed it. Mitigation: The incident was mitigated by rebalancing traffic across the remaining links.  The incident was resolved via restoration of the fiber and the optical system. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. Steps specific to this incident include: Evaluate faster link level bidirectional failure detection [in progress] Evaluate escalated timeline for higher capacity links for this data center [in progress] Expand existing black hole detection scenarios [in progress] Review process and validations after fiber plant maintenance [in progress] Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/BRH3-JT0",
+        "service_name": [
+            "Azure networking",
+            "data center"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 12,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "degraded performance",
+                    "connection error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "A network device connecting a datacenter in the West US region experienced a fault during routine fiber maintenance. Azure Networking lost a subset of capacity between the affected data center and other facilities in the West US region.  The failed network device also began silently dropping a portion of the flows that traversed it. "
+        },
+        "operation": [
+            "routine fiber maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "rebalance traffic",
+                "restore fiber"
+            ],
+            "details": "The incident was mitigated by rebalancing traffic across the remaining links.  The incident was resolved via restoration of the fiber and the optical system. ",
+            "troubleshooting": {
+                "1": "The incident was mitigated by rebalancing traffic across the remaining links.",
+                "2": "The incident was resolved via restoration of the fiber and the optical system. "
+            }
+        },
+        "propagation pass": {
+            "1": "network device",
+            "2": "data center"
+        },
+        "refined path": {
+            "1": "network device",
+            "2": "data center"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181027-1": {
+        "title": "Virtual Machines/VM Scale Sets - West US 2",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "10/27/2018",
+        "summary": "Between 02:50 and 10:37 UTC on 27 Oct 2018, a subset of customers using Virtual Machines and/or Virtual Machine Scale Sets in West US 2 may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in this region. ",
+        "details": "Preliminary root cause: Engineers determined that some instances of a backend service responsible for interservice communication became unhealthy which in turn, caused requests between Storage and dependent resources to fail. Mitigation: Engineers performed a change to the backend service to achieve mitigation. Platform telemetry was then observed and service team engineers from affected services confirmed all requests completed successfully. Next steps: Engineers will continue to investigate to establish the full root cause to prevent future occurrences.",
+        "service_name": [
+            "Virtual machines"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 467,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "Engineers determined that some instances of a backend service responsible for interservice communication became unhealthy which in turn, caused requests between Storage and dependent resources to fail. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "perform a change to the backend service"
+            ],
+            "details": "Engineers performed a change to the backend service to achieve mitigation. Platform telemetry was then observed and service team engineers from affected services confirmed all requests completed successfully",
+            "troubleshooting": {
+                "1": "Engineers determined that some instances of a backend service responsible for interservice communication became unhealthy which in turn, caused requests between Storage and dependent resources to fail.",
+                "2": "Engineers performed a change to the backend service to achieve mitigation. Platform telemetry was then observed and service team engineers from affected services confirmed all requests completed successfully."
+            }
+        },
+        "propagation pass": {
+            "1": "instances of a backend service",
+            "2": "backend services"
+        },
+        "refined path": {
+            "1": "backend instances",
+            "2": "backend services"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181102-1": {
+        "title": "Azure Portal Timeouts and Latency",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "11/02/2018",
+        "summary": "Between 23:05 UTC on 02 Nov 2018 and 00:21 UTC on 03 Nov 2018, some customers may have experienced high latency or timeouts when viewing resources or loading blades through the Azure Portal (https://portal.azure.com). ",
+        "details": "Preliminary root cause: Engineers determined that a recent deployment task introduced an updated DNS record that caused the backend service hosting portal blades to become unhealthy, preventing requests from completing. Mitigation: Engineers performed a configuration change to revert the impacting update. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. ",
+        "service_name": [
+            "Azure Portal"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 76,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "timeout",
+                    "high latency"
+                ]
+            },
+            {
+                "system kpi": [
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config",
+                    "layer-4": "DNS"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Engineers determined that a recent deployment task introduced an updated DNS record that caused the backend service hosting portal blades to become unhealthy, preventing requests from completing."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "change configuration"
+            ],
+            "details": "Engineers performed a configuration change to revert the impacting update. ",
+            "troubleshooting": {
+                "1": "Engineers determined that a recent deployment task introduced an updated DNS record that caused the backend service hosting portal blades to become unhealthy, preventing requests from completing. ",
+                "2": "Engineers performed a configuration change to revert the impacting update."
+            }
+        },
+        "propagation pass": {
+            "1": "DNS",
+            "2": "backend service hosting portal blades",
+            "3": "Azure Portal"
+        },
+        "refined path": {
+            "1": "DNS",
+            "2": "backend services",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181109-1": {
+        "title": "App Service and Azure Functions",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "11/09/2018",
+        "summary": "Between 22:48 UTC on 08 Nov 2018 and 13:30 UTC on 09 Nov 2018, a subset of customers using App Services may have experienced errors when accessing the Azure Functions blade, or experienced issues when accessing App settings in the Azure portal (https://portal.azure.com) ",
+        "details": "Preliminary root cause: Engineers identified a recent deployment to a specific regional instance of the Functions portal as the root cause. Mitigation: Engineers deployed a platform hotfix to mitigate the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.",
+        "service_name": [
+            "App services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 882,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Engineers identified a recent deployment to a specific regional instance of the Functions portal as the root cause. "
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy a platform hotfix"
+            ],
+            "details": "Engineers deployed a platform hotfix to mitigate the issue. ",
+            "troubleshooting": {
+                "1": "Engineers identified a recent deployment to a specific regional instance of the Functions portal as the root cause. ",
+                "2": "Engineers deployed a platform hotfix to mitigate the issue. "
+            }
+        },
+        "propagation pass": {
+            "1": "a specific regional instance of the Functions portal",
+            "2": "Azure services and Azure functions"
+        },
+        "refined path": {
+            "1": "app instances",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181111-1": {
+        "title": "Storage - West US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "11/11/2018",
+        "summary": "Between 07:12 and 17:19 UTC on 11 Nov 2018, you were identified as a customer using Storage in West US who may have experienced difficulties reading from a subset of blob storage accounts hosted in this region. ",
+        "details": "Root cause: Engineers received monitoring alerts for degraded storage accessibility. Upon investigation, they determined that a single storage scale unit was unreachable from internet. It started when a route configuration at one of the regional internet service providers caused traffic to get re-routed incorrectly and drop. Traffic inside the Microsoft network for the storage scale unit was not affected by this issue. Mitigation: Engineers worked with the internet service provider to correct the route configuration and removed the incorrect route advertisement. Next steps: Microsoft monitors all its route advertisement on the internet to validate the origins of the route. Since this incident, Microsoft has hardened the check for its routes on the internet. Microsoft is also working with large service providers to not accept Microsoft routes from any other service provider. We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. ",
+        "service_name": [
+            "Storage",
+            "internet service provider"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 607,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "monitoring"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "degraded storage accessibility"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "third-party failures"
+                }
+            ],
+            "details": "Engineers received monitoring alerts for degraded storage accessibility. Upon investigation, they determined that a single storage scale unit was unreachable from internet. It started when a route configuration at one of the regional internet service providers caused traffic to get re-routed incorrectly and drop. Traffic inside the Microsoft network for the storage scale unit was not affected by this issue."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "correct route configuration",
+                "remove incorrect route advertisement"
+            ],
+            "details": "Engineers worked with the internet service provider to correct the route configuration and removed the incorrect route advertisement",
+            "troubleshooting": {
+                "1": "Upon investigation, they determined that a single storage scale unit was unreachable from internet.",
+                "2": "Engineers worked with the internet service provider to correct the route configuration and removed the incorrect route advertisement"
+            }
+        },
+        "propagation pass": {
+            "1": "router",
+            "2": "storage scale unit",
+            "3": "Storage"
+        },
+        "refined path": {
+            "1": "router",
+            "2": "storage scale unit",
+            "3": "storage"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verififcation": "lixy, yugb"
+    },
+    "azure-20181113-1": {
+        "title": "App Service and Function Apps",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "11/13/2018",
+        "summary": "Between 11:10 and 12:25 UTC on 13 Nov 2018, you were identified as a customer using App Service and/or Function Apps who may have received intermittent HTTP 500-level response codes, have experienced timeouts or high latency when accessing App Service (Web, Mobile and API Apps) deployments hosted in these regions. Impacted customers may have also seen issues with their Azure App Service Scaling settings. ",
+        "details": "Preliminary root cause: Engineers determined that unhealthy instances of a backend application caused a subset of servers to become unstable, preventing requests from completing. Mitigation: Engineers performed a hotfix to patch these servers, in order to mitigate the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. ",
+        "service_name": [
+            "App Service"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 75,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "HTTP 500-level response codes",
+                    "timeout",
+                    "high latency"
+                ]
+            },
+            {
+                "system kpi": [
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "Engineers determined that unhealthy instances of a backend application caused a subset of servers to become unstable, preventing requests from completing. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "perform a hotfix"
+            ],
+            "details": "Engineers performed a hotfix to patch these servers, in order to mitigate the issue. ",
+            "troubleshooting": {
+                "1": "Engineers determined that unhealthy instances of a backend application caused a subset of servers to become unstable, preventing requests from completing. ",
+                "2": "Engineers performed a hotfix to patch these servers, in order to mitigate the issue. "
+            }
+        },
+        "propagation pass": {
+            "1": "instances of a backend application",
+            "2": "App Service and Function Apps"
+        },
+        "refined path": {
+            "1": "backend instances",
+            "2": "backend services",
+            "3": "backend servers",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181114-1": {
+        "title": "Azure DevTest Labs - Mitigated",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "11/14/2018",
+        "summary": "Between 20:29 and 22:28 UTC on 14 Nov 2018, a subset of customers using Azure DevTest Labs may have received failure notifications when attempting to access their Labs via the Azure Portal. ",
+        "details": "Preliminary root cause: Engineers determined that a recent deployment task contained an update which caused calls to an internal API to fail. Mitigation: Engineers rolled back the recent deployment task to mitigate the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.",
+        "service_name": [
+            "Azure DevTest Labs"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 119,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "error rate",
+                    "failure notification"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Engineers determined that a recent deployment task contained an update which caused calls to an internal API to fail. "
+        },
+        "operation": [
+            "deployment",
+            "update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back deployment"
+            ],
+            "details": "Engineers rolled back the recent deployment task to mitigate the issue.",
+            "troubleshooting": {
+                "1": "Engineers determined that a recent deployment task contained an update which caused calls to an internal API to fail. ",
+                "2": "Engineers rolled back the recent deployment task to mitigate the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "internal API",
+            "2": "Azure Portal",
+            "3": "Azure DevTest Lab"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181119-1": {
+        "title": "RCA - Multi-Factor Authentication",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "11/19/2018",
+        "summary": "Between 04:39 UTC and 18:38 UTC on 19 November 2018, Microsoft Azure AD Multi-Factor Authentication (MFA) services experienced an outage. Users of Azure Active Directory authentication services - including users of Office 365, Azure, Dynamics and other services which use Azure Active Directory for authentication – were unable to log in if MFA was required as determined by their organization’s policy.  The event was mitigated on Monday, 19 November 2018 at 18:38 UTC. Furthermore, engineers kept the event open and confirmed through extensive monitoring that​the root causes identified were correct, incorporated immediate telemetry and processed changes to close the incident​on​Wednesday, 21 November 2018 at 03:00 UTC.​​​",
+        "details": "There were three independent root causes discovered. In addition, gaps in telemetry and monitoring for the MFA services delayed the identification and understanding of these root causes which caused an extended mitigation time. The first two root causes were identified as issues on the MFA frontend server, both introduced in a roll-out of a code update that began in some datacenters (DCs) on Tuesday, 13 November 2018 and completed in all DCs by Friday, 16 November 2018. The issues were later determined to be activated once a certain traffic threshold was exceeded which occurred for the first time early Monday (UTC) in the Azure West Europe (EU) DCs. Morning peak traffic characteristics in the West EU DCs were the first to cross the threshold that triggered the bug. The third root cause was not introduced in this rollout and was found as part of the investigation into this event. The first root cause manifested as latency issue in the MFA frontend’s communication to its cache services. This issue began under high load once a certain traffic threshold was reached. Once the MFA services experienced this first issue, they became more likely to trigger second root cause. The second root cause is a race condition in processing responses from the MFA backend server that led to recycles of the MFA frontend server processes which can trigger additional latency and the third root cause (below) on the MFA backend. The third identified root cause, was previously undetected issue in the backend MFA server that was triggered by the second root cause. This issue causes accumulation of processes on the MFA backend leading to resource exhaustion on the backend at which point it was unable to process any further requests from the MFA frontend while otherwise appearing healthy in our monitoring. Mitigation: There were three main phases of this event: Phase 1: Impact to EMEA and APAC customers - 04:39 UTC to 07:50 UTC on 19 Nov 2018: To enhance reliability and performance, caching services are used throughout Azure Active Directory. The MFA team recently deployed a change to more effectively manage connections to the caching services. Unfortunately, this change introduced more latency and a race-condition in the new connection management code, under heavy load. This caused the MFA service to slow down processing of requests, initially impacting the West EU DCs (which services APAC and EMEA traffic). During this time, multiple mitigations were applied - including changes in the traffic patterns in the EU DCs, disablement of auto-mitigation systems to reduce traffic volumes and eventually traffic which was rerouted to East US DC. Our expectation was that a healthy cache service in the East US DC would mitigate the latency issues and allow the engineers to focus on other mitigations in the West EU DCs. However, the additional traffic to the East US DC caused the MFA frontend servers to experience the same issue as West EU, and eventually requests started to timeout. Engineers therefore rerouted traffic back to the West EU DCs and continued with the investigation. Phase 2: Broad customer impact - 07:50 UTC to 18:38 UTC on 19 Nov 2018: A previously undetected issue in the Azure MFA backend, triggered by the race condition in the front end, and caused an accumulation of processes. Azure MFA backend resource limits were exhausted, preventing the delivery of MFA messages to customers.  During this time, the West EU DCs were still experiencing timeouts in serving requests and in the absence of signals/telemetry to indicate other issues, the engineering team's continued focus was on mitigating the latency issue in the MFA frontend servers. In order to restore the health of these datacenters, engineers rolled back the recent deployment, added capacity, increased throttling limits, recycled MFA cache servers and frontend servers and applied a hotfix to the frontend servers to bypass the cache. This mitigated the latency issue, but customers (inclusive of US Gov and China) were still reporting issues with MFA, therefore engineers increased their focus in looking for root causes other than the MFA frontend latency issue. After investigating and identifying issues in the MFA backend servers, engineers cycled the MFA backend servers to fully restore service health.  The initial diagnosis of these issues was difficult because the various events impacting the service were overlapping and did not manifest as separate issues.  This was made more acute by the gaps in telemetry that would identify the backend server issue.  Once these issues were determined and fully mitigated across all DCs, the team continued to monitor events and customer reported issues for the following 48 hours. Phase 3:  Post recovery - RCA, Monitoring and analysis of customer reported issues - 18:38 UTC on 19 Nov 2018 to 03:00 UTC on 21 Nov 2018: Engineers kept the incident open for a period of approximately 48 hours to monitor and fully investigate any further customer reported cases and confirm that the issues were fully mitigated. We also wanted to increase our confidence that the root causes identified were, in fact, the source of the failures. On Wednesday, 21 November 2018 at 03:00 UTC, the incident was closed. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Review our update deployment procedures to better identify similar issues during our development and testing cycles (completion by Dec 2018) Review the monitoring services to identify ways to reduce detection time and quickly restore service (completion by Dec 2018) Review our containment process to avoid propagating an issue to other datacenters (completion by Jan 2019) Update communications process to the Service Health Dashboard and monitoring tools to detect publishing issues immediately during incidents (completed) We always encourage customers to stay informed on any issues, maintenance events, or advisories. They should visit:​https://www.aka.ms/ash-alerts​and configure notifications via their preferred communication channel(s): email, SMS, webhook, etc. In this incident communications were not promptly sent to the Service Health blade in the management portal for all impacted customers. This was an error from the Azure team, for which we apologize. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey - https://aka.ms/R4S4-RWG ",
+        "service_name": [
+            "Multi-Factor Authentication (MFA)",
+            "Azure Active Directory",
+            " Office 365",
+            "Azure",
+            "Dynamics"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 839,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "telemetry"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "high resource utilization"
+                ]
+            },
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "resource race"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "excessive flow"
+                }
+            ],
+            "details": "There were three independent root causes discovered. In addition, gaps in telemetry and monitoring for the MFA services delayed the identification and understanding of these root causes which caused an extended mitigation time. The first two root causes were identified as issues on the MFA frontend server, both introduced in a roll-out of a code update that began in some datacenters (DCs) on Tuesday, 13 November 2018 and completed in all DCs by Friday, 16 November 2018. The issues were later determined to be activated once a certain traffic threshold was exceeded which occurred for the first time early Monday (UTC) in the Azure West Europe (EU) DCs. Morning peak traffic characteristics in the West EU DCs were the first to cross the threshold that triggered the bug. The third root cause was not introduced in this rollout and was found as part of the investigation into this event. The first root cause manifested as latency issue in the MFA frontend’s communication to its cache services. This issue began under high load once a certain traffic threshold was reached. Once the MFA services experienced this first issue, they became more likely to trigger second root cause. The second root cause is a race condition in processing responses from the MFA backend server that led to recycles of the MFA frontend server processes which can trigger additional latency and the third root cause (below) on the MFA backend. The third identified root cause, was previously undetected issue in the backend MFA server that was triggered by the second root cause. This issue causes accumulation of processes on the MFA backend leading to resource exhaustion on the backend at which point it was unable to process any further requests from the MFA frontend while otherwise appearing healthy in our monitoring. "
+        },
+        "operation": [
+            "update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy a change",
+                "roll back deployment",
+                "add capacity",
+                "increase throttling limits",
+                "recycled MFA cache servers",
+                "apply a hotfix"
+            ],
+            "details": "There were three main phases of this event: Phase 1: Impact to EMEA and APAC customers - 04:39 UTC to 07:50 UTC on 19 Nov 2018: To enhance reliability and performance, caching services are used throughout Azure Active Directory. The MFA team recently deployed a change to more effectively manage connections to the caching services. Unfortunately, this change introduced more latency and a race-condition in the new connection management code, under heavy load. This caused the MFA service to slow down processing of requests, initially impacting the West EU DCs (which services APAC and EMEA traffic). During this time, multiple mitigations were applied - including changes in the traffic patterns in the EU DCs, disablement of auto-mitigation systems to reduce traffic volumes and eventually traffic which was rerouted to East US DC. Our expectation was that a healthy cache service in the East US DC would mitigate the latency issues and allow the engineers to focus on other mitigations in the West EU DCs. However, the additional traffic to the East US DC caused the MFA frontend servers to experience the same issue as West EU, and eventually requests started to timeout. Engineers therefore rerouted traffic back to the West EU DCs and continued with the investigation. Phase 2: Broad customer impact - 07:50 UTC to 18:38 UTC on 19 Nov 2018: A previously undetected issue in the Azure MFA backend, triggered by the race condition in the front end, and caused an accumulation of processes. Azure MFA backend resource limits were exhausted, preventing the delivery of MFA messages to customers.  During this time, the West EU DCs were still experiencing timeouts in serving requests and in the absence of signals/telemetry to indicate other issues, the engineering team's continued focus was on mitigating the latency issue in the MFA frontend servers. In order to restore the health of these datacenters, engineers rolled back the recent deployment, added capacity, increased throttling limits, recycled MFA cache servers and frontend servers and applied a hotfix to the frontend servers to bypass the cache. This mitigated the latency issue, but customers (inclusive of US Gov and China) were still reporting issues with MFA, therefore engineers increased their focus in looking for root causes other than the MFA frontend latency issue. After investigating and identifying issues in the MFA backend servers, engineers cycled the MFA backend servers to fully restore service health.  The initial diagnosis of these issues was difficult because the various events impacting the service were overlapping and did not manifest as separate issues.  This was made more acute by the gaps in telemetry that would identify the backend server issue.  Once these issues were determined and fully mitigated across all DCs, the team continued to monitor events and customer reported issues for the following 48 hours. Phase 3:  Post recovery - RCA, Monitoring and analysis of customer reported issues - 18:38 UTC on 19 Nov 2018 to 03:00 UTC on 21 Nov 2018: Engineers kept the incident open for a period of approximately 48 hours to monitor and fully investigate any further customer reported cases and confirm that the issues were fully mitigated. We also wanted to increase our confidence that the root causes identified were, in fact, the source of the failures. On Wednesday, 21 November 2018 at 03:00 UTC, the incident was closed. ",
+            "troubleshooting": {
+                "1": "The MFA team recently deployed a change to more effectively manage connections to the caching services.",
+                "2": "multiple mitigations were applied - including changes in the traffic patterns in the EU DCs, disablement of auto-mitigation systems to reduce traffic volumes and eventually traffic which was rerouted to East US DC",
+                "3": "In order to restore the health of these datacenters, engineers rolled back the recent deployment, added capacity, increased throttling limits, recycled MFA cache servers and frontend servers and applied a hotfix to the frontend servers to bypass the cache",
+                "4": "After investigating and identifying issues in the MFA backend servers, engineers cycled the MFA backend servers to fully restore service health."
+            }
+        },
+        "propagation pass": {
+            "1": "MFA redis and MFA backend services",
+            "2": "MFA frontend server",
+            "3": "Azure Active Directory",
+            "4": "services"
+        },
+        "refined path": {
+            "1": "backend services",
+            "2": "frontend server",
+            "3": "middleware",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181126-1": {
+        "title": "RCA - Virtual Network - UK South and UK West",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "11/26/2019",
+        "summary": "Between 11:19 and 16:56 UTC on 26 Nov 2018, a subset of customers using Virtual Networks in UK South and UK West may have experienced difficulties connecting to resources hosted in these regions. Some customers using Global VNET peering or replication between these regions may have experienced latency or connectivity issues. This issue may have also impacted connections to other Azure services. ",
+        "details": "Root cause and mitigation: A 16 minute hardware failure on a WAN router caused a large amount of traffic to failover from the primary path out of the region to the backup path, causing increased congestion on the backup path. Once the hardware failure was resolved, a firmware issue with our WAN traffic engineering solution prevented traffic from returning to the primary path, causing the congestion issue to persist. Engineers manually rerouted network traffic back to the primary path to reduce the congestion and mitigate the issue. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Fix the firmware issue that prevented traffic from rerouting back to the primary path (completed) Create alerts to detect similar issues with our traffic engineering solution in the future (completed) Assess possible design changes to the WAN Traffic Engineering solution to maximize performance in extreme congestion scenarios (in progress) Create alerts and monitoring process to detect large traffic flows that can be throttled to reduce congestion in this type of situation (completed) Increase capacity in the region to avoid the potential for congestion (completed) Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/F7M1-9QG ",
+        "service_name": [
+            "Virtual network"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 217,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error",
+                    "high latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "A 16 minute hardware failure on a WAN router caused a large amount of traffic to failover from the primary path out of the region to the backup path, causing increased congestion on the backup path. Once the hardware failure was resolved, a firmware issue with our WAN traffic engineering solution prevented traffic from returning to the primary path, causing the congestion issue to persist."
+        },
+        "operation": [
+            "normal operation",
+            "failover"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "reroute network traffic"
+            ],
+            "details": "Engineers manually rerouted network traffic back to the primary path to reduce the congestion and mitigate the issue. ",
+            "troubleshooting": {
+                "1": "Engineers manually rerouted network traffic back to the primary path to reduce the congestion and mitigate the issue. "
+            }
+        },
+        "propagation pass": {
+            "1": "hardware",
+            "2": "WAN router",
+            "3": "virtual network"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "router",
+            "3": "network"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null
+    },
+    "azure-20181127-1": {
+        "title": "RCA - Multi-Factor Authentication",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "11/27/2018",
+        "summary": "At 14:20 UTC on November 27th, the Azure Multi-Factor Authentication (MFA) service experienced an outage that impacted cloud-based MFA customers worldwide. Service was partially restored at 14:40 UTC and fully restored at 17:39 UTC. Login scenarios requiring MFA using SMS, voice, phone app, or OATH tokens-based logins were blocked during that time. Password-based and Windows Hello-based logins were not impacted, nor were valid unexpired MFA sessions. From 14:20 to 14:40 UTC, any user required to perform MFA using cloud-based Azure MFA was unable to complete the MFA process and so could not sign-in. These users were shown a browser page or client app that contained an error ID. From 14:40 to 17:39 UTC, the problem was resolved for some users but continued for the majority. This subset of users continued to experience difficulties in authenticating via MFA. When experienced, the user would appear to begin the MFA authentication but never receive a code from the service. This affected all Azure MFA methods (e.g. SMS, Phone, or Authenticator) and occurred whether MFA was triggered by Conditional Access policy or per-user MFA. Conditional access policies not requiring MFA were not impacted. Windows Hello authentication was not impacted. ​​​",
+        "details": "Root cause and mitigation: This outage was caused by a Domain Name System (DNS) failure which made the MFA service temporarily undiscoverable and a subsequent traffic surge resulting from the restoration of DNS service. Microsoft detected the DNS outage when it began at 14:20 UTC when engineers were notified by monitoring alerts. We sincerely apologize to our customers whose business depends on Azure Multi-Factor Authentication and were impacted by these two recent MFA incidents. Immediate and medium-term remediation steps are being taken to improve performance and significantly reduce the likelihood of future occurrence to customers across Azure, O365 and Dynamics. As described above, there were two stages to the outage, related but with separate root causes. The first root cause was an operational error that caused an entry to expire in the DNS system used internally in the MFA service. This expiration occurred at 14:20 UTC, and in turn caused our MFA front-end servers to be unable to communicate with the MFA back-end. Once the DNS outage was resolved at 14:40 UTC, the resultant traffic patterns that were built up from the aforementioned issue caused contention and exhaustion of a resource in the MFA back-end that took an extended time to identify and mitigate. This second root cause was a previously unknown bug in the same component as the MFA incident that occurred on 19 of Nov 2018. This bug would cause the servers to freeze as they were processing the backlogged traffic. To prevent this bug causing servers to freeze while a sustainable mitigation was being applied, engineers recycled servers. Engineering teams continued add capacity to the MFA service to assist in alleviating the backlog. Draining the resultant traffic back to normal levels took until 17:39 UTC at which point the incident was mitigated. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Implementing the code fix to the MFA backend service to stop servers from freezing when processing high rate of backlogged requests. [COMPLETE] During the last incident we increased capacity in the Europe region, capacity is now being scaled out to all regions for MFA. [COMPLETE] Deploy improved throttling management system to manage traffic spikes. [COMPLETE] All DNS changes will be moved to an automated system [IN PROGRESS] Provide feedback: Please help us improve the Azure customer communications experience by taking our survey - https://aka.ms/AA3dtmc ",
+        "service_name": [
+            "Azure Multi-Factor Authentication (MFA)"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 199,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            },
+            {
+                "system kpi": [
+                    "high resource utilization"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config",
+                    "layer-4": "DNS"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "This outage was caused by a Domain Name System (DNS) failure which made the MFA service temporarily undiscoverable and a subsequent traffic surge resulting from the restoration of DNS service. Microsoft detected the DNS outage when it began at 14:20 UTC when engineers were notified by monitoring alerts. We sincerely apologize to our customers whose business depends on Azure Multi-Factor Authentication and were impacted by these two recent MFA incidents. Immediate and medium-term remediation steps are being taken to improve performance and significantly reduce the likelihood of future occurrence to customers across Azure, O365 and Dynamics. As described above, there were two stages to the outage, related but with separate root causes. The first root cause was an operational error that caused an entry to expire in the DNS system used internally in the MFA service. This expiration occurred at 14:20 UTC, and in turn caused our MFA front-end servers to be unable to communicate with the MFA back-end. Once the DNS outage was resolved at 14:40 UTC, the resultant traffic patterns that were built up from the aforementioned issue caused contention and exhaustion of a resource in the MFA back-end that took an extended time to identify and mitigate. This second root cause was a previously unknown bug in the same component as the MFA incident that occurred on 19 of Nov 2018. This bug would cause the servers to freeze as they were processing the backlogged traffic. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "recycle server",
+                "add capacity",
+                "drain traffic"
+            ],
+            "details": "To prevent this bug causing servers to freeze while a sustainable mitigation was being applied, engineers recycled servers. Engineering teams continued add capacity to the MFA service to assist in alleviating the backlog. Draining the resultant traffic back to normal levels took until 17:39 UTC at which point the incident was mitigated",
+            "troubleshooting": {
+                "1": "Microsoft detected the DNS outage when it began at 14:20 UTC when engineers were notified by monitoring alerts. ",
+                "2": "Once the DNS outage was resolved at 14:40 UTC, the resultant traffic patterns that were built up from the aforementioned issue caused contention and exhaustion of a resource in the MFA back-end that took an extended time to identify and mitigate.",
+                "3": "To prevent this bug causing servers to freeze while a sustainable mitigation was being applied, engineers recycled servers",
+                "4": "Engineering teams continued add capacity to the MFA service to assist in alleviating the backlog. ",
+                "5": "Draining the resultant traffic back to normal levels took until 17:39 UTC at which point the incident was mitigated. "
+            }
+        },
+        "propagation pass": {
+            "1": "DNS",
+            "2": "MFA services backend",
+            "3": "MFA services frontend",
+            "4": "other services depends on MFA"
+        },
+        "refined path": {
+            "1": "DNS",
+            "2": "backend services",
+            "3": "frontend",
+            "4": "app"
+        },
+        "detection time": 0,
+        "fix time": 199,
+        "identification time": 0,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181128-1": {
+        "title": "Storage - West US 2",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "11/28/2018",
+        "summary": "Between 04:20 and 12:30 UTC on 28 Nov 2018, a subset of Storage customers in West US 2 may have experienced difficulties connecting to resources hosted in this region. Customers using resources dependent on Storage may have also seen impact.",
+        "details": "Preliminary root cause: Engineers determined that a recent deployment task introduced an incorrect backend authentication setting. As a result, some resources attempting to connect to storage endpoints in the region experienced failures. Mitigation: Engineers developed an update designed to refresh the incorrect authentication setting. A staged deployment of this update was then applied to the impacted storage nodes to mitigate the issue. In a small number of cases, where application of the fix was not possible, impacted nodes were removed from active rotation for further examination. Next steps: Engineers will review deployment procedures to prevent future occurrences and a full root cause analysis will be completed. To stay informed on any issues, maintenance events, or advisories, create service health alerts (https://www.aka.ms/ash-alerts) and you will be notified via your preferred communication channel(s): email, SMS, webhook, etc. ",
+        "service_name": [
+            "Storage"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 490,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Engineers determined that a recent deployment task introduced an incorrect backend authentication setting. As a result, some resources attempting to connect to storage endpoints in the region experienced failures."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "develop an update",
+                "remove nodes"
+            ],
+            "details": "Engineers developed an update designed to refresh the incorrect authentication setting. A staged deployment of this update was then applied to the impacted storage nodes to mitigate the issue.In a small number of cases, where application of the fix was not possible, impacted nodes were removed from active rotation for further examination.",
+            "troubleshooting": {
+                "1": "Engineers determined that a recent deployment task introduced an incorrect backend authentication setting. As a result, some resources attempting to connect to storage endpoints in the region experienced failures.",
+                "2": "Engineers developed an update designed to refresh the incorrect authentication setting. A staged deployment of this update was then applied to the impacted storage nodes to mitigate the issue.",
+                "3": "In a small number of cases, where application of the fix was not possible, impacted nodes were removed from active rotation for further examination."
+            }
+        },
+        "propagation pass": {
+            "1": "backend authenitcation",
+            "2": "storage endpoints",
+            "3": "storage"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "storage servers",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181129-1": {
+        "title": "Azure Data Lake Store/Data Lake Analytics - North Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "11/29/2018",
+        "summary": "Between 08:00 and 13:39 UTC on 29 Nov 2018, a subset of customers using Azure Data Lake Store and/or Data Lake Analytics may have experienced difficulties accessing resources hosted in this region. Data ingress or egress operations may have also timed-out or failed. Azure Data Lake Analytics customers may have experienced job failures. In addition, customers using other services with dependencies upon Azure Data Lake Store resources in this region such as Databricks, Data Catalog, HDInsight and Data Factory - may also have experienced downstream impact.",
+        "details": "Preliminary root cause: A scheduled power maintenance in a datacenter in North Europe resulted in a small number of hardware instances becoming unhealthy. As result of this, Data Lake Store resources hosted on the impacted hardware became temporarily unavailable to customers. Mitigation: The power maintenance task was cancelled and the impacted hardware was restarted. This returned the affected services hosted on this hardware to a healthy state, mitigating the impact for customers. Next steps: Engineers will continue to investigate to establish the full root cause of why the power maintenance task failed and prevent future occurrences. ",
+        "service_name": [
+            "Azure Data Lake Store",
+            "Data Lake Analytics",
+            "Databricks",
+            "Data Catalog",
+            "HDInsight",
+            "Data Factory"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 339,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "timeout",
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "power outage"
+                }
+            ],
+            "details": "A scheduled power maintenance in a datacenter in North Europe resulted in a small number of hardware instances becoming unhealthy. As result of this, Data Lake Store resources hosted on the impacted hardware became temporarily unavailable to customers. "
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "cancel maintenance"
+            ],
+            "details": "The power maintenance task was cancelled and the impacted hardware was restarted. This returned the affected services hosted on this hardware to a healthy state, mitigating the impact for customers. ",
+            "troubleshooting": {
+                "1": "The power maintenance task was cancelled and the impacted hardware was restarted. This returned the affected services hosted on this hardware to a healthy state, mitigating the impact for customers. "
+            }
+        },
+        "propagation pass": {
+            "1": "power",
+            "2": "hardware instances",
+            "3": "data center",
+            "4": "data lake store"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "data center",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181204-1": {
+        "title": "RCA - Networking - South Central US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "12/04/2018",
+        "summary": "Between 02:48 UTC and 04:52 UTC on 04 Dec 2018, a subset of customers in South Central US may have experienced degraded performance, network drops, or timeouts when accessing Azure resources hosted in this region. Applications and resources that retried connections or requests may have succeeded due to multiple redundant network devices and routes available within Azure datacenters. ",
+        "details": "Root cause: Two network devices in the South Central US region received an incorrect configuration during an automated process to update their configuration and firmware. As a result of the incorrect configuration, these routers were unable to hold all of the forwarding information they were expected to carry and dropped traffic to some destinations. The Azure network fabric failed to automatically remove these devices from service and continued to drop a small percentage of the network traffic passed through these devices. For the duration of the incident, approximately 7% of the available network links in and out of the impacted datacenter were partially impacted. The configuration deployed to the network devices caused a problem as it contained one setting incompatible with the devices in the South Central US Region. The deployment process failed to detect that the setting should not be applied to the devices in that region. Mitigation: The impacted devices were identified and manually removed from service by Azure engineers, the network automatically recovered utilizing alternate network devices. The automated process for updating configuration and firmware detected that the devices had become unhealthy after the update and ceased updating any additional devices. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): - Additional monitoring to detect repeats of this issue (complete) - Improvement in the system for validating the gold configuration file generated for each type of network device (in planning) - Determine whether this class of conditions can be safely mitigated by automated configuration rollback, and if so add rollback to the error handling used by the configuration and firmware update service (in planning) Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/VXR4-7VZ",
+        "service_name": [
+            "Azure datacenter"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 124,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "degraded performance",
+                    "timeout",
+                    "network drop"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Two network devices in the South Central US region received an incorrect configuration during an automated process to update their configuration and firmware. As a result of the incorrect configuration, these routers were unable to hold all of the forwarding information they were expected to carry and dropped traffic to some destinations. The Azure network fabric failed to automatically remove these devices from service and continued to drop a small percentage of the network traffic passed through these devices. For the duration of the incident, approximately 7% of the available network links in and out of the impacted datacenter were partially impacted. The configuration deployed to the network devices caused a problem as it contained one setting incompatible with the devices in the South Central US Region. The deployment process failed to detect that the setting should not be applied to the devices in that region. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "remove devices",
+                "utilize alternate network devices"
+            ],
+            "details": " The impacted devices were identified and manually removed from service by Azure engineers, the network automatically recovered utilizing alternate network devices. The automated process for updating configuration and firmware detected that the devices had become unhealthy after the update and ceased updating any additional devices. ",
+            "troubleshooting": {
+                "1": "The impacted devices were identified and manually removed from service by Azure engineers, the network automatically recovered utilizing alternate network devices. ",
+                "2": "The automated process for updating configuration and firmware detected that the devices had become unhealthy after the update and ceased updating any additional devices."
+            }
+        },
+        "propagation pass": {
+            "1": "router",
+            "2": "data center"
+        },
+        "refined path": {
+            "1": "router",
+            "2": "data center"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181212-1": {
+        "title": "Log Analytics - East US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "12/12/2018",
+        "summary": "Between 08:00 and 15:50 UTC on 12 Dec 2018, customers using Log Analytics in East US may have experienced delays in metrics data ingestion",
+        "details": "Preliminary root cause: Engineers determined that several service dependent web roles responsible for processing data became unhealthy, causing a data ingestion backlog. Mitigation: Engineers manually rerouted data traffic to backup roles to mitigate the issue. Next steps: Engineers will continue to investigate to establish the full root cause for why the service instances became unhealthy. To stay informed on any issues, maintenance events, or advisories, create service health alerts (https://www.aka.ms/ash-alerts) and you will be notified via your preferred communication channel(s): email, SMS, webhook, etc. ",
+        "service_name": [
+            "Log Analytics"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 470,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "delay"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "payload flood"
+                }
+            ],
+            "details": "Engineers determined that several service dependent web roles responsible for processing data became unhealthy, causing a data ingestion backlog. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "reroute data traffic"
+            ],
+            "details": "Engineers manually rerouted data traffic to backup roles to mitigate the issue. ",
+            "troubleshooting": {
+                "1": "Engineers determined that several service dependent web roles responsible for processing data became unhealthy, causing a data ingestion backlog. ",
+                "2": "Engineers manually rerouted data traffic to backup roles to mitigate the issue. "
+            }
+        },
+        "propagation pass": {
+            "1": "services dependent web roles",
+            "2": "log analytics"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181212-2": {
+        "title": "Azure Analysis Services - West Central US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "12/12/2018",
+        "summary": "Between 21:55 UTC on 12 Dec 2018 and 09:55 UTC on 13 Dec 2018, a subset of customers using Azure Analysis Services in West Central US may have experienced issues accessing existing servers, provisioning new servers, resuming new servers, or performing SKU changes for active servers. ",
+        "details": "Preliminary root cause: Engineers determined that a recent update deployment task impacted a back-end Service Fabric instance which became unhealthy. This prevented requests to Azure Analysis servers from completing. Mitigation: Engineers rolled back the recent deployment task to mitigate the issue. Next steps: Engineers will review deployment procedures to prevent future occurrences. To stay informed on any issues, maintenance events, or advisories, create service health alerts (https://www.aka.ms/ash-alerts) and you will be notified via your preferred communication channel(s): email, SMS, webhook, etc. ",
+        "service_name": [
+            "Azure Analysis Services",
+            "back-end Service Fabric instance"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 720,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Engineers determined that a recent update deployment task impacted a back-end Service Fabric instance which became unhealthy. This prevented requests to Azure Analysis servers from completing. "
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back deployment"
+            ],
+            "details": "Engineers rolled back the recent deployment task to mitigate the issue",
+            "troubleshooting": {
+                "1": "Engineers determined that a recent update deployment task impacted a back-end Service Fabric instance which became unhealthy. This prevented requests to Azure Analysis servers from completing. ",
+                "2": "Engineers rolled back the recent deployment task to mitigate the issue"
+            }
+        },
+        "propagation pass": {
+            "1": "back-end Service Fabric instance",
+            "2": "Azure Analysis servers",
+            "3": "azure analysis services"
+        },
+        "refined path": {
+            "1": "backend instances",
+            "2": "backend services",
+            "3": "app servers",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20181214-1": {
+        "title": "RCA - Networking - UK West",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "12/14/2018",
+        "summary": "Between 03:30 and 12:25 UTC on 14 Dec 2018, a subset of customers with resources in UK West may have intermittently experienced degraded performance, latency, network drops or time outs when accessing Azure resources hosted in this region. Customers with resources in UK West attempting to access resources outside of the region may have also experienced similar symptoms. ",
+        "details": "Root cause: Engineers determined that an external networking circuit experienced a hardware failure impacting a single fiber in this region. A single card on the optical system that services this fiber path had developed a fault, and this reduced the available network capacity, thus causing network issues for a subset of customers. Mitigation: Azure Engineers initially re-directed internal Azure traffic to free up capacity for customer traffic, and this mitigated the issues being experienced by customers. Engineers subsequently performed a full hardware replacement which restored full connectivity across the fiber circuit, thus completely mitigating the issue. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Augmenting critical networking paths to UK West with 400Gb of additional capacity. 50% of this work is already now complete, and the remaining work is scheduled to be completed by end of February 2019. Updating our monitoring to ensure we are able to respond quicker to external networking issues, and thus reduce the impact time for customers. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/B7F1-JXZ ",
+        "service_name": [
+            "network circuit",
+            "Azure resources"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 535,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "degraded performance",
+                    "high latency",
+                    "timeout"
+                ]
+            },
+            {
+                "system kpi": [
+                    "network drop"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "Engineers determined that an external networking circuit experienced a hardware failure impacting a single fiber in this region. A single card on the optical system that services this fiber path had developed a fault, and this reduced the available network capacity, thus causing network issues for a subset of customers. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "redirect traffic",
+                "replace hardware"
+            ],
+            "details": " Azure Engineers initially re-directed internal Azure traffic to free up capacity for customer traffic, and this mitigated the issues being experienced by customers. Engineers subsequently performed a full hardware replacement which restored full connectivity across the fiber circuit, thus completely mitigating the issue",
+            "troubleshooting": {
+                "1": "Engineers determined that an external networking circuit experienced a hardware failure impacting a single fiber in this region.",
+                "2": " Azure Engineers initially re-directed internal Azure traffic to free up capacity for customer traffic, and this mitigated the issues being experienced by customers.",
+                "3": "Engineers subsequently performed a full hardware replacement which restored full connectivity across the fiber circuit, thus completely mitigating the issue"
+            }
+        },
+        "propagation pass": {
+            "1": "network circuit",
+            "2": "fiber",
+            "3": "data center",
+            "4": "services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "network device",
+            "3": "data center",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190104-1": {
+        "title": "Log Analytics - East US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+        ],
+        "time": "01/04/2019",
+        "summary": "Between 09:30 and 18:00 UTC on 04 Jan 2019, a subset of customers using Log Analytics in East US may have received intermittent failure notifications and/or experienced latency when attempting to ingest and/or access data. Tiles and blades may have failed to load and display data. Customers may have experienced issues creating queries, log alerts, or metric alerts on logs. Additionally, customers may have experienced false positive alerts or missed alerts. ",
+        "details": "Preliminary root cause: Engineers determined that a core backend Log Analytics service responsible for processing customer data became unhealthy when a database on which it is dependent became unresponsive. Initial investigation shows that this database experienced unexpectedly high CPU utilization. Mitigation: Engineers made a configuration change to this database which allowed it to scale automatically. The database is now responsive and the core backend Log Analytics service is healthy. Next steps: Engineers will continue to investigate the reason for the high CPU utilization to establish the full root cause. Looking to stay informed on service health? Set up custom alerts here: https://www.aka.ms/ash-alerts ",
+        "service_name": [
+            "Log Analytics"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 510,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "high latency",
+                    "error rate",
+                    "failure notification"
+                ]
+            },
+            {
+                "system kpi": [
+                    "high CPU utilization"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource",
+                    "layer-3": "CPU"
+                }
+            ],
+            "details": "Engineers determined that a core backend Log Analytics service responsible for processing customer data became unhealthy when a database on which it is dependent became unresponsive. Initial investigation shows that this database experienced unexpectedly high CPU utilization. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "change configuration",
+                "scale database"
+            ],
+            "details": "Engineers made a configuration change to this database which allowed it to scale automatically. The database is now responsive and the core backend Log Analytics service is healthy. ",
+            "troubleshooting": {
+                "1": "Engineers determined that a core backend Log Analytics service responsible for processing customer data became unhealthy when a database on which it is dependent became unresponsive.",
+                "2": "Engineers made a configuration change to this database which allowed it to scale automatically. The database is now responsive and the core backend Log Analytics service is healthy. "
+            }
+        },
+        "propagation pass": {
+            "1": "database",
+            "2": "a core backend Log Analytics service",
+            "3": "log analytics"
+        },
+        "refined path": {
+            "1": "database",
+            "2": "backend services",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    }
+}

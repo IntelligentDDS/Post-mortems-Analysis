@@ -1,0 +1,6 @@
+RCA - Erroneous Browser Warning - Azure Germany Portal
+Summary of impact: Between 14:10 and 17:20 UTC on 18 Feb 2019, customers attempting to login to the Azure Germany portal (portal.microsoftazure.de via login.microsoftonline.de) may have received erroneous warnings stating "Deceptive site ahead." This message was erroneous and the site and user credentials were fully secure. The URLs were accidentally marked as malicious in a high-usage URL reputation feed.
+Root cause: The URL login.microsoftonline.de was incorrectly classified as an unsafe site due to an operational error, resulting in impact. Mitigation: Azure engineers worked with the third party provider to mitigate the issue and addressed the root cause of the erroneous classification.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Engineers will continue to investigate alongside the third party provider involved to determine how this incorrect classification occurred to prevent future occurrences.
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/V6HG-RQZ

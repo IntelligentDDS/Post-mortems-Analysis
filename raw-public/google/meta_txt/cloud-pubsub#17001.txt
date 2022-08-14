@@ -1,0 +1,139 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+March 30, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Pub/Sub](/incident/cloud-pubsub/17001)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Pub/Sub Incident #17001
+
+Issues with Cloud Pub/Sub
+
+Incident began at **2017-03-21 21:22** and ended at **2017-03-21 22:02** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Mar 29, 2017 | 22:19 |
+
+ISSUE SUMMARY On Tuesday 21 March 2017, new connections to Cloud Pub/Sub
+experienced high latency leading to timeouts and elevated error rates for a
+duration of 95 minutes. Connections established before the start of this issue
+were not affected. If your service or application was affected, we apologize –
+this is not the level of quality and reliability we strive to offer you, and
+we are taking immediate steps to improve the platform’s performance and
+availability.
+
+DETAILED DESCRIPTION OF IMPACT On Tuesday 21 March 2017 from 21:08 to 22:43
+US/Pacific, Cloud Pub/Sub publish, pull and ack methods experienced elevated
+latency, leading to timeouts. The average error rate for the issue duration
+was 0.66%. The highest error rate occurred at 21:43, when the Pub/Sub publish
+error rate peaked at 4.1%, the ack error rate reached 5.7% and the pull error
+rate was 0.02%.
+
+ROOT CAUSE The issue was caused by the rollout of a storage system used by the
+Pub/Sub service. As part of this rollout, some servers were taken out of
+service, and as planned, their load was redirected to remaining servers.
+However, an unexpected imbalance in key distribution led some of the remaining
+servers to become overloaded. The Pub/Sub service was then unable to retrieve
+the status required to route new connections for the affected methods.
+Additionally, some Pub/Sub servers didn’t recover promptly after the storage
+system had been stabilized and required individual restarts to fully recover.
+
+REMEDIATION AND PREVENTION Google engineers were alerted by automated
+monitoring seven minutes after initial impact. At 21:24, they had correlated
+the issue with the storage system rollout and stopped it from proceeding
+further. At 21:41, engineers restarted some of the storage servers, which
+improved systemic availability. Observed latencies for Pub/Sub were still
+elevated, so at 21:54, engineers commenced restarting other Pub/Sub servers,
+restoring service to 90% of users. At 22:29 a final batch was restarted,
+restoring the Pub/Sub service to all.
+
+To prevent a recurrence of the issue, Google engineers are creating safeguards
+to limit the number of keys managed by each server. They are also improving
+the availability of Pub/Sub servers to respond to requests even when in an
+unhealthy state. Finally they are deploying enhancements to the Pub/Sub
+service to operate when the storage system is unavailable.  
+  
+|
+
+ISSUE SUMMARY On Tuesday 21 March 2017, new connections to Cloud Pub/Sub
+experienced high latency leading to timeouts and elevated error rates for a
+duration of 95 minutes. Connections established before the start of this issue
+were not affected. If your service or application was affected, we apologize –
+this is not the level of quality and reliability we strive to offer you, and
+we are taking immediate steps to improve the platform’s performance and
+availability.
+
+DETAILED DESCRIPTION OF IMPACT On Tuesday 21 March 2017 from 21:08 to 22:43
+US/Pacific, Cloud Pub/Sub publish, pull and ack methods experienced elevated
+latency, leading to timeouts. The average error rate for the issue duration
+was 0.66%. The highest error rate occurred at 21:43, when the Pub/Sub publish
+error rate peaked at 4.1%, the ack error rate reached 5.7% and the pull error
+rate was 0.02%.
+
+ROOT CAUSE The issue was caused by the rollout of a storage system used by the
+Pub/Sub service. As part of this rollout, some servers were taken out of
+service, and as planned, their load was redirected to remaining servers.
+However, an unexpected imbalance in key distribution led some of the remaining
+servers to become overloaded. The Pub/Sub service was then unable to retrieve
+the status required to route new connections for the affected methods.
+Additionally, some Pub/Sub servers didn’t recover promptly after the storage
+system had been stabilized and required individual restarts to fully recover.
+
+REMEDIATION AND PREVENTION Google engineers were alerted by automated
+monitoring seven minutes after initial impact. At 21:24, they had correlated
+the issue with the storage system rollout and stopped it from proceeding
+further. At 21:41, engineers restarted some of the storage servers, which
+improved systemic availability. Observed latencies for Pub/Sub were still
+elevated, so at 21:54, engineers commenced restarting other Pub/Sub servers,
+restoring service to 90% of users. At 22:29 a final batch was restarted,
+restoring the Pub/Sub service to all.
+
+To prevent a recurrence of the issue, Google engineers are creating safeguards
+to limit the number of keys managed by each server. They are also improving
+the availability of Pub/Sub servers to respond to requests even when in an
+unhealthy state. Finally they are deploying enhancements to the Pub/Sub
+service to operate when the storage system is unavailable.  
+  
+| Mar 21, 2017 | 22:40 |
+
+The issue with Pub/Sub high latency has been resolved for all affected
+projects as of 22:02 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence.  
+  
+|
+
+The issue with Pub/Sub high latency has been resolved for all affected
+projects as of 22:02 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence.  
+  
+| Mar 21, 2017 | 21:47 |
+
+We are investigating an issue with Pub/Sub. We will provide more information
+by 22:40 US/Pacific.  
+  
+|
+
+We are investigating an issue with Pub/Sub. We will provide more information
+by 22:40 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

@@ -1,0 +1,31 @@
+External demand for an expensive MW API query, caused the MW API web servers to become overall slower to respond to other queries as well. Some of these queries became sufficiently slow as to trigger our execution timeout of 60 seconds. The Recommendation API service was partially unavailable for about 35-40 minutes as it uses the MW API for part of its work.
+
+Who was affected and how? For user-facing outages, estimate: How many queries were lost? How many users were affected, and which populations (editors only? all readers? just particular geographies?) were affected? etc. Be as specific as you can, and do not assume the reader already has a good idea of what your service is and who uses it.
+
+Was automated monitoring the first to detect the issue? Or was it a human reporting an error?
+
+If human only, an actionable should probably be "add alerting".
+
+If automated, please add the relevant alerts to this section. Did the appropriate alert(s) fired? Was the alert volume manageable? Did they point to the problem with as much accuracy as possible?
+
+This is a step by step outline of what happened to cause the incident and how it was remedied. Include the lead-up to the incident, as well as any epilogue, and clearly indicate when the user-visible outage began and ended.
+
+What weaknesses did we learn about and how can we address them?
+
+The following sub-sections should have a couple brief bullet points each.
+
+What went well?
+• for example: automated monitoring detected the incident, outage was root-caused quickly, etc
+• for example: documentation on the affected service was unhelpful, communication difficulties, etc
+
+Where did we get lucky?
+• for example: user's error report was exceptionally detailed, incident occurred when the most people were online to assist, etc
+
+How many people were involved in the remediation?
+• for example: 2 SREs and 1 software engineer troubleshooting the issue plus 1 incident commander
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.

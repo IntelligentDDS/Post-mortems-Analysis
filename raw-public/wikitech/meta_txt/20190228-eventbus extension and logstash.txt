@@ -1,0 +1,11 @@
+An invalid mediawiki-config deployment caused EventBus extension to be misconfigured. This resulted in a spike in mediawiki errors which caused logstash instances to become overloaded and stop reliably processing logs until logstash persisted queueing was disabled.
+• 19:40: https://gerrit.wikimedia.org/r/#/c/operations/mediawiki-config/+/492770/ was deployed as part of Morning SWAT. It was tested on mwdebug1002 before being deployed to the rest of fleet, but the misconfiguration would only manifest on group2 wikis.
+• 19:40 group2 wikis can no longer send events to eventlogging-service-eventbus.
+• 20:10: Mediawiki .wmf19 is deployed to group2 wikis. EventBus extension configuration now works everywhere.
+• 20:20: troubleshooting -- all associated services in stack appear healthy despite no logs being processed. logstash instances are logging normally with no errors, elasticsearch cluster health green, kafka cluster is in sync and healthy. logstash restarts do not improve the situation
+• ~20:30: Hashar notices that error logs are related to EventBus and notifies Ottomata. Hashar and Ottomata revert https://gerrit.wikimedia.org/r/#/c/operations/mediawiki-config/+/492770/ just in case.
+• 22:29: Ottomata realizes that the failed event data is in the udp_localhost-err topic in the Kafka logging cluster. He consumes the events and replays them to eventlogging-service-eventbus.
+• Logstash is not able to cope with a sudden significant increase in log volume, in this case mediawiki errors.
+• The logstash persistent queue mechanism becomes unstable under significant load, resulting in broken logstash instances that remain in a broken state across restarts.
+• Improve visibility of logging pipeline health by creating grafana dashboard with closely related metrics side by side (namely kafka consumer lag, mw log volume, logstash loss/queues) (done)
+• Consider using Kafka logstash consumer throttling with Kafka quotas: https://kafka.apache.org/documentation/#design_quotas

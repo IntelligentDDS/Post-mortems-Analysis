@@ -1,0 +1,17 @@
+
+• Duration: from about 20:20 UTC to 21:00 UTC; approximately 40 minutes
+• Cause: It is still unknown at this point why srv268 had a load spike. The team is still investigating it.
+
+Here is the update from Faidon on this site incident.
+
+At 20:21 UTC we started getting alerts on IRC (but not pages, see below) with several application servers getting Apache HTTP timeout and subsequently, LVS IPv4 CRITICAL alerts. The LVS alerts were for foundation-lb.{pmtpa,esams}, wikiversity-lb.{pmtpa,esams} and appservers.svc.pmtpa.wmnet. We got no reports for other service IPs, even though we got reports of slowness on IRC & enwiki village pump for them as well. We didn't get alerts for IPv6 LBs or SSL either.
+
+Leslie, Peter and myself were online and began investigating and Asher logged in halfway through and joined us as well.
+
+It took us quite a while (more than half an hour) of going through dozens of alerts, but at some point we noticed that one of the application servers, srv268, was getting increased load for unknown reasons. Other appservers were having normal load but were extremely slow at serving responses.
+
+As Asher explained, srv268 is part of memcached slot 0, and that's where the key "enwiki:lag_times:db38" maps to (with db38 being the enwiki master). That key was requested on every enwiki article among other things. Since srv268 was slow but not completely down and our custom memcache client doesn't handle timeouts well, the Apache children were delaying the requests while waiting for a reply.
+
+We both power reset srv268 and replaced it in the memcache pool with another server and things quickly returned to normal.
+
+It is still unknown at this point why srv268 had a load spike in the first place. Besides that, and according to Asher, there are two bugs at hand:

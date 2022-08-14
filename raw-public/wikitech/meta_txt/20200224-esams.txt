@@ -1,0 +1,34 @@
+A router hardware failure caused widespread issues. While a single hardware failure like that shouldn't cause issues, more hardware failure had preceded this one, lowering our capability to absorb failures.
+
+All services were affected for all types of users for large portions of Europe and everyone reaching our projects via Amsterdam. That includes parts of Asia and Africa. It is difficult to gauge the exact numbers as it was highly related to the network path from the user to our infrastructure.
+
+Eyeballing the traffic graph for the interval, we lost about 47M queries over an interval of approx. 20 minutes.
+
+Humans detected this first. Icinga alerted 1 minute later with pages for cr2-esams arriving to multiple SREs
+• 13:56:37 bast3004 is also down for multiple SRE.
+• 14:00:04 XioNoX: looks like a linecard failure as well
+• 14:14:06 paravoid all cr2-esams interfaces are down
+• 14:15:22 paravoid the links to asw2 are et-1/0/0 & et-1/0/1, and show up as up, but are on FPC 1
+• 14:15:42 _joe_: now we're in the business of restoring esams
+• 14:18:36 bblack: normal volume on vfe-reported GET was 86K/s before the cr2 hit, then it was around 40K just before dns depool, latest sample is ~5K and dropping
+• 14:19:41 paravoid: so we have two MX480s both with major FPC errors after a JunOS upgrade
+• 14:20:23 bblack charting codfw+eqiad+esams aggregate reqs (those involved in the shuffle), we look to be back at "normal" total reqs as expected, at least roughly https://w.wiki/J65
+• 14:35:08 marostegui: so, are we fully up? (trying to document stuff)
+• 14:35:43 akosiaris: marostegui: as far as I know and as far as users are concerned, yes
+• 14:42:01 paravoid: esams has two MX480s, and both failed today
+• 14:42:13 paravoid: eqiad and codfw also have two MX480s for core routers
+• 14:48:46 mark: we can't swap line cards at esams
+• 14:48:49 mark: the PDUs are in the way :)
+• 21:40 volans| bblack, XioNoX: just noticed that the CA app email still complains about ns2 IP and in effect I cannot reach ns2
+• 22:59 XioNoX| bblack, volans, ns2 is now redirected to eqiad
+
+What went well?
+• Automated monitoring detected the incident, outage was understood quickly enough
+• The Geographic DNS configuration, created back in January, proved itself well here: we were able to leave esams depooled for some time without overheating eqiad, which had been a problem in the past when esams was depooled during peak traffic times of day. Instead, this map shifts most of eqiad's usual North American traffic westwards to codfw (and some codfw traffic further westwards to ulsfo).
+• We were unlucky enough to have 2 different hardware failures in 2 different routers coincide.
+
+Where did we get lucky?
+• It happened during a timeframe were a lot of SREs were awake and fresh.
+
+How many people were involved in the remediation?
+• Restricted phabricator tasks T246009 and T245825 have been filed for replacing the FPCs on the routers after RMA process was recommendended by the vendor. Tasks are restricted per the usual policy for vendors

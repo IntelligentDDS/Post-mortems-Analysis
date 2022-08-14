@@ -1,0 +1,21 @@
+rsyslog was automatically upgraded via puppet ("ensure => latest") which triggered a known bug in Swift (media storage) causing it to hang thus cascading down to the imagescalers.
+
+At about 18:55 UTC, the imagescaler (rendering) cluster started being unresponsive, ultimately throwing a LVS rendering CRITICAL alert. The error was cascading from Swift, on both pmtpa & eqiad and eventually a CRITICAL alert for ms-fe LVS as well was also issued.
+
+Service recovered with no manual action(?) at ~19:40 UTC but still at an increased system load. I fixed this by restarting Swift front/back daemons at about 01:00 UTC.
+
+The root cause was a combination of:
+• Swift having a bug where it gets into a busy loop when losing the syslog socket: the sendto() operation to the syslog socket produces a ENOTCONN, it raises an exception, tries to log it, gets an ENOTCONN and so on and so on (strace shows this nicely, I saw it from the backlog, when Ori pasted it)
+• puppet having the rsyslog package as ensure => latest (puppet, base module) and upgrading to the new version automatically (puppet.log, dpkg.log).
+
+puppet ran across all boxes in the 30' window; the rsyslog package was upgraded, the package's postinst restarted the service, Swift lost the socket, busy looped, got overloaded and caused all kinds of errorenous responses, including cascading into the imagescaler cluster.
+
+Iv'e fixed the evil (3) behavior with https://gerrit.wikimedia.org/r/99576. I'll have a look at (1) and see if it's fixed in newer upstream.
+• don't automatically upgrade rsyslog at least until the bug in Swift is fixed.
+• Upstream: Swift daemons die when syslog stops running LP:1094230
+• Abandoned (because of inactivity) change to fix: https://review.openstack.org/#/c/24871
+• Status: Done - Figure out something since the upstream issue probably won't be resolved:
+• ALT1: use udp for syslog messages from swift?
+• ALT2: upstart hook to restart swift when syslog is restarted?
+• DONE: swift machines moved to trusty in which doesn't seem to be affected
+• Status: Done - syslog is not autoupgraded, so that shouldn't happen again

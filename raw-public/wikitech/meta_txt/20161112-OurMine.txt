@@ -1,0 +1,15 @@
+Accounts of Wikimedia Foundation staff and community members were compromised by the hacker group OurMine. The attackers used those accounts to vandalize highly visible pages. An initial response was posted on the Wikimedia Blog. Tim Starling wrote a pretty good summary on wikitech-l and wikimedia-l:
+
+Since Friday, we've had a slow but steady stream of admin account compromises on WMF projects. The hacker group OurMine has taken credit for these compromises.
+
+We're fairly sure now that their mode of operation involves searching for target admins in previous user/password dumps published by other hackers, such as the 2013 Adobe hack. They're not doing an online brute force attack against WMF. For each target, they try one or two passwords, and if those don't work, they go on to the next target. Their success rate is maybe 10%.
+
+When they compromise an account, they usually do a main page defacement or similar, get blocked, and then move on to the next target.
+
+Today, they compromised the account of a www.mediawiki.org admin, did a main page defacement there, and then (presumably) used the same password to log in to Gerrit. They took a screenshot, sent it to us, but took no other action.
+
+So, I don't think they are truly malicious -- I think they are doing it for fun, fame, perhaps also for their stated goal of bringing attention to poor password security.
+
+Indications are that they are familiarising themselves with MediaWiki and with our community. They probably plan on continuing to do this for some time.
+
+We're doing what we can to slow them down, but admins and other users with privileged access also need to take some responsibility for the security of their accounts.

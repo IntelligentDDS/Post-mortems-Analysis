@@ -1,0 +1,8 @@
+All Mediawiki servers were serving mostly HTTP 5XX for about 5 minutes at 1350 UTC
+• 13:50 UTC: switch CirrusSearch traffic to codfw, with a buggy configuration (see https://gerrit.wikimedia.org/r/#/c/282163/ for the correction)
+• almost immediate raise in HTTP 5XX errors to 400K errors / minute
+• testing configuration changes related to datacenter is not possible on labs
+• carefully testing this kind of change on test nodes (mw1017/mw1099/mw2017/mw2099) is the minimum required
+
+Immediate issues have been addressed. This incident is mainly about human error (mine) and insufficient testing (me again).
+• a standardized and automated canary test system would help mitigate this kind of issues, but is probably a long term action outside of the scope of a post incident action.

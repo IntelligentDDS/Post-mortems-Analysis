@@ -1,0 +1,9 @@
+Two associated bug report for this incident: bugzilla:49294 and bugzilla:49330
+• Niklas Laxström reported that CI was stuck. Via email to Engineering on 09:03 (UTC) and via Bugzilla at 08:41 (UTC)
+• Beta was running out of space - Antoine fixed this so the Jenkins job queue was able to catch back up
+• Gerrit replication was failing to antimony, causing the replication jobs to get re-queued and clog Gerrit. This blocked stream-events which caused Zuul to not see anything as happening
+• For #1, better disk space monitoring for Beta would help keep this from happening again.
+• For #2, we need more monitoring for Gerrit, Jenkins and Zuul to make sure the whole pipeline is working as expected. Antoine and Chad have already discussed taking care of this together first thing next week when he's back from vacation. Also we should make replication a little less greedy on retrying when it fails...this has caused cascading problems before.
+
+Explicit next steps to prevent this from happening again as much as possible, with Bugzilla bugs or RT tickets linked for every step.
+• Chad and Antoine will work on better monitoring of CI infrastructure (see above).

@@ -1,0 +1,134 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+November 28, 2016  All services normal
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/18012)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #18012
+
+Errors Accessing the Big Query UI and API
+
+Incident began at **2015-11-29 07:30** and ended at **2015-11-29 08:30** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Dec 01, 2015 | 12:53 |
+
+SUMMARY:
+
+On Sunday 29th of November 2015, for an aggregate of 33 minutes occurring
+between 7:31am and 8:24am PST, 11% of all requests to the BigQuery API
+experienced errors. If your service or application was affected, we apologize
+— this is not the level of quality and reliability we strive to offer you, and
+we have taken and are taking immediate steps to improve the platform’s
+performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Sunday 29th of November 2015, between 7:31am and 7:41am, 7% of BigQuery API
+requests were redirected (HTTP 302) to a CAPTCHA service. The issue reoccurred
+between 8:01am and 8:24am PST, affecting 22% of requests. As the CAPTCHA
+service is intended to verify that the requester is human, any automated
+requests that were redirected failed.
+
+ROOT CAUSE:
+
+The BigQuery API is designed to provide fair service to all users during
+intervals of unusually-high traffic. During this event, a surge in traffic to
+the API caused traffic verification and fairness systems to activate, causing
+a fraction of requests to be redirected to the CAPTCHA service.
+
+REMEDIATION AND PREVENTION:
+
+While investigating the source of the increased traffic, Google engineers
+assessed that BigQuery’s service capacity was sufficient to handle the
+additional queries without putting existing queries at risk. The engineers
+instructed BigQuery to allow the additional queries without verification,
+ending the incident.
+
+To prevent future recurrences of this problem, Google engineers will change
+BigQuery's traffic threshold policy to an adaptive mechanism appropriate for
+automated requests, which provides intelligent traffic control and isolation
+for individual users.  
+  
+|
+
+SUMMARY:
+
+On Sunday 29th of November 2015, for an aggregate of 33 minutes occurring
+between 7:31am and 8:24am PST, 11% of all requests to the BigQuery API
+experienced errors. If your service or application was affected, we apologize
+— this is not the level of quality and reliability we strive to offer you, and
+we have taken and are taking immediate steps to improve the platform’s
+performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Sunday 29th of November 2015, between 7:31am and 7:41am, 7% of BigQuery API
+requests were redirected (HTTP 302) to a CAPTCHA service. The issue reoccurred
+between 8:01am and 8:24am PST, affecting 22% of requests. As the CAPTCHA
+service is intended to verify that the requester is human, any automated
+requests that were redirected failed.
+
+ROOT CAUSE:
+
+The BigQuery API is designed to provide fair service to all users during
+intervals of unusually-high traffic. During this event, a surge in traffic to
+the API caused traffic verification and fairness systems to activate, causing
+a fraction of requests to be redirected to the CAPTCHA service.
+
+REMEDIATION AND PREVENTION:
+
+While investigating the source of the increased traffic, Google engineers
+assessed that BigQuery’s service capacity was sufficient to handle the
+additional queries without putting existing queries at risk. The engineers
+instructed BigQuery to allow the additional queries without verification,
+ending the incident.
+
+To prevent future recurrences of this problem, Google engineers will change
+BigQuery's traffic threshold policy to an adaptive mechanism appropriate for
+automated requests, which provides intelligent traffic control and isolation
+for individual users.  
+  
+| Nov 29, 2015 | 09:32 |
+
+We experienced an intermittent issue with Big Query for requests to the UI or
+API beginning at Sunday, 2016-11-29 07:30 US/Pacific.
+
+Current data indicates that approximately 25% of requests are affected by this
+issue.
+
+This issue should have been resolved for all affected users as of 08:30
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to prevent or minimize future
+recurrence.  
+  
+|
+
+We experienced an intermittent issue with Big Query for requests to the UI or
+API beginning at Sunday, 2016-11-29 07:30 US/Pacific.
+
+Current data indicates that approximately 25% of requests are affected by this
+issue.
+
+This issue should have been resolved for all affected users as of 08:30
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to prevent or minimize future
+recurrence.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

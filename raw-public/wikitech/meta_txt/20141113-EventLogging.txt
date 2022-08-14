@@ -1,0 +1,5 @@
+Restarting consumers after temporary switch of m2-master CNAME caused ~20 minute outage of writing events to the database between 2014-11-13T00:59 -- 2014-11-13T01:21. (The data did not get lost, as the data is available in log files.)
+• The fact that EventLogging is writing data synchronously and not buffering up database writes (hence cannot handle database connection issues nicely) is not known visible enough throughout the foundation.
+• Regardless of the testing done in labs, production firewalls get in the way.
+• Status: Done Make sure that log files exist for the affected period, so we can backfill.
+• Status: Done Make sure can connect to (RT8863).

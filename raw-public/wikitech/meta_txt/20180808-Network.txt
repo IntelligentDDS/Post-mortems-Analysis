@@ -1,0 +1,18 @@
+Topology changes made to improve the redundancy and stability of the switch stack asw2-a-eqiad caused it to drop ~1/3 of the packets transiting through its members for about 1h. This packet drop caused internal services to timeout/retry, exact user facing issues TBD but at least an increase of 5xx errors.
+
+17:47 - First Icinga alerts, some high API latencies, puppetfails, etc. IRC spam is bad, but no major pages or signs of broader user-facing issues yet.
+
+18:07 - Replaced fpc1-fpc3 link for T201095 (Unaware of the alerts)
+
+18:33 - Minor user-facing disturbances begin showing up as a low-but-unusual rate of 503s
+
+18:42 - 503 rate begins climbing significantly, reaching ~5% of all cache_text request rate at peak (probably roughly all of the misses and passes (e.g. logged-in traffic), only cache hits being served). Grafana
+
+18:50 - 503 burst that began at 18:42 comes back to normal near-zero rate.
+
+19:18 - eqiad front edge depooled in DNS, to stabilize and reduce risk during follow-on investigations fixups (takes 10 minutes for DNS TTLs to expire as this comes into effect)
+• Virtual Chassis are black boxes, which makes it more difficult to investigate issues
+• Topology changes included cable move, which makes a rollback more difficult
+• Our current topologies are unsupported, this outage revealed that any changes, even though toward a more supported configuration can have bad consequences.
+• Logging work done in SAL could have reduced the response time
+• This event caused a driver issue on new cp1* servers, causing their link to be up on the switch side, but down on the server side

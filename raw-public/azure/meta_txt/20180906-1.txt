@@ -1,0 +1,5 @@
+Azure Active Directory - Multiple Regions
+Summary of impact: Between 16:13 UTC on 06 Sep 2018 and 01:35 UTC on 07 Sep 2018, a subset of Azure Active Directory customers using multiple services may have experienced intermittent authentication request failures when connecting to resources.
+Preliminary root cause: Engineers determined that a recent deployment task impacted instances of a backend service which became unhealthy, preventing requests from completing.
+Mitigation: Engineers deployed a platform hotfix in order to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

@@ -1,0 +1,3 @@
+Azure Service Management Failures
+Customer Impact: Between 21:14 UTC on 1st Aug and 00:00 UTC 2nd Aug 2018, a subset of customers may have experienced timeouts or failures when attempting to perform service management operations for Azure Resources dependent on management.core.windows.net, this is Azure’s v1 API endpoint. In addition, some customers may have experienced intermittent latency and connection failures to their Classic Cloud Service resources.
+Prelimary Root Cause and Mitigation: Underlying Storage experienced larger than normal loads by our internal services, engineers manually reduced the load to mitigate the issue.

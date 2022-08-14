@@ -1,0 +1,6 @@
+NFS lagged for all labs instances when I (milimetric (talk)) executed a
+
+on a huge 35GB file in /data/project/milimetric/. This used up all the bandwidth.
+• I could have asked someone from ops to do the file operation locally on labstore1002
+• I could have rate limited with pv -L
+• I probably should have just fixed the source file on stat1002 (where it came from originally) and re-copied it to labs

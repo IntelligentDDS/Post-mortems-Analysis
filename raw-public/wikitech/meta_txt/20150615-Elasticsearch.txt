@@ -1,0 +1,31 @@
+Elasticsearch service (on elastic*.eqiad.wmnet nodes)-ES for shorṭ-, backing the search functionality on all wikis was partially down for 6 hours, and fully unavailable to the users for 3 hours, starting at 9:26 UTC.
+• Near 7 UTC, some ES hosts start to fail, as noted by 5xx spikes on mediawiki:
+• Icinga fails to acknowledge some of that failures for a long time, as appointed by ori and later by joe:
+• Ori hot-patches Mediawiki so that frontends do not throw an exception if the searches fail :
+• But that was a (bad) consequence, not the underlying cause, which was ES fully failing (or at least many nodes, including the masters).
+• Single node restarts do not work, as they cannot join back to the cluster. Logs show the master as unresponsive:
+• We decide to soft-disable search functionality, as searches are blocked and their queue full:
+• There has been garbage collection issues on many nodes:
+• We finally locate an EL expert, which confirms the issues and solves them by killing all offending nodes:
+• That doesn't really fix it. Master keeps getting hosed. Not sure why. I restart other master. Cluster become super unhappy. I issue a full cluster restart.
+• Now the cluster is at least in a recovering state, unlike before. Recovery speed is increased but it takes ~2-3 hours to resynchronize the cluster with at least 2 replicas for the enwiki of every shard.
+• It is put back up (throttled) when all shards have at least one replica, and fully up a bit later
+• at 15:00, all ES hosts are healty (Green)
+
+
+
+ The next morning (EU time) it happens _again_. Pretty much rinse and repeat but everything is faster. We find out the root cause and take some (soft) corrective action to make sure it doesn't happen again. We're not fully protected yet, but we'll schedule work to fix it.
+
+Thanks to all people involved: Giuseppe, Nik, mobrovac, Chad, moritzm, Mark, Max and others
+• ES monitoring does not reflect properly the state of the cluster: it does not warn in yellow state, and general health monitoring was not enough to detect this particular case
+• ES topology could be improved, as suggested by several people: things like master nodes not being data nodes, and maybe decoupling more wiki searches?
+• Difficulty of testing ES java configurations, such as gc settings
+• Ganglia tie-in for ES stats is error-prone and gets in the way during an outage
+• Root cause is https://phabricator.wikimedia.org/T102589 - its not visible to those who haven't signed the NDA.
+• There are other issues - mostly the elasticsearch doesn't recover properly even after we bounce the nodes that crash from the query. I'm tracking that here: https://phabricator.wikimedia.org/T102594 . Its also N
+• This issue also came up in 20141027-CirrusSearch which was this issue but with a different query.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+• Status: Done Search shouldn't display misleading "No results found" if there is an error in the search backend ( )
+• Status: Unresolved Improve ES icinga monitoring. Icinga should probably detect "gc death spirals" occuring on ES nodes (e.g. by detecting GC runs running than x seconds) (https://phabricator.wikimedia.org/P782 list the ones that occured during the outage)
+• Status: Unresolved ES metrics should be pushed from master instead of polling with Ganglia. Use statsd plugin. ( )

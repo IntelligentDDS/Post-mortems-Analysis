@@ -1,0 +1,44 @@
+In late February, GitHub experienced multiple service interruptions that resulted in degraded service for a total of eight hours and 14 minutes over four distinct events. Unexpected variations in database load, coupled with an unintended configuration issue introduced as a part of ongoing scaling improvements, led to resource contention in our database cluster.
+
+We sincerely apologize for any negative impact these interruptions may have caused. We know you place trust in GitHub for your most important projects—and we make it our top priority to maintain that trust with a platform that is highly durable and available. We’re committed to applying what we’ve learned from these incidents to avoid disruptions moving forward.
+
+Originally, all our MySQL data lived in a single database cluster. Over time, as grew larger and busier, we split functionally grouped sets of tables into new clusters and created new clusters for new features. However, much of our core dataset still resides within that original cluster.
+
+We’re constantly scaling our databases to handle the additional load driven by new users and new products. In this case, an unexpected variance in database load contributed to cluster degradations and unavailability.
+
+At this time, an unexpectedly resource-intensive query began running against our database cluster. The intent was to run this load against our read replica pool at a much lower frequency, but we inadvertently sent this traffic to the master of the cluster, increasing the pressure on that host beyond surplus capacity. This pressure overloaded ProxySQL, which is responsible for connection pooling, resulting in an inability to consistently perform queries.
+
+Two days later, as part of a planned master database promotion, we saw unexpectedly high load which triggered a similar ProxySQL failure. The intent of this maintenance was to give our teams visibility into issues they might experience when a master is momentarily read-only.
+
+After an initial load spike, we were able to use the same remediation steps as in the previous incident to restore the system to a working state. We suspended further maintenance events of this type as we investigated how this system failed.
+
+In this third incident involving ProxySQL, active database connections crossed a critical threshold that changed the behavior of this new infrastructure. Because connections remained above the critical threshold after remediation, the system fell back into a degraded state. During this time, GitHub.com services were affected by stalled writes on our database cluster.
+
+As a result of our previous investigation, we understood that file descriptor limits on ProxySQL nodes were capped at levels significantly lower than intended and insufficient to maintain throughput at high load levels. Specifically, because of a system-level limit of , our process manager silently reduced our setting from to . During remediation, we also encountered a race condition between our process manager and service configurations which slowed our ability to change our file limit to .
+
+Application logic changes to database query patterns rapidly increased load on the master of our database cluster. This spike slowed down the cluster enough to affect availability for all dependent services.
+
+We’ve used these events to identify operational readiness and observability improvements around how we need to operate ProxySQL. We have made changes to allow us to more quickly detect and address issues like this in the future. Remediating these issues were straightforward once we tracked down interactions between systems. It’s clear to us that we need better system integration and performance testing at realistic load levels in some areas before fully deploying to production.
+
+We’re also devoting more energy to understanding the performance characteristics of ProxySQL at scale and the trickle-down effect on other services before it affects our users.
+
+We decided to freeze production deployments for three days to address short-term hotspotting as a result of the final incident on February 27. This helped us stabilize GitHub.com. Our increased confidence in service reliability gave us the breathing room to plan next steps thoughtfully and also helped identify long-term investments we can make to mitigate underlying scalability issues.
+
+We shipped a sizable chunk of data partitioning efforts we’ve worked on for the past six months just days after these incidents for one of our more significant MySQL table domains, the “abilities” table. Given that every authentication request to GitHub uses this table domain in some way, we had to be very deliberate about how we performed this work to fulfill our requirement of zero downtime and minimal user-impact. To accomplish this, we:
+• Removed all queries between the table and any other table in the database
+• Built a new cluster to move all of the table data into
+• Copied all data to the new cluster using Vitess‘s vertical replication feature, keeping the copied data up-to-date in real-time
+• Moved all reads to the new cluster
+• Moved all writes to the new cluster using Vitess’ proxy layer
+
+Steps one and two took months’ worth of effort, while steps three through five were completed in four hours.
+
+These changes reduced load on the cluster master by 20 percent, and queries per second by 15 percent. The following graph shows a snapshot of query performance on March 2nd, prior to partitioning, and on March 3rd, after partitioning. Queries per second peaked at 109.9k/second immediately prior to partitioning and decreased to a peak of 89.19k queries/second after.
+• Audit and lower reads from leader databases: We’re auditing reads from master databases with the intent to lower them. We put unnecessary load on our master databases by reading from them when replicas have the same data. This can exacerbate capacity issues and service reliability by adding load to the most critical databases at GitHub. By auditing and changing these reads to replica databases, we increase headroom in our SQL databases and reduce the risk of them being overloaded as production load varies.
+• Widen our usage of feature flags: We’re requiring feature flags for code updates, which allows us to disable problematic code dynamically, and will dramatically speed up recovery for active incidents.
+• Complete in-flight functional partitioning: We’re completing our in-flight functional partitioning of our database cluster. We’ve been working on moving tables that comprise functional domains out of the cluster over the last year. We’re very close to finishing that work for a significant number of tables and schema domains. Shipping these improvements will immediately reduce writes to the cluster by 60 percent and storage requirements by 70 percent. Expect to see another post in the coming months that details the performance benefits from this work.
+• Refine our dashboards: We’re improving our visibility into the effects of deploys on our database cluster. Our current deployment dashboard can be noisy, making it difficult to determine deploy safety. Interviews with engineers involved in these incidents noted the cognitive load required to process noisy dashboards. We predict refined dashboards will allow us to spot problems with deploys earlier in the process.
+• Invest in additional data partitioning opportunities: We’ve identified an additional 12 schema domains that we’ll split out from the cluster to further protect us from request and storage constraints.
+• Shard to scale: We’ll begin sharding our largest schema set. Functional partitioning buys us time, but it’s not a sufficient solution to our scaling needs. We plan to use sharding (tenant partitioning) to move us from vertical scaling to horizontal scaling, enabling us to expand capacity much more easily as we grow.
+
+We know you depend on our platform to be reliable. With the immediate changes we’ve made and long-term plans in progress, we’ll continue to use what we’ve learned to make GitHub better every day.

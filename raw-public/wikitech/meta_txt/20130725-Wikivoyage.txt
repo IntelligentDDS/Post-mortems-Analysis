@@ -1,0 +1,1 @@
+Wikis on 1.22wmf11 that use Wikibase (only testwikis and Wikivoyage at the time) went down for 40 minutes with a fatal error on every apache hit.

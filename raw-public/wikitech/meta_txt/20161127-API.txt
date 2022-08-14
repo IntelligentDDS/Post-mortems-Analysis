@@ -1,0 +1,6 @@
+On 2016-11-27 at around 2 UTC HHVM on the API cluster suffered from excessive memory consumption, eventually leading to an API outage. One leading factor to the outage was an expensive template being asked repeatedly as part of batch re-renderings. This is likely a reoccurrence of a similar event on 2016-10-17 (at https://phabricator.wikimedia.org/T148652) with similar underlying reasons. The investigation was carried out in https://phabricator.wikimedia.org/T151702.
+• ~2.40 First round of rolling restarts to help lessen the issue.
+• ~3.30 5xx are down, after three/four peaks, investigation continues. It is noted that there are many failing requests from euwiki
+• 5.00 symptoms are back, ori deploys a bandaid to mw1290 to ban (500) requests for euwiki coming from parsoid
+
+Effective protection against excessive resource usage is still an open issue, in particular for the API cluster. Further, there's no isolation per-usage and that leads to bigger blast radiuses than needed.

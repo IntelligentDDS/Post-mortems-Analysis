@@ -1,0 +1,22 @@
+While https://phabricator.wikimedia.org/T224395 is on which led to depooling codfw. Codfw was pooled back and only two nodes were available (see Incident documentation/20190603-maps). It was necessary to reimage all codfw servers to pickup the new partitioning scheme. And when maps2003 was reimaged which was the last to reimage, kartotherian codfw which is pooled had no node to route traffic to hence request timeouts and SREs were paged. Icinga started alerting from 8:21am
+
+Users who were currently served from codfw were affect. They were affected for about 6min(from logstash)
+
+Icinga alerts for kartotherian endpoints. Also from pybal, no nodes were pooled at codfw due to
+• 8:21 Icinga alerts on IRC and pages were sent out
+
+What weaknesses did we learn about and how can we address them?
+
+The following sub-sections should have a couple brief bullet points each.
+
+What went well?
+• Outage was at least detected quickly
+
+Where did we get lucky?
+• It was easy to link outage to the ongoing reimage of maps2003
+
+We should streamline processes for maps to reduce outages. Maybe via a cookbook to ensure we capture all activities and steps before performing any activity on maps.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+• Streamline all maps activities via a script(cookbook) to make sure we don't miss anything?
+• Always check all asumptions (never trust any)

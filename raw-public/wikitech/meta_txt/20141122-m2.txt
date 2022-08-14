@@ -1,0 +1,7 @@
+db1046 (m2-master) encountered a thread pool lockup of some sort and started denying new connections:
+
+141122 20:10:53 [ERROR] Threadpool could not create additional thread to handle queries, because the number of allowed threads was reached. 141122 20:10:53 [Note] Threadpool has been blocked for 30 seconds.
+
+Existing persistent connections for otrs and eventlogging were apparently still working, but gerrit could not connect. It wasn't immediately obvious which thread was doing the blocking, and a gdb backtrace suggested that a low-level buffer pool mutex deadlock may have occurred, so I opted to restart mysqld. That returned things to normal.
+
+Further investigation needed. Ori wondered on IRC if the recent eventlogging batching changes were related; unlikely IMO, since EL isn't doing anything more unusual than batching inserts. Most likely this is an upstream bug.

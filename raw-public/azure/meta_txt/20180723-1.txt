@@ -1,0 +1,5 @@
+Error notifications in Microsoft Azure Portal
+Summary of impact: Between approximately 20:00 and 22:56 UTC on 23 Jul 2018, a subset of customers may have received timeout errors or failure notifications when attempting to load multiple blades in the Microsoft Azure Portal. Customers may also have experienced slowness or difficulties logging into the Portal. 
+Preliminary root cause: Engineers determined that instances of a backend service became unhealthy, preventing these requests from completing. 
+Mitigation: Engineers performed a change to the service configuration to return the backend service to a healthy state and mitigate the issue. 
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future

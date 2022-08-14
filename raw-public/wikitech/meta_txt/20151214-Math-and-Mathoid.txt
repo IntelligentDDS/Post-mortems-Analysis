@@ -1,0 +1,20 @@
+A bug in MathJax, the rendering engine used by Mathoid, coupled with a bug introduced in the Math extension when switching to RESTBase, caused certain Wiki pages with mathematical formulae not being able to render. The user-perceived impact was low because only pages containing nested TeX constructs were failing to load, and only for logged-in users that selected MathML as the preferred rendering mode.
+
+On the Mathoid side, MathJax v2.5 contained a bug which would cause the process to enter an endless rendering loop when nested TeX constructs, such as , were used. This caused Mathoid to start refusing connections during shorter periods of time:
+
+In spite of the endless-loop bug, Mathoid was functional because the master service process monitors its workers and kills them after a time-out if they are unresponsive, which limited the impact of the overall rendering.
+
+The user-visible impact was also contained because of the recent switch in the Math extension to using RESTBase as a storage proxy, since many of the renders were already present in its storage. Unfortunately, the switch itself introduced a bug which caused the Math extension to ask for a render even for invalid formulae. This caused the Math extension to start throwing exceptions, effectively blocking MediaWiki from displaying Wiki pages containing problematic formulae.
+• 2015-12-14 11:03: First reports from Icinga about Mathoid issues
+• 2015-12-14 20:00: An abnormal amount of Math ext exceptions noticed in Logstash, mobrovac starts investigating and files
+• 2015-12-14 22:40: PS fixing the Math extension is merged, landed in 1.27wmf9
+• 2015-12-17 14:00: User reports ( ) of rendering crashing still occurring, and giving a concrete TeX formula exposing the MathJax bug
+• 2015-12-17 16:30: PS back-ported to 1.27wmf8, Wiki pages are now being displayed, bug with an error in lieu of the formula
+• 2015-12-17 18:10: Number of Mathoid workers temporarily increased to 50 to reduce production impact (PS )
+• 2015-12-17 23:42: physikerwelt fixes the original MathJax bug, and a new version of Mathoid including it is deployed (PS )
+
+The bug crashing the Math extension could have been caught by tests exercising rendering of invalid input. However, currently RESTBase's math checking endpoint is closed for external IPs since it's a POST endpoint, thus making it impossible to test in our CI infrastructure.
+
+As far as Mathoid is concerned, the main problem in this incidence is that the formula exposing the bug is an edge case. Furthermore, as the timeline shows, problems appeared 3 days before users reported it, making it quite hard to find the root cause of the problem. Not having logging enabled in production for the Math extension didn't help either.
+• Status: Unresolved Consider opening up the math check POST RESTBase endpoint -
+• Done Enable logging for the Math extension in production - PS

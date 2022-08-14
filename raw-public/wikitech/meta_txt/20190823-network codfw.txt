@@ -1,0 +1,24 @@
+A provider outage on our primary transport link between eqiad and codfw caused it to be in a constant flapping (going down and up) state.
+
+This flapping caused routing re-convergence churn and packet loss between the two sites.
+
+On the application level, this translated to elevated 5xx/s from Varnish from ulsfo, eqsin, and codfw from 21:20 to 21:55 UTC. Varnish reported "No backend" for many of the requests. Host checks in Icinga were flapping "TTL exceeded" and service checks flapping "No route to host."
+
+Monitoring caught and reported the issue via SmokePing and Icinga.
+• 21:47 Decided to depool codfw (ended up not needing it)
+
+What went well?
+• The root cause was quickly worked-around once the cause (network link) was identified.
+• Due to the frequency of the flapping Icinga checks for link status, OSPF and BFD didn't trigger, causing SREs to think of an application layer issue
+• The work-around (failing over to the backup link) is not documented and requires Netops to be done.
+• Nothing paged even though it had user facing impact
+
+Where did we get lucky?
+• Giuseppe, and Filippo responded outside of their office hours.
+
+How many people were involved in the remediation?
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.
+• Those two will help mitigate the consequences of an overly flapping link:
+• This one will make it easier (down the road) to a non-netops to failover a link if the need arises:
+• This one is about having better monitoring and alerting by replacing Smokeping by something Prometheus based

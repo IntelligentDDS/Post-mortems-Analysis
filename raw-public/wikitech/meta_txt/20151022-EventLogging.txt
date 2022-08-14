@@ -1,0 +1,13 @@
+On Monday, October 26, 2015, we found out that data was no longer replicated for about 80 tables from m4-master to analytics-store (dbstore1002 not dbstore2002) as was visible to stat1003. All dashboards, research, etc. against these schemas (listed below) will be invalid until this data is backfilled from m4.
+
+This was caused by schema changes done on Task T108856, combined with the replication model not using standard mysql replication, using a 3rd party script to clone data. This meant that schema changes were not replicated, and as a consequence, the copy script failed on all tables alphabetically after the first one with a different schema.
+
+The schema change was applied to all tables and the script is backfilling slowly all rows.
+• 2015-10-08 (not directly related) I delete some tables from the log schema, and I notice that the tables were recreated automatically. I am puzzled by it, but cannot do anything, as they do not reappear again. (they were being recreated by the "custom replication" process)
+• 2015-10-22 15:52 A schema change is rolled on db1046. Everything seems ok after the change, but starting from that time, results may not be accurate
+• 2015-10-26 14:39 milimetric informs jynus of an issue with the m4 (eventlogging) database on chat
+• 2015-10-26 19:08 jynus finds the custom script failing to copy the events. Ori and others confirm its existence some minutes later. Schema is changed a few minutes after that and the script starts to backfill events from the master.
+• 2015-10-27 08:24 All events are synced again with the master.
+• Status: Done Document better the analytics replication model.
+• Status: Done Puppetize the copy script (otherwise, it will fail on server reboot).
+• Status: Done Implement better monitoring of the custom replication on db1047 and dbstore1002 . Although it can be improved by monitoring the lag, too.

@@ -1,0 +1,137 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/15055)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #15055
+
+Google Cloud Compute difficulty reaching internet
+
+Incident began at **2015-08-04 08:57** and ended at **2015-08-04 09:05** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 05, 2015 | 12:47 |
+
+SUMMARY:
+
+On Tuesday 4 August 2015, incoming network traffic to Google Compute Engine
+(GCE) was interrupted for 5 minutes. We are sorry for any impact this had on
+our customers' services. We have identified the cause of the incident and we
+are taking steps to avoid this class of problems in future.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday 4 August 2015 from 08:56 to 09:01 PDT, all incoming network packets
+from the Internet to GCE public IP addresses were dropped. The incident
+affected network load balancers and Google Cloud VPNs as well as the external
+IP addresses of GCE instances.
+
+Whilst packets from GCE to the Internet were not affected, the loss of return
+traffic prevented the correct operation of TCP connections. There was no
+effect on instance-to-instance traffic using GCE internal IP addresses.
+
+ROOT CAUSE:
+
+GCE's external network connectivity is provided by a Google core networking
+component that supports many of Google's public services. A software
+deployment for this system introduced a bug which failed to handle a specific
+property of the configuration for GCE IP addresses. This led to the removal of
+all inward-bound routes for GCE.
+
+REMEDIATION AND PREVENTION:
+
+The impact on GCE networking triggered immediate alerts, and Google engineers
+restored service by rolling back the software deployment.
+
+To avoid regression of the specific issue, Google engineers will extend
+testing frameworks to include the GCE configuration property that triggered
+the bug.
+
+To increase our defence in depth against related issues in future, Google
+engineers will also implement a number of technical and procedural measures,
+including: increased engineer review of configuration changes, automatic
+sanity-checks on route deployment changes, and protection of IP ranges
+associated with GCE.  
+  
+|
+
+SUMMARY:
+
+On Tuesday 4 August 2015, incoming network traffic to Google Compute Engine
+(GCE) was interrupted for 5 minutes. We are sorry for any impact this had on
+our customers' services. We have identified the cause of the incident and we
+are taking steps to avoid this class of problems in future.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday 4 August 2015 from 08:56 to 09:01 PDT, all incoming network packets
+from the Internet to GCE public IP addresses were dropped. The incident
+affected network load balancers and Google Cloud VPNs as well as the external
+IP addresses of GCE instances.
+
+Whilst packets from GCE to the Internet were not affected, the loss of return
+traffic prevented the correct operation of TCP connections. There was no
+effect on instance-to-instance traffic using GCE internal IP addresses.
+
+ROOT CAUSE:
+
+GCE's external network connectivity is provided by a Google core networking
+component that supports many of Google's public services. A software
+deployment for this system introduced a bug which failed to handle a specific
+property of the configuration for GCE IP addresses. This led to the removal of
+all inward-bound routes for GCE.
+
+REMEDIATION AND PREVENTION:
+
+The impact on GCE networking triggered immediate alerts, and Google engineers
+restored service by rolling back the software deployment.
+
+To avoid regression of the specific issue, Google engineers will extend
+testing frameworks to include the GCE configuration property that triggered
+the bug.
+
+To increase our defence in depth against related issues in future, Google
+engineers will also implement a number of technical and procedural measures,
+including: increased engineer review of configuration changes, automatic
+sanity-checks on route deployment changes, and protection of IP ranges
+associated with GCE.  
+  
+| Aug 04, 2015 | 09:33 |
+
+The issue with Google Compute Engine instances experiencing difficulty
+reaching the internet between 8:57 to 9:05 US/Pacific is now resolved. We will
+conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrences. We will
+provide a more detailed analysis of this incident once we have completed our
+internal investigation.  
+  
+|
+
+The issue with Google Compute Engine instances experiencing difficulty
+reaching the internet between 8:57 to 9:05 US/Pacific is now resolved. We will
+conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrences. We will
+provide a more detailed analysis of this incident once we have completed our
+internal investigation.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

@@ -1,0 +1,24 @@
+Jenkins has been down for a couple hours on Wednesday April 18th from 9pm to 11pm.
+
+The root cause is that I forgot to deploy a configuration change for the Zuul daemon (the software that takes patches from Gerrit and trigger jobs in Jenkins).
+
+The consequence is that on each job, git had to copy the repository being tested from a disk to another one instead of using hardlinks. That caused jobs to take a huge time and basically killed Jenkins.
+
+The chain of events (all times are GMT) is roughly:
+• Operations team kindly inserted an SSD device in the continuous integration server. The device has been mounted on /srv/ssd/
+• At 3pm I have configured Jenkins to use the new workspace.
+• At 4pm I prepare Zuul related changes to later migrate its git repositories to the SSD.
+• The CPU usage has been fine most of the weekend.
+• 10pm Load raise a bit but nothing to worrying. I am barely monitoring the activity while doing conf calls.
+• around midnight an attempt is made to tweak the Jenkins jobs to use the replicated Gerrit repositories.
+• 6:45am the tweak is reverted. The Jenkins jobs must use the Zuul repositories which contains the patchset merged on the tip of the branch. The symptoms were that all jobs were not able to fetch the refspec they needed.
+• During the morning, a few more jobs need to be updated. I investigate the git slowness and eventually move to something else.
+• 8pm Jenkins job queue is full. I track down the actual root cause:
+• 8pm18 I shutdown Zuul to stop triggering new jobs and cancel all pending Jenkins jobs.
+• 8pm30 I migrate the Zuul repositories to be on the same disks the Jenkins jobs are. That would let git clone creates hardlink and dramatically speed up the cloning processes.
+• The changes I have prepared on Friday 12th get merged and applied on the server. Thus making Zuul use the new configuration.
+• Started migrating all the jobs to use the new git path
+• I should not have switched Jenkins workspaces on Friday. That should have been done on Monday together with the Zuul changes.
+• hardlinks do not work from a device to another one.
+• Jenkins need to start up faster (there is a patch upstream) [fixed May 1st, 2013 bugzilla:47120)
+• Testing in labs does not catch everything.

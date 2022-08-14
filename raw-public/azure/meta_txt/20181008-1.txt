@@ -1,0 +1,5 @@
+Azure DevOps
+Summary of impact: Between 11:40 and 13:30 UTC on 08 Oct 2018, a subset of Azure DevOps customers may have experienced error messages, latency, and/or
+authentication issues. For more information regarding this issue, please refer to: https://aka.ms/devopsincident
+In addition, a small subset of Azure Portal customers may have experienced issues logging into the Azure portal.
+Preliminary root cause: Engineers determined that a network device experienced a hardware fault and that network traffic was not automatically rerouted. Mitigation: Engineers took the faulty network device out of rotation and rerouted network traffic to mitigate the issue.

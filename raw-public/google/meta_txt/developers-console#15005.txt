@@ -1,0 +1,158 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+October 25, 2015  All services normal
+
+  * [Cloud Status](/)
+  * [Incidents](/summary)
+  * [Google Developers Console](/incident/developers-console/15005)
+
+# [Google Cloud Status](//status.cloud.google.com/)
+
+This page provides status information on the services that are part of the
+Google Cloud Platform. Check back here to view the current status of the
+services listed below. For additional information on these services, please
+visit [cloud.google.com](//cloud.google.com/).
+
+# Google Developers Console Incident #15005
+
+Developers console showing 404s for some users
+
+Incident began at **2015-07-27 13:21** and ended at **2015-07-27 14:02** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jul 28, 2015 | 23:09 |
+
+SUMMARY:
+
+On Monday, 27 July 2015, the Google Developers Console was unavailable to all
+users for a duration of 41 minutes. We apologize for the inconvenience and any
+impact on your operations that this may have caused. We are urgently working
+to implement preventative measures to ensure similar incidents do not occur in
+the future.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Monday, 27th July 2015 from 13:21 to 14:02 PDT, the Google Developers
+Console was unavailable to users. All requests
+to<https://console.developers.google.com>returned a 404 "Not Found" response.
+
+Existing Cloud Platform resources such as Compute Engine instances or App
+Engine applications were not affected. All Google Cloud Platform APIs remained
+fully functional, allowing most Cloud Platform resources to be managed through
+the Google Cloud SDK and other API-based tools until Console access was
+restored.
+
+ROOT CAUSE:
+
+At 13:21, while reviewing the production status of the Developer Console, a
+Google engineer inadvertently disabled the production instance of the console.
+The engineer immediately recognised the error and began remediating the
+problem, but the configuration change had also engaged a security mechanism
+which restricted the application to the Google corporate network. This
+mechanism was identified and disengaged at 14:01, which restored public access
+to the Console.
+
+REMEDIATION AND PREVENTION:
+
+To prevent similar incidents, Google Engineers are currently adding safeguards
+to make it harder to change application settings by mistake, implementing
+external monitoring to detect errors outside of the Google network, and
+creating alerts based on serving errors from the Developers Console.  
+  
+|
+
+SUMMARY:
+
+On Monday, 27 July 2015, the Google Developers Console was unavailable to all
+users for a duration of 41 minutes. We apologize for the inconvenience and any
+impact on your operations that this may have caused. We are urgently working
+to implement preventative measures to ensure similar incidents do not occur in
+the future.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Monday, 27th July 2015 from 13:21 to 14:02 PDT, the Google Developers
+Console was unavailable to users. All requests
+to<https://console.developers.google.com>returned a 404 "Not Found" response.
+
+Existing Cloud Platform resources such as Compute Engine instances or App
+Engine applications were not affected. All Google Cloud Platform APIs remained
+fully functional, allowing most Cloud Platform resources to be managed through
+the Google Cloud SDK and other API-based tools until Console access was
+restored.
+
+ROOT CAUSE:
+
+At 13:21, while reviewing the production status of the Developer Console, a
+Google engineer inadvertently disabled the production instance of the console.
+The engineer immediately recognised the error and began remediating the
+problem, but the configuration change had also engaged a security mechanism
+which restricted the application to the Google corporate network. This
+mechanism was identified and disengaged at 14:01, which restored public access
+to the Console.
+
+REMEDIATION AND PREVENTION:
+
+To prevent similar incidents, Google Engineers are currently adding safeguards
+to make it harder to change application settings by mistake, implementing
+external monitoring to detect errors outside of the Google network, and
+creating alerts based on serving errors from the Developers Console.  
+  
+| Jul 27, 2015 | 14:14 |
+
+The issue with Developers Console should be resolved for all affected users as
+of 14:02 US/Pacific. We will conduct an internal investigation of this issue
+and make appropriate improvements to our systems to prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+|
+
+The issue with Developers Console should be resolved for all affected users as
+of 14:02 US/Pacific. We will conduct an internal investigation of this issue
+and make appropriate improvements to our systems to prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+| Jul 27, 2015 | 13:56 |
+
+We are experiencing an issue with the Developers Console beginning at Monday,
+2015-07-27 13:21 US/Pacific.
+
+Current data indicates that all users are affected by this issue.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 16:15 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an issue with the Developers Console beginning at Monday,
+2015-07-27 13:21 US/Pacific.
+
+Current data indicates that all users are affected by this issue.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 16:15 US/Pacific with current
+details.  
+  
+| Jul 27, 2015 | 13:41 |
+
+We are currently investigating an issue where some users are getting a 404
+error when accessing the Developers Console. We will update the status of this
+issue within 15 minutes  
+  
+|
+
+We are currently investigating an issue where some users are getting a 404
+error when accessing the Developers Console. We will update the status of this
+issue within 15 minutes  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

@@ -1,0 +1,15 @@
+ORES in CODFW stopped processing requests. The result was sustained overload errors and a growing backlog of requests to process.
+
+This is a short (<= 1 paragraph) of what happened. Please ensure to remove private information.
+• March 19th
+• 0400 - We observe a very high, sustained request rate from Google Cloud in SFO The sustained request rate brings EQIAD/CODFW near capacity. (grafana of external requests)
+• March 20
+• 15:58 DNS oresrdb.svc.codfw.wmnet is switched over to oresrdb2002
+• 14:12:22 - Score cache redis start and begins loading the redis databases from disk
+• 14:13:57 - the score cache redis database loads the file and start accepting connections. It also begins a full resynchronization from master
+• 14:40 - Reversal of previous DNS change and forced restart of workers.
+• 14:43 - ORES codfw begins to return scores again (grafana of scores processed)
+
+Miscommunication between SRE team members ended up in the reboot of the backup redis server after it was switched to serve redis traffic.
+
+Where is the documentation that someone responding to this alert should have (cookbook / runbook). If that documentation does not exist, there should be an action item to create it.

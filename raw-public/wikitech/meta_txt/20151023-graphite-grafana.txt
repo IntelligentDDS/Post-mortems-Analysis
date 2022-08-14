@@ -1,0 +1,6 @@
+Graphite was unable to serve data properly due to large queries in dashboards
+• 16:47 - stop cronjob, suspected as a factor and later excluded
+• 17:57 - the offending queries are found and the related grafana dashboard deleted
+
+Graphite doesn't include query cancellation or timeout capabilities for local queries it seems, so queries involving a lot of time series can occupy all uwsgi workers, resulting in "bad gateway" from apache. In addition, grafana clients don't seem to reload dashboards when the dashboard definition is itself updated. This results in clients keep requesting the same (problematic, in this case) dashboard and thus needing a bad server-side.
+• Not done limit the impact of heavy/large graphite queries ( )

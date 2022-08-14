@@ -1,0 +1,9 @@
+Migration of maps to upload caches resulted in query parameters being stripped, breaking some subservices (phab:T166735).
+
+This is a step by step outline of what happened to cause the incident and how it was remedied.
+• There is never enough monitoring.
+• An important change was considered ops-only, was never communicated to its product team, neither beforehand for coordination nor afterwards for a quick check that everything still works.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+• Done Add geoshapes and geolines to monitoring spec (Task T166776)
+• Not done Kartographer should handle external data errors gracefully (Task T148883)

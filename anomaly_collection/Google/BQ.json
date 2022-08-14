@@ -1,0 +1,724 @@
+{
+    "google-BQ-1": { 
+      "title": "Google BigQuery Incident #18012",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318012.pdf"],
+      "time": "11/29/2015",
+      "summary": "for an aggregate of 33 minutes occurring between 7:31am and 8:24am PST, 11% of allrequests to the BigQuery API experienced errors. ",
+      "details": "On Sunday 29th of November 2015, between 7:31am and 7:41am, 7% of BigQuery API requests were redirected (HTTP 302) to a CAPTCHA service. The issue reoccurred between 8:01am and 8:24am PST, affecting 22% of requests. As the CAPTCHA service is intended to verify that the requester is human, any automated requests that were redirected failed.",
+      "service_name": ["Google BigQuery"],
+      "impact symptom": ["availability","performance"],
+      "duration": 33,
+      "detection": {
+        "method": null, 
+        "tool": null
+      },
+      "manifestation": [
+            {
+            "business kpi": ["API error rate", "API throughout"]
+          }, {
+            "system kpi": []
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "external causes",
+            "layer-2": "excessive flow"
+          }
+        ],
+        "details": "The BigQuery API is designed to provide fair service to all users during intervals of unusually-high traffic. During this event, a surge in traffic to the API caused traffic verification and fairness systems to activate, causing a fraction of requests to be redirected to the CAPTCHA service."
+      },
+      "operation": ["normal operation"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["allow the additional queries", "change traffic threshold policy"],
+        "details": "The engineers instructed BigQuery to allow the additional queries without verification, ending the incident.",
+        "troubleshooting": {
+           "1": "Google engineers assessed that BigQuery’s service capacity was sufficient to handle the additional queries without putting existing queries at risk. ",
+           "2": "Instructed BigQuery to allow the additional queries without verification, ending the incident.",
+           "3": "Change BigQuery's traffic threshold policy to an adaptive mechanism appropriate for automated requests, which provides intelligent traffic control and isolation for individual users." 
+        } 
+      },
+      "propagation pass": {
+          "1": "BigQuery API",
+          "2": "CAPTCHA service"
+      },
+      "refined path": {
+        "1": "app",
+        "2": "app"
+      },
+      "detection time": null,
+      "fix time": null,
+      "identification time": null,
+      "verification": "lixy, lixy"
+    },
+    "google-BQ-2":{
+      "title": "Google BigQuery Incident #18015",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318015.pdf"],
+      "time": "05/18/2016",
+      "summary": "On Wednesday 18 May 2016 the BigQuery API was unavailable for two periods totaling 31 minutes. ",
+      "details": "On Wednesday 18 May 2016 from 11:50 until 12:15 PDT all non-streaming BigQuery API calls failed, and additionally from 14:41 until 14:47, 70% of calls failed. An error rate of 1% occurred from 11:28 until 15:34. API calls affected by this issue experienced elevated latency and eventually returned an HTTP 500 status with an error message of 'Backend Error'. The BigQuery web console was also unavailable during these periods.",
+      "service_name": ["Google BigQuery"],
+      "impact symptom": ["availability", "performance"],
+      "duration": 31,
+      "detection": {
+        "method": null, 
+        "tool": null
+      },
+      "manifestation": [
+            {
+            "business kpi": ["API error rate", "elevated latency","HTTP 500 status"]
+          }, {
+            "system kpi": [""]
+          },
+          "service unavailable"
+        ],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "config"
+          }
+        ],
+        "details": "In 2015 BigQuery introduced datasets located in Europe. This required infrastructure to allow BigQuery API calls to be routed to an appropriate zone. This infrastructure was deployed uneventfully and has been operating in production for some time. The errors on 18 May were caused when a new configuration was deployed to improve routing of APIs, and then subsequently rolled back. "
+      },
+      "operation": ["change"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["rollback", "change configuration"],
+        "details": "The engineering team has made changes to the routing configuration for BigQuery API calls to prevent this issue from recurring in the future, and to more rapidly detect elevated error levels in BigQuery API calls in the future ",
+        "troubleshooting": {
+           "1": "The errors on 18 May were caused when a new configuration was deployed to improve routing of APIs, and then subsequently rolled back. ",
+           "2": "The engineering team has made changes to the routing configuration for BigQuery API calls to prevent this issue from recurring in the future"
+        } 
+      },
+      "propagation pass": {
+          "1": "routing infrastructure",
+          "2": "BigQuery API"
+      },
+      "refined path": {
+        "1": "router",
+        "2": "app"
+      },
+      "detection time": null,
+      "fix time": null,
+      "identification time": null,
+      "verification": "lixy"
+    },
+    "google-BQ-3":{
+      "title": "Google BigQuery Incident #18018",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318018.pdf"],
+      "time": "07/25/2016",
+      "summary": "On Monday 25 July 2016, the Google BigQuery Streaming API experienced elevated error rates for a duration of 71 minutes. ",
+      "details": "On Monday 25 July 2016 between 17:03 and 18:14 PDT, the BigQuery Streaming API returned HTTP 500 or 503 errors for 35% of streaming insert requests, with a peak error rate of 49% at 17:40. Customers who retried on error were able to mitigate the impact. Calls to the BigQuery jobs API showed an error rate of 3% during the incident but could generally be executed reliably with normal retry behaviour. Other BigQuery API calls were not affected.",
+      "service_name": ["Google BigQuery", "load balancer"],
+      "impact symptom": ["performance","availability"],
+      "duration": 71,
+      "detection": {
+        "method": "automate", 
+        "tool": ["monitoring"]
+      },
+      "manifestation": [
+            "service unavailable",
+            {
+            "business kpi": ["increased error rate", "HTTP 500 status", "HTTP 503 status", "API throughout"]
+          }, {
+            "system kpi": []
+          }],
+      "root cause": {
+        "label": [
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "config"
+          }
+        ],
+        "details": "the capacity limit for the Streaming API service had been configured higher than its true capacity. As a result, the internal Google service was able to send too many requests to the Streaming API, causing it to fail for a percentage of responses."
+      },
+      "operation": ["normal operation"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["block traffic", "set the correct capacity limits"],
+        "details": "blocked traffic from the internal Google client causing the overload shortly thereafter which immediately started to mitigate the impact of the incident. Error rates dropped to normal by 18:14,  We will also set the correct capacity limits for the Streaming API service based on improved load tests in order to ensure that internal clients cannot exceed the service's capacity. ",
+        "troubleshooting": {
+           "1": "detected the issue",
+           "2": "blocked traffic",
+           "3": "set the correct capacity limits for the Streaming API service based on improved load tests in order to ensure that internal clients cannot exceed the service's capacity*"
+        } 
+      },
+      "propagation pass": {
+          "1": "An internal Google service",
+          "2": "BigQuery Streaming API service",
+          "3": "BigQuery metadata service"
+          },
+      "refined path": {
+        "1": "app",
+        "2": "app",
+        "3": "app"
+      },
+      "detection time": 17,
+      "fix time": 54,
+      "identification time": null,
+      "verification": "lixy"
+    },
+    "google-BQ-4":{
+      "title": "Google BigQuery Incident #18022",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318022.pdf"],
+      "time": "11/08/2016",
+      "summary": "On Tuesday 8 November 2016, Google BigQuery’s streaming service, which includes streaming inserts and queries against recently committed streaming buffers, was largely unavailable for a period of 4 hours.",
+      "details": "On Tuesday 8 November 2016 from 16:00 to 20:00 US/Pacific, 73% of BigQuery streaming inserts failed with a 503 error code indicating an internal error had occurred during the insertion. At peak, 93% of BigQuery streaming inserts failed. During the incident, queries performed on tables with recently-streamed data returned a result code (400) indicating that the table was unavailable for querying. Queries against tables in which data were not streamed within the 24 hours preceding the incident were unaffected. There were no issues with non-streaming ingestion of data.",
+      "service_name": ["Google BigQuery streaming service"],
+      "impact symptom": ["availability", "performance"],
+      "duration": 240,
+      "detection": {
+        "method": null, 
+        "tool": null
+      },
+      "manifestation": [
+        "service unavailable",
+            {
+            "business kpi": ["error rate"]
+          }, {
+            "system kpi": []
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "payload flood"
+          },
+          {
+            "layer-1": "external causes",
+            "layer-2": "excessive flow"
+          }
+        ],
+        "details": "At 16:00 US/Pacific, a combination of reduced backend authorization capacity coupled with routine cache entry refreshes caused a surge in requests to the authorization backends, exceeding their current capacity."
+      },
+      "operation": ["normal operation"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["reduce load", "increase the cache TTL", "allow streaming authorization requests", "populate the cache"],
+        "details": "The issue with authorization capacity was ultimately resolved by incrementally reducing load on the authorization system internally and increasing the cache TTL, allowing streaming authorization requests to succeed and populate the cache so that internal services could be restarted.",
+        "troubleshooting": {
+           "1": "Alerted to issues with the streaming service at 16:21 US/Pacific.",
+           "2": "Redirecting requests to bypass the caching layer at 16:51.",
+           "3": "At 18:13, pinpoint the failures to a set of overloaded authorization backends and begin remediation.",
+           "4": "The issue with authorization capacity was ultimately resolved by incrementally reducing load on the authorization system internally and increasing the cache TTL."
+        }
+      },
+      "propagation pass": {
+         "1": "cache layer",
+         "2": "authorization service",
+         "3": "BigQuery streaming service"
+        },
+      "refined path": {
+        "1": "middleware",
+        "2": "middleware",
+        "3": "app"
+      },
+      "detection time": 21,
+      "fix time": 40,
+      "identification time": 230,
+      "verification": "lixy"
+    },
+    "google-BQ-5":{
+      "title": "Google BigQuery Incident #18026",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318026.pdf"],
+      "time": "03/13/2017",
+      "summary": "On Monday 13 March 2017, the BigQuery streaming API experienced 91% error rate in the US and 63% error rate in the EU for a duration of 30 minutes. ",
+      "details": "On Monday 13 March 2017 from 10:22 to 10:52 PDT 91% of streaming API requests to US BigQuery datasets and 63% of streaming API requests to EU BigQuery datasets failed with error code 503 and an HTML message indicating 'We're sorry... but your computer or network may be sending automated queries. To protect our users, we can't process your request right now.'",
+      "service_name": ["Google BigQuery streaming service"],
+      "impact symptom": ["availability"],
+      "duration": 30,
+      "detection": {
+        "method": null, 
+        "tool": null
+      },
+      "manifestation": [
+            {
+            "business kpi": ["error rate increase"]
+          }, {
+            "system kpi": ["log entries volume"]
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "payload flood"
+          },
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "config"
+          }
+        ],
+        "details": "The trigger for this incident was a sudden increase in log entries being streamed from Stackdriver Logging to BigQuery by logs export. The denial of service (DoS) protection used by BigQuery responded to this by rejecting excess streaming API traffic. However the configuration of the DoS protection did not adequately segregate traffic streams resulting in normal sources of BigQuery streaming API requests being rejected."
+      },
+      "operation": ["change"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["block load", "revert change", "clear backlog"],
+        "details": "Identify and reverting the change that triggered the increase in log entries and clear the backlog of log entries that had grown.",
+        "troubleshooting": {
+           "1": "Google engineers initially mitigated the issue by blocking the source of unexpected load. ",
+           "2": "This prevented the overload and allowed all other traffic to resume normally. ",
+           "3": "Engineers fully resolved the issue by identifying and reverting the change that triggered the increase in log entries and clearing the backlog of log entries that had grown. " 
+        } 
+      },
+      "propagation pass": {
+          "1": "StackDriver Logging",
+          "2": "BigQuery streaming API"
+      },
+      "refined path": {
+        "1": "middleware",
+        "2": "app"
+      },
+      "detection time": null,
+      "fix time": null,
+      "identification time": null,
+      "verification": "lixy"
+    },
+    "google-BQ-6":{
+      "title": "Google BigQuery Incident #18029",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318029.pdf"],
+      "time": "06/14/2017",
+      "summary": "For 10 minutes on Wednesday 14 June 2017, Google BigQuery experienced increased error rates for both streaming inserts and most API methods due to their dependency on metadata read operations. ",
+      "details": "Starting at 10:43am US/Pacific, global error rates for BigQuery streaming inserts and API calls dependent upon metadata began to rapidly increase. The error rate for streaming inserts peaked at 100% by 10:49am. Within that same window, the error rate for metadata operations increased to a height of 80%. By 10:54am the error rates for both streaming inserts and metadata operations returned to normal operating levels.",
+      "service_name": ["Google BigQuery"],
+      "impact symptom": ["availability", "inconsistency"],
+      "duration": 10,
+      "detection": {
+        "method": "automate", 
+        "tool": ["monitoring system"]
+      },
+      "manifestation": [
+          "service unavailable",
+            {
+            "business kpi": ["elevated latency","error rate increase"]
+          }, {
+            "system kpi": ["network delay"]
+          }],
+      "root cause": {
+        "label": [
+          {
+            "layer-1": "external causes",
+            "layer-2": "component removal"
+          }
+        ],
+        "details": "BigQuery engineers completed the migration of BigQuery's metadata storage to an improved backend infrastructure. As the new backend infrastructure came online, there was one particular type of read traffic that hadn’t yet migrated to the new metadata storage. This caused a sudden spike of that read traffic to the new backend."
+      },
+      "operation": ["incomplete migration"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["allocate resource automatically", "redirect traffic automatically", "free up resources"],
+        "details": "The spike came when the new storage backend had to process a large volume of incoming requests as well as allocate resources to handle the increased load. Initially the backend was able to process requests with elevated latency, but all available resources were eventually exhausted, which lead to API failures. Once the backend was able to complete the load redistribution, it began to free up resources to process existing requests and work through its backlog. BigQuery operations continued to experience elevated latency and errors for another five minutes as the large backlog of requests from the first five minutes of the incident were processed. .",
+        "troubleshooting": {
+           "1": "The spike came when the new storage backend had to process a large volume of incoming requests as well as allocate resources to handle the increased load. ",
+           "2": "By this time, the underlying root cause had already passed. ",
+           "3": "the backend was able to complete the load redistribution, it began to free up resources to process existing requests and work through its backlog."
+        } 
+      },
+      "propagation pass": {
+          "1": "backend infrastructure",
+          "2": "BigQuery service"
+      },
+      "refined path": {
+        "1": "backend infrastructure",
+        "2": "app"
+      },
+      "detection time": 6,
+      "fix time": null,
+      "identification time": null,
+      "verification": "lixy"
+    },
+    "google-BQ-7":{
+      "title": "Google BigQuery Incident #18030",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318030.pdf"],
+      "time": "06/28/2017",
+      "summary": "On Wednesday 28 June 2017, streaming data into Google BigQuery experienced elevated error rates for a period of 57 minutes.",
+      "details": "On Wednesday 28 June 2017 from 18:00 to 18:20 and from 18:40 to 19:17 US/Pacific time, BigQuery's streaming insert service returned an increased error rate to clients for all projects. The proportion varied from time to time, but failures peaked at 43% of streaming requests returning HTTP response code 500 or 503. ",
+      "service_name": ["Google BigQuery"],
+      "impact symptom": ["availability"],
+      "duration": 57,
+      "detection": {
+        "method": "automatic", 
+        "tool": null
+      },
+      "manifestation": [
+        "service unavailable",
+            {
+            "business kpi": ["elevated error rate", "HTTP 500 status", "HTTP 503 status"]
+          }, {
+            "system kpi": []
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "external causes",
+            "layer-2": "excessive flow"
+          }
+        ],
+        "details": "A sudden increase in traffic to the BigQuery streaming service combined with diminished capacity in a datacenter resulted in that datacenter returning a significant amount of errors for tables whose IDs landed in that datacenter. Other datacenters processing streaming data into BigQuery were unaffected."
+      },
+      "operation": ["normal operation"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["redirect traffic", "improve configuration", "rate-limit strategy"],
+        "details": "Google engineers were notified of the event at 18:20, and immediately started to investigate the issue. The first set of errors had subsided, but starting at 18:40 error rates increased again. At 19:17 Google engineers redirected traffic away from the affected datacenter. The table IDs in the affected datacenter were redistributed to remaining, healthy streaming servers and error rates began to subside. To prevent the issue from recurring, Google engineers are improving the load balancing configuration, so that spikes in streaming traffic can be more equitably distributed amongst the available streaming servers. Additionally, engineers are adding further monitoring as well as tuning existing monitoring to decrease the time it takes to alert engineers of issues with the streaming service. Finally, Google engineers are evaluating rate-limiting strategies for the backend to prevent them from becoming overloaded. ",
+        "troubleshooting": {
+           "1": "Google engineers were notified of the event at 18:20, and immediately started to investigate the issue. ",
+           "2": "The first set of errors had subsided, but starting at 18:40 error rates increased again. ",
+           "3": "At 19:17 Google engineers redirected traffic away from the affected datacenter. ",
+           "4": "The table IDs in the affected datacenter were redistributed to remaining, healthy streaming servers and error rates began to subside. "
+        } 
+      },
+      "propagation pass": {
+        "1": "BigQuery Streaming service",
+        "2": "data center"
+      },
+      "refined path": {
+        "1": "app",
+        "2": "data center"
+      },
+      "detection time": 20,
+      "fix time": 57,
+      "identification time": null,
+      "verification": "lixy"
+    },
+    "google-BQ-8":{
+      "title": "Google BigQuery Incident #18032",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318032.pdf"],
+      "time": "07/26/2017",
+      "summary": "On 2017-07-26, BigQuery delivered error messages for 7% of queries and 15% of exports for a duration of two hours and one minute. It also experienced elevated failures for streaming inserts for one hour and 40 minutes.",
+      "details": "On 2017-07-26 from 13:45 to 15:45 US/PDT, BigQuery jobs experienced elevated failures at a rate of 7% to 15%, depending on the operation attempted. Overall 7% of queries, 15% of exports, and 9% of streaming inserts failed during this event. These failures occurred in 12% of customer projects The errors for affected projects varied from 2% to 69% of exports, over 50% for queries, and up to 28.5% for streaming inserts. Customers affected saw an error message stating that their project has “not enabled BigQuery”.",
+      "service_name": ["Google BigQuery", "Google’s Service Manager"],
+      "impact symptom": ["availability", "inconsistency"],
+      "duration": 130,
+      "detection": {
+        "method": "automated", 
+        "tool": ["monitoring"]
+      },
+      "manifestation": [
+            {
+            "business kpi": ["error rate"]
+          }, {
+            "system kpi": []
+          }],
+      "root cause": {
+        "label": [
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "config"
+          }
+        ],
+        "details": " during one stage of the rollout, configuration data for two GCP datacenters was migrated before the corresponding permissions module for BigQuery was updated. As a result, the permissions module in those datacenters began erroneously reporting that projects running there no longer had BigQuery enabled. "
+      },
+      "operation": ["rollout", "migration"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["reconfigure", "rollback data migration"],
+        "details": "Google engineers focused on mitigating the user impact by configuring BigQuery in affected locations to skip the erroneous permissions check.",
+        "troubleshooting": {
+          "1": "alerted by automated monitoring within 15 minutes of the beginning of the event at 13:59 ",
+          "2": "investigation determined at 14:17 that multiple projects were experiencing BigQuery validation failures, and the cause of the errors was identified at 14:46 as being changed permissions.",
+          "3": "focused on mitigating the user impact by configuring BigQuery in affected locations.",
+          "4": "with mitigations in place, the Google engineering team worked to safely roll back the data migration" 
+        } 
+      },
+      "propagation pass": {
+        "1": "permission module in Google's Service Manager",
+        "2": "BigQuery"
+      },
+      "refined path": {
+        "1": "middleware",
+        "2": "app"
+      },
+      "detection time": 15,
+      "fix time": 90,
+      "identification time": 32,
+      "verification": "lixy"
+    },
+    "google-BQ-9":{
+      "title": "Google BigQuery Incident #18036",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318036.pdf"],
+      "time": "05/16/2018",
+      "summary": "On Wednesday 16 May 2018, Google BigQuery experienced failures of import, export and query jobs for a duration of 88 minutes over two time periods (55 minutes initially, and 33 minutes in the second, which was isolated to the EU). ",
+      "details": "On Wednesday 16 May 2018 from 16:00 to 16:55 and from to 17:45 to 18:18 PDT, Google BigQuery experienced a failure of some import, export and query jobs. During the first period of impact, there was a 15.26% job failure rate; during the second, which was isolated to the EU, there was a 2.23% error rate. Affected jobs would have failed with INTERNAL_ERROR as the reason.",
+      "service_name": ["Google BigQuery import, export and query jobs"],
+      "impact symptom": ["availability","inconsistency"],
+      "duration": 88,
+      "detection": {
+        "method": "automatic", 
+        "tool": ["monitoring"]
+      },
+      "manifestation": [
+            {
+            "business kpi": ["error rate"]
+          }, {
+            "system kpi": []
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "config"
+          },
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "exception handling"
+          }
+        ],
+        "details": "Configuration changes being rolled out on the evening of the incident were not applied in the intended order. This resulted in an incomplete configuration change becoming live in some zones, subsequently triggering the failure of customer jobs. During the process of rolling back the configuration, another incorrect configuration change was inadvertently applied, causing the second batch of job failures."
+      },
+      "operation": ["rollout", "recover"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["rollback", "change configuration"],
+        "details": "Automated monitoring alerted engineering teams 15 minutes after the error threshold was met and were able to correlate the errors with the configuration change 3 minutes later. We feel that the configured alert delay is too long and have lowered it to 5 minutes in order to aid in quicker detection. During the rollback attempt, another bad configuration change was enqueued for automatic rollout and when unblocked, proceeded to roll out, triggering the second round of job failures. To prevent this from happening in the future, we are working to ensure that rollouts are automatically switched to manual mode when engineers are responding to production incidents. In addition, we're switching to a different configuration system which will ensure the consistency of configuration at all stages of the rollout. ",
+        "troubleshooting": {
+           "1": "automated monitoring alerted engineering teams 15 minutes after the error threshold was met",
+           "2": "correlate the errors with the configuration change",
+           "3": "rolling back the configuration" 
+        } 
+      },
+      "propagation pass": {
+          "1": "Google BigQuery"
+      },
+      "refined path": {
+        "1": "app"
+      },
+      "detection time": 15,
+      "fix time": 120,
+      "identification time": 3,
+      "verification": "lixy"
+    },
+    "google-BQ-18037":{
+      "title": "Google BigQuery Incident #18037",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318037.pdf"],
+      "time": "06/22/2018",
+      "summary": "On Friday 22 June 2018, Google BigQuery experienced increased query failures for a duration of 1 hour 6 minutes.",
+      "details": "On Friday 22 June 2018 from 12:06 to 13:12 PDT, up to 50% of total requests to the BigQuery API failed with error code 503. Error rates varied during the incident, with some customers experiencing 100% failure rate for their BigQuery table jobs.",
+      "service_name": ["Google BigQuery query"],
+      "impact symptom": ["performance","availability"],
+      "duration": 66,
+      "detection": {
+        "method": null, 
+        "tool": null
+      },
+      "manifestation": [
+            {
+            "business kpi": ["error rate"]
+          }, {
+            "system kpi": ["memory utilization","CPU utilization"]
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "payload flood"
+          }
+        ],
+        "details": "A new release of the BigQuery API introduced a software defect that caused the API component to return larger-than-normal responses to the BigQuery router server. "
+      },
+      "operation": ["rollout"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["increase capacity","reconfigure", "revert change"],
+        "details": "Google Engineers initially mitigated the issue by increasing the capacity of the BigQuery router server which prevented overload and allowed API traffic to resume normally. The issue was fully resolved by identifying and reverting the change that caused large response sizes.",
+        "troubleshooting": {
+           "1": "Increase the capacity of the BigQuery router server",
+           "2": "Identify and revert the change that caused large response sizes." 
+        } 
+      },
+      "propagation pass": {
+        "1": "BigQuery API",
+        "2": "router server",
+        "3": "BigQuery API"
+      },
+      "refined path": {
+        "1": "app",
+        "2": "router",
+        "3": "app"
+      },
+      "detection time": null,
+      "fix time": 66,
+      "identification time": null,
+      "verification": "lixy" 
+    },
+    "google-BQ-11":{
+      "title": "Google BigQuery Incident #19002",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2319002.pdf"],
+      "time": "03/08/2019",
+      "summary": "On Friday 8 March 2019, Google BigQuery’s jobs.insert API in the US regions experienced an average elevated error rate of 51.21% for a duration of 45 minutes.",
+      "details": "On Friday 8 March 2019 from 00:45 - 01:30 US/Pacific, BigQuery’s jobs.insert [1] API (responsible for import/export, query, and copy jobs) in the US region experienced an average error rate of 51.21%. Affected customers received error responses such as “Error encountered during Execution, retrying may solve the problem” and “Read timed out” when sending requests to BigQuery.",
+      "service_name": ["Google BigQuery insert"],
+      "impact symptom": ["availability"],
+      "duration": 45,
+      "detection": {
+        "method": "automatic monitoring", 
+        "tool": null
+      },
+      "manifestation": [
+            {
+            "business kpi": ["elevated error rate", "HTTP 503 status"]
+          }, {
+            "system kpi": []
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "payload flood"
+          },
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "code change"
+          }
+        ],
+        "details": "A recent change to BigQuery’s shuffle scheduling service [2] introduced the potential for the service to enter a state where it was unable to process shuffle jobs. A new canary release was deployed to fix the potential issue. However, this release contained an unrelated issue which placed an overly restrictive rate limit on the shuffle service preventing it from operating nominally. This strict rate limit created a large job backlog for the BigQuery Job Server, which resulted in BigQuery returning errors."
+      },
+      "operation": ["upgrade"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["redirect traffic", "fix bug", "allocate additional capacity"],
+        "details": "We are taking immediate action to prevent recurrence. First, we have implemented a fix to prevent the shuffle service from potentially entering a state where it is unable to process jobs. Second, we are allocating additional capacity to BigQuery’s US region to reduce the impact of traffic redirections on adjacent datacenters running the service. Additionally, we are increasing the precision of our monitoring to enable more swift and accurate diagnosing of BigQuery issues going forward. ",
+        "troubleshooting": {
+           "1": "Automatically alert at 00:47 and immediately began their investigation. ",
+           "2": "The root cause was discovered at 01:23.",
+           "3": "Redirect traffic away from the impacted datacenter at 01:27.",
+           "4": "The incident was fully resolved by 01:30."
+        } 
+      },
+      "propagation pass": {
+          "1": "BigQuery's shuffle scheduling service",
+          "2": "BigQuery Job Server",
+          "3": "BigQuery"
+      },
+      "refined path": {
+        "1": "middleware",
+        "2": "job server",
+        "3": "app"
+      },
+      "detection time": 2,
+      "fix time": 43,
+      "identification time": 36,
+      "verification": "lixy"
+    },
+    "google-BQ-12":{
+      "title": "Google BigQuery Incident #19003",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2319003.pdf"],
+      "time": "05/17/2019",
+      "summary": "On Friday, May 17 2019, 83% of Google BigQuery insert jobs in the US multi-region failed for a duration of 27 minutes. Query jobs experienced an average error rate of 16.7% for a duration of 2 hours. BigQuery users in the US multi-region also observed elevated latency for a duration of 4 hours and 40 minutes. ",
+      "details": "On Friday May 17 2019, from 08:30 to 08:57 US/Pacific, 83% of Google BigQuery insert jobs failed for 27 minutes in the US multi-region. From 07:30 to 09:30 US/Pacific, query jobs in US multi-region returned an average error rate of 16.7%. Other jobs such as list, cancel, get, and getQueryResults in the US multi-region were also affected for 2 hours along with query jobs. Google BigQuery users observed elevated latencies for job completion from 07:30 to 12:10 US/Pacific. ",
+      "service_name": ["Google BigQuery insert"],
+      "impact symptom": ["availability", "performance"],
+      "duration": 280,
+      "detection": {
+        "method": null, 
+        "tool": null
+      },
+      "manifestation": [
+            {
+            "business kpi": ["service delay", "error rate"]
+          }, {
+            "system kpi": [""]
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "external causes",
+            "layer-2": "excessive flow"
+          },
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs"
+          }
+        ],
+        "details": "The incident was triggered by a sudden increase in queries in US multi-region leading to quota exhaustion in the storage system serving incoming requests. Detecting the sudden increase, BigQuery initiated its auto-defense mechanism and redirected user requests to a different location. The high load of requests triggered an issue in the schedul18037ing system, causing delays in scheduling incoming queries. These delays resulted in errors for query, insert, list, cancel, get and getQueryResults BigQuery jobs and overall latency experienced by users. As a result of these high number of requests at 08:30 US/Pacific, the scheduling system’s overload protection mechanism began rejecting further incoming requests, causing insert job failures for 27 minutes."
+      },
+      "operation": ["normal operation"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["restart system", "redirect queries", "block load"],
+        "details": "BigQuery’s defense mechanism began redirection at 07:50 US/Pacific. Google Engineers were automatically alerted at 07:54 US/Pacific and began investigation. The issue with the scheduler system began at 08:00 and our engineers were alerted again at 08:10. At 08:43, they restarted the scheduling system which mitigated the insert job failures by 08:57. Errors seen for insert, query, cancel, list, get and getQueryResults jobs were mitigated by 09:30 when queries were redirected to different locations. Google engineers then successfully blocked the source of sudden incoming queries that helped reduce overall latency. The issue was fully resolved at 12:10 US/Pacific when all active and pending queries completed running. ",
+        "troubleshooting": {
+           "1": "BigQuery’s defense mechanism began redirection at 07:50 US/Pacific. ",
+           "2": " Google Engineers were automatically alerted at 07:54 US/Pacific ",
+           "3": "The issue with the scheduler system began at 08:00 and our engineers were alerted again at 08:10.",
+           "4": "Restart the scheduling system which mitigated the insert job failures by 08:57.",
+           "5": "Queries were redirected to different locations.",
+           "6": "Block the source of sudden incoming queries."
+        } 
+      },
+      "propagation pass": {
+          "1": "storage system",
+          "2": "scheduling system",
+          "3": "BigQuery service"
+      },
+      "refined path": {
+        "1": "database",
+        "2": "middleware",
+        "3": "app"
+      },
+      "detection time": 6,
+      "fix time": 40,
+      "identification time": 256,
+      "verification": "lixy"
+    }
+}

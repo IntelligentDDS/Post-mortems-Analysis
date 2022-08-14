@@ -1,0 +1,10 @@
+RCA - Storage - Unable to access Azure file share with Azure Active Directory Domain Services joined machines (Tracking ID HSXX-1P8)
+Summary of Impact: Between 18:00 UTC on 30 Sep 2019, and 05:00 UTC on 03 Oct 2019, customers may have experienced failures when accessing Azure file shares from Azure Active
+Directory Domain Services (AAD DS) joined machines.
+Root Cause: Azure Files communication with Azure Active Directory Domain Services (AAD DS) was in the process of upgrading from a manually configured backend authentication system to an automatically configured backend authentication system. However, a step was missed in this change which caused Azure Files to fail when authenticating with Azure Active Directory Domain Services. This caused clients accessing the Azure file share using AAD DS authentication to fail. The outage was automatically detected by our system, but it took the team longer than desired to diagnose and roll back the changes.
+Mitigation: Once the issue was fully understood, engineers rolled back the changes which mitigated the issue for all customers.
+Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure
+such incidents do not occur in the future. In this case, this includes (but is not limited to):
+The configuration has now been rolled back globally, and the team is doing further work to ensure the move to the automated system can be completed without any further customer impact. We will also follow up to determine what tools and processes can be improved to reduce the time needed to investigate and mitigate similar incidents in the future.
+Provide Feedback
+Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/HSXX-1P8

@@ -1,0 +1,149 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+May 18, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/18036)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #18036
+
+Multiple failing BigQuery job types
+
+Incident began at **2018-05-16 16:00** and ended at **2018-05-16 18:18** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| May 18, 2018 | 14:34 |
+
+ISSUE SUMMARY
+
+On Wednesday 16 May 2018, Google BigQuery experienced failures of import,
+export and query jobs for a duration of 88 minutes over two time periods (55
+minutes initially, and 33 minutes in the second, which was isolated to the
+EU). We sincerely apologize to all of our affected customers; this is not the
+level of reliability we aim to provide in our products. We will be issuing SLA
+credits to customers who were affected by this incident and we are taking
+immediate steps to prevent a future recurrence of these failures.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 16 May 2018 from 16:00 to 16:55 and from to 17:45 to 18:18 PDT,
+Google BigQuery experienced a failure of some import, export and query jobs.
+During the first period of impact, there was a 15.26% job failure rate; during
+the second, which was isolated to the EU, there was a 2.23% error rate.
+Affected jobs would have failed with INTERNAL_ERROR as the reason.
+
+ROOT CAUSE
+
+Configuration changes being rolled out on the evening of the incident were not
+applied in the intended order. This resulted in an incomplete configuration
+change becoming live in some zones, subsequently triggering the failure of
+customer jobs. During the process of rolling back the configuration, another
+incorrect configuration change was inadvertently applied, causing the second
+batch of job failures.
+
+REMEDIATION AND PREVENTION
+
+Automated monitoring alerted engineering teams 15 minutes after the error
+threshold was met and were able to correlate the errors with the configuration
+change 3 minutes later. We feel that the configured alert delay is too long
+and have lowered it to 5 minutes in order to aid in quicker detection.
+
+During the rollback attempt, another bad configuration change was enqueued for
+automatic rollout and when unblocked, proceeded to roll out, triggering the
+second round of job failures. To prevent this from happening in the future, we
+are working to ensure that rollouts are automatically switched to manual mode
+when engineers are responding to production incidents.
+
+In addition, we're switching to a different configuration system which will
+ensure the consistency of configuration at all stages of the rollout.  
+  
+|
+
+ISSUE SUMMARY
+
+On Wednesday 16 May 2018, Google BigQuery experienced failures of import,
+export and query jobs for a duration of 88 minutes over two time periods (55
+minutes initially, and 33 minutes in the second, which was isolated to the
+EU). We sincerely apologize to all of our affected customers; this is not the
+level of reliability we aim to provide in our products. We will be issuing SLA
+credits to customers who were affected by this incident and we are taking
+immediate steps to prevent a future recurrence of these failures.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 16 May 2018 from 16:00 to 16:55 and from to 17:45 to 18:18 PDT,
+Google BigQuery experienced a failure of some import, export and query jobs.
+During the first period of impact, there was a 15.26% job failure rate; during
+the second, which was isolated to the EU, there was a 2.23% error rate.
+Affected jobs would have failed with INTERNAL_ERROR as the reason.
+
+ROOT CAUSE
+
+Configuration changes being rolled out on the evening of the incident were not
+applied in the intended order. This resulted in an incomplete configuration
+change becoming live in some zones, subsequently triggering the failure of
+customer jobs. During the process of rolling back the configuration, another
+incorrect configuration change was inadvertently applied, causing the second
+batch of job failures.
+
+REMEDIATION AND PREVENTION
+
+Automated monitoring alerted engineering teams 15 minutes after the error
+threshold was met and were able to correlate the errors with the configuration
+change 3 minutes later. We feel that the configured alert delay is too long
+and have lowered it to 5 minutes in order to aid in quicker detection.
+
+During the rollback attempt, another bad configuration change was enqueued for
+automatic rollout and when unblocked, proceeded to roll out, triggering the
+second round of job failures. To prevent this from happening in the future, we
+are working to ensure that rollouts are automatically switched to manual mode
+when engineers are responding to production incidents.
+
+In addition, we're switching to a different configuration system which will
+ensure the consistency of configuration at all stages of the rollout.  
+  
+| May 16, 2018 | 18:01 |
+
+The issue with Google BigQuery has been resolved for all affected users as of
+2018-05-16 17:06 US/Pacific. We will conduct an internal investigation of this
+issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. Short Summary  
+  
+|
+
+The issue with Google BigQuery has been resolved for all affected users as of
+2018-05-16 17:06 US/Pacific. We will conduct an internal investigation of this
+issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. Short Summary  
+  
+| May 16, 2018 | 17:17 |
+
+We are rolling back a configuration change to mitigate this issue. We will
+provide another status update by Wednesday 2018-05-16 17:21 US/Pacific with
+current details.  
+  
+|
+
+We are rolling back a configuration change to mitigate this issue. We will
+provide another status update by Wednesday 2018-05-16 17:21 US/Pacific with
+current details.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

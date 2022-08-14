@@ -1,0 +1,12 @@
+Starting on June 22th UTC morning the imagescaler fleet ran out of available workers due to increased load. Users requesting thumbnails that needed scaling might have incurred in timeouts/errors.
+• 2014-06-22 08:58 operations start getting alarms for rendering.svc.eqiad not responding
+• 2014-06-22 09:30 initial investigation by , increased load on imagescalers and more objects making their way to swift. Looks like genuine load.
+• 2014-06-22 10:30 a bulk image upload to commonswiki is suspected as the root cause and evidence found and the user is asked to stop
+• 2014-06-22 10:30 a bulk image upload to commonswiki is suspected as the root cause and evidence found
+• 2014-06-22 17:40 a new alarm for rendering.svc.eqiad is raised and investigation continues, no abnormal upload counts are seen
+• 2014-06-22 21:00 points out that thumbnails are being generated with unusual sizes and a user-agent is suspected (WikiLinks)
+• 2014-06-23 10:00 notes that WikiLinks has been offered free the previous day, above normal load on the image scalers is seen but not at critical levels
+
+The imagescaler cluster can sustain normal churn of thumbnails but not spikes while generating uncommon thumbnail sizes. Swift frontend bandwidth was nearly at capacity due to the increased load.
+• Status: Declined - Number of uploads should be a metric in graphite
+• Status: Done - Increase the number of imagescaler workers once swift bandwith can withstand it

@@ -1,0 +1,20 @@
+A new backwards incompatible feature was added to the Math extension (dependence on a new db table) and deployed without the rights steps being taken to ensure backwards compatibility and/or production changes in place.
+
+On Wednesday June 11th Kunal noticed a change to the Math extension mentioning adding a new table. He commented on the relevant bug informing the developer that db changes need to be done before the change is merged and linked to the Schema Changes page. Kunal asked if the current change, if merged without the new table, would cause errors on production and Physikerwelt replied "Only useres that want to test the MathML rendering will get a database error. That might cause many bug reports". Brad replied with even more warning and pointing to the Schema changes documentation/guidelines.
+
+On Thursday June 12th we had a spike of 500's.
+
+the reason was the Math extension:
+
+Sean guessed right, it was expecting a new database table without going through the proper way of requesting it:
+
+We considered several options to revert:
+
+legoktm pointed out we should also change the default case and revert the tests:
+
+and Ori synced, which stopped the exceptions and it recovered
+
+Greg had a good conversation with Physikerwelt on the morning of the 13th. Physikerwelt was unaware of many aspects of the deployment cycle/process at WMF and together they came to a new mutual understanding of how to make changes.
+• Status: on going - Greg be more diligent about actively reverting non-backwards compatible changes before they cause problems.
+• Status: Done - Update our extension development documentation as per Physikerwelt's (good) suggestion.
+• Status: in-progress - Get more WMF reviewers for the Math extension work (not only will it be reviewed more quickly, but we'll have more institutional knowledge for when things break, as software tends to do)

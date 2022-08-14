@@ -1,0 +1,17 @@
+A MediaWiki config change that should have been a no-op was synced and caused pages to appear with no content (and get cached) as well as Special:Random throwing exceptions.
+• 17:56: Chad asks Legoktm if he as any objections to merging gerrit:232966 (written back in August). Legoktm quickly looks over it and says no objections
+• 18:01: First report in #wikimedia-operations that something is wrong. "A database query error has occurred. This may indicate a bug in the software." and "I can't see any page"
+• 18:03: Legoktm checks fatalmonitor and sees a bunch of 303 Compilation failed: two named subpatterns have the same name at offset 263 in /srv/mediawiki/php-1.27.0-wmf.2/includes/MagicWord.php on line 960
+• 18:04-05: Confusion over whether twentyafterfour had started the train deploy (he hadn't)
+• 18:06: Legoktm reverts config change in gerrit, while Chad deploys it: !log demon@tin Synchronized wmf-config: (no message) (duration: 00m 19s)
+• 18:07: People are still reporting blank pages, purging them fixes it
+• ... Discussion about what pages are cached, people trying to find a test case
+• 18:11: Andre spots that https://en.wikipedia.org/wiki/GNU_General_Public_License is broken, Legoktm realizes that we need parser cache purges
+• 18:14: Ori proposes using the RejectParserCacheValue hook to empty the cache and purge varnish
+• 18:17: Legoktm determines that the outage was caused by double loading of the Disambiguator extension
+• It's probably safer to do these mass extension changes one at a time
+• We should leave some room before train deploys so we can pin-point what deploy caused issues?
+• MagicWord.php should have thrown exceptions instead of silently failing.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+• Status: Done MagicWord.php should check return value of preg_* calls instead of assuming they succeed ( )

@@ -1,0 +1,6 @@
+SQL Services - West Europe
+Summary of impact: Between 10:57 and 12:48 UTC on 07 May 2019, a subset of customers using SQL Database, SQL Data Warehouse, Azure Database for PostgreSQL, Azure Database for MySQL, Azure Database for MariaDB, in West Europe may have experienced issues performing service management operations – such as create, update, rename and delete- for resources hosted in this region.
+In addition, customers may have been unable to see their list of databases using SMSS. However as this was a Service Management issue, these databases would not have been impacted (despite not being visible from SMSS).
+Preliminary root cause: Engineers identified a back-end database service responsible for processing service management requests in the region became unhealthy preventing the requests from completing.
+Mitigation: Engineers performed a manual restart of the impacting back-end service, which restored its capacity to process requests, mitigating the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by
+creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation

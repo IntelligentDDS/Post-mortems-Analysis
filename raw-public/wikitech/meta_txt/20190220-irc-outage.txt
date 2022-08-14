@@ -1,0 +1,6 @@
+The IRC-based changes feed was not pushing out changes for 67 minutes following a restart of systemd-journald which was done as part of a security update.
+• 11:01 - Moritz restarts systemd-journald on kraz.wikimedia.org as part of the rollout of a security update for systemd
+• 12:00 - User sDrewth reports on the #wikimedia-operations channel "is it known that the RC IRC feeds have stopped?"
+• 12:08 - Moritz restarts the ircecho service on kraz and changes are propagated again
+• The Icinga status of kraz was checked following the restart of journald, but our monitoring didn't alert an error, despite being broken the udpmxircecho service continued to run and our Icinga check only validates the presence of the process, not whether it's functional
+• phab:T216611 - Icinga check for ircecho should check for actual activity

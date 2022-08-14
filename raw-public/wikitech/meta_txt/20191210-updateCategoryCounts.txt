@@ -1,0 +1,30 @@
+On 2019-12-10, mainly between 22:26 and 22:39 UTC (but there were other smaller instances in the previous hour), Common wiki database replicas were lagging behind, causing slowdown, returning stale results, errors and, as a consequence of the original bug, category counts were updated incorrectly.
+
+The user-noticeable impact was directly felt on Commons for a few minutes due to articles being removed from . However, the bug was present production on the following wikis during the given dates:
+
+While the other wikis did not suffer from obvious impact (lag), they may have suffered from incorrect category counts.
+
+First notice was on IRC (see timeline).
+
+There is an alert for lag, but it only triggers after 300 seconds for 10 checks (while slowdown happen after lag is higher than 1 second, and hard down is after 6 seconds). Top production lag was around 100 seconds. [JCrespo thinks (but is unsure) that the reason for this discrepancy is because SRE concerns are only about broken mysql replication and excessive (e.g. 1 hours) lag, and no one attending application problems currently receives these alerts].
+• 22:12 - 22:14: Smaller spike of lag. Other less impacting occurences may have happened before then with no user-noticeable impact.
+• 22:26: For the purposes of this document, outage will be considered starting here, when a more continuous lag spike starts. This is due to the following query running:
+
+This query is incorrect, the 11 should be enclosed between quotes (''). This causes a slow query (not using and index) plus all categories starting with 11 to be updated, rather than just 1.
+• 22:39 lag ceases. cdanis, Apergos and jcrespo (maybe others) are responding to the issue. The long running query is detected through long running query monitoring and the above query is seen being executed, potentially many times. Long running query killer does not kill writes, as that can cause even a worse outage.
+• Dec 11, 23:19: UTC wmf.10 with a fix is rolled into commons
+• Dec 13, 18:31; The code point is tested and the query is correct
+
+What went well?
+• for example: automated monitoring detected the incident, outage was root-caused quickly, etc
+• for example: documentation on the affected service was unhelpful, communication difficulties, etc
+
+Where did we get lucky?
+• The query was relatively harmless by not affecting canonical data (category counts). If it had affected main metadata or data, backups would have to be recovered in a non trivial operation
+
+How many people were involved in the remediation?
+• for example: 2 SREs and 1 software engineer troubleshooting the issue plus 1 incident commander
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+• Immediate issue to avoid recurrence of the same problem: Task T240405
+• Change some dangerous updates of a single row to be ?

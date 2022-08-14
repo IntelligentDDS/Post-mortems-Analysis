@@ -1,0 +1,9 @@
+RCA - Issues logging in to the Azure Portal with a Microsoft Account
+Summary of Impact: Between 21:00 UTC and 22:24 UTC on 30 Jul 2019, a subset of customers may have experienced intermittent error messages and failures when logging in to the Azure Portal with a Microsoft account. This issue affected a subset of MSA users who could not authenticate or manage their accounts. Retries may have been successful.
+Root Cause: Engineers were performing standard maintenance on a standby module when the active module became unstable. It was determined that combination of factors including a device mismatch and code bug, resulted in the active device becoming unstable.
+Mitigation: Engineers routed the user traffic to other redundant paths to recover the service, which restored Microsoft Account services for customers.
+Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our
+processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Updates to processes around manageability of all devices.
+Improve and increase the redundancy of the supporting infrastructure, including the manageability of failed devices.
+Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/HVZ7-JP8

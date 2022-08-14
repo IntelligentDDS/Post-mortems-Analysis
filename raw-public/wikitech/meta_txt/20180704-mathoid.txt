@@ -1,0 +1,18 @@
+Due to operator error there was a 4 min outage of the mathoid service in codfw
+
+During reimaging of the codfw kubernetes hosts in preparation for the 1.8 upgrade, an operator oversight caused the mathoid service, which is served by the codfw kubernetes cluster to experience an outage of 4 mins due to no pods running.
+• 07:18 akosiaris starts reimaging kubernetes100{1,2}.eqiad.wmnet kubernetes200{1,2}.codfw.wmnet without swap. Kubernetes100{3,4} and kubernetes200{3,4} had been reimage the previous day successfully. The process is the same, that is sequential with a large sleep (45 mins) between hosts.
+• 08:04 kubernetes1001 is done. akosiaris interrupts the process and removes the --sequential argument to the reimaging tool.
+• 08:06:26 akosiaris notices the issue. Namely, due to the previous day's reimaging all the pods were scheduled on the codfw hosts being reimaged. So with the 2 hosts being reimaged simultaneously, no alive host has pods scheduled on them.
+• 08:07 kubernetes has already noticed the issue and is rescheduling pods on other nodes. This unfortunately is taking longer than normal since the available nodes are all pristine and hence have to download the container from the registry
+• 08:08:20 akosiaris notes that kubernetes2004 is already starting the first container.
+
+Humans are always the weakest link in the chain. However there was some quite useful information gained from this.
+• The time for an automatic recovery with 0 human interaction on the platform was 4 minutes.
+• kubernetes does not do currently automatic rescheduling of pods. That is expected behavior and some work to resolve this is on https://github.com/kubernetes-incubator/descheduler.
+• chaos engineering can be a useful method to detect issues like this.
+• Some 24 requests for math rendering formulas seem have initially failed.
+
+We need to create a lot of documention on the kubernetes platform anyway
+
+None at this point in time

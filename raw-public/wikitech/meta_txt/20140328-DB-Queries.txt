@@ -1,0 +1,12 @@
+We have more than one db user because it lets us treat wmf jobs and tasks specially. We should avoid breaking that.
+
+The symptoms we saw were jobs that normally run as the wikiadmin DB user, were running as wikiuser on the dbs. This started around 6 p.m. UTC on Thursday March 27 but was not noticed right away. Sean saw it and told me about it when I came on line Friday morning my time. We spent some time looking at repos and git logs before realizing that if it was scap related we might be looking at a file that had changed up to a week ago.
+
+Our maintenance scripts and our xml dumps run as the wikiadmin user; this is a user that gets treated specially. One of the forms of special treatment is that jobs run as this user do not get shot after 5 minutes. This meant that once we tracked down the issue we had to rerun a number of jobs (I had a number of broken dumps for instance).
+
+The cause was a change made to PrivateSettings.php which, in keeping with the release notes for mw 1.23, removed the remaining references to AdminSettings.php (though thank goodness not the file itself). PrivateSettings.php isn't in a repo so we wouldn't be notified about the change or be able even to be sure what changed. Additionally, the change didn't take effect until the next scap a week later. Boom!
+• Status: Unresolved - PrivateSettings.php should be in a repo so we can be sure what's changed.
+• Status: Done - Db user and password settings should go into PrivateSettings (and not be removed from AdminSettings until anyone relying on that file has converted their jobs).
+• Status: Declined - Changes made should go out immediately as they do for all configuration files.
+
+This time all we had to do was waste some hours and rerun some jobs. In the future the grants for our db users are likely to be different, which could mean outright breakage of all rather than just long-running tasks. WikiDb updates go via wikiadmin I believe, as well as the job queue.

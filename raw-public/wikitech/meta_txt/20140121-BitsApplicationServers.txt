@@ -1,0 +1,6 @@
+A change to the default JavaScript and CSS payload of pages across Wikimedia projects caused the Bits application servers to overload, resulting in some users being served pages with no CSS or JavaScript for a period lasting about eighteen minutes.
+• 11:28 - mw1149, mw1150, mw1151 and mw1152 begin flapping, with icinga-wm reporting alternating socket timeouts / recovery. Users on IRC were now reporting that some pages were loading without CSS or JavaScript. Ganglia shows a spike in busy Apache workers.
+
+Already on RT according to mark:
+• Ensure changes to default JS / CSS payload are deployed in a staggered fashion.
+• Add redundancy to Bits application cluster or dissolve into broader app server pool.

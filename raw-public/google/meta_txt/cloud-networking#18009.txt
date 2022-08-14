@@ -1,0 +1,189 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+May 22, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Networking](/incident/cloud-networking/18009)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Networking Incident #18009
+
+GCE Networking issue in us-east4
+
+Incident began at **2018-05-16 19:24** and ended at **2018-05-16 20:17** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| May 22, 2018 | 13:32 |
+
+ISSUE SUMMARY
+
+On Wednesday 16 May 2018, Google Cloud Networking experienced loss of
+connectivity to external IP addresses located in us-east4 for a duration of 58
+minutes.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 16 May 2018 from 18:43 to 19:41 PDT, Google Compute Engine,
+Google Cloud VPN, and Google Cloud Network Load Balancers hosted in the us-
+east4 region experienced 100% packet loss from the internet and other GCP
+regions. Google Dedicated Interconnect Attachments located in us-east4 also
+experienced loss of connectivity.
+
+ROOT CAUSE
+
+Every zone in Google Cloud Platform advertises several sets of IP addresses to
+the Internet via BGP. Some of these IP addresses are global and are advertised
+from every zone, others are regional and advertised only from zones in the
+region. The software that controls the advertisement of these IP addresses
+contained a race condition during application startup that would cause
+regional IP addresses to be filtered out and withdrawn from a zone. During a
+routine binary rollout of this software, the race condition was triggered in
+each of the three zones in the us-east4 region. Traffic continued to be routed
+until the last zone received the rollout and stopped advertising regional
+prefixes. Once the last zone stopped advertising the regional IP addresses,
+external regional traffic stopped entering us-east4.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were alerted to the problem within one minute and as soon as
+investigation pointed to a problem with the BGP advertisements, a rollback of
+the binary in the us-east4 region was created to mitigate the issue. Once the
+rollback proved effective, the original rollout was paused globally to prevent
+any further issues.
+
+We are taking the following steps to prevent the issue from happening again.
+We are adding additional monitoring which will provide better context in
+future alerts to allow us to diagnose issues faster. We also plan on improving
+the debuggability of the software that controls the BGP advertisements.
+Additionally, we will be reviewing the rollout policy for these types of
+software changes so we can detect issues before they impact an entire region.
+
+We apologize for this incident and we recognize that regional outages like
+this should be rare and quickly rectified. We are taking immediate steps to
+prevent recurrence and improve reliability in the future.  
+  
+|
+
+ISSUE SUMMARY
+
+On Wednesday 16 May 2018, Google Cloud Networking experienced loss of
+connectivity to external IP addresses located in us-east4 for a duration of 58
+minutes.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 16 May 2018 from 18:43 to 19:41 PDT, Google Compute Engine,
+Google Cloud VPN, and Google Cloud Network Load Balancers hosted in the us-
+east4 region experienced 100% packet loss from the internet and other GCP
+regions. Google Dedicated Interconnect Attachments located in us-east4 also
+experienced loss of connectivity.
+
+ROOT CAUSE
+
+Every zone in Google Cloud Platform advertises several sets of IP addresses to
+the Internet via BGP. Some of these IP addresses are global and are advertised
+from every zone, others are regional and advertised only from zones in the
+region. The software that controls the advertisement of these IP addresses
+contained a race condition during application startup that would cause
+regional IP addresses to be filtered out and withdrawn from a zone. During a
+routine binary rollout of this software, the race condition was triggered in
+each of the three zones in the us-east4 region. Traffic continued to be routed
+until the last zone received the rollout and stopped advertising regional
+prefixes. Once the last zone stopped advertising the regional IP addresses,
+external regional traffic stopped entering us-east4.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were alerted to the problem within one minute and as soon as
+investigation pointed to a problem with the BGP advertisements, a rollback of
+the binary in the us-east4 region was created to mitigate the issue. Once the
+rollback proved effective, the original rollout was paused globally to prevent
+any further issues.
+
+We are taking the following steps to prevent the issue from happening again.
+We are adding additional monitoring which will provide better context in
+future alerts to allow us to diagnose issues faster. We also plan on improving
+the debuggability of the software that controls the BGP advertisements.
+Additionally, we will be reviewing the rollout policy for these types of
+software changes so we can detect issues before they impact an entire region.
+
+We apologize for this incident and we recognize that regional outages like
+this should be rare and quickly rectified. We are taking immediate steps to
+prevent recurrence and improve reliability in the future.  
+  
+| May 16, 2018 | 20:17 |
+
+The issue with GCE Networking (affecting GCE, GKE, Cloud VPN and Cloud Private
+Interconnect) in us-east4 region has been resolved for all affected users as
+of Wednesday, 2018-05-16 19:40 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to help prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+|
+
+The issue with GCE Networking (affecting GCE, GKE, Cloud VPN and Cloud Private
+Interconnect) in us-east4 region has been resolved for all affected users as
+of Wednesday, 2018-05-16 19:40 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to help prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+| May 16, 2018 | 19:59 |
+
+The issue with GCE Networking (affecting GCE, GKE, Cloud VPN and Cloud Private
+Interconnect) in us-east4 region should be resolved for the majority of users
+and we expect a full resolution in the near future. We will provide another
+status update by Wednesday, 2018-05-16 20:20 US/Pacific with current details.  
+  
+|
+
+The issue with GCE Networking (affecting GCE, GKE, Cloud VPN and Cloud Private
+Interconnect) in us-east4 region should be resolved for the majority of users
+and we expect a full resolution in the near future. We will provide another
+status update by Wednesday, 2018-05-16 20:20 US/Pacific with current details.  
+  
+| May 16, 2018 | 19:38 |
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Wednesday, 2018-05-16 20:10 US/Pacific with current
+details.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Wednesday, 2018-05-16 20:10 US/Pacific with current
+details.  
+  
+| May 16, 2018 | 19:24 |
+
+We are investigating an issue with GCE Networking in us-east4 region affecting
+GCE VMs, GKE, Cloud VPN and Cloud Private Interconnect resulting in network
+packet loss. We will provide more information by Wednesday, 2018-05-16 19:43
+US/Pacific.  
+  
+|
+
+We are investigating an issue with GCE Networking in us-east4 region affecting
+GCE VMs, GKE, Cloud VPN and Cloud Private Interconnect resulting in network
+packet loss. We will provide more information by Wednesday, 2018-05-16 19:43
+US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

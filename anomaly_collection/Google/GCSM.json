@@ -1,0 +1,115 @@
+{    
+    "gcsm-18007": { 
+      "title": "Google Stackdriver Incident #18007",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCSM/Google%20Stackdriver%20Incident%20%2318007.pdf"],
+      "time": "05/20/2018",
+      "summary": "On Sunday, 20 May 2018 for 4 hours and 25 minutes, approximately 6% of Stackdriver Logging logs experienced a median ingest latency of 90 minutes. To our Stackdriver Logging customers whose operations monitoring was impacted during this outage, we apologize. We have conducted an internal investigation and are taking steps to ensure this doesn’t happen again. ",
+      "details": "DETAILED DESCRIPTION OF IMPACT On Wednesday, 20 May 2018 from 18:40 to 23:05 Pacific Time, 6% of logs ingested by Stackdriver Logging experienced log event ingest latency of up to 2 hours 30 minutes, with a median latency of 90 minutes. Customers requesting log events within the latency window would receive empty responses. Logging export sinks were not affected. ROOT CAUSE Stackdriver Logging uses a pool of workers to persist ingested log events. On Wednesday, 20 May 2018 at 17:40, a load spike in the Stackdriver Logging storage subsystem caused 0.05% of persist calls made by the workers to time out. The workers would then retry persisting to the same address until reaching a retry timeout. While the workers were retrying, they were not persisting other log events. This resulted in multiple workers removed from the pool of available workers. By 18:40, enough workers had been removed from the pool to reduce throughput below the level of incoming traffic, creating delays for 6% of logs. REMEDIATION AND PREVENTION After Google Engineering was paged, engineers isolated the issue to these timing out workers. At 20:35, engineers configured the workers to return timed out log events to queue and move on to a different log event after timeout. This allowed workers to catch up with ingest rate. At 23:02, the last delayed message was delivered. We are taking the following steps to prevent the issue from happening again: we are modifying the workers to retry persists using alternate addresses to reduce the impact of persist timeouts; we are increasing the persist capacity of the storage subsystem to manage load spikes; we are modifying Stackdriver Logging workers to reduce their unavailability when the storage subsystem experiences higher latency. ",
+      "service_name": ["Stackdriver logging service"],
+      "impact symptom": ["performance", "availability"],
+      "duration": 265,
+      "detection": {
+        "method": null, 
+        "tool": null
+      },
+      "manifestation": [
+            {
+            "business kpi": ["log ingest latency", "empty responses", "timeout", "high load"]
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "external causes",
+            "layer-2": "excessive flow"
+          }
+        ],
+        "details": "Stackdriver Logging uses a pool of workers to persist ingested log events. On Wednesday, 20 May 2018 at 17:40, a load spike in the Stackdriver Logging storage subsystem caused 0.05% of persist calls made by the workers to time out. The workers would then retry persisting to the same address until reaching a retry timeout. While the workers were retrying, they were not persisting other log events. This resulted in multiple workers removed from the pool of available workers. By 18:40, enough workers had been removed from the pool to reduce throughput below the level of incoming traffic, creating delays for 6% of logs. "
+      },
+      "operation": ["normal operation"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["configure workers"],
+        "details": "After Google Engineering was paged, engineers isolated the issue to these timing out workers. At 20:35, engineers configured the workers to return timed out log events to queue and move on to a different log event after timeout. This allowed workers to catch up with ingest rate. At 23:02, the last delayed message was delivered. We are taking the following steps to prevent the issue from happening again: we are modifying the workers to retry persists using alternate addresses to reduce the impact of persist timeouts; we are increasing the persist capacity of the storage subsystem to manage load spikes; we are modifying Stackdriver Logging workers to reduce their unavailability when the storage subsystem experiences higher latency. ",
+        "troubleshooting": {
+           "1": "After Google Engineering was paged, engineers isolated the issue to these timing out workers. ",
+           "2": "At 20:35, engineers configured the workers to return timed out log events to queue and move on to a different log event after timeout. ",
+           "3":  "At 23:02, the last delayed message was delivered."
+        } 
+      },
+      "propagation pass": {
+          "1": "Stackdriver Logging storage subsystem"
+      },
+      "refined path": {
+        "1": "database"
+      },
+      "detection time": null,
+      "fix time": 265,
+      "identification time": null,
+      "verification": "lixy"
+    },
+    "gcsm-19007": { 
+        "title": "Operations Incident #19007",
+        "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCSM/Operations%20Incident%20%2319007.pdf"],
+        "time": "09/24/2019",
+        "summary": "On Tuesday 24 September, 2019, the following Google Cloud Platform services were partially impacted by an overload condition in an internal publish/subscribe messaging system which is a dependency of these products: App Engine, Compute Engine, Kubernetes Engine, Cloud Build, Cloud Composer, Cloud Dataflow, Cloud Dataproc, Cloud Firestore, Cloud Functions, Cloud DNS, Cloud Run, and Stackdriver Logging & Monitoring. Impact was limited to administrative operations for a number of these products, with existing workloads and instances not affected in most cases. We apologize to those customers whose services were impacted during this incident; we are taking immediate steps to improve the platform’s performance and availability. ",
+        "details": "## ISSUE SUMMARY On Tuesday 24 September, 2019, the following Google Cloud Platform services were partially impacted by an overload condition in an internal publish/subscribe messaging system which is a dependency of these products: App Engine, Compute Engine, Kubernetes Engine, Cloud Build, Cloud Composer, Cloud Dataflow, Cloud Dataproc, Cloud Firestore, Cloud Functions, Cloud DNS, Cloud Run, and Stackdriver Logging & Monitoring. Impact was limited to administrative operations for a number of these products, with existing workloads and instances not affected in most cases. We apologize to those customers whose services were impacted during this incident; we are taking immediate steps to improve the platform’s performance and availability. ## DETAILED DESCRIPTION OF IMPACT On Tuesday 24 September, 2019 from 12:46 to 20:00 US/Pacific, Google Cloud Platform experienced a partial disruption to multiple services with their respective impacts detailed below: ### App Engine Google App Engine (GAE) create, update, and delete admin operations failed globally from 12:57 to 18:21 for a duration of 5 hours and 24 minutes. Affected customers may have seen error messages like “APP_ERROR”. Existing GAE workloads were unaffected. ### Compute Engine Google Compute Engine (GCE) instances failed to start in us-central1-a from 13:11 to 14:32 for a duration of 1 hour and 21 minutes, and GCE Internal DNS in us-central1, us-east1, and us-east4 experienced delays for newly created hostnames to become resolvable. Existing GCE instances and hostnames were unaffected. ### Kubernetes Engine Google Kubernetes Engine (GKE) experienced delayed resource metadata and inaccurate Stackdriver Monitoring for cluster metrics globally. Additionally, cluster creation operations failed in us-central1-a from 3:11 to 14:32 for a duration of 1 hour and 21 minutes due to its dependency on GCE instance creation. Most existing GKE clusters were unaffected by the GCE instance creation failures, except for clusters in us-central1-a that were may have been unable to repair nodes or scale a node pool. ### Stackdriver Logging & Monitoring Stackdriver Logging experienced delays of up to two hours for logging events generated globally. Exports were delayed by up to 3 hours and 30 minutes. Some user requests to write logs in us-central1 failed. Some logs-based metric monitoring charts displayed lower counts, and queries to Stackdriver Logging briefly experienced a period of 50% error rates. The impact to Stackdriver Logging & Monitoring took place from 12:54 to 18:45 for a total duration of 5 hours and 51 minutes. ### Cloud Functions Cloud Functions deployments failed globally from 12:57 to 18:21 and experienced peak error rates of 13% in us-east1 and 80% in us-central1 from 19:12 to 19:57 for a combined duration of 6 hours and 15 minutes. Existing Cloud Function deployments were unaffected. ### Cloud Build Cloud Build failed to update build status for GitHub App triggers from 12:54 to 16:00 for a duration of 3 hours and 6 minutes. ### Cloud Composer Cloud Composer environment creations failed globally from 13:25 to 18:05 for a duration of 4 hours and 40 minutes. Existing Cloud Composer clusters were unaffected. ### Cloud Dataflow Cloud Dataflow workers failed to start in us-central1-a from 13:11 to 14:32 for a duration of 1 hour and 21 minutes due to its dependency on Google Compute Engine instance creation. Affected jobs saw error messages like “Startup of the worker pool in zone us-central1-a failed to bring up any of the desired X workers. INTERNAL_ERROR: Internal error. Please try again or contact Google Support. (Code: '-473021768383484163')”. All other Cloud Dataflow regions and zones were unaffected. ### Cloud Dataproc Cloud Dataproc cluster creations failed in us-central1-a from 13:11 to 14:32 for a duration of 1 hour and 21 minutes due to its dependency on Google Compute Engine instance creation. All other Cloud Dataproc regions and zones were unaffected. ### Cloud DNS Cloud DNS in us-central1, us-east1, and us-east4 experienced delays for newly created or updated Private DNS records to become resolvable from 12:46 to 19:51 for a duration of 7 hours and 5 minutes. ### Cloud Firestore Cloud Firestore API was unable to be enabled (if not previously enabled) globally from 13:36 to 17:50 for a duration of 4 hours and 14 minutes. ### Cloud Run Cloud Run new deployments failed in the us-central1 region from 12:48 to 16:35 for a duration of 3 hours and 53 minutes. Existing Cloud Run workloads, and deployments in other regions were unaffected. ## ROOT CAUSE Google runs an internal publish/subscribe messaging system, which many services use to propagate state for control plane operations. That system is built using a replicated, high-availability key-value store, holding information about current lists of publishers, subscribers and topics, which all clients of the system need access to. The outage was triggered when a routine software rollout of the key-value store in a single region restarted one of its tasks. Soon after, a network partition isolated other tasks, transferring load to a small number of replicas of the key-value store. As a defense-in-depth, clients of the key- value store are designed to continue working from existing, cached data when it is unavailable; unfortunately, an issue in a large number of clients caused them to fail and attempt to resynchronize state. The smaller number of key- value store replicas were unable to sustain the load of clients synchronizing state, causing those replicas to fail. The continued failures moved load around the available replicas of the key-value store, resulting in a degraded state of the interconnected components. The failure of the key-value store, combined with the issue in the key-value store client, meant that publishers and subscribers in the impacted region were unable to correctly send and receive messages, causing the documented impact on dependent services. ## REMEDIATION AND PREVENTION Google engineers were automatically alerted to the incident at 12:56 US/Pacific and immediately began their investigation. As the situation began to show signs of cascading failures, the scope of the incident quickly became apparent and our specialized incident response team joined the investigation at 13:58 to address the problem. The early hours of the investigation were spent organizing, developing, and trialing various mitigation strategies. At 15:59 a potential root cause was identified and a configuration change submitted which increased the client synchronization delay allowed by the system, allowing clients to successfully complete their requests without timing out and reducing the overall load on the system. By 17:24, the change had fully propagated and the degraded components had returned to nominal performance. In order to reduce the risk of recurrence, Google engineers configured the system to limit the number of tasks coordinating publishers and subscribers, which is a driver of load on the key-value store. The initial rollout of the constraint was faulty, and caused a more limited recurrence of problems at 19:00. This was quickly spotted and completely mitigated by 20:00, resolving the incident. We would like to apologize for the length and severity of this incident. We have taken immediate steps to prevent recurrence of this incident and improve reliability in the future. In order to reduce the chance of a similar class of errors from occurring we are taking the following actions. We will revise provisioning of the key-value store to ensure that it is sufficiently resourced to handle sudden failover, and fix the issue in the key-value store client so that it continues to work from cached data, as designed, when the key-value store fails. We will also shard the data to reduce the scope of potential impact when the key-value store fails. Furthermore, we will be implementing automatic horizontal scaling of key-value store tasks to enable faster time to mitigation in the future. Finally, we will be improving our communication tooling to more effectively communicate multi-product outages and disruptions. ## NOTE REGARDING CLOUD STATUS DASHBOARD COMMUNICATION Incident communication was centralized on a single product - in this case Stackdriver - in order to provide a central location for customers to follow for updates. We realize this may have created the incorrect impression that Stackdriver was the root cause. We apologize for the miscommunication and will make changes to ensure that we communicate more clearly in the future. ",
+        "service_name": ["App Engine", "Compute Engine", "Kubernetes Engine", "Cloud Build", "Cloud Composer", "Cloud Dataflow", "Cloud Dataproc", "Cloud Firestore", "Cloud Functions", "Cloud DNS", "Cloud Run", "Stackdriver Logging & Monitoring"],
+        "impact symptom": ["performance", "availability"],
+        "duration": 434,
+        "detection": {
+          "method": "automate", 
+          "tool": null
+        },
+        "manifestation": ["service unavailable",
+              {
+              "business kpi": ["error rate", "delay"]
+            }],
+        "root cause": {
+          "label": [ 
+            {
+              "layer-1": "internal causes",
+              "layer-2": "software bugs",
+              "layer-3": "payload flood"
+            }
+          ],
+          "details": "Google runs an internal publish/subscribe messaging system, which many services use to propagate state for control plane operations. That system is built using a replicated, high-availability key-value store, holding information about current lists of publishers, subscribers and topics, which all clients of the system need access to. The outage was triggered when a routine software rollout of the key-value store in a single region restarted one of its tasks. Soon after, a network partition isolated other tasks, transferring load to a small number of replicas of the key-value store. As a defense-in-depth, clients of the key- value store are designed to continue working from existing, cached data when it is unavailable; unfortunately, an issue in a large number of clients caused them to fail and attempt to resynchronize state. The smaller number of key- value store replicas were unable to sustain the load of clients synchronizing state, causing those replicas to fail. The continued failures moved load around the available replicas of the key-value store, resulting in a degraded state of the interconnected components. The failure of the key-value store, combined with the issue in the key-value store client, meant that publishers and subscribers in the impacted region were unable to correctly send and receive messages, causing the documented impact on dependent services. "
+        },
+        "operation": ["rollout"],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+          "label": ["submit configuration change", "increase client synchronization delay"],
+          "details": "Google engineers were automatically alerted to the incident at 12:56 US/Pacific and immediately began their investigation. As the situation began to show signs of cascading failures, the scope of the incident quickly became apparent and our specialized incident response team joined the investigation at 13:58 to address the problem. The early hours of the investigation were spent organizing, developing, and trialing various mitigation strategies. At 15:59 a potential root cause was identified and a configuration change submitted which increased the client synchronization delay allowed by the system, allowing clients to successfully complete their requests without timing out and reducing the overall load on the system. By 17:24, the change had fully propagated and the degraded components had returned to nominal performance. In order to reduce the risk of recurrence, Google engineers configured the system to limit the number of tasks coordinating publishers and subscribers, which is a driver of load on the key-value store. The initial rollout of the constraint was faulty, and caused a more limited recurrence of problems at 19:00. This was quickly spotted and completely mitigated by 20:00, resolving the incident. We would like to apologize for the length and severity of this incident. We have taken immediate steps to prevent recurrence of this incident and improve reliability in the future. In order to reduce the chance of a similar class of errors from occurring we are taking the following actions. We will revise provisioning of the key-value store to ensure that it is sufficiently resourced to handle sudden failover, and fix the issue in the key-value store client so that it continues to work from cached data, as designed, when the key-value store fails. We will also shard the data to reduce the scope of potential impact when the key-value store fails. Furthermore, we will be implementing automatic horizontal scaling of key-value store tasks to enable faster time to mitigation in the future. Finally, we will be improving our communication tooling to more effectively communicate multi-product outages and disruptions. ",
+          "troubleshooting": {
+             "1": "Google engineers were automatically alerted to the incident at 12:56 US/Pacific and immediately began their investigation. ",
+             "2": "As the situation began to show signs of cascading failures, the scope of the incident quickly became apparent and our specialized incident response team joined the investigation at 13:58 to address the problem. ",
+             "3": "The early hours of the investigation were spent organizing, developing, and trialing various mitigation strategies. ",
+             "4": "At 15:59 a potential root cause was identified and a configuration change submitted which increased the client synchronization delay allowed by the system, allowing clients to successfully complete their requests without timing out and reducing the overall load on the system. ",
+             "5": "the change had fully propagated and the degraded components had returned to nominal performance. "
+          } 
+        },
+        "propagation pass": {
+            "1": "key-value store",
+            "2": "internal publish/subscribe messaging system",
+            "3": "[\"App Engine\", \"Compute Engine\", \"Kubernetes Engine\", \"Cloud Build\", \"Cloud Composer\", \"Cloud Dataflow\", \"Cloud Dataproc\", \"Cloud Firestore\", \"Cloud Functions\", \"Cloud DNS\", \"Cloud Run\", \"Stackdriver Logging & Monitoring\"]"
+
+        },
+        "refined path": {
+          "1": "database",
+          "2": "middleware",
+          "3": "app"
+        },
+        "detection time": 10,
+        "identification time": 183,
+        "fix time": 148,
+        "verification": "lixy"
+      }
+}
+  

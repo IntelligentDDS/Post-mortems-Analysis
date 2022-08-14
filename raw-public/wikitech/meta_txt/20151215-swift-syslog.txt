@@ -1,0 +1,25 @@
+An rsyslog config change was merged, which took down swift. This caused a public partial outage on upload.wikimedia.org image fetches. About 2% of said image requests failed with 503 errors for about 15 minutes in our client response-code graphs (the rest were successful due to cache hits in varnish, presumably). dzahn restarted the swift proxies and the service recovered.
+
+upload-5xx graph vs total from this incident: https://grafana.wikimedia.org/dashboard/db/varnish-aggregate-client-status-codes?from=1450205993052&to=1450209627883&var-cache_type=upload&var-status_type=5&var-site=All
+• 19:08 < grrrit-wm> (CR) Ottomata: [C: 2] Increase size of programname field in remote syslog template [puppet] - https://gerrit.wikimedia.org/r/259271 (https://phabricator.wikimedia.org/T120874) (owner: Ottomata)
+• 19:08 < ottomata> !log merged change to allow longer programnames in remote rsyslog config.
+• 19:19 < icinga-wm> PROBLEM - Swift HTTP backend on ms-fe1001 is CRITICAL: CRITICAL - Socket timeout after 10 seconds
+• 19:21 < icinga-wm> PROBLEM - Swift HTTP backend on ms-fe1002 is CRITICAL: CRITICAL - Socket timeout after 10 seconds
+• 19:25 < icinga-wm> PROBLEM - Swift HTTP backend on ms-fe1003 is CRITICAL: Connection timed out
+• 19:26 < icinga-wm> PROBLEM - LVS HTTP IPv4 on rendering.svc.eqiad.wmnet is CRITICAL: CRITICAL - Socket timeout after 10 seconds
+• 19:27 < icinga-wm> PROBLEM - LVS HTTP IPv4 on ms-fe.eqiad.wmnet is CRITICAL: CRITICAL - Socket timeout after 10 seconds
+• 19:29 < icinga-wm> PROBLEM - Swift HTTP frontend on ms-fe1003 is CRITICAL: Connection timed out
+• 19:30 < icinga-wm> RECOVERY - LVS HTTP IPv4 on rendering.svc.eqiad.wmnet is OK: HTTP OK: HTTP/1.1 200 OK - 15119 bytes in 0.082 second response time
+• 19:30 < icinga-wm> PROBLEM - Swift HTTP backend on ms-fe1004 is CRITICAL: Connection timed out
+• 19:31 < icinga-wm> PROBLEM - Swift HTTP frontend on ms-fe1004 is CRITICAL: Connection timed out
+• 19:37 < icinga-wm> RECOVERY - LVS HTTP IPv4 on ms-fe.eqiad.wmnet is OK: HTTP OK: HTTP/1.1 200 OK - 391 bytes in 0.061 second response time
+• 19:39 < icinga-wm> RECOVERY - Swift HTTP backend on ms-fe1004 is OK: HTTP OK: HTTP/1.1 200 OK - 391 bytes in 0.015 second response time
+• 19:39 < icinga-wm> RECOVERY - Swift HTTP frontend on ms-fe1004 is OK: HTTP OK: HTTP/1.1 200 OK - 185 bytes in 0.006 second response time
+• 19:39 < icinga-wm> RECOVERY - Swift HTTP frontend on ms-fe1003 is OK: HTTP OK: HTTP/1.1 200 OK - 185 bytes in 0.004 second response time
+• 19:39 < icinga-wm> RECOVERY - Swift HTTP backend on ms-fe1002 is OK: HTTP OK: HTTP/1.1 200 OK - 391 bytes in 0.014 second response time
+• 19:39 < icinga-wm> RECOVERY - Swift HTTP backend on ms-fe1003 is OK: HTTP OK: HTTP/1.1 200 OK - 391 bytes in 0.020 second response time
+• 19:40 < icinga-wm> RECOVERY - Swift HTTP backend on ms-fe1001 is OK: HTTP OK: HTTP/1.1 200 OK - 391 bytes in 0.016 second response time
+
+This is the 3rd time we've had the same outage - once a year in 2013, 2014, and now 2015:
+
+Same as the last two times, still not completed.

@@ -1,0 +1,14 @@
+Maps overloaded actinium web proxy with errors by trying to connect to eventbus through it. The issue was mitigated by shutting down tilerator and kartotherian on maps1004 and removing the overflowing logs on actinium. This affected all services using the proxy, in particular restbase and citoid failures were detected by Icinga.
+• 6:39 2018-10-01: latest version of tilerator deployed to maps1004 (including new tile invalidation mechanism)
+• Maps was wrongly configured to use as a proxy for all connection since the migration to scap3 for deployment.
+• maps1004 is depooled and freshly reimaged to stretch, initial data import was completed and initial tile generation is running
+• active invalidation of tiles being regenerated was deployed to maps1004 phab:T186732, this sends invalidation messages through event bus
+
+High tile invalidation load during initial tile generation, combined with wrong proxy configuration lead to an overload of url-downloader proxies, triggering cascading failures to other services using those proxies.
+• My understanding is that only url-downloader in eqiad (actinium) should have been impacted. Looking at Icinga alerts, services in codfw have been failing as well (citoid endpoints health on scb200[1-6]).
+• How do we prevent the cascading failure in case of one service overloads the proxies (akosiaris seems to have a few idea).
+
+Where is the documentation that someone responding to this alert should have (cookbook / runbook). If that documentation does not exist, there should be an action item to create it.
+• we validated that the expected tile invalidation rate was reasonable for varnish, but we have not checked that this rate is reasonable on eventbus phab:T186732
+• document that tile invalidation should be disabled during initial tile generation
+• Audit all services and remove usage of url downloader for internal IPs. Then update urldownloader configuration to disallow connecting to internal IPs to avoid this in the future

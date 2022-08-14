@@ -1,0 +1,247 @@
+
+[01/28/2010][Difficulties joining LIVE members in Battlefield BC2 Demo]
+r-unk
+i-op
+t-1h13m
+p-no
+
+[01/29/2013][Xbox Live experiencing a temporary outage January 29, 2013]
+http://www.technologytell.com/gaming/106668/xbox-live-experiencing-a-temporary-outage-january-29-2013/
+r-unk
+t-1h
+p-no
+i-down
+
+[02/15/2010][Difficulties connecting to Xbox LIVE]
+r-unk
+i-down
+t-6h12m
+p-no
+
+[02/22/2013][Microsoft To Refund Windows Azure Customers Hit By 12 Hour Outage That Disrupted Xbox Live]
+http://techcrunch.com/2013/02/24/microsoft-to-refund-windows-azure-customers-hit-by-12-hour-outage-that-disrupted-xbox-live/
+http://www.theverge.com/2013/2/22/4019772/xbox-live-and-windows-azure-suffering-from-extended-outages
+http://azure.microsoft.com/blog/2013/03/01/details-of-the-february-22nd-2013-windows-azure-storage-disruption/
+http://azure.microsoft.com/blog/2013/02/24/windows-azure-service-disruption-from-expired-certificate/
+r-cross
+i-down
+t-12h
+f-cross
+p-no
+
+[02/27/2011][Difficulties signing into Xbox LIVE from Xbox.com]
+r-unk
+i-op
+t-unk
+p-no
+
+[03/11/2014][Xbox Live outage cripples the launch of Titanfall]
+http://www.theverge.com/2014/3/11/5498690/xbox-live-goes-down-crippling-the-launch-of-titanfall
+http://www.engadget.com/2014/03/11/xbox-live-problems-keep-many-xbox-one-owners-from-calling-in-the/
+r-unk
+i-down
+t-unk
+p-no
+
+[04/13/2013][Xbox Live outage wasn’t caused by a hack, says Microsoft]
+http://www.vg247.com/2013/04/16/xbox-live-outage-wasnt-caused-by-a-hack-says-microsoft/
+http://www.theverge.com/2013/4/13/4221398/xbox-live-outage-knocks-gamers-offline-netflix-other-apps-useless
+http://thenextweb.com/microsoft/2013/04/15/microsoft-xbox-live-outage-caused-by-routine-maintenance-not-any-sort-of-hack-attack/
+r-config
+i-down
+t-2h
+f-fix
+p-no
+
+[05/03/2010][Difficulties with the Halo:Reach Beta]
+r-unk
+i-op
+t-2h54m
+p-no
+
+[05/24/2015][Xbox Live is down for many, with core services affected]
+http://venturebeat.com/2015/05/24/xbox-live-is-down-for-many-with-core-services-affected/
+r-unk
+t-unk
+i-down
+p-no
+
+[06/22/2015][Xbox Live is down for many on Xbox One and 360]
+http://venturebeat.com/2015/06/22/xbox-live-is-down-for-many-on-xbox-one-and-360/
+r-unk
+t-unk
+i-down
+p-no
+
+[07/01/2015][Xbox Live down for many on Xbox One, Xbox 360]
+http://venturebeat.com/2015/07/01/xbox-live-down-for-many-on-xbox-one-xbox-360/
+r-unk
+t-unk
+i-down
+p-no
+
+[07/06/2012][Issues with the LIVE services]
+http://www.theregister.co.uk/2012/07/06/xbox-live-outage/
+r-unk
+i-down
+t-unk
+p-no
+
+[07/22/2010][Scheduled maintenance no renting and purchasing]
+r-upgrade
+i-op
+t-6h58m
+p-yes
+
+[08/03/2010][Issues with billing]
+r-unk
+i-op
+t-2h7m
+p-no
+
+[08/09/2009][XBOX LIVE: via twitter]
+r-unk
+i-op
+t-19h47m
+p-no
+
+[08/14/2009][Xbox.com Avatar Marketplace is unavailable]
+r-unk
+i-op
+t-7h18m
+p-no
+
+[08/18/2015][Xbox Live down – Xbox 360 users suffer major outage]
+http://www.dailystar.co.uk/tech/gaming/459984/Xbox-Live-down-Xbox-360-users-suffer-major-outage
+http://venturebeat.com/2015/08/18/xbox-live-down-intermittently-for-gamers-around-the-world/
+r-unk
+t-unk
+i-down
+p-no
+
+[08/27/2009][Issues downloading video content]
+r-unk
+i-op
+t-unk
+p-no
+
+[09/07/2010][Issues attempting to execute the Halo Waypoint app]
+r-unk
+i-op
+t-unk
+p-no
+
+[09/08/2010][Issues attempting to execute the Halo Waypoint app]
+r-unk
+i-op
+t-unk
+p-no
+
+[09/23/2012][A subset of Time/Warner RoadRunner ISP users will have intermittent]
+r-unk
+i-down
+t-unk
+p-no
+
+[10/01/2015][Xbox Live down intermittently for many gamers]
+http://venturebeat.com/2015/10/01/xbox-live-down-intermittently-for-many-gamers/
+r-unk
+t-unk
+i-down
+p-no
+
+[10/03/2011][Issues with Xbox LIVE earlier today]
+http://blogs.msdn.com/b/xblops/archive/2011/10/03/issues-with-xbox-live-earlier-today.aspx
+http://news.softpedia.com/news/Microsoft-Resolves-Short-Xbox-LIVE-Outage-Blames-Human-Error-225377.shtml
+http://www.ign.com/articles/2011/10/03/xbox-live-outage-due-to-human-error
+http://www.kotaku.com.au/2011/10/xbox-live-brought-down-by-human-error/
+r-admin
+r-upgrade
+i-down
+t-2h
+p-no
+
+[10/04/2009][Difficulties with purchase transactions]
+r-unk
+i-op
+t-5h47m
+p-no
+
+[10/23/2015][Xbox Live is down for gamers on Xbox One, 360]
+http://venturebeat.com/2015/10/23/xbox-live-is-down-for-gamers-on-xbox-one-360/
+r-unk
+t-unk
+i-down
+p-no
+
+[10/31/2013][Issues with the LIVE services]
+r-unk
+i-down
+t-unk
+p-no
+
+[11/05/2014][Xbox Live Experiencing Partial Outage]
+http://www.ign.com/articles/2014/11/05/xbox-live-experiencing-partial-outage
+r-unk
+i-op
+t-unk
+p-no
+
+[11/09/2013][Issues with the LIVE services]
+r-unk
+i-down
+t-17h26m
+p-no
+
+[11/11/2015][Xbox Live is down intermittently and preventing Fallout 4 players from uploading screenshots]
+http://venturebeat.com/2015/11/11/xbox-live-is-down-intermittently-and-preventing-fallout-4-players-from-uploading-screenshots/
+r-unk
+t-unk
+i-down
+p-no
+
+[11/16/2012][Difficulty accessing LIVE]
+r-unk
+i-down
+t-unk
+p-no
+
+[11/19/2014][Microsoft Azure and Xbox Live Services Experiencing Outages]
+http://gadgets.ndtv.com/internet/news/microsoft-azure-and-xbox-live-services-experiencing-outages-622865
+http://thenextweb.com/microsoft/2014/11/19/microsoft-azure-suffering-widespread-outage/
+r-cross
+i-down
+t-2h18m
+f-cross
+p-no
+
+[12/06/2011][Issues with the LIVE services]
+r-unk
+i-down
+t-22h23m
+p-no
+
+[12/18/2015][Xbox Live down for some gamers on Xbox One and Xbox 360]
+http://venturebeat.com/2015/12/18/xbox-live-down-for-some-gamers-on-xbox-one-and-xbox-360/
+r-unk
+t-unk
+i-down
+p-no
+
+[12/25/2014][Hackers Take Credit For PlayStation Network And Xbox Live Outages On Christmas]
+http://techcrunch.com/2014/12/25/merry-xmas-you-filthy-animals/
+http://deadline.com/2014/12/playstation-network-down-sony-1201335682/
+r-sec
+i-down
+t-3d12h59m
+f-fix
+p-no
+
+[12/28/2012][Xbox Live Temporarily Disconnecting Cloud Storage for Some Users]
+http://www.engadget.com/2012/12/28/xbox-live-outage-temporarily-disconnecting-cloud-storage-for-som/
+http://www.theverge.com/2012/12/31/3820690/xbox-cloud-saved-games-outage-free-xbox-live-month
+r-unk
+i-down
+t-2d
+p-no
+

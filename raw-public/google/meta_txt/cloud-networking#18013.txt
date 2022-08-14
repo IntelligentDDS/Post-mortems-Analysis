@@ -1,0 +1,221 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+August 07, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Networking](/incident/cloud-networking/18013)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Networking Incident #18013
+
+We are investigating issues with Internet access for VMs in the europe-west4
+region.
+
+Incident began at **2018-07-27 18:27** and ended at **2018-07-27 19:31** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 07, 2018 | 14:51 |
+
+ISSUE SUMMARY
+
+On Friday 27 July 2018, for a duration of 1 hour 4 minutes, Google Compute
+Engine (GCE) instances and Cloud VPN tunnels in europe-west4 experienced loss
+of connectivity to the Internet. The incident affected all new or recently
+live migrated GCE instances. VPN tunnels created during the incident were also
+impacted. We apologize to our customers whose services or businesses were
+impacted during this incident, and we are taking immediate steps to avoid a
+recurrence.
+
+DETAILED DESCRIPTION OF IMPACT
+
+All Google Compute Engine (GCE) instances in europe-west4 created on Friday 27
+July 2018 from 18:27 to 19:31 PDT lost connectivity to the Internet and other
+instances via their public IP addresses. Additionally any instances that live
+migrated during the outage period would have lost connectivity for
+approximately 30 minutes after the live migration completed. All Cloud VPN
+tunnels created during the impact period, and less than 1% of existing tunnels
+in europe-west4 also lost external connectivity. All other instances and VPN
+tunnels continued to serve traffic. Inter-instance traffic via private IP
+addresses remained unaffected.
+
+ROOT CAUSE
+
+Google's datacenters utilize software load balancers known as Maglevs [1] to
+efficiently load balance network traffic [2] across service backends. The
+issue was caused by an unintended side effect of a configuration change made
+to jobs that are critical in coordinating the availability of Maglevs. The
+change unintentionally lowered the priority of these jobs in europe-west4. The
+issue was subsequently triggered when a datacenter maintenance event required
+load shedding of low priority jobs. This resulted in failure of a portion of
+the Maglev load balancers. However, a safeguard in the network control plane
+ensured that some Maglev capacity remained available. This layer of our
+typical defense-in-depth allowed connectivity to extant cloud resources to
+remain up, and restricted the disruption to new or migrated GCE instances and
+Cloud VPN tunnels.
+
+REMEDIATION AND PREVENTION
+
+Automated monitoring alerted Google’s engineering team to the event within 5
+minutes and they immediately began investigating at 18:36. At 19:25 the team
+discovered the root cause and started reverting the configuration change. The
+issue was mitigated at 19:31 when the fix was rolled out. At this point,
+connectivity was restored immediately.
+
+In addition to addressing the root cause, we will be implementing changes to
+both prevent and reduce the impact of this type of failure by improving our
+alerting when too many Maglevs become unavailable, and adding a check for
+configuration changes to detect priority reductions on critical dependencies.
+
+We would again like to apologize for the impact that this incident had on our
+customers and their businesses in the europe-west4 region. We are conducting a
+detailed post-mortem to ensure that all the root and contributing causes of
+this event are understood and addressed promptly.
+
+[1] <https://ai.google/research/pubs/pub44824>
+
+[2] <https://cloudplatform.googleblog.com/2016/03/Google-shares-software-
+network-load-balancer-design-powering-GCP-networking.html>  
+  
+|
+
+ISSUE SUMMARY
+
+On Friday 27 July 2018, for a duration of 1 hour 4 minutes, Google Compute
+Engine (GCE) instances and Cloud VPN tunnels in europe-west4 experienced loss
+of connectivity to the Internet. The incident affected all new or recently
+live migrated GCE instances. VPN tunnels created during the incident were also
+impacted. We apologize to our customers whose services or businesses were
+impacted during this incident, and we are taking immediate steps to avoid a
+recurrence.
+
+DETAILED DESCRIPTION OF IMPACT
+
+All Google Compute Engine (GCE) instances in europe-west4 created on Friday 27
+July 2018 from 18:27 to 19:31 PDT lost connectivity to the Internet and other
+instances via their public IP addresses. Additionally any instances that live
+migrated during the outage period would have lost connectivity for
+approximately 30 minutes after the live migration completed. All Cloud VPN
+tunnels created during the impact period, and less than 1% of existing tunnels
+in europe-west4 also lost external connectivity. All other instances and VPN
+tunnels continued to serve traffic. Inter-instance traffic via private IP
+addresses remained unaffected.
+
+ROOT CAUSE
+
+Google's datacenters utilize software load balancers known as Maglevs [1] to
+efficiently load balance network traffic [2] across service backends. The
+issue was caused by an unintended side effect of a configuration change made
+to jobs that are critical in coordinating the availability of Maglevs. The
+change unintentionally lowered the priority of these jobs in europe-west4. The
+issue was subsequently triggered when a datacenter maintenance event required
+load shedding of low priority jobs. This resulted in failure of a portion of
+the Maglev load balancers. However, a safeguard in the network control plane
+ensured that some Maglev capacity remained available. This layer of our
+typical defense-in-depth allowed connectivity to extant cloud resources to
+remain up, and restricted the disruption to new or migrated GCE instances and
+Cloud VPN tunnels.
+
+REMEDIATION AND PREVENTION
+
+Automated monitoring alerted Google’s engineering team to the event within 5
+minutes and they immediately began investigating at 18:36. At 19:25 the team
+discovered the root cause and started reverting the configuration change. The
+issue was mitigated at 19:31 when the fix was rolled out. At this point,
+connectivity was restored immediately.
+
+In addition to addressing the root cause, we will be implementing changes to
+both prevent and reduce the impact of this type of failure by improving our
+alerting when too many Maglevs become unavailable, and adding a check for
+configuration changes to detect priority reductions on critical dependencies.
+
+We would again like to apologize for the impact that this incident had on our
+customers and their businesses in the europe-west4 region. We are conducting a
+detailed post-mortem to ensure that all the root and contributing causes of
+this event are understood and addressed promptly.
+
+[1] <https://ai.google/research/pubs/pub44824>
+
+[2] <https://cloudplatform.googleblog.com/2016/03/Google-shares-software-
+network-load-balancer-design-powering-GCP-networking.html>  
+  
+| Jul 27, 2018 | 19:44 |
+
+The issue with Internet access for VMs in the europe-west4 region has been
+resolved for all affected projects as of Friday, 2018-07-27 19:45 US/Pacific.
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to help prevent or minimize future recurrence.  
+  
+|
+
+The issue with Internet access for VMs in the europe-west4 region has been
+resolved for all affected projects as of Friday, 2018-07-27 19:45 US/Pacific.
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to help prevent or minimize future recurrence.  
+  
+| Jul 27, 2018 | 19:40 |
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Friday, 2018-07-27 20:30 US/Pacific with current
+details.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Friday, 2018-07-27 20:30 US/Pacific with current
+details.  
+  
+| Jul 27, 2018 | 19:28 |
+
+Our Engineering Team believes they have identified the root cause of the issue
+and is working to mitigate. We will provide another status update by Friday,
+2018-07-27 20:15 US/Pacific with current details.  
+  
+|
+
+Our Engineering Team believes they have identified the root cause of the issue
+and is working to mitigate. We will provide another status update by Friday,
+2018-07-27 20:15 US/Pacific with current details.  
+  
+| Jul 27, 2018 | 19:25 |
+
+Investigation is currently underway by our Engineering Team. We will provide
+another status update by Friday, 2018-07-27 20:15 US/Pacific with current
+details.  
+  
+|
+
+Investigation is currently underway by our Engineering Team. We will provide
+another status update by Friday, 2018-07-27 20:15 US/Pacific with current
+details.  
+  
+| Jul 27, 2018 | 18:55 |
+
+We are investigating an issue with Google Cloud Networking for VM instances in
+the europe-west4 region. We will provide more information by Friday,
+2018-07-27 19:30 US/Pacific.  
+  
+|
+
+We are investigating an issue with Google Cloud Networking for VM instances in
+the europe-west4 region. We will provide more information by Friday,
+2018-07-27 19:30 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

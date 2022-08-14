@@ -1,0 +1,208 @@
+
+[01/04/2010][Major service disruption hits Salesforce.com]
+http://www.mycustomer.com/topic/technology/major-service-disruption-hits-salesforcecom
+http://www.datacenterknowledge.com/archives/2010/01/04/salesforce-com-hit-by-one-hour-outage/
+http://allthingsd.com/20100104/salesforce-com-rings-in-new-year-with-massive-service-disruption/
+r-fail
+i-down
+t-1h
+p-no
+
+[01/06/2009][Salesforce.com outage hits thousands of businesses]
+http://www.datacenterknowledge.com/archives/2009/01/08/the-salesforcecom-outage-and-dashboards/
+http://www.cnet.com/news/salesforce-com-outage-hits-thousands-of-businesses/
+r-fail
+r-bug
+i-down
+t-40m
+f-fix
+f-fix
+p-no
+
+[01/07/2013][Service disruption at Salesforce]
+http://iwgcr.org/service-disruption-at-salesforce/
+r-fail
+i-down
+t-36m
+p-no
+
+[02/01/2013][salesforce.com NA8 outage]
+http://iwgcr.org/salesforce-com-na8-outage/
+r-bug
+t-5h28m
+p-no
+f-restart
+i-down
+
+[03/11/2010][Salesforce.Com Outage has Customers Tweeting]
+http://www.cio.com/article/2419850/enterprise-software/salesforce-com-outage-has-customers-tweeting.html
+http://cw.com.hk/news/salesforcecom-outage-has-customers-tweeting
+http://www.mycustomer.com/topic/technology/salesforcecom-hit-outage-twitter-flooded-sfcom-supportabuse/105217
+r-unk
+i-down
+t-21m
+p-no
+
+[03/19/2013][Salesforce.com NA13 instance go down after an upgrade]
+http://iwgcr.org/salesforce-com-na13-instance-go-down-after-an-upgrade/
+r-upgrade
+i-down
+t-9h
+p-no
+
+[04/07/2013][Salesforce EU1 disruption]
+http://iwgcr.org/salesforce-eu1-disruption-interruption-de-service-temps-040713-1200-am-utc-details-the-salesforce-com-technology-team-resolved-a-service-disruption-affecting-the-eu1-instance-the-problem-beg/
+r-unk
+i-down
+t-37m
+p-no
+
+[04/22/2013][Salesforce.com EU0 search issue]
+http://iwgcr.org/salesforce-com-eu0-search-issue/
+r-fail
+t-30m
+p-no
+i-op
+
+[05/10/2013][Salesforce CS9 disruption]
+http://iwgcr.org/salesforce-cs9-disruption/
+r-fail
+t-1.95m
+p-no
+
+[05/12/2013][Storage fault at Salesforce]
+http://iwgcr.org/storage-fault-at-salesforce/
+r-fail
+i-down
+t-1h57m
+p-no
+
+[05/21/2013][Salesforce CS10 instance disrupted]
+http://iwgcr.org/salesforce-cs10-instance-disrupted/
+r-cross
+i-down
+t-40m
+p-no
+f-cross
+
+[05/26/2013][Salesforce NA11 and NA13 instances disrupted]
+http://iwgcr.org/salesforce-na11-and-na13-instances-disrupted/
+r-fail
+i-down
+t-2h17m
+p-no
+
+[06/01/2013][Salesforce NA7 evicted of all the database nodes]
+http://iwgcr.org/salesforce-na7-database-eviction/
+i-op
+t-2h45m
+p-no
+
+[06/28/2012][Salesforce suffers service outage, North America and Europe affected]
+http://venturebeat.com/2012/06/28/salesforce-outage/
+http://news.techworld.com/storage/3367069/salesforcecom-outage-affects-europe-and-north-america/
+http://www.zdnet.com/blog/btl/salesforce-com-hit-with-outage-cites-fault-in-storage-tier/81264
+http://www.computerworld.com/article/2505150/enterprise-applications/salesforce-com-hit-with-outage.html
+r-fail
+r-fail
+i-down
+t-5h56m
+i-down
+p-no
+
+[07/10/2012][Major Outage for Salesforce.com]
+http://www.datacenterknowledge.com/archives/2012/07/10/major-outage-salesforce-com/
+http://www.zdnet.com/salesforce-com-suffers-worldwide-disruption-after-power-outage-7000000581/
+http://www.computerworld.com/article/2505624/disaster-recovery/salesforce-com-hit-with-second-major-outage-in-two-weeks.html
+http://www.information-management.com/news/salesforce-outage-crm-saas-data-center-10022846-1.html
+r-fail
+r-cross
+i-down
+t-9h
+i-down
+f-cross
+p-no
+
+[07/12/2013][Salesforce Mobile Classic issues]
+http://iwgcr.org/salesforce-mobile-classic-issues/
+r-unk
+i-op
+t-5h
+p-no
+
+[07/20/2013][Salesforce EU0 (EMEA) : a -3 day- unexpected DNS fault]
+http://iwgcr.org/salesforce-eu0-emea-a-3-day-unexpected-dns-fault/
+r-fail
+i-down
+t-40h
+p-no
+
+[08/16/2013][Isolated Data Loss at Salesforce]
+http://iwgcr.org/isolated-data-loss-at-salesforce/
+http://www.theregister.co.uk/2013/08/15/salesforce_data_outage/
+r-fail
+i-loss
+t-1h
+p-no
+f-restore
+
+[09/01/2014][Salesforce cloud goes titsup: Users face another long weekend]
+http://www.theregister.co.uk/2014/09/05/salesforce_friday_outage/
+r-unk
+t-6h
+p-no
+
+[11/04/2012][Salesforce: three outages on three consecutive days]
+http://iwgcr.org/salesforce-three-outages-on-three-consecutive-days/
+r-upgrade
+t-1h
+i-down
+p-no
+
+[11/05/2012][Salesforce: three outages on three consecutive days]
+http://iwgcr.org/salesforce-three-outages-on-three-consecutive-days/
+r-admin
+t-1h20m
+p-no
+
+[11/06/2012][Salesforce: three outages on three consecutive days]
+http://iwgcr.org/salesforce-three-outages-on-three-consecutive-days/
+r-unk
+i-down
+t-20m
+p-no
+
+[11/14/2013][Salesforce Goes Down in North America and Europe]
+http://iwgcr.org/salesforce-goes-down-in-north-america-and-europe/
+http://www.theregister.co.uk/2013/11/15/salesforce_massive_outage/
+http://allthingsd.com/20131115/salesforce-went-down-for-about-three-hours-today-in-north-america-and-europe/
+r-fail
+r-upgrade
+i-down
+t-3h
+p-no
+
+[11/18/2012][Salesforce: NA2 down 4 hours]
+http://iwgcr.org/salesforce-na2-down-4-hours/
+r-fail
+i-down
+t-3.5h
+p-no
+
+[12/04/2012][Salesforce disruption: NA2 and next day, CS1]
+http://iwgcr.org/salesforce-disruption/
+r-fail
+i-down
+t-42m
+f-restart
+f-restore
+p-no
+
+[12/05/2012][Salesforce disruption: NA2 and next day, CS1]
+http://iwgcr.org/salesforce-disruption/
+r-fail
+i-down
+t-4h3m
+f-fix
+p-no
+

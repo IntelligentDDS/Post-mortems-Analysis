@@ -1,0 +1,17 @@
+Due to repeated database connection failures an EventLogging writer automatically shut down on 2014-03-18. Although Icinga alerted about the issue, it was only fixed when people noticed reports showing no up-to-date data.
+
+From Ori's email to the Analytics list
+
+At about 2014-03-18 00:04 UTC, stopped accepting incoming connections. At some point during the subsequent hour, MariaDB had either crashed or been manually restarted. Sean noticed that the database was choking on some queries from the researchers and notified the wmfresearch list.
+
+During the time that the database server was out or rejecting connection, the EventLogging writer that writes to was repeatedly failing to connect to it:
+
+The Upstart job for EventLogging is configured to re-spawn the writer, up to a certain threshold of failures. Because the writer repeatedly failed to connect, it hit the threshold, and was not re-spawned.
+
+This alert was not responded to. Ori finally got pinged by Tillman, who noticed the blog visitor stats report was blank, and by Gilles, who noticed image loading performance data was missing.
+• Mixing analytics slaves with other work is fragile, as the root cause for the downtime were research queries[1].
+• There is no clarity who is to respond to EventLogging alerts by when.
+• Status: on going - Clarify who is to respond to which EventLogging alerts by when.
+• Analytics now owns EL, and can respond to some alerts, but not all. Discussion between Ops and Analytics is still ongoing.
+• Status: Done - Figure out a way to allow joining EventLogging data against enwiki, as this seems to be critical for researchers.
+• Look at timestamp 08:54:10f in the Ops channel log

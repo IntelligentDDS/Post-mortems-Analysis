@@ -1,0 +1,4 @@
+Azure DevTest Labs - Virtual Machine Error Message
+Summary of impact: Between 16:30 UTC on 08 Jan 2019 and 00:52 UTC on 10 Jan 2019, a subset of customers using Azure DevTest Labs may have experienced issues creating Virtual Machines from Formulas in lab. Impacted customers may have also experienced incorrect error messages when connecting to Virtual Machines.
+Root cause: Engineers determined that an issue within a recent Azure Portal UI deployment task caused impact to customer resource error messaging and operations.
+Mitigation: Engineers deployed a platform hotfix in order to mitigate the issue for the majority of impacted customers. Remaining impacted customers will continue to receive communication updates via their Azure Management Portal: https://aka.ms/azserviceissues

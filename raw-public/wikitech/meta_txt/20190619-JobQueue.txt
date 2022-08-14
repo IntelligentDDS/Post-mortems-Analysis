@@ -1,0 +1,13 @@
+Jobs stopped being processed after rollout of MediaWiki 1.34.0-wmf.10.
+
+With the Kafka job queue the jobs are serialized into JSON and then via EventBus and ChangeProp are delivered to an internal endpoint on job runners for execution. in 516241 a property was removed from the job specification. We have been preparing for this, removing the property from the job JSON schema, however, we've forgot that the internal endpoint checks for the field to be present and returns 400 if it's not. The check is done very early in the codepath, so no logging was done, and change-prop ignored the 400. So the issue was not observable. It was fixed by 518751
+
+Jobs were not processed for group0 and group1 wikis for 12 hours. Jobs that go around all the wikis, like , got stuck reaching a group0 or group1 wiki.
+
+The issue was not detected automatically by monitoring tool, logs or graphs, it was found by accident due to job being stuck
+• No indication of a breakage in logs, graphs or monitoring tools
+• Due to cpt offsite a long time has passed between the issue discovery and a fix
+
+Where did we get lucky?
+• The outage was noticed quickly due to stuck jobs
+• Better observability for jobqueue (TODO: link to existing task)

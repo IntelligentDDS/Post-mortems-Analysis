@@ -1,0 +1,14 @@
+The kernel OOM killer sniped the mysqld process on the m1-master, db1001. This would have had the immediate, though brief, effect of taking down:
+
+At 2014-05-26 08:30:25 the kernel OOM killer sniped the mysqld process on the m1-master, db1001. The DB restarted and InnoDB crash recovery completed, leaving only a warning due to that service still using a MyISAM table for fulltext search which failed startup checks and required manual repair. Hashar and _joe_ resolved that.
+
+Why did mysqld run out of memory? Ganglia shows something unusual happened on db1001 around that time of 0830.
+
+Oddly, db1001 syslog reported that the actual process triggering the OOM was diamond, the graphite collector. Is it possible to prove that diamond was just in the wrong place at the wrong time, or that it possibly played a more critical role?
+
+Tendril logged a spike in mysqld connections, aborted connections, bytes recv/sent, and queries on db1001 at the same time. It tentatively assigns blame to "bloguser" based on user and query sampling, however the relevant reporting script is new and untested and the sample rate is set too low to prove the culprit without doubt.
+
+An RDBMS was hit by a spike in traffic and overwhelmed.
+• Status: Done MAX_USER_CONNECTIONS is 512 for "bloguser" on db1001.
+• Status: Done The affected MyISAM tables have been switched to ARIA.
+• Status: on-going Phabricator will use proper InnoDB tables, plus Elasticsearch.

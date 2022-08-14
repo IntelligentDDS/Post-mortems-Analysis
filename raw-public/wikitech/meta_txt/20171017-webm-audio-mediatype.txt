@@ -1,0 +1,12 @@
+files were incorrectly labeled as & . After having fixed the cause (https://phabricator.wikimedia.org/T156135), there were a few old entries in the database that had to be fixed ( : 30, : 4, : 94). Because of the small amount of rows to be updated, mlitn misjudged the impact.
+
+mlitn logs in to tin & connects to mysql commonswiki.
+
+~13:25: mlitn forgot to what he was doing: there was confusion, and execution of another (unrelated) script was halted as a result
+
+As a general comment, the reason why it has so much impact was because, despite the number of rows being very low, the actual number of rows read was very high (probably most or a significant part of the table, which not only was read, but also blocked, preventing other writes to go on, and blocking replication on the non-masters. There are scripts such as pt-archiver that assure writes are done by primary key on very small batches, ensuring minimal impact (e.g. for deleting >30M rows on commmonswiki https://phabricator.wikimedia.org/T177772#3670119 ).
+• Scripting should properly have been done instead of running from CLI
+• DBAs should have been pinged, who are in a better position to judge impact & advise
+• should have been used to warn what was about to be made
+• Before performing database edits- backups should be performed to allow easy reversions
+• Should dangerous maintenance scripts executions be limited/managed differently/documented better?

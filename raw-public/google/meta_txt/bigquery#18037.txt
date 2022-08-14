@@ -1,0 +1,166 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+June 27, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/18037)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #18037
+
+We've received a report of an issue with Google BigQuery.
+
+Incident began at **2018-06-22 12:06** and ended at **2018-06-22 13:12** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jun 27, 2018 | 09:22 |
+
+ISSUE SUMMARY
+
+On Friday 22 June 2018, Google BigQuery experienced increased query failures
+for a duration of 1 hour 6 minutes. We apologize for the impact of this issue
+on our customers and are making changes to mitigate and prevent a recurrence.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Friday 22 June 2018 from 12:06 to 13:12 PDT, up to 50% of total requests to
+the BigQuery API failed with error code 503. Error rates varied during the
+incident, with some customers experiencing 100% failure rate for their
+BigQuery table jobs. bigquery.tabledata.insertAll jobs were unaffected.
+
+ROOT CAUSE
+
+A new release of the BigQuery API introduced a software defect that caused the
+API component to return larger-than-normal responses to the BigQuery router
+server. The router server is responsible for examining each request, routing
+it to a backend server, and returning the response to the client. To process
+these large responses, the router server allocated more memory which led to an
+increase in garbage collection. This resulted in an increase in CPU
+utilization, which caused our automated load balancing system to shrink the
+server capacity as a safeguard against abuse. With the reduced capacity and
+now comparatively large throughput of requests, the denial of service
+protection system used by BigQuery responded by rejecting user requests,
+causing a high rate of 503 errors.
+
+REMEDIATION AND PREVENTION
+
+Google Engineers initially mitigated the issue by increasing the capacity of
+the BigQuery router server which prevented overload and allowed API traffic to
+resume normally. The issue was fully resolved by identifying and reverting the
+change that caused large response sizes.
+
+To prevent future occurrences, BigQuery engineers will also be adjusting
+capacity alerts to improve monitoring of server overutilization.
+
+We apologize once again for the impact of this incident on your business.  
+  
+|
+
+ISSUE SUMMARY
+
+On Friday 22 June 2018, Google BigQuery experienced increased query failures
+for a duration of 1 hour 6 minutes. We apologize for the impact of this issue
+on our customers and are making changes to mitigate and prevent a recurrence.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Friday 22 June 2018 from 12:06 to 13:12 PDT, up to 50% of total requests to
+the BigQuery API failed with error code 503. Error rates varied during the
+incident, with some customers experiencing 100% failure rate for their
+BigQuery table jobs. bigquery.tabledata.insertAll jobs were unaffected.
+
+ROOT CAUSE
+
+A new release of the BigQuery API introduced a software defect that caused the
+API component to return larger-than-normal responses to the BigQuery router
+server. The router server is responsible for examining each request, routing
+it to a backend server, and returning the response to the client. To process
+these large responses, the router server allocated more memory which led to an
+increase in garbage collection. This resulted in an increase in CPU
+utilization, which caused our automated load balancing system to shrink the
+server capacity as a safeguard against abuse. With the reduced capacity and
+now comparatively large throughput of requests, the denial of service
+protection system used by BigQuery responded by rejecting user requests,
+causing a high rate of 503 errors.
+
+REMEDIATION AND PREVENTION
+
+Google Engineers initially mitigated the issue by increasing the capacity of
+the BigQuery router server which prevented overload and allowed API traffic to
+resume normally. The issue was fully resolved by identifying and reverting the
+change that caused large response sizes.
+
+To prevent future occurrences, BigQuery engineers will also be adjusting
+capacity alerts to improve monitoring of server overutilization.
+
+We apologize once again for the impact of this incident on your business.  
+  
+| Jun 22, 2018 | 13:32 |
+
+The issue with Google BigQuery has been resolved for all affected projects as
+of Friday, 2018-06-22 13:30 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to help prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+|
+
+The issue with Google BigQuery has been resolved for all affected projects as
+of Friday, 2018-06-22 13:30 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to help prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+| Jun 22, 2018 | 13:15 |
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Friday, 2018-06-22 14:15 US/Pacific with current
+details.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Friday, 2018-06-22 14:15 US/Pacific with current
+details.  
+  
+| Jun 22, 2018 | 12:51 |
+
+We are investigating an issue with Google BiqQuery. Our Engineering Team is
+investigating possible causes. Affected customers may see their queries fail
+with 500 errors. We will provide another status update by Friday, 2018-06-22
+14:00 US/Pacific with current details.  
+  
+|
+
+We are investigating an issue with Google BiqQuery. Our Engineering Team is
+investigating possible causes. Affected customers may see their queries fail
+with 500 errors. We will provide another status update by Friday, 2018-06-22
+14:00 US/Pacific with current details.  
+  
+| Jun 22, 2018 | 12:51 |
+
+We've received a report of an issue with Google BigQuery.  
+  
+|
+
+We've received a report of an issue with Google BigQuery.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

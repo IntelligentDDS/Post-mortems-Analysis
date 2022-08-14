@@ -1,0 +1,6 @@
+The traffic layer in eqiad reported various HTTP failures fetching from the application layer. FetchError seemed different from the usual varnish-be scalability issue (e.g. not the same as in Incident documentation/20190416-varnish). Instead of "Could not get storage" we were getting "HTC status -1" and (less frequently) "http format error". See https://phabricator.wikimedia.org/P8470 and https://phabricator.wikimedia.org/P8469 respectively. HTC status -1 happens when the function HTC_RxStuff returns HTC_S_EOF. The "HTTP format error" case was verified to not be happening at the appserver layer. This initially led us to think of a potentially different issue. However, the varnish backends throwing 503 errors were confirmed to consistently be those running for the longest amount of time, and restarting them solved the problem.
+
+Approx 900,000 HTTP 503s served, mostly between 05:00 and 05:40.
+• 05:09 Icinga pages about LVS in eqsin and codfw
+• The on-disk Varnish storage backend does not scale.
+• There is unfortunately no action that can be taken immediately. In the medium-term, our strategy is moving all cache backends to Apache Traffic Server.

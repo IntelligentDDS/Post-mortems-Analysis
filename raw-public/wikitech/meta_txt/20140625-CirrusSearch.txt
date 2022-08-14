@@ -1,0 +1,14 @@
+All wikis using CirrusSearch lost search for 30 minutes. Users opted into the CirrusSearch BetaFeature lost it for an additional 20 minutes.
+• 2014-06-24 19:39 attempted to sync out a config change for Cirrus but instead just pulled the configuration change to the staging server and didn't sync anything.
+• 2014-06-25 16:16 sync a different config change for Cirrus - this one makes CirrusSearch the primary search backend on all but 11 wikis. This half synced out the config change by which caused search to totally break.
+• 2014-06-25 16:18 and realize that something is wrong with the config change. Independently of the broken sync from 2014-06-24 this change caused a small load spike while search caches warmed and caused some searches to temporarily fail. We monitor the situation thinking that cache will warm and everything will be OK.
+• 2014-06-25 16:21 Everything is not yet ok even though it looks like the caches are plenty warm.
+• 2014-06-25 16:23 rolls back the config change from 2014-06-25 16:16 thinking something is wrong with the change. It doesn't help. We do more investigating.
+• 2014-06-25 16:42 fails all wikis back over to lsearchd. Only users that have opted into the CirrusSearch BetaFeature still have broken search.
+• 2014-06-25 17:06 finds the half synced configuration and performs another configuration sync, this time pushing all the remaining half synced changes. CirrusSearch is now fixed.
+• 2014-06-25 17:41 reenables CirrusSearch as the primary search backend for all the wikis that it was serving before the 2014-06-25 16:16 configuration change.
+• Don't forget any of the steps in the deployment process. Recheck after the deploy to verify that it made it. Common sense but when you deploy all the time you get cavalier about it.
+• Status: on-going - Be more careful next time.
+• Status: Declined - If sync-dir/sync-file/scap don't sync any files then we need to log something about it because its weird. Warn the operator that the sync they just performed was a noop.
+• Status: Done - Add automatic cache warming to CirrusSearch to prevent load spikes when loading cold caches.
+• Status: Done - Improve CirrusSearch error handling, it's very broken.

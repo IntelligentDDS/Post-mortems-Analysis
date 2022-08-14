@@ -1,0 +1,8 @@
+Storage - West US
+Summary of impact: Between 07:12 and 17:19 UTC on 11 Nov 2018, you were identified as a customer using Storage in West US who may have experienced
+difficulties reading from a subset of blob storage accounts hosted in this region.
+Root cause: Engineers received monitoring alerts for degraded storage accessibility. Upon investigation, they determined that a single storage scale unit was unreachable from internet. It started when a route configuration at one of the regional internet service providers caused traffic to get re-routed incorrectly and drop. Traffic inside the Microsoft network for the storage scale unit was not affected by this issue.
+Mitigation: Engineers worked with the internet service provider to correct the route configuration and removed the incorrect route advertisement.
+Next steps: Microsoft monitors all its route advertisement on the internet to validate the origins of the route. Since this incident, Microsoft has hardened the check
+for its routes on the internet. Microsoft is also working with large service providers to not accept Microsoft routes from any other service provider.
+We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future.

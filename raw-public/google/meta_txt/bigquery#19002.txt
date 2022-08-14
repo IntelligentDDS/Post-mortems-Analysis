@@ -1,0 +1,197 @@
+# [](//cloud.google.com)
+
+March 17, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/19002)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #19002
+
+High error rate on multiple Google BigQuery APIs in the US region
+
+Incident began at **2019-03-08 00:45** and ended at **2019-03-08 01:30** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Mar 18, 2019 | 11:25 |
+
+ISSUE SUMMARY
+
+On Friday 8 March 2019, Google BigQuery’s jobs.insert API in the US regions
+experienced an average elevated error rate of 51.21% for a duration of 45
+minutes. BigQuery’s Streaming API was unaffected during this period. We
+understand how important BigQuery’s availability is to our customers’ business
+analytics and we sincerely apologize for the impact caused by this incident.
+We are taking immediate steps detailed below to prevent this situation from
+happening again.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Friday 8 March 2019 from 00:45 - 01:30 US/Pacific, BigQuery’s jobs.insert
+[1] API (responsible for import/export, query, and copy jobs) in the US region
+experienced an average error rate of 51.21%. Affected customers received error
+responses such as “Error encountered during Execution, retrying may solve the
+problem” and “Read timed out” when sending requests to BigQuery. BigQuery’s
+Streaming API was not impacted by this incident.
+
+The following is a breakdown of the errors experienced during the incident:
+
+  * 64.01% of jobs.insert API requests to BigQuery (US) received HTTP 503 errors
+
+  * The jobs.insert API experienced an average error rate of 51.21% and a peak error rate of 75.96% percent at 01:21 US/Pacific
+
+  * 17.93% of BigQuery projects in the region were impacted
+
+ROOT CAUSE
+
+A recent change to BigQuery’s shuffle scheduling service [2] introduced the
+potential for the service to enter a state where it was unable to process
+shuffle jobs. A new canary release was deployed to fix the potential issue.
+However, this release contained an unrelated issue which placed an overly
+restrictive rate limit on the shuffle service preventing it from operating
+nominally. This strict rate limit created a large job backlog for the BigQuery
+Job Server, which resulted in BigQuery returning errors such as “Error
+encountered during Execution, retrying may solve the problem” and “Read timed
+out” to users.
+
+REMEDIATION AND PREVENTION
+
+Google Engineers were automatically alerted at 00:47 and immediately began
+their investigation. The root cause was discovered at 01:23, and our engineers
+worked quickly to mitigate the issue by redirecting traffic away from the
+impacted datacenter at 01:27. The incident was fully resolved by 01:30.
+
+We are taking immediate action to prevent recurrence. First, we have
+implemented a fix to prevent the shuffle service from potentially entering a
+state where it is unable to process jobs. Second, we are allocating additional
+capacity to BigQuery’s US region to reduce the impact of traffic redirections
+on adjacent datacenters running the service. Additionally, we are increasing
+the precision of our monitoring to enable more swift and accurate diagnosing
+of BigQuery issues going forward.
+
+[1] <https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/insert> [2]
+<https://cloud.google.com/blog/products/gcp/in-memory-query-execution-in-
+google-bigquery>  
+  
+|
+
+ISSUE SUMMARY
+
+On Friday 8 March 2019, Google BigQuery’s jobs.insert API in the US regions
+experienced an average elevated error rate of 51.21% for a duration of 45
+minutes. BigQuery’s Streaming API was unaffected during this period. We
+understand how important BigQuery’s availability is to our customers’ business
+analytics and we sincerely apologize for the impact caused by this incident.
+We are taking immediate steps detailed below to prevent this situation from
+happening again.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Friday 8 March 2019 from 00:45 - 01:30 US/Pacific, BigQuery’s jobs.insert
+[1] API (responsible for import/export, query, and copy jobs) in the US region
+experienced an average error rate of 51.21%. Affected customers received error
+responses such as “Error encountered during Execution, retrying may solve the
+problem” and “Read timed out” when sending requests to BigQuery. BigQuery’s
+Streaming API was not impacted by this incident.
+
+The following is a breakdown of the errors experienced during the incident:
+
+  * 64.01% of jobs.insert API requests to BigQuery (US) received HTTP 503 errors
+
+  * The jobs.insert API experienced an average error rate of 51.21% and a peak error rate of 75.96% percent at 01:21 US/Pacific
+
+  * 17.93% of BigQuery projects in the region were impacted
+
+ROOT CAUSE
+
+A recent change to BigQuery’s shuffle scheduling service [2] introduced the
+potential for the service to enter a state where it was unable to process
+shuffle jobs. A new canary release was deployed to fix the potential issue.
+However, this release contained an unrelated issue which placed an overly
+restrictive rate limit on the shuffle service preventing it from operating
+nominally. This strict rate limit created a large job backlog for the BigQuery
+Job Server, which resulted in BigQuery returning errors such as “Error
+encountered during Execution, retrying may solve the problem” and “Read timed
+out” to users.
+
+REMEDIATION AND PREVENTION
+
+Google Engineers were automatically alerted at 00:47 and immediately began
+their investigation. The root cause was discovered at 01:23, and our engineers
+worked quickly to mitigate the issue by redirecting traffic away from the
+impacted datacenter at 01:27. The incident was fully resolved by 01:30.
+
+We are taking immediate action to prevent recurrence. First, we have
+implemented a fix to prevent the shuffle service from potentially entering a
+state where it is unable to process jobs. Second, we are allocating additional
+capacity to BigQuery’s US region to reduce the impact of traffic redirections
+on adjacent datacenters running the service. Additionally, we are increasing
+the precision of our monitoring to enable more swift and accurate diagnosing
+of BigQuery issues going forward.
+
+[1] <https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/insert> [2]
+<https://cloud.google.com/blog/products/gcp/in-memory-query-execution-in-
+google-bigquery>  
+  
+| Mar 08, 2019 | 02:51 |
+
+The issue with Google BigQuery API returning 503 errors has been resolved for
+all affected projects as of 1:30 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to help prevent or minimize future recurrence.  
+  
+|
+
+The issue with Google BigQuery API returning 503 errors has been resolved for
+all affected projects as of 1:30 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to help prevent or minimize future recurrence.  
+  
+| Mar 08, 2019 | 02:30 |
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Friday, 2019-03-08 03:30 US/Pacific with current
+details.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Friday, 2019-03-08 03:30 US/Pacific with current
+details.  
+  
+| Mar 08, 2019 | 01:24 |
+
+We are investigating an issue with Google BigQuery. We will provide more
+information by Friday, 2019-03-08 02:30 US/Pacific.  
+  
+|
+
+We are investigating an issue with Google BigQuery. We will provide more
+information by Friday, 2019-03-08 02:30 US/Pacific.  
+  
+| Mar 08, 2019 | 01:24 |
+
+We are investigation an issue with Google BigQuery.  
+  
+|
+
+We are investigation an issue with Google BigQuery.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

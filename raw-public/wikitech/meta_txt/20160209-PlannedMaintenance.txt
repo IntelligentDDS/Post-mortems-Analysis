@@ -1,0 +1,13 @@
+Between 23:00 and 23:59 UTC, February 9th 2016 there is a scheduled maintenance window that will affect some of the wikis hosted by the Wikimedia Foundation.
+
+The maintenance is needed in order to perform necessary hardware, operating system and database upgrades. During the upgrade, content on affected wikis will be available at all times, but edits may fail during approximately 5 minutes within that schedule (these wikis will be in "read only mode").
+
+The following wikis will be affected:
+
+All other wikis will not be affected by this maintenance.
+
+We apologize in advance for this disruption and will try to minimize the duration of the maintenance work.
+
+Upgrade seems to have gone well. Read-only mode was enabled for a bit longer than we initially expected: approximately between 23:16 and 23:30, but all within the scheduled maintenance window. Most of the time was spent monitoring that the switchover was done correctly, and that traffic was not affected after the fact. s2 master is now running a modern operating system version (Debian Jessie) and the latest version of MariaDB 10 on a new host, and no replication lag or major issues where detected after the failover. We will continue monitoring that shard and wikis for stability and performance.
+
+If you find any further issues, please use Phabricator to communicate this to us.

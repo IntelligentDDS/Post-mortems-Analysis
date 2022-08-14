@@ -1,0 +1,13 @@
+RCA - SQL Services - West Europe
+Summary of impact: Between 09:40 UTC and 17:15 UTC on 20 Feb 2019 a subset of customers using SQL Services (inclusive of Azure DB for MariaDB, MySQL, and PostgreSQL, SQL DB, and SQL Data Warehouse) in West Europe experienced issues performing service management operations and/or experienced service availability issues following scaling operations. Symptoms may have included but were not limited to:
+• Service management operations returning failure notifications
+• Server and database create, drop & scale operations may result in "deployment failed" errors • Failures when creating databases through SQL Script
+• Databases may become unavailable after performing scaling operations.
+Note: This issue was impacting all types of SQL service deployments (e.g. Elastic Pool, Single and Managed Instances).
+Root cause and mitigation: Engineers observed that the SQL Control Plane reached an operational threshold, causing service management for dependent services and service availability failures for scale operations. Logic that selects a ring, a unit of capacity within a region, to place a service instance during creation or SLO change could incorrectly pick the same overloaded ring for incoming placement operations. It would correctly recognize rings close to full capacity and initiate the placement retry. However it would forget prior selection, restart the whole process from the beginning and reconsider a prior rejected ring again. Engineers manually offloaded a backlog of operations, which allowed traffic to resume and mitigated the issue. The mitigation involved removing rings close to full capacity from the selection list first manually and eventually through automation.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+• Introduce alerts for this type of the issue
+• Fix logic to avoid in order ring traversal
+• Introduce stochastic scheme to pick up next available ring for placement
+• Create tensile tests simulating the situation to verify the solution and avoid regressions going forward
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/VCGK-TRG

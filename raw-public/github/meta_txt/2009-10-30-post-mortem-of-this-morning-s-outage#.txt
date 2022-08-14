@@ -1,0 +1,12 @@
+At 07:53 PDT this morning the site was hit with an abnormal number of SSH connections. The script that runs after an SSH connection is accepted makes an RPC call to the backend to check for the existence of the repository so that we can display a nice error message if it is not present. The vast number of these calls that came in simultaneously caused some delays in the backend that cascaded to the frontends and resulted in a piling up of the scripts waiting for their RPC results. This, in turn, caused load to spike on the frontends further exacerbating the problem. I removed the RPC call from the SSH script to prevent this bottlenecking and soon after the barrage of SSH connections ceased.
+
+Another unrelated problem caused the outage to continue even after the SSH connection load became nominal. Last night I deployed some package upgrades to our RPC stack that had tested out fine in staging for two days. While debugging the SSH problem, I restarted the backend RPC servers to rule them out as the problem source. This was the first time these processes had been restarted since the package upgrades, as they were deemed to be backward compatible with the changes and staging had shown no problems in this regard. However, it appears that these restarts put the RPC servers into an unworking state, and they began serving requests very sporadically. After failing to identify the problem within a short period, we decided to roll back to the previous known working state. After the packages were rolled back and the daemons restarted, the site picked up and began operating normally.
+
+Full site operation returned at 09:34 PDT (some sporadic uptime was seen during the outage).
+
+Over the next week we will be doing several things:
+• Further testing on staging to attempt to reproduce the behavior seen on production and resolve the underlying issue.
+• Better SSH script logging to more quickly identify abnormal behavior.
+• Working towards a more fine-grained rolling deploy of infrastructure packages to limit the impact of unforeseen problems.
+
+On a positive note, the outage led me to identify the source of several subtle bugs that have been eluding our detection for a few weeks. We are all rapidly learning the quirks of our new architecture in a production environment, and every problem leads to a more robust system in the future. Thanks for your patience over the last month and during the coming months as we work to improve the GitHub experience on every level.

@@ -1,0 +1,10 @@
+This is a template for an Incident Report. Replace notes with your own description.
+
+ORES was down for an unknown amount of hours today due to a broken configuration file ( ).
+• ??? -- https://github.com/wikimedia/operations-puppet/commit/78119152c47b7873fdd7bd0c38a356b5bff27226 was merged to the production branch of wikimedia puppet
+• 2016-06-10 @ 2030 UTC -- 99-redis.yaml files are deleted and the workers are restarted. Service is restored.
+
+https://github.com/wikimedia/operations-puppet/commit/78119152c47b7873fdd7bd0c38a356b5bff27226 should not have been merged. We need a better testing process around puppet merges to make sure that they don't take down the service. Unlike a deploy, there's to a clear event at which puppet is run.
+
+Also, this downtime did not cause a paging event.
+• Investigate why we were not paged when the downtime started Phab:T137592

@@ -1,0 +1,17 @@
+From 5/09 to 6/06 we had issues regarding throughput. Vanadium was not able to validate as many events as they were received and thus, events were being dropped. The issue was affecting all events. Users that are extrapolating absolute counts from data in EL will have likely seen small drops of data in the same interval. The interval in which we dropped data is marked in red the image below. Root case was CPU maxed out in Vanadium.
+
+Publishing of events to EventLogging was increased to about twice the usual volume of data. The MediaViewer team had just recently instrumented their code and they were logging at too high of rate.
+
+EventLogging lives in one machine (vanadium) where events are published in raw json (blue line below) and they are validated againsta json schema before hitting the database (green line below). We found out that our validation throughput was capped to 250 events per second in vanadium due to heavy usage of CPU resources by the validation code. Thus, we were dropping events that we could not validate. The time in which this was happening is marked in red on the graph below.
+
+There should always be a small disparity in the raw versus validated events, as some events sent are not valid. Now, the difference present in the graph below among both streams is much too high.
+
+We learned that we were CPU-bound when it came to event validation. We looked for optimizations we could do in the code and we found we were validating event schemas too frequently.
+
+We did a fix on that regard here: https://gerrit.wikimedia.org/r/#/c/137810/
+
+It is important to know that the drop of data will be seen in our users dashboards. Specially for metrics that calculate absolute counts from a given sampling rate. The drop of data will affect all events equally.
+• Status: Done - We have set up alarms on Event Logging regarding throughput so analytics team is notified if events per second go beyond a certain threshold.
+• Status: Done - We have set a policy of notifying our users when these type of events happen.
+• Status: Done - Repopulate data?
+• Analytics talked to the affected teams and looks like there is no need to repopulate the data lost.

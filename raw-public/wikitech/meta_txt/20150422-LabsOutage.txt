@@ -1,0 +1,22 @@
+Many labs instances were migrated to new virtualization hardware. A kernel bug on the new hosts resulted in bad behavior of the guest VMs: poor response time, network interruptions and a flurry of monitoring alerts. Kernel update and reboot on the affected systems resolved the problem, but the accompanying reboot further interrupted many VMs.
+
+Affected hosts were running a kernel having this bug: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1346917 which was found by investigating the symptoms reported at https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1307473 on comparable Precise->Trusty upgrades.
+• There are six new labs virtualization boxes, labvirt1001-1006. They run the same hardware as old, tried-and-true nodes virt1010, 1011 and 1012. virt1010 and 1011 are running Ubuntu Precise, virt1012 is running Trusty with 3.13.0-46 kernel. The new nodes use a stock install of Trusty, kernel version 3.13.0-24.
+• Andrew migrates select instances to the new labvirt hardware. Projects 'openstack,' 'testlabs,' and a few miscellaneous instances are moved to the hardware. No ill-effects are observed.
+• Andrew migrates the 'cvn' and 'staging' projects to labvirt hosts.
+• Andrew runs a scripted migration of the deployment-prep project to labvirt hosts. This is the first large-scale migration to the new hardware.
+• [02:00] Shinken starts to send many, many alerts to #wikimedia-releng, reporting deployment hosts to be flapping. Page loads fail intermittently.
+• [12:30] Andrew wakes up, begins a scripted migration of Tools instances to the labvirt hardware.
+• [13:00] Andrew converses with Tyler Cipriani and becomes aware of the deployment-prep issues, starts debugging in earnest.
+• [15:00] By this time it's clear that the issue is localized to instances on labvirt hardware. Scripted migration of tools is halted.
+• [16:30] The first working theory is that there's a competition for resources on labvirt1005 and 1006, as instances on those hosts are sending the most alerts. Ganglia graphs are spiky and concerning and most instances on those hosts are unresponsive, so Andrew reboots them. Symptoms are temporarily alleviated
+• [18:00] It's clear now that reboots were insufficient and we still have issues, including on labvirt1001-1004.
+• [20:00] Alex Monk notes that ping times are very irregular; sometimes jumping to multiple seconds. Andrew confirms that this issue is also isolated to instances on labvirt hosts. Marc joins the debug effort.
+• [21:15] It's agreed to try a kernel upgrade. Andrew starts migrating tools hosts away from labvirt1001 so it can be restarted without causing further interruption.
+• [21:45] Andrew upgrade the kernel of labvirt1001 to 3.16.0-34, reboots. The instance fails to start as it is unable to mount the filesystem,
+• [22:30] labvirt1001 is finally back up, running kernel 3.13.0-48. Instances seem to be running properly. Andrew migrates tools nodes away from labvirt1002.
+• [14:00] labvirt1001 and labvirt1002 are declared healthy. Andrew migrates tools hosts away from 1003-1006, Marc drains jobs from affected tools-exec nodes.
+• [16:30] All labvirt hosts up, all instances running.
+
+All labvirt nodes are now upgraded and fine. When the other HP systems (virt1010, 1011, 1012) are re-imaged, it's critical that a dist-upgrade and reboot be run before any instances are migrated to them.
+• Guard against nova-compute being deployed on affected kernels (T97152)

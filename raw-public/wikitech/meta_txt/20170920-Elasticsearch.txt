@@ -1,0 +1,10 @@
+Yesterday, we did a cold restart of the elasticsearch / cirrus eqiad cluster. This restart did not go as planned. It did not generate any user facing impact, since we moved all the traffic to codfw before the restart. It did impact logstash (more of that in a different report).
+• 15:36: start of plugin upgrade and cluster restart on elasticsearch eqiad
+• 15:46: shutdown and restart of all elasticsearch nodes, cluster is not recovering
+• 16:34: restart of elastic1051, cluster is starting to recover, cluster is in yellow state after a few minutes (ready to serve traffic)
+
+elastic1051 did not restart cleanly, due to failed cleanup of previous plugins. This was not investigated right away, as we thought that recovering the cluster was more urgent and that the clsuter should recover without issue even if one node is unavailable. We now know differently.
+
+The parameters governing the recovery of the cluster are:
+
+Our previous understanding was that the cluster would start recovering with 24 of the 36 nodes available, or start recovering anyway after 20 minutes. So we were not expecting that one node being down would prevent a recovery. Our current understanding is that elasticsearch will wait for to be available, and recover anyway after if at least are present.

@@ -1,0 +1,10 @@
+Tool Labs proxy (and thus all webservice accessibility from the internet) were down for approximately 2 minutes, between UTC 0546 and 0548, Tue Aug 23.
+• 0546: Yuvi gets a page for PAWS being down
+• 0546: Yuvi investigates, notices tools is down too
+• 0547: SSHs into tools-proxy-01, looks at error.log. Notice lots of 768 worker_connections are not enough errors
+• 0548: Restarts nginx, fixing the issue for now.
+• Our current worker_connections limit is too low.
+• There was no widespread paging for this. PAWS alert is set to alert only Yuvi, and also caught this only incidentally.
+• We had a higher worker_connections limit, but that was killed in favor of the default number in https://gerrit.wikimedia.org/r/#/c/297829/.
+• There's no quick way to failover tools-proxy, making intense debugging a priority over failover & calmly investigating.
+• Setup paging with a super simple webservice, to replace the killed tools home page check phab:T143638

@@ -1,0 +1,7 @@
+Azure Portal Timeouts and Latency
+Summary of impact: Between 23:05 UTC on 02 Nov 2018 and 00:21 UTC on 03 Nov 2018, some customers may have experienced high latency or timeouts when
+viewing resources or loading blades through the Azure Portal (https://portal.azure.com).
+Preliminary root cause: Engineers determined that a recent deployment task introduced an updated DNS record that caused the backend service hosting portal
+blades to become unhealthy, preventing requests from completing.
+Mitigation: Engineers performed a configuration change to revert the impacting update.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

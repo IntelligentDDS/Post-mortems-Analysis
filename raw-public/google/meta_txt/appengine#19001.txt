@@ -1,0 +1,293 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+January 08, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google App Engine](/incident/appengine/19001)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google App Engine Incident #19001
+
+We are currently investigating an issue with Google App Engine app creation,
+Cloud Function deployments, and Project Creation in Cloud Console.
+
+Incident began at **2019-01-02 14:40** and ended at **2019-01-02 18:20** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jan 07, 2019 | 17:25 |
+
+ISSUE SUMMARY
+
+On Wednesday 2 January, 2019, application creation in Google App Engine (App
+Engine), first-time deployment of Google Cloud Functions (Cloud Functions) per
+region, and project creation & API management in Cloud Console experienced
+elevated error rates ranging from 71% to 100% for a duration of 3 hours, 40
+minutes starting at 14:40 PST. Workloads already running on App Engine and
+Cloud Functions, including deployment of new versions of applications and
+functions, as well as ongoing use of existing projects and activated APIs,
+were not impacted.
+
+We know that many customers depend on the ability to create new Cloud
+projects, applications & functions, and apologize for our failure to provide
+this to you during this time. The root cause of the incident is fully
+understood and engineering efforts are underway to ensure the issue is not at
+risk of recurrence.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 2 January, 2019 from 14:40 PST to 18:20 PST, application creation
+in App Engine, first-time deployments of Cloud Functions, and project creation
+& API auto-enablement in Cloud Console experienced elevated error rates in all
+regions due to a recently deployed configuration update to the underlying
+control plane for all impacted services.
+
+First-time deployments of new Cloud Functions failed. Redeploying existing
+deployments of Cloud Functions were not impacted. Workloads on already
+deployed Cloud Functions were not impacted.
+
+App Engine app creation experienced an error rate of 98%. Workloads for
+deployed App Engine applications were not impacted.
+
+Cloud API enable requests experienced a 97% average error rate while disable
+requests had a 71% average error rate. Affected users observed these errors
+when attempting to enable an API via the Cloud Console and API Console.
+
+ROOT CAUSE
+
+The control plane responsible for managing new app creations in App Engine,
+new function deployments in Cloud Functions, project creation & API management
+in Cloud Console utilizes a metadata store. This metadata store is responsible
+for persisting and processing new project creations, function deployments, App
+Engine applications, and API enablements.
+
+Google engineers began rolling out a new feature designed to improve the
+fault-tolerance of the metadata store. The rollout had been successful in test
+environments, but triggered an issue in production due to an unexpected
+difference in configuration, which triggered a bug. The bug caused writes to
+the metadata store to fail.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were automatically alerted of the elevated error rate within
+3 minutes of the incident start and immediately began their investigation.
+
+At 15:17, an issue with our metadata store was identified as the root cause,
+and mitigation work began. An initial mitigation was applied, but automation
+intentionally slowed the rollout of this mitigation to minimize risks to
+production. To reduce time to resolution, Google engineers developed and
+implemented a new mitigation. The metadata store became fully available at
+18:20.
+
+To prevent a recurrence, we will implement additional validation to the
+metadata store’s schemas and ensure that test validation of metadata store
+configuration matches production.
+
+To improve time to resolution for such issues, we are increasing the
+robustness of our emergency rollback procedures for the metadata store, and
+creating engineering runbooks for such scenarios.  
+  
+|
+
+ISSUE SUMMARY
+
+On Wednesday 2 January, 2019, application creation in Google App Engine (App
+Engine), first-time deployment of Google Cloud Functions (Cloud Functions) per
+region, and project creation & API management in Cloud Console experienced
+elevated error rates ranging from 71% to 100% for a duration of 3 hours, 40
+minutes starting at 14:40 PST. Workloads already running on App Engine and
+Cloud Functions, including deployment of new versions of applications and
+functions, as well as ongoing use of existing projects and activated APIs,
+were not impacted.
+
+We know that many customers depend on the ability to create new Cloud
+projects, applications & functions, and apologize for our failure to provide
+this to you during this time. The root cause of the incident is fully
+understood and engineering efforts are underway to ensure the issue is not at
+risk of recurrence.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 2 January, 2019 from 14:40 PST to 18:20 PST, application creation
+in App Engine, first-time deployments of Cloud Functions, and project creation
+& API auto-enablement in Cloud Console experienced elevated error rates in all
+regions due to a recently deployed configuration update to the underlying
+control plane for all impacted services.
+
+First-time deployments of new Cloud Functions failed. Redeploying existing
+deployments of Cloud Functions were not impacted. Workloads on already
+deployed Cloud Functions were not impacted.
+
+App Engine app creation experienced an error rate of 98%. Workloads for
+deployed App Engine applications were not impacted.
+
+Cloud API enable requests experienced a 97% average error rate while disable
+requests had a 71% average error rate. Affected users observed these errors
+when attempting to enable an API via the Cloud Console and API Console.
+
+ROOT CAUSE
+
+The control plane responsible for managing new app creations in App Engine,
+new function deployments in Cloud Functions, project creation & API management
+in Cloud Console utilizes a metadata store. This metadata store is responsible
+for persisting and processing new project creations, function deployments, App
+Engine applications, and API enablements.
+
+Google engineers began rolling out a new feature designed to improve the
+fault-tolerance of the metadata store. The rollout had been successful in test
+environments, but triggered an issue in production due to an unexpected
+difference in configuration, which triggered a bug. The bug caused writes to
+the metadata store to fail.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were automatically alerted of the elevated error rate within
+3 minutes of the incident start and immediately began their investigation.
+
+At 15:17, an issue with our metadata store was identified as the root cause,
+and mitigation work began. An initial mitigation was applied, but automation
+intentionally slowed the rollout of this mitigation to minimize risks to
+production. To reduce time to resolution, Google engineers developed and
+implemented a new mitigation. The metadata store became fully available at
+18:20.
+
+To prevent a recurrence, we will implement additional validation to the
+metadata store’s schemas and ensure that test validation of metadata store
+configuration matches production.
+
+To improve time to resolution for such issues, we are increasing the
+robustness of our emergency rollback procedures for the metadata store, and
+creating engineering runbooks for such scenarios.  
+  
+| Jan 02, 2019 | 18:38 |
+
+The issue regarding Google App Engine application creation, GCP Project
+Creation, Cloud Function deployments, and GenerateUploadUrl calls has been
+resolved for all affected users as of Wednesday, 2019-01-02 18:35 US/Pacific.
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to help prevent or minimize future recurrence.  
+  
+|
+
+The issue regarding Google App Engine application creation, GCP Project
+Creation, Cloud Function deployments, and GenerateUploadUrl calls has been
+resolved for all affected users as of Wednesday, 2019-01-02 18:35 US/Pacific.
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to help prevent or minimize future recurrence.  
+  
+| Jan 02, 2019 | 18:16 |
+
+Mitigation work is currently underway by our Engineering Team. As the work
+progresses, the error rates observed from various affected systems continue to
+drop. We will provide another status update by Wednesday, 2019-01-02 19:15
+US/Pacific with current details.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. As the work
+progresses, the error rates observed from various affected systems continue to
+drop. We will provide another status update by Wednesday, 2019-01-02 19:15
+US/Pacific with current details.  
+  
+| Jan 02, 2019 | 17:13 |
+
+Error rates have started to subside. Mitigation work is continuing by our
+Engineering Team. We will provide another status update by Wednesday,
+2019-01-02 18:15 US/Pacific with current details.  
+  
+|
+
+Error rates have started to subside. Mitigation work is continuing by our
+Engineering Team. We will provide another status update by Wednesday,
+2019-01-02 18:15 US/Pacific with current details.  
+  
+| Jan 02, 2019 | 16:31 |
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Wednesday, 2019-01-02 17:15 US/Pacific with current
+details.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Wednesday, 2019-01-02 17:15 US/Pacific with current
+details.  
+  
+| Jan 02, 2019 | 16:04 |
+
+We are currently investigating an issue with Google App Engine app creation,
+Cloud Function deployments, and Project Creation in Cloud Console as of
+Wednesday, 2019-01-02 15:07 US/Pacific.
+
+Affected customers may see elevated errors when creating Google App Engine
+applications in all regions.
+
+Affected Customers may also experience an issue with GCP Project Creation,
+Cloud Function deployments, and GenerateUploadUrl calls may also fail.
+Existing App Engine applications are unaffected.
+
+We have identified the root cause and are working towards a mitigation. We
+will provide another status update by Wednesday, 2019-01-02 16:45 US/Pacific
+with current details.  
+  
+|
+
+We are currently investigating an issue with Google App Engine app creation,
+Cloud Function deployments, and Project Creation in Cloud Console as of
+Wednesday, 2019-01-02 15:07 US/Pacific.
+
+Affected customers may see elevated errors when creating Google App Engine
+applications in all regions.
+
+Affected Customers may also experience an issue with GCP Project Creation,
+Cloud Function deployments, and GenerateUploadUrl calls may also fail.
+Existing App Engine applications are unaffected.
+
+We have identified the root cause and are working towards a mitigation. We
+will provide another status update by Wednesday, 2019-01-02 16:45 US/Pacific
+with current details.  
+  
+| Jan 02, 2019 | 15:38 |
+
+We are investigating elevated errors when creating Google App Engine
+applications in all regions as of Wednesday, 2019-01-02 15:07 US/Pacific.
+Existing App Engine applications are unaffected. We have identified the root
+cause and are working towards a mitigation. We will provide another status
+update by Wednesday, 2019-01-02 16:30 US/Pacific with current details.  
+  
+|
+
+We are investigating elevated errors when creating Google App Engine
+applications in all regions as of Wednesday, 2019-01-02 15:07 US/Pacific.
+Existing App Engine applications are unaffected. We have identified the root
+cause and are working towards a mitigation. We will provide another status
+update by Wednesday, 2019-01-02 16:30 US/Pacific with current details.  
+  
+| Jan 02, 2019 | 15:38 |
+
+Google App Engine application creation is experiencing elevated error rates in
+all regions.  
+  
+|
+
+Google App Engine application creation is experiencing elevated error rates in
+all regions.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

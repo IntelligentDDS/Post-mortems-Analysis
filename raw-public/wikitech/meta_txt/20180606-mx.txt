@@ -1,0 +1,10 @@
+Between [2018/06/06 18:55 UTC] and [2018/06/07 02:00 UTC] outbound mail was interrupted for the below services (by puppet module/profile names).
+• 18:55 UTC Keith stops Exim on mx1001 in preparation for OS reload planned the next day. [1]
+• 01:27 UTC (June 7th) Gerrit and Phabricator email issues are reported via IRC.
+• 01:54 UTC Faidon checks in on IRC and begins investigating.
+• 02:00 UTC Keith checks in on IRC and begins investigating.
+• 02:00 UTC Faidon restarts exim on mx1001 which fixes the issue [2]. Affected services are able to send mail out once again. Deferred phabricator emails are dequeued and delivered.
+• Unexpected SPOFs and a lack of outbound mail queueing is present in several production services. The cause was tracked to two issues:
+• Phabricator is configured to use mx1001 as primary, and mx2001 as a backup, for outbound mail. For an unknown reason failover to the backup mail server did not occur when mx1001 became unavaialble.
+• Some services are configured (via puppet) to use an SMTP server of mail_smarthost[0] which populates the service configuration with only the first mailserver listed for that realm, resulting in an SPOF.
+• Explore graphing of outbound mail volume on per-service or hostgroup level - phab:T197171

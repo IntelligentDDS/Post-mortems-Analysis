@@ -1,0 +1,6 @@
+On 23:40 a change was pushed out which removed and unloaded the FastStringSearch extension for HHVM. We had code in MediaWiki which checks for the presence of this extension and branches accordingly, using a fallback when the extension is not available. One of the callers of this code passes it a parameter of the wrong type, an error which the FastStringSearch extension had swallowed, but which caused a fatal error in the fallback branch (now filed as bug T109160). This bug was not caught on the beta cluster, because the code-path is exercised when converting text from one language variant to another, which does not happen frequently in that environment.
+
+It does happen frequently in production, so the error-rate spiked. To revert, the configuration line needed to be restored to /etc/hhvm/fcgi.ini, but it needed to happen sooner than the next Puppet run. An engineer ran a command across all application servers which was meant to append the line to end of the file but which truncated the file instead. This caused HHVM to restart with a skeleton configuration file, making a bad problem worse.
+
+At 23:54 a good copy of the configuration file was provisioned across the cluster and HHVM was restarted, at which point the site recovered.
+• Status: Unresolved ReplacementArray::replace() called with ResourceLoaderContext instead of string ( )

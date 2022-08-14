@@ -1,0 +1,9 @@
+RCA - Unable to create new resources in Azure Portal (Tracking ID 4_6S-NC8)
+Summary of Impact: Between 15:02 UTC and 16:22 UTC on 27 Dec 2019, customers using the Azure Portal may have received failure notifications or 404 errors when attempting to create new resources through the Azure Portal due to the Marketplace Blade not loading. Programmatic deployments, such as CLI, PowerShell, and template deployments would have been successful.
+Root Cause: Customers were unable to create new resources in the Azure Portal due to a code change that was introduced which caused a key extension to fail, causing a null- reference within the Marketplace blade. The failure surfaced when a set of dependent static data became stale. Approximately 80% of the tenants issuing create calls through the portal were impacted during the incident. Post mitigation, less than 1% of tenants may have seen errors if the faulty extension was cached in their browser.
+Mitigation: The incident was mitigated by rolling back the Marketplace extension to a previous build.
+Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure
+such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Code was checked to remove this specific error, and related code was vetted for similar errors. Extend tests to cover all extension flows.
+Refactor code to remove null return-values and references to static data.
+Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/4_6S-NC8

@@ -1,0 +1,9 @@
+While we’ve been working hard to keep ahead of the demand for new file servers to push to and new web servers to keep the angry unicorn at bay, we’ve sadly neglected a very vital part of our infrastructure: the load balancers.
+
+Earlier today our active load balancer became starved for resources due to some unfortunate timing, with a higher than normal amount of hits to the site while a rather intensive periodic job was running in the background. This caused the load balancer to start swapping out, drastically reducing its performance.
+
+A few minutes later – after determining that the active load balancer wasn’t going to recover any time soon – the standby load balancer proceeded to take over from the active load balancer. Unfortunately, as anyone who has worked with HA systems before will agree, failovers don’t always go as planned. The standby load balancer failed to start all the necessary resources and the site was left in a broken state. Once we were alerted to the issue, we logged in and quickly determined what the issue was and started working on resolving it.
+
+What’s the outcome of these outages?
+
+We’ve increased the resources available to the load balancers in order to account for the growth we’ve had over the last year. We’ve also had a potent reminder on how important it is to keep a close eye on all parts of your infrastructure, not just the bits that are the most visible.

@@ -1,0 +1,9 @@
+Between 1350 UTC and 1550 UTC, ORES was down during an upgrade.
+
+During an upgrade, version issues cause the ORES service to go down for approximately two hours. The problem was the result of the wrong version of ORES being pushed to the production servers. This was due to an outdated 'master' branch being pushed to the 'deploy' branch before the 'fab deploy_web' and 'fab deploy_celery' scripts were called. This resulted in the service being unable to even start.
+
+Another issue worth note is the extreme amount of time spent waiting for to update packages (that did not need updating in the first place). While and specify a range of versions requirements that was satisfied by packages that were already installed, insisted on installing new versions repeatedly.
+• 2015-09-08 @ 15:50 UTC -- ORES is able to serve requests again
+• is great for development, but it's a problem in production. We should never be surprised with a 5 minute compile time when we're deploying code
+• It's critical to make sure that the right version is on the 'deploy' branch before starting the deployment.
+• phab:T111826 -- [Spike] Under what circumstances does pip want to re-compile scipy/numpy?

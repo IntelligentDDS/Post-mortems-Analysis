@@ -1,0 +1,165 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Storage](/incident/storage/16027)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Storage Incident #16027
+
+High error rate of requests to Google Cloud Storage
+
+Incident began at **2015-08-08 20:22** and ended at **2015-08-08 22:50** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 10, 2015 | 23:10 |
+
+SUMMARY:
+
+On Saturday 8 August 2015, Google Cloud Storage served an elevated error rate
+for a duration of 139 minutes. If your service or application was affected, we
+apologize. We have taken an initial set of actions to prevent recurrence of
+the problem, and have a larger set of changes which will provide defense in
+depth currently under review by the engineering teams.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Saturday 8 August 2015 from 20:21 to 22:40 PDT, Google Cloud Storage
+returned a high rate of error responses to queries. The average error rate
+during this time was 28.4%, with an initial peak of 47% at 20:27. Error levels
+gradually decreased subsequently, with intermediate periods of normal
+operation from 21:46-21:54 and 22:04-22:10. Usage was equally affected across
+the Google Cloud Storage XML and JSON APIs.
+
+ROOT CAUSE:
+
+The elevated GCS error rate was induced by a large increase in traffic
+compared to normal levels. The traffic surge was exacerbated by retries from
+software clients receiving errors. The GCS errors were principally served to
+the sources which were generating the unusual traffic levels, but a fraction
+of the errors were served to other users as well.
+
+REMEDIATION AND PREVENTION:
+
+Google engineers were alerted to the elevated error rate by automated
+monitoring, and took steps to both reduce the impact and to increase capacity
+to mitigate the duration and severity of the incident for GCS users. In
+parallel, Google’s support team contacted the system owners which were
+generating the bulk of unexpected traffic, and helped them reduce their
+demand. The combination of these two actions resolved the incident.
+
+To prevent a potential future recurrence, Google’s engineering team have made
+or are making a number of changes to GCS, including:
+
+  * Adding traffic rate ‘collaring’ to prevent unexpected surges in demand from exceeding sustainable levels;
+
+  * Adding or improving caching at multiple levels in order to increase capacity, and increase resilience to repetitive queries;
+
+  * Changing RPC queuing behavior in GCS to provide more capacity and more graceful handling of overload.
+
+  
+|
+
+SUMMARY:
+
+On Saturday 8 August 2015, Google Cloud Storage served an elevated error rate
+for a duration of 139 minutes. If your service or application was affected, we
+apologize. We have taken an initial set of actions to prevent recurrence of
+the problem, and have a larger set of changes which will provide defense in
+depth currently under review by the engineering teams.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Saturday 8 August 2015 from 20:21 to 22:40 PDT, Google Cloud Storage
+returned a high rate of error responses to queries. The average error rate
+during this time was 28.4%, with an initial peak of 47% at 20:27. Error levels
+gradually decreased subsequently, with intermediate periods of normal
+operation from 21:46-21:54 and 22:04-22:10. Usage was equally affected across
+the Google Cloud Storage XML and JSON APIs.
+
+ROOT CAUSE:
+
+The elevated GCS error rate was induced by a large increase in traffic
+compared to normal levels. The traffic surge was exacerbated by retries from
+software clients receiving errors. The GCS errors were principally served to
+the sources which were generating the unusual traffic levels, but a fraction
+of the errors were served to other users as well.
+
+REMEDIATION AND PREVENTION:
+
+Google engineers were alerted to the elevated error rate by automated
+monitoring, and took steps to both reduce the impact and to increase capacity
+to mitigate the duration and severity of the incident for GCS users. In
+parallel, Google’s support team contacted the system owners which were
+generating the bulk of unexpected traffic, and helped them reduce their
+demand. The combination of these two actions resolved the incident.
+
+To prevent a potential future recurrence, Google’s engineering team have made
+or are making a number of changes to GCS, including:
+
+  * Adding traffic rate ‘collaring’ to prevent unexpected surges in demand from exceeding sustainable levels;
+
+  * Adding or improving caching at multiple levels in order to increase capacity, and increase resilience to repetitive queries;
+
+  * Changing RPC queuing behavior in GCS to provide more capacity and more graceful handling of overload.
+
+  
+| Aug 08, 2015 | 23:03 |
+
+The issue with Google Cloud Storage should be resolved for all affected
+projects as of 22:50 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+|
+
+The issue with Google Cloud Storage should be resolved for all affected
+projects as of 22:50 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+| Aug 08, 2015 | 22:29 |
+
+We are still investigating the issue with Google Cloud Storage. Current data
+indicates that the error rate is improving for most projects affected by this
+issue. We will provide another status update by 23:00 US/Pacific with current
+details.  
+  
+|
+
+We are still investigating the issue with Google Cloud Storage. Current data
+indicates that the error rate is improving for most projects affected by this
+issue. We will provide another status update by 23:00 US/Pacific with current
+details.  
+  
+| Aug 08, 2015 | 22:03 |
+
+We are investigating reports of an issue with Google Cloud Storage. We will
+provide more information by 22:30 US/Pacific.  
+  
+|
+
+We are investigating reports of an issue with Google Cloud Storage. We will
+provide more information by 22:30 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

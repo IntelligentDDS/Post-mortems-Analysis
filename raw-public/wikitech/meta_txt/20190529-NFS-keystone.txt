@@ -1,0 +1,41 @@
+
+• We are trying to upgrade cloudcontrol1003 from Debian Jessie to Debian Stretch
+• That involves reallocating control plane workload to cloudcontrol1004 which is already Debian Stretch
+• The reallocation caused issues in NFS, affecting all NFS attached OpenStack projects
+• Other Openstack projects using NFS had troubles using NFS.
+
+Mixed dectection mostly at the same time:
+• 11:54 UTC labstore1005 nfs-exportd fails to get project list from keystone
+• 11:55 UTC labstore1004 nfs-exportd fails to get project list from keystone
+• 11:57 UTC Arturo downtimes cloudservices1003.wikimedia.org because we plan to rebuild as stretch
+• 12:08 UTC Arturo detects that nfs-exportd is using a hardcoded keystone server (cloudcontrol1003.wikimedia.org)
+• 12:18 UTC Andrew merged (nfs-exportd: use cloudcontrol1004 endpoint for now)
+• 12:29 UTC stashbot joins the #wikimedia-cloud-admin IRC channel, indicating that Toolforge is indeed good
+• 12:34 UTC Brooke identifies some code in nfs-exportd that can be improved to handle a situation in which keystone returns 401 (not authed)
+• 12:37 UTC icinga page for cloudcontrol1004: keystone_novaobserver_delete_tokens, may be a delayed message for whatever reason
+• 12:39 UTC Andrew decides to downtime a bunch of stuff in icinga while on operations
+• 12:45 UTC Toolforge seems to be working correctly
+• 12:49 UTC Brooke merges (nfs-exportd: if auth errors happen, do not proceed)
+• 13:00 UTC we consider the incident done, all systems seems to be working and we understand the issue.
+
+What weaknesses did we learn about and how can we address them?
+
+The following sub-sections should have a couple brief bullet points each.
+
+What went well?
+• Alerts went out relatively quickly
+• All the OpsEng in the WMCS team immediately were available to handle the outage. Worked together as a team pretty well.
+• The outage was the result of an upgrade operation that we were unable to reproduce in a testing/staging environment
+• Since some of the storage environment is in flux at the moment, there were justified concerns that documentation would be outdated
+
+Where did we get lucky?
+• incident occurred when the most people were online to assist
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+• -- nfs-exportd: get essential openstack information from yaml files Done
+• Improve nfs-exportd to consult keystone about the project list to recognize deleted projects
+• use service FQDN everywhere rather than a concrete server (cloudcontrol: decide on FQDN for service endpoints task T223902)
+• revisit the design of the nfs-exportd code: we could remove any ability to drop exports in the code, but that's a security and practical concern because we reuse IP addresses.
+• possibly introduce a maintenance flag for openstack services to watch for in hiera or a puppet-controlled file such as novaobserver.yaml
+• We don't know why keystone @ cloudcontrol1003 refused to auth queries when we started failovering the service to cloudcontrol1004.
+• Add unit tests to nfs-exportd.py -- we can absolutely check for how it behaves in countless failure states easily if it has tests like gridconfigurator does

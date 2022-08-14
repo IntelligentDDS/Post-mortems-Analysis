@@ -1,0 +1,25 @@
+After re-categorizing the Echo notifications, the Collaboration team realized we still needed to update Alerts/Messages to Alerts/Notices. Moriel put together a patch for this, and I monitored SWAT for it. The i18n changes did not deploy properly, causing noticeable user impact (phab:T139712), so followup was needed.
+
+See also Server admin log entries during this time. Times in UTC.
+• An Echo patch were was initially listed for 07/07/16 evening SWAT (23:00) (there was also a Flow change in the same SWAT, which is not relevant to this incident report)
+• [wmf.9] [Echo] "Change 'messages' to 'notices' throughout the interface". This had new i18n messages.
+• We soon realized this needed a followup, so we added (with Dereckson's OK):
+• 07/08/16 01:02 - Echo change was live on mw1017, but this did not include the second one
+• 07/08/16 01:17 - Second Echo change live on mw1017. Neither could be tested on mw1017, since new i18n messages are not testable there.
+• 07/08/16 01:55 - Just over 5 minutes after scap, ResourceLoader messages for Echo have missing messages: "<matt_flaschen> Dereckson, i18n is not working.". This causes very noticeable user impact.
+• 07/08/16 01:57 <Dereckson> matt_flaschen: expected, we had an issue during the scap
+• 07/08/16 01:59 <Dereckson> matt_flaschen: so, Terbium ran out of disk space on the partition needed by the l10n update part
+• 07/08/16 02:05 <Dereckson> I'm trying again l10nupdate, if it fails, we'll sync-l10nupdate manually only for Echo
+• 07/08/16 02:29 Krinkle verifies that direct access to the i18n messages (via shell) is now working.
+• 07/08/16 02:32 <Krinkle> matt_flaschen: Dereckson: Most likely what happened is that new l10n cache rolled out, during this part someone requested 'startup' manifest from a server with the new l10n cache values. This server responded with a module version that includes the new messages (and working). Then another request comes in (to an older server this time) responding to a request for Echo JS with the new version in the query string. It responds without the message as it doesn't have it yet. Then, the l10n sync completes, but the new url is now populated in varnish so it won't repair itself
+• 07/08/16 02:37 <Krinkle> Dereckson: Yeah, if l10n update was not synced at all, and is being synced now, then the problem wasn't cache poisoning. It was just missing and the version number of the broken version was of the broken version.
+
+The initial scap log makes it seem that l10n-update succeeded, and only terbium failed. However, either:
+• The exhausted disk space did cause the initial scap to fail (but the log is not clear about this), and Varnish cached the broken version of ResourceLoader-served messages during this time. The full backend logging of the scap run is available in /home/bd808/scap-20160708.log on fluorine. The only errors reported there are rsync failures on terbium due to disk space exhaustion. These errors would not have had any impact on the appservers. --BryanDavis (talk) 20:18, 8 July 2016 (UTC)
+• There was an unrelated i18n race condition. See T47877 During deployment old servers may populate new cache URIs (tracking)
+
+Once the scap done, strings were available from PHP, but not from JavaScript. The ResourceLoader cache was afterwards refreshed, and during refreshMessageBlobs run, wiki after wiki got access to the new string localisation through RL too.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+• Status: Unresolved Need to set up terbium disk space monitoring at proper levels, and act on it.
+• Status: Unresolved Document if strings are available from PHP, but not from JS, we need to refresh the ResourceLoader cache. This can be done running .

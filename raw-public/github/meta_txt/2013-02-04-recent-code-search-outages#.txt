@@ -1,0 +1,59 @@
+Last week, between Thursday, January 24 and Friday, January 25 we experienced a critical outage surrounding our newly-launched Code Search service. As always, we strive to provide detailed, transparent post-mortems about these incidents. We’ll do our best to explain what happened and how we’ve mitigated the problems to prevent the cause of this outage from occurring again.
+
+But first, I’d like to apologize on behalf of GitHub for this outage. While it did not affect the availability of any component but Code Search, the severity and the length of the outage are both completely unacceptable to us. I’m very sorry this happened, especially so soon after the launch of a feature we’ve been working on for a very long time.
+
+Our previous search implementation used a technology called Solr. With the launch of our new and improved search, we had finally finished migrating all search results served by GitHub to multiple new search clusters built on elasticsearch.
+
+Since the code search index is quite large, we have a cluster dedicated to it. The cluster currently consists of 26 storage nodes and 8 client nodes. The storage nodes are responsible for holding the data that comprises the search index, while the client nodes are responsible for coordinating query activity. Each of the storage nodes has 2TB of SSD based storage.
+
+At the time of the outage, we were storing roughly 17TB of code in this cluster. The data is sharded across the cluster and each shard has a single replica on another node for redundancy, bringing for a total of around 34TB of space in use. This put the total storage utilization of the cluster at around 67%. This Code Search cluster operated on Java 6 and elasticsearch 0.19.9, and had been running without problem for several months while we backfilled all the code into the index.
+
+On Thursday, January 17 we were preparing to launch our Code Search service to complete the rollout of our new, unified search implementation. Prior to doing so, we noted that elasticsearch had since released version 0.20.2 which contained a number of fixes and some performance improvements.
+
+We decided that delaying the Code Search launch to upgrade our elasticsearch cluster from version 0.19.9 to 0.20.2 before launching it publicly would help ensure a smooth launch.
+
+We were able to complete this upgrade successfully on Thursday, January 17. All nodes in the cluster were successfully online and recovering the cluster state.
+
+Since this upgrade, we have experienced two outages in the Code Search cluster.
+
+Unlike some other search services that use massive, single indexes to store data, elasticsearch uses a sharding pattern to divide data up so it can be easily distributed around the cluster in manageable chunks. Each of these shards is itself a Lucene index, and elasticsearch aggregates search queries across these shards using Lucene merge indexes.
+
+The first outage occurred roughly 2 hours after the upgrade, during the recovery process that takes place as part of a cluster restart. We found error messages in the index logs indicating that some shards were unable to assign or allocate to certain nodes. Upon further inspection, we discovered that while some of these data shards had their segment cache files corrupted, others were missing on disk. elasticsearch was able to recover any shards with corrupted segment cache files and shards where only one of the replicas was missing, but 7 shards (out of 510) were missing both the primary copy and the replica.
+
+We reviewed the circumstances of the outage and determined at the time that the problems we saw stemmed from the high load during the cluster recovery. Our research into this problem did not demonstrate other elasticsearch users encountering these sorts of problems. The cluster has happy and healthy over the weekend, and so we decided to send it out to the world.
+
+The second outage began on Thursday, January 24. We first noticed problems as our exception tracking and monitoring systems detected a large spike in exceptions. Further review indicated that the majority of these exceptions were coming from timeouts in code search queries and from the background jobs that update our code search indexes with data from new pushes.
+
+At this time, we began to examine both the overall state of all members of the cluster and elasticsearch’s logs. We were able to identify massive levels of load on a seemingly random subset of storage nodes. While most nodes were using single digit percentages of CPU, several were consuming nearly 100% of all of the available CPU cores. We were able to eliminate system-induced load and IO-induced load as culprits: the only thing contributing to the massive load on these servers was the java process elasticsearch was running in. With the search and index timeouts still occurring, we also noticed in the logs that a number of nodes were being rapidly elected to and later removed from the master role in the cluster. In order to mitigate potential problems resulting from this rapid exchanging of master role around the cluster, we determined that the best course of action was to full-stop the cluster and bring it back up in “maintenance mode”, which disables allocation and rebalancing of shards.
+
+We were able to bring the cluster back online this way, but we noted a number of problems in the elasticsearch logs.
+
+After the cluster restart, we noticed that some nodes were completely unable to rejoin the cluster, and some data shards were trying to double-allocate to the same node. At this point, we reached out to Shay and Drew from elasticsearch, the company that develops and supports elasticsearch.
+
+We were able to confirm with Shay and Drew that these un-allocatable shards (23 primaries plus replicas) had all suffered data loss. In addition to the data loss, the cluster spent a great deal of time trying to recover the remaining shards. During the course of this recovery, we had to restart the cluster several times as we rolled out further upgrades and configuration changes, which resulted in having to verify and recover shards again. This ended up being the most time consuming part of the outage as loading 17TB of indexed data off of disk multiple times is a slow process.
+
+With Shay and Drew, we were able to discover some areas where our cluster was either misconfigured or the configuration required further tuning for optimal performance. They were also able to identify two bugs in elasticsearch itself (see these two commits for further details on those bugs) based on the problems we encountered and within a few hours released a new version with fixes included. Lastly, we were running a version of Java 6 that was released in early 2009. This contains multiple critical bugs that affect both elasticsearch and Lucene as well as problems with large memory allocation which can lead to high load.
+
+Based on their suggestions, we immediately rolled out upgrades for Java and elasticsearch, and updated our configuration with their recommendations. This was done by creating a topic branch and environment on our Puppetmaster for these specific changes, and running Puppet on each of these nodes in that environment.
+
+While these audits increased the length of the outage by a few hours, we believe that the time was well spent garnering the feedback from experts in large elasticsearch deployments.
+
+With the updated configuration, new elasticsearch version with the fixes for the bugs we encountered, and the performance improvements in Java 7, we have not been able to reproduce any of the erratic load or rapid master election problems we witnessed in the two outages discussed so far.
+
+We suffered an additional outage Monday, January 28 to our Code Search cluster. This outage was unrelated to any of the previous incidents and was the result of human error.
+
+An engineer was merging the feature branch containing the Java and elasticsearch upgrades back into our production environment. In the process, the engineer rolled the Puppet environment on the Code Search nodes back to the production environment before deploying the merged code. This resulted in elasticsearch being restarted on nodes as Puppet was running on them. We recognized immediately the source of the problem and stopped the cluster to prevent any problems caused by running multiple versions of Java and elasticsearch in the same cluster. Once the merged code was deployed, we ran Puppet on all the Code Search nodes again and brought the cluster back online. Rather than enabling Code Search indexing and querying while the cluster was in a degraded state, we opted to wait for full recovery. Once the cluster finished recovering, we turned Code Search back on.
+
+We did not sufficiently test the 0.20.2 release of elasticsearch on our infrastructure prior to rolling this upgrade out to our code search cluster, nor had we tested it on any other clusters beforehand. A contributing factor to this was the lack of a proper staging environment for the code search cluster. We are in the process of provisioning a staging environment for the code search cluster so we can better test infrastructure changes surrounding it.
+
+The bug fixes included in elasticsearch 0.20.3 do make us confident that we won’t encounter the particular problems they caused again. We’re also running a Java version now that is actively tested by the elasticsearch team and is known to be more stable and performant running elasticsearch. Additionally, our code search cluster configuration has been audited by the team at elasticsearch with future audits scheduled to ensure it remains optimal for our use case.
+
+As for Monday’s outage, we are currently working on automation to make the a Puppet run in a given environment impossible in cases where the branch on GitHub is ahead of the environment on the Puppetmaster.
+
+Finally, there are some specific notes from the elasticsearch team regarding our configuration that we’d like to share in hopes of helping others who may be running large clusters:
+• Set the ES_HEAP_SIZE environment variable so that the JVM uses the same value for minimum and maximum memory. Configuring the JVM to have different minimum and maximum values means that each time the JVM needs additional memory (up to the maximum), it will block the Java process to allocate it. Combined with the old Java version, this explains the pauses that our nodes exhibited when introduced to higher load and continuous memory allocation when they were opened up to public searches. The elasticsearch team recommends a setting of 50% of system RAM.
+• Our cluster was configured with a recover_after_time set to 30 minutes. The elasticsearch team recommended a change so that recovery would begin immediately rather than after a timed period.
+• We did not have minimum_master_nodes configured, so the cluster became unstable when nodes experienced long pauses as subsets of nodes would attempt to form their own clusters.
+• During the initial recovery, some of our nodes ran out of disk space. It’s unclear why this happened since our cluster was only operating at 67% utilization before the initial event, but it’s believed this is related to the high load and old Java version. The elasticsearch team continues to investigate to understand the exact circumstances.
+
+I’m terribly sorry about the availability problems of our Code Search feature since its launch. It has not been up to our standards, and we are taking each and every one of the lessons these outages have taught us to heart. We can and will do better. Thank you for supporting us at GitHub, especially during the difficult times like this.

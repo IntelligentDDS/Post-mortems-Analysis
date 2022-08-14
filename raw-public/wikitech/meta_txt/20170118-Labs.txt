@@ -1,0 +1,13 @@
+~270 user home directories across labs instances that didn't have NFS mounted (non-tools/maps instances) got erased as an unintended side effect of the planned NFS migration(Task T154336) for moving rest of labs projects on NFS to the secondary NFS cluster. This happened due to merging an erroneous puppet patch that made /home a symlink to the mount path across all instances, instead of just on nodes where /home was on NFS. We were able to restore most of the data using puppet filebucket restore mechanisms, but a few home directories, and some executable file permissions have been permanently lost.
+• [17:09] Madhu starts labs (misc share) NFS migration to the new secondary NFS cluster
+• [17:58] Madhu merges patch (https://gerrit.wikimedia.org/r/#/c/332735/) that sets up symlinks for /home and /data/project to mounts from labstore-secondary
+• [17:59] Tests on a few NFS mounted nodes and then starts rolling it out
+• [18:30] Roll outs and puppet runs complete - spot checks nodes - realizes that some instances where /home isn't mounted from NFS have broken symlinks
+• [18:40] Abogott and mutante report puppet failures across tools and labs because /home is a broken symlink
+• [18:46] Madhu rolls out fix https://gerrit.wikimedia.org/r/#/c/332803/, but puppet has already run in a lot of nodes and wiped out all the home directories
+• [19:00] Chase and Yuvi work on writing a script that uses puppet filebucket to restore the missing /home directories - after a lot of tweaking and setting up user permissions, seems to work fine. Madhu rolls out script across broken nodes and most directories are recovered.
+• List of affected nodes in this process -Task P4784
+• List of nodes where /home is missing - Task P4785
+• Most of the data was recovered, but we lost executable permissions set on files, and there has been one report of partially missing data.
+• Having nfsclient.pp applied to every single labs instance, and then optionally mounting/unmounting shares based on config is scary - it leads to cases like this where instances that don't have NFS and shouldn't be affected or watched out for do end up being affected
+• Do not include nfsclient.pp globally across all instances (https://gerrit.wikimedia.org/r/#/c/333227/)

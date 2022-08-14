@@ -1,0 +1,11 @@
+For about 30 minutes, Logstash was not getting any messages from the MediaWiki servers.
+
+During the Logstash outage, we were partly blind in terms of operational monitoring. It also meant developers were unable to use WikimediaDebug, and unable to deploy new code for MediaWiki and most other services.
+
+While this impacted scheduling and developer productivity, it did not directly affect end-users of any public services. Also, the logs were eventually recovered into Logstash after it was restarted (the Logstash-Kafka consumer picks up where it left off).
+• 23:24 <+icinga-wm> PROBLEM - Too many messages in kafka logging-eqiad on icinga1001 is CRITICAL: cluster=misc exported_cluster=logging-eqiad group={logstash,logstash-codfw} instance=kafkamon1001:9501 job=burrow partition={0,1,2} site=eqiad topic=udp_localhost-info https://wikitech.wikimedia.org/wiki/Logstash%23Kafka_consumer_lag https://grafana.wikimedia.org/d/000000484/kafka-consumer-lag
+• Logstash consumer failed, which does not recover by itself. Details at https://phabricator.wikimedia.org/T230847#5427615
+
+What went well?
+
+How many people were involved in the remediation?

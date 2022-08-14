@@ -1,0 +1,13 @@
+We had a small and planned user facing outage during maintenance
+• 14:18 UTC Aaron Halfaker and Alex discuss the need to do a scheduled reboot of the oresrdb hosts for kernel upgrades. Decision is taken to proceed with it ASAP
+• 14:25 UTC Alex starts with the slaves in codfw and eqiad. No impact
+• 14:34 UTC Both slaves had caught up to the masters
+• 14:34 UTC Alex starts reboots for the master redis on codfw. Errors start
+• 14:35 UTC Reboot is done but redis is loading the dataset in memory
+• 14:37 UTC oresrdb2001 has the dataset in memory, jobs can be submitted once more.
+• 14:45 UTC After having gauged the effects in codfw, alex starts the same process in eqiad
+• 14:50 UTC Up and running again. Icinga notices
+
+We were unable to serve ~2500 requests total in eqiad (~250 external ones) and ~6000 requests in codfw (~240 external ones). The reason behind this is that the redis hosts that acts both as a queue and as a cache is now a SPOF and this should be addressed.
+• Use twemproxy for the cache redis at least in order to be able to serve at least a portion of requests during a downtime (Phab: TODO)
+• Try to figure out way that the queue redis can be made highly available (Phab: TODO)

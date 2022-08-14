@@ -1,0 +1,5 @@
+Issue signing in to https://shell.azure.com
+Summary of impact: Between 18:00 UTC on 30 Apr 2019 and 23:20 UTC on 01 May 2019, customers may have experienced issues signing in to https://shell.azure.com
+During this time, customers were able to access Cloud Shell through the Azure portal at https://portal.azure.com
+Preliminary root cause: Engineers identified a mis-match between a configuration file which had been recently updated and its corresponding code in shell.azure.com
+Mitigation: The Cloud Shell team developed, tested, and rolled out a new build which addressed and corrected the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

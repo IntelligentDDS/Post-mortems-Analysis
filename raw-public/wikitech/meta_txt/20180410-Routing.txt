@@ -1,0 +1,8 @@
+A configuration change on routers located in the Ashburn and Singapore datacenters caused a service interruption of ~10min (22:53-23:03UTC) for users redirected to Ashburn, and ~40min for users redirected to Singapore. (22:47-23:24 UTC)
+• Changes, even if already live in part of the infrastructure, need to be better discussed with the team
+• POPs (especially non redundant ones) should be depooled before applying changes, if any doubt
+• The same change had different results across the deployment:
+• Partial failure (cr1-eqsin), connectivity to the router and rpd appeared in a healthy state, user traffic was being dropped
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+• Tickets have been opened with the vendor phab:T191667 (update: crash reason found)

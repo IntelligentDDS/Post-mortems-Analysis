@@ -1,0 +1,8 @@
+During planned network maintenance, elasticsearch search cluster in eqiad lost connectivity between nodes, resulting in 17 nodes parting the cluster, and elasticsearch stopping to respond to requests for around 10 minutes (see graph).
+• 17:18UTC: less than 300 secondary shard not allocated
+• 17:18UTC: traffic switched back to eqiad cluster (except more-like, which are by design sent to codfw)
+• In its current configuration, elasticsearch is too sensitive to loss of networking. This is the second time we have a similar issue. Previous analysis by discovery team was in reluctant to change default parameters in elasticsearch fault discovery, which runs the risk of not detecting faults early enough. This analysis needs to be reviewed.
+• As long as we don't make elasticsearch more robust to loss of connectivity, we should preemptively switch traffic away from a datacenter during maintenance.
+• Switching traffic took too much time. Part of it is Guillaume not being ready for this procedure, part is the procedure being too complex (a change in wmf-config).
+• Elasticsearch icinga alerts are too noisy. Checks on global cluster state are done for each node instead of doing it once for the cluster.
+• Switching search traffic between datacenters should be faster ( )

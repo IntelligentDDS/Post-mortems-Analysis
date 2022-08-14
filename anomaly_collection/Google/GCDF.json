@@ -1,0 +1,56 @@
+{
+    "google-gcdf-16001": { 
+      "title": "Google Cloud Dataflow Incident #16001",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCDF/Google%20Cloud%20Dataflow%20Incident%20%2316001.pdf"],
+      "time": "08/12/2016",
+      "summary": "On Friday 12 August 2016, Cloud Dataflow experienced pipeline delays for 99 minutes. Although all pipelines did eventually successfully complete, we know that you rely on the timely execution of these !ows and apologise for the long duration and impact of this incident. We are taking steps to improve reliability and time to resolution so that we meet the level of service that you rightly expect.",
+      "details": "DETAILED DESCRIPTION OF IMPACT: On Friday 12 August 2016 13:29 to 15:08 PDT all Dataflow pipelines ceased to process data, but remained in 'Running' state. Requests to start new Dataflow pipelines or cancel existing ones failed. After the period of impact, existing pipelines resumed processing without missing any input data. ROOT CAUSE: During mitigation of a lower impact performance issue, Google engineers made a configuration change to pipeline orchestration. An error in this configuration caused validation within the orchestration component to reject all requests. As calls to this component are needed to create jobs, cancel jobs and make progress on existing jobs, none of these operations were possible. REMEDIATION AND PREVENTION: At 14:59 Google engineers rolled back the erroneous configuration change, a few minutes after which errors ceased and normal pipeline execution resumed. In future Data!ow configuration changes will go through additional validation in the form of pre-deployment tests, staging and progressive rollouts. This defense in depth will minimize the possible impact of future errors. To improve detection and isolation time, Data!ow servers are being altered to abort if started with invalid configuration. This provides a strong signal that can be used in automated systems and is fast for engineers to identify. Additionally we are improving our availability alerting such that elevated error rates on all operations will notify engineers of problems more quickly. We apologize for the di#culty this issue caused you.",
+      "service_name": ["Google Cloud Dataflow"],
+      "impact symptom": ["availability", "performance"],
+      "duration": 99,
+      "detection": {
+        "method": "manual", 
+        "tool": [""]
+      },
+      "manifestation": [ 
+          "service unavailable",
+          {
+            "business kpi": ["delay", "error rate"]
+          }
+            ],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs", 
+            "layer-3": "config"
+          }
+        ],
+        "details": "During mitigation of a lower impact performance issue, Google engineers made a configuration change to pipeline orchestration. An error in this configuration caused validation within the orchestration component to reject all requests. As calls to this component are needed to create jobs, cancel jobs and make progress on existing jobs, none of these operations were possible."
+      },
+      "operation": ["mitigation"],
+      "human error": true,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["roll back configuration"],
+        "details": "At 14:59 Google engineers rolled back the erroneous conguration change, a few minutes after which errors ceased and normal pipeline execution resumed.",
+        "troubleshooting": {
+           "1": "At 14:59 Google engineers rolled back the erroneous configuration change, a few minutes after which errors ceased and normal pipeline execution resumed. "
+        } 
+      },
+      "propagation pass": {
+        "1": "Dataflow pipelines"   
+      },
+      "refined path": {
+        "1": "middleware"
+      },
+      "detection time": null,
+      "fix time": 99,
+      "identification time": null,
+      "verification": "lixy"
+    }
+}
+  

@@ -1,0 +1,81 @@
+{
+  "google-gciam-18001": {
+    "title": "Identity and Access Management Incident #18001",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCIAM/Identity%20and%20Access%20Management%20Incident%20%2318001.pdf"
+    ],
+    "time": "06/27/2018",
+    "summary": "On Wednesday 27 June 2018, Google Cloud Console and Google Cloud Resource Manager API experienced a significant performance degradation for a duration of 51 minutes. Although, this did not alect user resources running on the Google Cloud Platform, we understand that our customers rely heavily on Google Cloud Console to manage their resources and we sincerely apologize to everyone who was a!ected by the incident.",
+    "details": "DETAILED DESCRIPTION OF IMPACT: From 14:21 to 15:11 PDT, users were unable to manage their folders, projects and organizations using Google Cloud Console, Google Cloud Resource Manager API and gcloud command line. The following APIs were alected: Google Cloud Console: Impacted users were unable to list their projects, search for projects, folders and organizations or view their bill. Search box failed to return the above too. Google Cloud Resource Manager API: Impacted users were unable to list their projects, folders and organizations BigQuery: Impacted users were unable to list their bigquery projects using the API. ROOT CAUSE: The incident was triggered by a configuration change in the search infrastructure powering Cloud resource metadata search. The search infrastructure sends ACL checks to a central ACL server to make sure the end user has access to the Cloud resource metadata it plans to return. The configuration change introduced a new field in the ACL check request, while the central ACL server had not whitelisted the search infrastructure to send that field, causing an outage in Cloud resource metadata search. REMEDIATION AND PREVENTION: At 12:26 PDT, Google Engineers rolled out the configuration change. Our automated release validation system rejected the change due to a high rate of errors. Around 14:16 PDT, an unrelated change was made to the same search infrastructure which triggered a bug that disabled its automated release validation system. This change also inadvertently picked up the prior configuration change and due to the lack of automated release validation, the change was successfully propagated to production. Within a span of few minutes, several engineering teams were automatically alerted to the situation and began the mitigation process. The issue was fully mitigated at 15:11 PDT when the configuration change was rolled back. We apologize again for the inconvenience caused. We are taking immediate steps to prevent recurrence and improve reliability in the future, including: Fixing the bug that inadvertently disabled the canary analysis system. Improving process around pushing changes that involve several dependencies. Improving testing and staging alerts to catch issues of this nature before they reach production.",
+    "service_name": [
+      "Google Cloud Console",
+      "Google Cloud Resource Manager",
+      "BigQuery"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 51,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        ""
+      ]
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "performance degradation",
+          "error rate"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        },
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs"
+        }
+      ],
+      "details": "The incident was triggered by a configuration change in the search infrastructure powering Cloud resource metadata search. The search infrastructure sends ACL checks to a central ACL server to make sure the end user has access to the Cloud resource metadata it plans to return. The configuration change introduced a new field in the ACL check request, while the central ACL server had not whitelisted the search infrastructure to send that field, causing an outage in Cloud resource metadata search."
+    },
+    "operation": [
+      "change"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": "At 12:26 PDT, Google Engineers rolled out the configuration change. Our automated release validation system rejected the change due to a high rate of errors. Around 14:16 PDT, an unrelated change was made to the same search infrastructure which triggered a bug that disabled its automated release validation system. This change also inadvertently picked up the prior configuration change and due to the lack of automated release validation, the change was successfully propagated to production. Within a span of few minutes, several engineering teams were automatically alerted to the situation and began the mitigation process."
+    },
+    "mitigation": {
+      "label": [
+        "roll back configuration"
+      ],
+      "details": "At 12:26 PDT, Google Engineers rolled out the configuration change. Our automated release validation system rejected the change due to a high rate of errors. Around 14:16 PDT, an unrelated change was made to the same search infrastructure which triggered a bug that disabled its automated release validation system. This change also inadvertently picked up the prior configuration change and due to the lack of automated release validation, the change was successfully propagated to production. Within a span of few minutes, several engineering teams were automatically alerted to the situation and began the mitigation process. The issue was fully mitigated at 15:11 PDT when the configuration change was rolled back. ",
+      "troubleshooting": {
+        "1": "At 12:26 PDT, Google Engineers rolled out the configuration change.Our automated release validation system rejected the change due to a high rate of errors. ",
+        "2": "Around 14:16 PDT, an unrelated change was made to the same search infrastructure which triggered a bug that disabled its automated release validation system. ",
+        "3": "Within a span of few minutes, several engineering teams were automatically alerted to the situation and began the mitigation process. ",
+        "4": "The issue was fully mitigated at 15:11 PDT when the configuration change was rolled back. "
+      }
+    },
+    "propagation pass": {
+      "1": "Access Control List",
+      "2": "Cloud resource metadata search"
+    },
+    "refined path": {
+      "1": "middleware",
+      "2": "app"
+    },
+    "identification time": null,
+    "detection time": null,
+    "fix time": 51,
+    "verification": "lixy"
+  }
+}

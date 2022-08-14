@@ -1,0 +1,6 @@
+ORES review tool (= ORES extension) couldn't score edits made in 14 hours between rolling out of wmf.20 and the fast fix made in 2016-09-23
+
+This is a step by step outline of what happened to cause the incident and how it was remedied.
+• There should be an alarm to scream when jobs such as ORESFetchScoreJob is not triggered for more than an hour.
+• The lapse was easy to notice, ORES extension should have extensive CI tests.
+• High failure rate of account creation should trigger an alarm / page people (Task T146090)

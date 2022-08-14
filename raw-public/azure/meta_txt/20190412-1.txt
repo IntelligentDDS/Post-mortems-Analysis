@@ -1,0 +1,8 @@
+RCA - Cognitive Services
+Summary of impact: Between 01:50 and 11:30 UTC on 12 Apr 2019 a subset of customers using Cognitive Services including Computer Vision, Face and Text Analytics in West Europe and/or West Central US may have experienced 500-level response codes, high latency and/or timeouts when connecting to resources hosted in this region.
+Root cause: Engineers determined a recent deployment introduced a software regression, manifesting in increased latency across two regions.
+Mitigation: The issue was not detected in pre-deployment testing, however, once manually detected, engineers proceeded to roll-back the recent deployment task
+to mitigate the issue.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Improve pre-deployment tests to catch this kind of issue in the future [In Progress] Improve monitoring to more closely represent production traffic patterns [In Progress]
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/Q4JN-7FG

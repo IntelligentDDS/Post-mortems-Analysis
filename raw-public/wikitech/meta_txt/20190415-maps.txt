@@ -1,0 +1,14 @@
+Tilerator and Kartotherian failed to restart during planned restart for OpenSSL upgrade. Issue was tracked down to config being not readable, permissions were manually reset and service recovered.
+• maps.wikimedia.org was partially unavailable for about 10 minutes. See graph.
+• 14:04Z: first icinga alert about kartotherian and tilerator being down on maps1001
+• 14:18Z: permission reset on /srv/deployment/kartotherian and /srv/deployment/tilerator for all maps servers
+• Restarting a service should be a trivial operation, but was not, and was not tested properly on a single host before restarting the whole clusters.
+• The wrong permissions on config files is not yet explained.
+
+What went well?
+• good collaboration of multiple people to resolve the issue
+• lack of focus by the operator during the restart
+
+Where did we get lucky?
+
+It isn't clear yet what went wrong in this case and what should be documented. Maps runbook is available, but does not contain anything that would have helped in this case.

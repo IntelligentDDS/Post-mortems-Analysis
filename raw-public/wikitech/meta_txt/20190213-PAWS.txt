@@ -1,0 +1,36 @@
+The PAWS service was offline for several hours due to issues connecting to tools.db.svc.eqiad.wmflabs, related to the database being in the limit of usage ( T215993: tools.db.svc.eqiad.wmflabs hitting it's limit?).
+
+See also the following day's related incident: 20190214-labsdb1005
+
+All times are in UTC.
+• 03:38 first icinga alert about PAWS being down.
+• 05:38 second icinga alert about PAWS being down.
+• 06:41 third icinga alert about PAWS being down.
+• 06:42 Brooke and Arturo start looking into the PAWS issue. Very late/early for both.
+• 07:27 detect an issue with the database (connection refused), didn't pay enough attention since it appeared transient in the logs at the time.
+• 07:47 we start chasing issues regarding networking/proxying related to kubernetes since some parts of that had stopped working
+• 08:45 Brooke goes to sleep, very late in her timezone. Arturo breakfast.
+• 09:28 Giovanni realizes the database issue could be the root issue. Restarts the database.
+
+The PAWS setup is really complex from the user-to-server path, lots of small spots to check & debug, at least 3 or 4 proxies are involved.
+
+ Also, these proxies are in different CloudVPS projects (project-proxy, paws, and tools).
+
+
+
+We overlooked the issue in tools.db.svc.eqiad.wmflabs, probably due to being very late for Brooke and very early for Arturo.
+
+ The database issue itself is not weird (capacity saturation) given increased usage of our platforms.
+
+It took us a lot of time to start debugging things properly because PAWS is poorly documented from the administration/design/architecture/operation point of view. Since nobody in the WMF-WMCS team is really involved in mantaining PAWS, is not known which bits are important, what are the common things to check, etc. We weren't familiar with the setup.
+
+In general, PAWS is in a weird state. It's a service that WMF/WMCS wants to offer to the Wikimedia Movement, but we don't have enough human capacity to fully support it.
+
+ The truth is that the project is mostly community-maintained, which is probably not enough for the importance of the service within the movement.
+
+ It's weird that we get paged at odd hours to fix a service that we aren't really supporting.
+
+We have a basic documentation page which clearly is not enough:
+• Increase capacity and robustness for tools.db.svc.eqiad.wmflabs. (TODO: create phab task)
+• Replace labsdb100[4567] with instances on cloudvirt1019 and cloudvirt1020
+• Clarify on the level of support offered for PAWS from WMF/WMCS.

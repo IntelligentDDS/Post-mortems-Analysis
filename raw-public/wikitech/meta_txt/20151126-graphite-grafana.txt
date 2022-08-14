@@ -1,0 +1,9 @@
+graphite.wikimedia.org was overwhelmed with legitimate requests, yielding 500s returned to clients
+• 2015/11/25 15:11 - big influx of requests on graphite1001's apache identified as being the root cause. likely a misbehaving dashboard
+• 2015/11/25 15:53 - kafka dashboard also suspected and banned from apache
+
+grafana dashboards relying on intensive graphite queries can easily overwhelm graphite itself, particularly dashboard that refresh frequently, resulting in denial of service.
+
+in addition, it has been observed that misc varnish retries the request on 5xx from a backend, further contributing to thundering herd of requests.
+• Status: Unresolved Make it easier to ban misbehaving dashboards from graphite ( )
+• Done 500 errors from graphite shouldn't be retried by varnish ( )

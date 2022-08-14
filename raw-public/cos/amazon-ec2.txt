@@ -1,0 +1,188 @@
+
+[01/06/2014][Amazon 'Outage' Actually ISP Fiber Line Cut]
+http://talkincloud.com/public-cloud/010714/east-coast-blizzard-takes-down-amazon-customers
+r-cross
+r-fail
+t-2h15m
+i-down
+f-cross
+p-no
+
+[03/15/2012][Amazon EC2 Recovers After Brief Downtime]
+http://www.datacenterknowledge.com/archives/2012/03/15/amazon-ec2-recovers-after-brief-downtime/
+r-fail
+i-down
+t-21m
+p-no
+
+[04/21/2011][Summary of the Amazon EC2 and Amazon RDS Service Disruption in the US East Region]
+http://aws.amazon.com/message/65648/
+http://money.cnn.com/2011/04/21/technology/amazon_server_outage/
+http://www.rightscale.com/blog/cloud-industry-insights/amazon-ec2-outage-summary-and-lessons-learned
+http://www.infoq.com/news/2011/04/Amazon-EC2-Outage-Explained
+r-config
+r-admin
+r-bug
+r-bug
+i-down
+t-2d5h28m
+f-add
+f-restore
+p-no
+
+[05/04/2010][Amazon Addresses EC2 Power Outages]
+http://www.datacenterknowledge.com/archives/2010/05/10/amazon-addresses-ec2-power-outages/
+r-fail
+i-down
+t-4h13m
+f-fix
+p-no
+
+[05/08/2010][Amazon Addresses EC2 Power Outages]
+http://www.datacenterknowledge.com/archives/2010/05/10/amazon-addresses-ec2-power-outages/
+r-fail
+i-down
+t-7h
+p-no
+f-fix
+
+[05/13/2010][Car Crash Triggers Amazon Power Outage]
+http://www.datacenterknowledge.com/archives/2010/05/13/car-crash-triggers-amazon-power-outage/
+r-fail
+r-natdis
+i-down
+t-1h3m
+f-fix
+p-no
+
+[06/11/2009][Lightning Strike Triggers Amazon EC2 Outage]
+http://www.datacenterknowledge.com/archives/2009/06/11/lightning-strike-triggers-amazon-ec2-outage/
+r-fail
+r-natdis
+i-down
+t-4h
+p-no
+f-fix
+
+[06/15/2012][Power Outage Affects Amazon Customers]
+http://www.datacenterknowledge.com/archives/2012/06/15/power-outage-affects-amazon-customers/
+http://www.wired.com/2012/06/amazon-outage-pilot-error/
+r-fail
+i-down
+t-6h36m
+p-no
+f-fix
+
+[06/29/2012][Summary of the AWS Service Event in the US East Region]
+http://aws.amazon.com/message/67457/
+http://www.forbes.com/sites/anthonykosner/2012/06/30/amazon-cloud-goes-down-friday-night-taking-netflix-instagram-and-pinterest-with-it/
+http://www.datacenterknowledge.com/archives/2012/06/29/another-outage-amazon-cloud/
+http://www.datacenterknowledge.com/archives/2012/07/03/multiple-generator-failures-caused-amazon-outage/
+r-fail
+r-natdis
+i-down
+t-24h
+f-fix
+p-no
+
+[07/19/2009][Outage for Amazon Web Services]
+http://www.datacenterknowledge.com/archives/2009/07/19/outage-for-amazon-web-services/
+r-unk
+t-15m
+p-no
+
+[08/07/2011][Summary of the Amazon EC2, Amazon EBS, and Amazon RDS Service Event in the EU West Region]
+http://aws.amazon.com/message/2329B7/
+http://www.datacenterknowledge.com/archives/2011/08/07/lightning-in-dublin-knocks-amazon-microsoft-data-centers-offline/
+http://techcrunch.com/2011/08/08/amazon-ec2-outage/
+r-natdis
+r-fail
+t-3d9h44m
+i-down
+p-no
+f-restore
+f-fix
+
+[08/10/2015][Amazon investigating major cloud outage, GitHub and Heroku report issues]
+http://www.techweekeurope.co.uk/cloud/cloud-management/aws-suffers-cloud-outage-amazon-174529
+http://www.information-age.com/technology/cloud-and-virtualisation/123459971/amazon-investigating-major-cloud-outage-github-and-heroku-report-issues
+r-cross
+t-40m
+i-down
+p-no
+r-cross
+
+[08/25/2013][Amazon Web Services suffers outage, takes down Vine, Instagram, others with it]
+http://www.zdnet.com/article/amazon-web-services-suffers-outage-takes-down-vine-instagram-others-with-it/
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide10
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide11
+r-fail
+i-down
+t-1h
+p-no
+f-fix
+
+[09/13/2013][Network Issues Cause Amazon Cloud Outage]
+http://www.datacenterknowledge.com/archives/2013/09/13/network-issues-cause-amazon-cloud-outage/
+http://www.usatoday.com/story/tech/2013/09/13/amazon-cloud-outage/2810257/
+http://www.infoq.com/news/2013/09/aws-east-outage
+r-fail
+i-down
+t-1h50m
+f-fix
+p-no
+
+[09/20/2015][Summary of the Amazon DynamoDB Service Disruption and Related Impacts in the US-East Region]
+http://www.theregister.co.uk/2015/09/20/aws_database_outage/
+http://www.informationweek.com/cloud/infrastructure-as-a-service/amazon-disruption-produces-cloud-outage-spiral/d/d-id/1322279
+r-cross
+r-fail
+t-4h55m
+i-op
+f-cross
+p-no
+
+[09/25/2014][EC2 Maintenance Update]
+http://www.zdnet.com/article/aws-users-fret-over-downtime-ahead-of-amazons-massive-ec2-reboot/
+r-sec
+r-upgrade
+p-yes
+t-unk
+f-restart
+i-down
+
+[10/04/2009][DDoS attack rains down on Amazon cloud]
+http://www.theregister.co.uk/2009/10/05/amazon_bitbucket_outage/
+r-sec
+i-down
+t-19h
+p-no
+f-restart
+
+[10/22/2012][Summary of the October 22, 2012 AWS Service Event in the US-East Region]
+http://aws.amazon.com/message/680342/
+http://arstechnica.com/information-technology/2012/10/amazon-web-services-outage-once-again-shows-reality-behind-the-cloud/
+http://www.datacenterknowledge.com/archives/2012/10/23/aws-outage-rivals-seek-to-capitalize/
+http://techcrunch.com/2012/10/22/aws-ec2-issues-in-north-virginia-affect-heroku-reddit-and-others-heroku-still-down/
+http://techcrunch.com/2012/10/27/amazon-web-services-outage-caused-by-memory-leak-and-failure-in-monitoring-alarm/
+r-cross
+i-down
+t-6h15m
+p-no
+f-fix
+
+[12/10/2009][Brief Power Outage for Amazon Data Center]
+http://www.datacenterknowledge.com/archives/2009/12/10/power-outage-for-amazon-data-center/
+r-fail
+i-down
+t-45m
+p-no
+f-fix
+
+[12/11/2009][Amazon EC2 cloud service hit by botnet, outage]
+http://www.cnet.com/news/amazon-ec2-cloud-service-hit-by-botnet-outage/
+r-sec
+t-unk
+p-no
+f-restore
+

@@ -1,0 +1,10 @@
+At about 17:00 UTC Feb. 22 the www.wikipedia.org page was severely broken for about an hour.
+
+The text on the page was invisible. This bug was caused by a JavaScript file being improperly cached and returning a 404.
+• A bug was filed at around 17:09 UTC Feb.22 noting that the text on www.wikipedia.org is invisible. task T158782
+• We were made aware of this bug at about 17:40 UTC
+• at 18:15 UTC an attempt was made to rollback to the previous deploy. The deploy was visible on mwdebug1002 without error, but the error persisted in production.
+• at 18:20 UTC we purged the URL of the specific JavaScript file, fixing the issue.
+• The wikipedia.org portal depends on a specific order of syncing followed by purging urls, which is fragile and needs some rethinking.
+• Errors in JavaScript should not make the page unusable.
+• Adding an entire list of asset URLs to purge (task T158810)

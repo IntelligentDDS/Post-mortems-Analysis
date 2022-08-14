@@ -1,0 +1,76 @@
+
+[02/01/2013][Office 365 and Outlook.com outage hits North American users]
+http://www.cloudpro.co.uk/saas/5248/office-365-and-outlookcom-outage-hits-north-american-users
+r-upgrade
+r-fail
+i-down
+t-2h20m
+p-no
+
+[03/12/2013][Details of the Hotmail / Outlook.com outage on March 12th]
+http://zatz.com/outlookpower/2013/03/15/microsoft-outlook-and-hotmail-outage-is-due-to-overheating-data-center/
+http://www.theverge.com/2013/3/14/4102720/outlook-outage-overheating-datacenter
+r-upgrade
+r-fail
+i-down
+t-16h18m
+f-fix
+p-no
+
+[08/14/2013][Microsoft Outlook, SkyDrive outages hit users worldwide]
+http://www.zdnet.com/microsoft-outlook-skydrive-outages-hit-users-worldwide-7000019398/
+http://www.theregister.co.uk/2013/08/14/microsoft_cloud_problems/
+http://www.electronista.com/articles/13/08/19/exchange.activesync.issue.flooded.servers.system.changes.made/
+http://www.huffingtonpost.ca/2013/08/14/outage-hits-microsoft-out_n_3756291.html
+r-unk
+t-2d22h
+i-down
+p-no
+
+[09/08/2011][Office 365, Google Docs go down again, could give pause to the cloud-wary]
+http://arstechnica.com/business/2011/09/office-365-google-docs-go-down-again-could-give-pause-to-the-cloud-wary/
+http://www.channelregister.co.uk/2011/09/09/microsoft_cloud_outage/
+http://www.crn.com/news/cloud/231400092/microsoft-crediting-customers-in-recent-bpos-cloud-outage.htm
+http://windowsteamblog.com/windows_live/b/windowslive/archive/2011/09/20/follow-up-on-the-sept-8-service-outage.aspx
+http://www.itnews.com.au/News/271521,microsoft-office365-hotmail-blacks-out.aspx
+http://www.itnews.com.au/News/271835,is-microsofts-office365-vulnerable.aspx
+http://www.channelregister.co.uk/2011/09/21/microsoft_reveals_cloud_outage_causes/
+r-upgrade
+r-config
+r-fail
+i-down
+t-3h30m
+f-fix
+p-no
+
+[09/25/2013][Microsoft Skydrive offers 200GB Free storage for Surface 2 Tablet users and starts wrestling with outage!]
+http://storageservers.wordpress.com/2013/09/25/microsoft-skydrive-offers-200gb-free-storage-for-surface-2-tablet-users-and-starts-wrestling-with-outage/
+r-unk
+i-down
+t-40m
+p-no
+
+[10/21/2015][Microsoft OneDrive is down worldwide]
+http://www.neowin.net/news/microsoft-onedrive-is-down-worldwide
+http://mywindowshub.com/microsoft-onedrive-was-down-globally-back-in-action-now/
+r-unk
+t-unk
+i-down
+p-no
+
+[11/15/2015][One Drive files and account not loading. Error message: "Our server is having a problem"]
+http://answers.microsoft.com/en-us/onedrive/forum/odoptions-odweb/one-drive-files-and-account-not-loading-error/b2b17610-dbb2-4dc8-9e2b-02d003cfdee7?auth=1
+r-unk
+t-unk
+p-no
+
+[11/22/2013][Microsoft SkyDrive suffers outages]
+http://www.theaustralian.com.au/technology/microsoft-suffers-outages/story-e6frgakx-1226765853886?nk=17993311c8339e57dd2b84590efdab27
+http://www.cloudwards.net/news/skydrive-and-various-ms-services-suffer-outages-2103/
+http://redmondmag.com/articles/2013/11/21/windows-azure-outages.aspx
+r-upgrade
+r-fail
+i-down
+t-unk
+p-no
+

@@ -1,0 +1,9 @@
+On 2015-05-05 22:20:00 UTC, the schema MobileWebSearch started to send lots of events to EventLogging, in the range of 500 events per second. Current EL capacity is far below that, so the system stagnated. On 2015-05-06 20:00:00 UTC, the Mobile team deactivated events for that schema and EventLogging went back to normal.
+
+During that period (22 hours), 40% of events were lost (probably for some data loss in the zmq level, caused by its buffer overflowing) and 4 data gaps appeared due to EL consumer process being killed for too much memory consumption.
+
+The alarms for the problem were raised only on 2015-05-06 13:30:00 UTC, after 15 hours of the beginning of the issue, presumably because of the lower throughput in the night hours and because the EL buffers acted as cushion to the problem until they got full.
+
+Alarms: The fact that we are using fixed thresholds to trigger EL volume alarms is a limitation that prevents us to catch problems like this. We could either go for anomaly detection or different thresholds depending on the hour of the day.
+
+Buffers: We are already working on migrating EventLogging to use Kafka as a more robust transport layer. This way we'll avoid buffer overflow issues.

@@ -1,0 +1,10 @@
+RCA - Azure Services - South Central US
+Summary of impact: Between 14:16 UTC and 21:36 UTC on 16 Aug 2019, a subset of customers using resources in South Central US may have experienced difficulties connecting to resources hosted in this region.
+Root cause: An outage occurred during a regional infrastructure update, which is part of a South Central US datacenter refresh initiative. At approximately 14:00 UTC on 8/16/2019, facility engineers proceeded with removal of infrastructure following a pre-approved method of procedure (MOP). However, an error in fiber trunk validation resulted in production impacting connectivity loss.
+The loss of these physical links resulted in connectivity issues with a scale unit in the datacenter that hosted several Azure infrastructure services.
+Mitigation: To mitigate, services with multi-region deployments successfully failed out of the region to minimize impact. Residual impact was mitigated by restoring full fiber connectivity to the affected scale unit and placing it back into production rotation.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Halt infrastructure refresh projects globally until below repair items are addressed - Complete
+Method of Procedure (MoP) detailed review as related to infrastructure refresh projects – in progress
+Improve existing physical infrastructure change management process with additional collaboration & validation between facility and infra engineering - in progress.
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/KT5G-BC8

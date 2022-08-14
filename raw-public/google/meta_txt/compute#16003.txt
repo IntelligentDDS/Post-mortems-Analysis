@@ -1,0 +1,202 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 22, 2017  All services normal
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/16003)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #16003
+
+Quotas were reset to default values for some Customers
+
+Incident began at **2016-02-23 08:40** and ended at **2016-02-23 16:30** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Feb 25, 2016 | 14:47 |
+
+SUMMARY:
+
+On Tuesday 23 February 2016, for a duration of 10 hours and 6 minutes, 7.8% of
+Google Compute Engine projects had reduced quotas. We know that the ability to
+scale is vital to our customers, and apologize for preventing you from using
+the resources you need.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday 23 February 2016 from 06:06 to 16:12 PST, 7.8% of Google Compute
+Engine projects had quotas reduced. This impacted all quotas, including number
+of cores, IP addresses and disk size. If reduced quota was applied to your
+project and your usage reached this reduced quota you would have been unable
+to create new resources during this incident. Any such attempt would have
+resulted in a QUOTA_EXCEEDED error code with message "Quota 'XX_XX' exceeded.
+Limit: N". Any resources that were already created were unaffected by this
+issue.
+
+ROOT CAUSE:
+
+In order to maximize ease of use for Google Compute Engine customers, in some
+cases we automatically raise resource quotas. We then provide exclusions to
+ensure that no quotas previously raised are reduced. We occasionally tune the
+algorithm to determine which quotas can be safely raised. This incident
+occurred when one such change was made but a bug in the aforementioned
+exclusion process allowed some projects to have their quotas reduced.
+
+REMEDIATION AND PREVENTION:
+
+As soon as Google engineers identified the cause of the issue the initiating
+change was rolled back and quota changes were reverted. To provide faster
+resolution to quota related issues in the future we are creating new automated
+alerting and operational documentation. To prevent a recurrence of this
+specific issue, we have fixed the bug in the exclusion process. To prevent
+similar future issues, we are also creating a dry-run testing phase to verify
+the impact quota system changes will have.  
+  
+|
+
+SUMMARY:
+
+On Tuesday 23 February 2016, for a duration of 10 hours and 6 minutes, 7.8% of
+Google Compute Engine projects had reduced quotas. We know that the ability to
+scale is vital to our customers, and apologize for preventing you from using
+the resources you need.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday 23 February 2016 from 06:06 to 16:12 PST, 7.8% of Google Compute
+Engine projects had quotas reduced. This impacted all quotas, including number
+of cores, IP addresses and disk size. If reduced quota was applied to your
+project and your usage reached this reduced quota you would have been unable
+to create new resources during this incident. Any such attempt would have
+resulted in a QUOTA_EXCEEDED error code with message "Quota 'XX_XX' exceeded.
+Limit: N". Any resources that were already created were unaffected by this
+issue.
+
+ROOT CAUSE:
+
+In order to maximize ease of use for Google Compute Engine customers, in some
+cases we automatically raise resource quotas. We then provide exclusions to
+ensure that no quotas previously raised are reduced. We occasionally tune the
+algorithm to determine which quotas can be safely raised. This incident
+occurred when one such change was made but a bug in the aforementioned
+exclusion process allowed some projects to have their quotas reduced.
+
+REMEDIATION AND PREVENTION:
+
+As soon as Google engineers identified the cause of the issue the initiating
+change was rolled back and quota changes were reverted. To provide faster
+resolution to quota related issues in the future we are creating new automated
+alerting and operational documentation. To prevent a recurrence of this
+specific issue, we have fixed the bug in the exclusion process. To prevent
+similar future issues, we are also creating a dry-run testing phase to verify
+the impact quota system changes will have.  
+  
+| Feb 23, 2016 | 16:30 |
+
+The issue with quotas being reset to default values should have been resolved
+for all affected customers as of 16:30 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+|
+
+The issue with quotas being reset to default values should have been resolved
+for all affected customers as of 16:30 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+| Feb 23, 2016 | 15:30 |
+
+The issue with quotas being reset to default values should have been resolved
+for the majority of projects and we expect a full resolution in the near
+future. We will provide another status update by 16:30 US/Pacific with current
+details.  
+  
+|
+
+The issue with quotas being reset to default values should have been resolved
+for the majority of projects and we expect a full resolution in the near
+future. We will provide another status update by 16:30 US/Pacific with current
+details.  
+  
+| Feb 23, 2016 | 14:30 |
+
+We are continuing to investigate the issue with quotas being reset to default
+values for some customers. We'll provide a new update at 15:30 US / Pacific
+time.  
+  
+|
+
+We are continuing to investigate the issue with quotas being reset to default
+values for some customers. We'll provide a new update at 15:30 US / Pacific
+time.  
+  
+| Feb 23, 2016 | 13:30 |
+
+We are continuing to investigate the issue with quotas being reset to default
+values for some customers. We'll provide a new update at 14:30 US / Pacific
+time.  
+  
+|
+
+We are continuing to investigate the issue with quotas being reset to default
+values for some customers. We'll provide a new update at 14:30 US / Pacific
+time.  
+  
+| Feb 23, 2016 | 12:30 |
+
+We are continuing to investigate the issue with quotas being reset to default
+values for some customers. We'll provide a new update at 13:30 Pacific time  
+  
+|
+
+We are continuing to investigate the issue with quotas being reset to default
+values for some customers. We'll provide a new update at 13:30 Pacific time  
+  
+| Feb 23, 2016 | 11:30 |
+
+We continue to investigate the problem with quotas being reset to default
+values for some customers. We'll provide a new update at 12:30 PT.  
+  
+|
+
+We continue to investigate the problem with quotas being reset to default
+values for some customers. We'll provide a new update at 12:30 PT.  
+  
+| Feb 23, 2016 | 11:11 |
+
+We are still investigating the problem of some projects quotas being reverted
+back to Default values and we'll provide a new update in at 11:30 PST time.  
+  
+|
+
+We are still investigating the problem of some projects quotas being reverted
+back to Default values and we'll provide a new update in at 11:30 PST time.  
+  
+| Feb 23, 2016 | 10:43 |
+
+We are investigating a problem with our Quota System where Quotas were reset
+to default values for some Customers.  
+  
+|
+
+We are investigating a problem with our Quota System where Quotas were reset
+to default values for some Customers.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

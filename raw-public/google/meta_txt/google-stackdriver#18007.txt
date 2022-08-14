@@ -1,0 +1,177 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+May 24, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Stackdriver](/incident/google-stackdriver/18007)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Stackdriver Incident #18007
+
+The Stackdriver logging service is experiencing a 30-minute delay.
+
+Incident began at **2018-05-20 18:40** and ended at **2018-05-20 23:05** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| May 24, 2018 | 13:03 |
+
+ISSUE SUMMARY
+
+On Sunday, 20 May 2018 for 4 hours and 25 minutes, approximately 6% of
+Stackdriver Logging logs experienced a median ingest latency of 90 minutes. To
+our Stackdriver Logging customers whose operations monitoring was impacted
+during this outage, we apologize. We have conducted an internal investigation
+and are taking steps to ensure this doesn’t happen again.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday, 20 May 2018 from 18:40 to 23:05 Pacific Time, 6% of logs
+ingested by Stackdriver Logging experienced log event ingest latency of up to
+2 hours 30 minutes, with a median latency of 90 minutes. Customers requesting
+log events within the latency window would receive empty responses. Logging
+export sinks were not affected.
+
+ROOT CAUSE
+
+Stackdriver Logging uses a pool of workers to persist ingested log events. On
+Wednesday, 20 May 2018 at 17:40, a load spike in the Stackdriver Logging
+storage subsystem caused 0.05% of persist calls made by the workers to time
+out. The workers would then retry persisting to the same address until
+reaching a retry timeout. While the workers were retrying, they were not
+persisting other log events. This resulted in multiple workers removed from
+the pool of available workers.
+
+By 18:40, enough workers had been removed from the pool to reduce throughput
+below the level of incoming traffic, creating delays for 6% of logs.
+
+REMEDIATION AND PREVENTION
+
+After Google Engineering was paged, engineers isolated the issue to these
+timing out workers. At 20:35, engineers configured the workers to return timed
+out log events to queue and move on to a different log event after timeout.
+This allowed workers to catch up with ingest rate. At 23:02, the last delayed
+message was delivered.
+
+We are taking the following steps to prevent the issue from happening again:
+we are modifying the workers to retry persists using alternate addresses to
+reduce the impact of persist timeouts; we are increasing the persist capacity
+of the storage subsystem to manage load spikes; we are modifying Stackdriver
+Logging workers to reduce their unavailability when the storage subsystem
+experiences higher latency.  
+  
+|
+
+ISSUE SUMMARY
+
+On Sunday, 20 May 2018 for 4 hours and 25 minutes, approximately 6% of
+Stackdriver Logging logs experienced a median ingest latency of 90 minutes. To
+our Stackdriver Logging customers whose operations monitoring was impacted
+during this outage, we apologize. We have conducted an internal investigation
+and are taking steps to ensure this doesn’t happen again.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday, 20 May 2018 from 18:40 to 23:05 Pacific Time, 6% of logs
+ingested by Stackdriver Logging experienced log event ingest latency of up to
+2 hours 30 minutes, with a median latency of 90 minutes. Customers requesting
+log events within the latency window would receive empty responses. Logging
+export sinks were not affected.
+
+ROOT CAUSE
+
+Stackdriver Logging uses a pool of workers to persist ingested log events. On
+Wednesday, 20 May 2018 at 17:40, a load spike in the Stackdriver Logging
+storage subsystem caused 0.05% of persist calls made by the workers to time
+out. The workers would then retry persisting to the same address until
+reaching a retry timeout. While the workers were retrying, they were not
+persisting other log events. This resulted in multiple workers removed from
+the pool of available workers.
+
+By 18:40, enough workers had been removed from the pool to reduce throughput
+below the level of incoming traffic, creating delays for 6% of logs.
+
+REMEDIATION AND PREVENTION
+
+After Google Engineering was paged, engineers isolated the issue to these
+timing out workers. At 20:35, engineers configured the workers to return timed
+out log events to queue and move on to a different log event after timeout.
+This allowed workers to catch up with ingest rate. At 23:02, the last delayed
+message was delivered.
+
+We are taking the following steps to prevent the issue from happening again:
+we are modifying the workers to retry persists using alternate addresses to
+reduce the impact of persist timeouts; we are increasing the persist capacity
+of the storage subsystem to manage load spikes; we are modifying Stackdriver
+Logging workers to reduce their unavailability when the storage subsystem
+experiences higher latency.  
+  
+| May 20, 2018 | 22:53 |
+
+The issue with StackDriver logging delay has been resolved for all affected
+projects as of Sunday, 2018-05-20 22:45 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+|
+
+The issue with StackDriver logging delay has been resolved for all affected
+projects as of Sunday, 2018-05-20 22:45 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+| May 20, 2018 | 22:04 |
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Sunday, 2018-05-20 23:00 US/Pacific with current
+details.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Sunday, 2018-05-20 23:00 US/Pacific with current
+details.  
+  
+| May 20, 2018 | 20:44 |
+
+The Stackdriver logging service is experiencing a 30-minute delay. We will
+provide another status update by Sunday, 2018-05-20 22:00 US/Pacific with
+current details.  
+  
+|
+
+The Stackdriver logging service is experiencing a 30-minute delay. We will
+provide another status update by Sunday, 2018-05-20 22:00 US/Pacific with
+current details.  
+  
+| May 20, 2018 | 20:19 |
+
+We are investigating an issue with Google Stackdriver. We will provide more
+information by Sunday, 2018-05-20 20:30 US/Pacific.  
+  
+|
+
+We are investigating an issue with Google Stackdriver. We will provide more
+information by Sunday, 2018-05-20 20:30 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

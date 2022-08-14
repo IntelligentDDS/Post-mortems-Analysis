@@ -1,0 +1,303 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google App Engine](/incident/appengine/16008)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google App Engine Incident #16008
+
+App Engine Outage
+
+Incident began at **2016-08-11 13:13** and ended at **2016-08-11 15:00** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 23, 2016 | 09:54 |
+
+SUMMARY:
+
+On Thursday 11 August 2016, 21% of Google App Engine applications hosted in
+the US-CENTRAL region experienced error rates in excess of 10% and elevated
+latency between 13:13 and 15:00 PDT. An additional 16% of applications hosted
+on the same GAE instance observed lower rates of errors and latency during the
+same period.
+
+We apologize for this incident. We know that you choose to run your
+applications on Google App Engine to obtain flexible, reliable, high-
+performance service, and in this incident we have not delivered the level of
+reliability for which we strive. Our engineers have been working hard to
+analyze what went wrong and ensure incidents of this type will not recur.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Thursday 11 August 2016 from 13:13 to 15:00 PDT, 18% of applications hosted
+in the US-CENTRAL region experienced error rates between 10% and 50%, and 3%
+of applications experienced error rates in excess of 50%. Additionally, 14%
+experienced error rates between 1% and 10%, and 2% experienced error rate
+below 1% but above baseline levels. In addition, the 37% of applications which
+experienced elevated error rates also observed a median latency increase of
+just under 0.8 seconds per request.
+
+The remaining 63% of applications hosted on the same GAE instance, and
+applications hosted on other GAE instances, did not observe elevated error
+rates or increased latency.
+
+Both App Engine Standard and Flexible Environment applications in US-CENTRAL
+were affected by this incident. In addition, some Flexible Environment
+applications were unable to deploy new versions during this incident.
+
+App Engine applications in US-EAST1 and EUROPE-WEST were not impacted by this
+incident.
+
+ROOT CAUSE:
+
+The incident was triggered by a periodic maintenance procedure in which Google
+engineers move App Engine applications between datacenters in US-CENTRAL in
+order to balance traffic more evenly.
+
+As part of this procedure, we first move a proportion of apps to a new
+datacenter in which capacity has already been provisioned. We then gracefully
+drain traffic from an equivalent proportion of servers in the downsized
+datacenter in order to reclaim resources. The applications running on the
+drained servers are automatically rescheduled onto different servers.
+
+During this procedure, a software update on the traffic routers was also in
+progress, and this update triggered a rolling restart of the traffic routers.
+This temporarily diminished the available router capacity.
+
+The server drain resulted in rescheduling of multiple instances of manually-
+scaled applications. App Engine creates new instances of manually-scaled
+applications by sending a startup request via the traffic routers to the
+server hosting the new instance.
+
+Some manually-scaled instances started up slowly, resulting in the App Engine
+system retrying the start requests multiple times which caused a spike in CPU
+load on the traffic routers. The overloaded traffic routers dropped some
+incoming requests.
+
+Although there was sufficient capacity in the system to handle the load, the
+traffic routers did not immediately recover due to retry behavior which
+amplified the volume of requests.
+
+REMEDIATION AND PREVENTION:
+
+Google engineers were monitoring the system during the datacenter changes and
+immediately noticed the problem. Although we rolled back the change that
+drained the servers within 11 minutes, this did not sufficiently mitigate the
+issue because retry requests had generated enough additional traffic to keep
+the system’s total load at a substantially higher-than-normal level.
+
+As designed, App Engine automatically redirected requests to other datacenters
+away from the overload - which reduced the error rate. Additionally, our
+engineers manually redirected all traffic at 13:56 to other datacenters which
+further mitigated the issue.
+
+Finally, we then identified a configuration error that caused an imbalance of
+traffic in the new datacenters. Fixing this at 15:00 finally fully resolved
+the incident.
+
+In order to prevent a recurrence of this type of incident, we have added more
+traffic routing capacity in order to create more capacity buffer when draining
+servers in this region.
+
+We will also change how applications are rescheduled so that the traffic
+routers are not called and also modify that the system's retry behavior so
+that it cannot trigger this type of failure.
+
+We know that you rely on our infrastructure to run your important workloads
+and that this incident does not meet our bar for reliability. For that we
+apologize. Your trust is important to us and we will continue to all we can to
+earn and keep that trust.  
+  
+|
+
+SUMMARY:
+
+On Thursday 11 August 2016, 21% of Google App Engine applications hosted in
+the US-CENTRAL region experienced error rates in excess of 10% and elevated
+latency between 13:13 and 15:00 PDT. An additional 16% of applications hosted
+on the same GAE instance observed lower rates of errors and latency during the
+same period.
+
+We apologize for this incident. We know that you choose to run your
+applications on Google App Engine to obtain flexible, reliable, high-
+performance service, and in this incident we have not delivered the level of
+reliability for which we strive. Our engineers have been working hard to
+analyze what went wrong and ensure incidents of this type will not recur.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Thursday 11 August 2016 from 13:13 to 15:00 PDT, 18% of applications hosted
+in the US-CENTRAL region experienced error rates between 10% and 50%, and 3%
+of applications experienced error rates in excess of 50%. Additionally, 14%
+experienced error rates between 1% and 10%, and 2% experienced error rate
+below 1% but above baseline levels. In addition, the 37% of applications which
+experienced elevated error rates also observed a median latency increase of
+just under 0.8 seconds per request.
+
+The remaining 63% of applications hosted on the same GAE instance, and
+applications hosted on other GAE instances, did not observe elevated error
+rates or increased latency.
+
+Both App Engine Standard and Flexible Environment applications in US-CENTRAL
+were affected by this incident. In addition, some Flexible Environment
+applications were unable to deploy new versions during this incident.
+
+App Engine applications in US-EAST1 and EUROPE-WEST were not impacted by this
+incident.
+
+ROOT CAUSE:
+
+The incident was triggered by a periodic maintenance procedure in which Google
+engineers move App Engine applications between datacenters in US-CENTRAL in
+order to balance traffic more evenly.
+
+As part of this procedure, we first move a proportion of apps to a new
+datacenter in which capacity has already been provisioned. We then gracefully
+drain traffic from an equivalent proportion of servers in the downsized
+datacenter in order to reclaim resources. The applications running on the
+drained servers are automatically rescheduled onto different servers.
+
+During this procedure, a software update on the traffic routers was also in
+progress, and this update triggered a rolling restart of the traffic routers.
+This temporarily diminished the available router capacity.
+
+The server drain resulted in rescheduling of multiple instances of manually-
+scaled applications. App Engine creates new instances of manually-scaled
+applications by sending a startup request via the traffic routers to the
+server hosting the new instance.
+
+Some manually-scaled instances started up slowly, resulting in the App Engine
+system retrying the start requests multiple times which caused a spike in CPU
+load on the traffic routers. The overloaded traffic routers dropped some
+incoming requests.
+
+Although there was sufficient capacity in the system to handle the load, the
+traffic routers did not immediately recover due to retry behavior which
+amplified the volume of requests.
+
+REMEDIATION AND PREVENTION:
+
+Google engineers were monitoring the system during the datacenter changes and
+immediately noticed the problem. Although we rolled back the change that
+drained the servers within 11 minutes, this did not sufficiently mitigate the
+issue because retry requests had generated enough additional traffic to keep
+the system’s total load at a substantially higher-than-normal level.
+
+As designed, App Engine automatically redirected requests to other datacenters
+away from the overload - which reduced the error rate. Additionally, our
+engineers manually redirected all traffic at 13:56 to other datacenters which
+further mitigated the issue.
+
+Finally, we then identified a configuration error that caused an imbalance of
+traffic in the new datacenters. Fixing this at 15:00 finally fully resolved
+the incident.
+
+In order to prevent a recurrence of this type of incident, we have added more
+traffic routing capacity in order to create more capacity buffer when draining
+servers in this region.
+
+We will also change how applications are rescheduled so that the traffic
+routers are not called and also modify that the system's retry behavior so
+that it cannot trigger this type of failure.
+
+We know that you rely on our infrastructure to run your important workloads
+and that this incident does not meet our bar for reliability. For that we
+apologize. Your trust is important to us and we will continue to all we can to
+earn and keep that trust.  
+  
+| Aug 11, 2016 | 15:45 |
+
+The issue with App Engine APIs is now resolved for most of the affected
+projects as of 14:12 US/Pacific. We will follow up directly with the few
+remaining affected applications. We will also conduct a thorough internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize any future recurrence. Finally, we will publish a more
+detailed analysis of this incident once we have completed an internal
+investigation.  
+  
+|
+
+The issue with App Engine APIs is now resolved for most of the affected
+projects as of 14:12 US/Pacific. We will follow up directly with the few
+remaining affected applications. We will also conduct a thorough internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize any future recurrence. Finally, we will publish a more
+detailed analysis of this incident once we have completed an internal
+investigation.  
+  
+| Aug 11, 2016 | 15:15 |
+
+We are still investigating the issue with App Engine apis being unavailable.
+
+Current data indicates that some projects are affected by this issue. We will
+provide another status update by 15:45 US/Pacific with current details.  
+  
+|
+
+We are still investigating the issue with App Engine apis being unavailable.
+
+Current data indicates that some projects are affected by this issue. We will
+provide another status update by 15:45 US/Pacific with current details.  
+  
+| Aug 11, 2016 | 14:44 |
+
+The issue with App Engine apis being unavailable should have been resolved for
+the majority of projects and we expect a full resolution in the near future.
+
+We will provide another status update by 15:15 US/Pacific with current
+details.  
+  
+|
+
+The issue with App Engine apis being unavailable should have been resolved for
+the majority of projects and we expect a full resolution in the near future.
+
+We will provide another status update by 15:15 US/Pacific with current
+details.  
+  
+| Aug 11, 2016 | 14:16 |
+
+We are experiencing an issue with App Engine apis being unavailable beginning
+at Thursday, 2016-08-11 13:45 US/Pacific.
+
+Current data indicates that Applications in us-central are affected by this
+issue.  
+  
+|
+
+We are experiencing an issue with App Engine apis being unavailable beginning
+at Thursday, 2016-08-11 13:45 US/Pacific.
+
+Current data indicates that Applications in us-central are affected by this
+issue.  
+  
+| Aug 11, 2016 | 14:01 |
+
+We are investigating reports of an issue with App Engine. We will provide more
+information by 02:15 US/Pacific.  
+  
+|
+
+We are investigating reports of an issue with App Engine. We will provide more
+information by 02:15 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

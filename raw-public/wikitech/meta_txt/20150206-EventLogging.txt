@@ -1,0 +1,6 @@
+EventlLogging code was dropping events sparsely from 2015-02-06 to 2015-02-10
+
+Code seems to be working normally.
+• We would benefit from looking at alarms right away and not wait several days
+• More precise alarms as to what is going on wouldn't hurt
+• Status: Done Make sure that log files exist for the affected period, so we can backfill.

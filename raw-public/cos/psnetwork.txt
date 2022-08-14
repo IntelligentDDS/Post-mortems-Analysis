@@ -1,0 +1,174 @@
+
+[01/01/2014][Planetside 2 Hacker Attack Leads To Brief PSN, DCUO Outage]
+http://www.gameranx.com/updates/id/19623/article/planetside-2-hacker-attack-leads-to-brief-psn-dcuo-outage/
+r-sec
+t-8h
+i-op
+p-no
+
+[01/07/2015][PlayStation Network down for some gamers — Sony engineers investigating]
+http://venturebeat.com/2015/01/07/playstation-network-down-for-some-gamers-sony-engineers-investigating/
+r-unk
+t-unk
+i-down
+p-no
+
+[01/13/2015][PSN down yet again for some PS4 and PS3 players]
+http://venturebeat.com/2015/01/13/psn-down-yet-again-for-some-ps4-and-ps3-players/
+r-unk
+t-unk
+i-down
+p-no
+
+[02/01/2015][PlayStation Network down for many — Sony is aware of the problem]
+http://venturebeat.com/2015/02/01/psn-down-for-many-during-super-bowl/
+r-unk
+t-unk
+i-down
+p-no
+
+[03/01/2010][PLAYSTATION NETWORK PROBLEMS CAUSE PS3 MELTDOWN (UPDATED)]
+http://www.wired.com/2010/03/playstation-network-problems-cause-ps3-meltdown/
+http://blog.us.playstation.com/2010/03/01/latest-info-on-playstation-network-status/
+t-24h
+r-bug
+i-down
+p-no
+
+[03/04/2012][PlayStation Network Goes Down Today for Maintenance]
+http://www.themarysue.com/psn-down-maintenance/
+r-upgrade
+t-14h
+i-down
+p-yes
+
+[03/15/2013][Sony Computer Entertainment America LLC outage affects PlayStation Network and Store]
+http://segmentnext.com/2013/03/16/recent-psn-outage/
+t-1h
+r-unk
+p-no
+i-down
+
+[03/18/2015][PSN is down for some as the status site was having loading issues]
+http://venturebeat.com/2015/03/18/psn-down-and-the-service-status-site-isnt-loading/
+r-unk
+t-unk
+i-down
+p-no
+
+[04/02/2015][PlayStation Network is down for some on PlayStation 4]
+http://venturebeat.com/2015/04/02/playstation-network-is-down-for-some/
+r-unk
+t-unk
+p-no
+i-down
+
+[04/28/2011][Latest Update on PSN Outage]
+http://www.bbc.com/news/technology-13169518
+http://blog.us.playstation.com/2011/04/21/latest-update-on-psn-outage/#comments
+t-unk
+r-sec
+i-down
+p-no
+
+[05/15/2015][PSN down intermittently — gamers experiencing Internet issues on PlayStation consoles]
+http://venturebeat.com/2015/05/15/psn-down-gamers-experiencing-internet-issues-on-playstation-consoles/
+r-unk
+t-unk
+i-down
+p-no
+
+[07/03/2015][PSN down leading into the Fourth of July weekend]
+http://venturebeat.com/2015/07/03/psn-down-intermittently-leading-into-the-long-weekend/
+r-unk
+t-unk
+i-down
+p-no
+
+[07/14/2015][PlayStation Network Is Down — Time To Read A Bloody BOOK]
+http://techcrunch.com/2015/07/14/psn-made-me-read-your-bloody-tweets/
+r-unk
+t-unk
+i-down
+p-no
+
+[07/28/2015][PSN is down once again for gamers on Sony consoles]
+http://venturebeat.com/2015/07/28/playstation-network-is-down-once-again-for-gamers-on-sony-consoles/
+r-unk
+t-unk
+i-down
+p-no
+
+[08/18/2009][PlayStation Network conveniently down for maintenance during Sony's press conference today]
+http://www.engadget.com/2009/08/18/playstation-network-conveniently-down-for-maintenance-during-son/
+http://www.joystiq.com/2009/08/17/playstation-network-to-go-offline-tomorrow-8-18/
+t-2h
+r-upgrade
+i-down
+p-yes
+
+[08/25/2009][PlayStation Network Regular Scheduled Maintenance]
+http://blog.us.playstation.com/2009/08/24/playstation-network-regular-scheduled-maintenance-2/
+t-unk
+r-upgrade
+p-yes
+i-down
+
+[09/04/2015][PlayStation Network down as we head into long Labor Day weekend]
+http://venturebeat.com/2015/09/04/psn-down-as-we-head-into-long-labor-day-weekend/
+r-unk
+t-unk
+i-down
+p-no
+
+[09/23/2015][PlayStation Network is down once again for many gamers]
+http://venturebeat.com/2015/09/23/psn-is-down-once-again-for-many-gamers/
+r-unk
+t-unk
+i-down
+p-no
+
+[09/28/2015][PlayStation Network down for many on Monday morning]
+http://venturebeat.com/2015/09/28/playstation-network-down-for-many-on-monday-morning/
+r-unk
+p-no
+i-down
+t-unk
+
+[11/19/2015][PlayStation Network is down intermittently for many gamers]
+http://venturebeat.com/2015/11/19/playstation-network-is-down-intermittently-for-many-gamers/
+r-unk
+t-unk
+i-down
+p-no
+
+[11/28/2015][PlayStation Network is down and Sony is working to fix it]
+http://venturebeat.com/2015/11/28/psn-is-down/
+r-unk
+t-9h10m
+i-down
+p-no
+
+[12/24/2013][PSN Suffers from “Connection Issues”, Downtime Just Before Christmas, Error Code 80710092]
+http://www.playstationlifestyle.net/2013/12/24/psn-suffers-from-connection-issues-downtime-just-before-christmas-error-code-80710092/
+http://psnprofiles.com/forums/topic/11581-psn-problems-ps4-ps3/
+http://cloutage.org/incidents/1997-sony-computer-entertainment-america-llc-playstation-network
+t-unk
+r-unk
+i-down
+p-no
+
+[12/24/2015][Some PlayStation Network features down heading into Christmas]
+http://venturebeat.com/2015/12/24/psn-down-christmas-2015/
+r-unk
+t-unk
+i-op
+p-no
+
+[12/25/2014][The Hacker Gang Lizard Squad Is Loving It]
+http://www.businessinsider.com/xbox-live-and-playstation-network-are-still-down-and-the-hacker-gang-lizard-squad-is-loving-it-2014-12
+t-48h
+r-sec
+i-down
+p-no
+

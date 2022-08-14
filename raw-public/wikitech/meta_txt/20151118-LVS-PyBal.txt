@@ -1,0 +1,13 @@
+PyBal was stopped on the primary eqiad LVS servers (lvs100[123]) for maintenance, with the expectation that traffic would be unaffected and shift to the backup servers (lvs100[456]). Some services were not operating correctly on the backups, causing a partial outage. pybal was restarted ~5 minutes later on the primaries, ending the outage.
+
+The impact during the window was limited. Most service traffic moved successfully, and only a few specific service+proto+port combinations failed, with the primary public-facing affected services being:
+
+Because most of our traffic is IPv4 on port 443 (HTTPS) for all services, the impact to text and mobile services was limited (HTTP->HTTPS redirects for text, IPv6 users for mobile). misc-web was affected for most users, denying access to services such as phabricator, gerrit, racktables, etc.
+
+Traffic graphs of the primary clusters in eqiad: https://phabricator.wikimedia.org/F2972690
+• 14:00 - first user report on IRC: "< aude> did someone kill phabricator?"
+• 14:01 - first automated report on IRC: "< icinga-wm> PROBLEM - LVS HTTP IPv4 on text-lb.eqiad.wikimedia.org is CRITICAL: Connection refused"
+
+Because the same pattern of pybal failover to the same version of software had happened successfully at 3 other datacenters the day before, confidence was too high and not enough pre-flight checking was done. More verification on the state of lvs100[456] should have been done prior to the start of maintenance. The problem issues were obvious prior to the outage in the output of "ipvsadm -Ln" as well as the pybal service logs in "journalctl" if they were examined in depth.
+
+The actual technical issues are due to bugs in PyBal.

@@ -1,0 +1,5 @@
+During eqiad row D switch maintenance OCG (the service that renders PDFs) suffered an outage due to all of its service hosts being unreachable. During the time of outage users were not able to create PDFs from pages and collections.
+• 16:55 pybal alert for ocg.svc.eqiad.wmnet being down comes in and investigation begins
+• 17:08 _joe_ stops pybal on lvs1006 to stop announcing via BGP
+
+OCG was down for ~30min due to a combination of factors, namely row diversity isn't fully implemented with two service hosts being in the same rack and row that was undergoing maintenance bug T148506. The remaining OCG host is in row C but under maintenance at the time of the incident bug T161158.

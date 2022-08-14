@@ -1,0 +1,708 @@
+{
+    "azure-20161223-1": {
+        "title": "Azure Functions - Region Selection Issues in Portal | Recovered",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2016.11.21-2016.12.23.pdf"
+        ],
+        "time": "12/23/2016",
+        "summary": "Between 00:35 UTC on 22 Dec 2016 to 02:30 UTC on 23 Dec 2016, customers using Azure Functions may not have been able to select regions in the Management Portal and the Functions dashboard when creating applications. Customers provisioning new App Service \\ Web Apps in Visual Studio may also have experienced the inability to select regions",
+        "details": "Summary of impact: Between 00:35 UTC on 22 Dec 2016 to 02:30 UTC on 23 Dec 2016, customers using Azure Functions may not have been able to select regions in the Management Portal and the Functions dashboard when creating applications. Customers provisioning new App Service \\ Web Apps in Visual Studio may also have experienced the inability to select regions",
+        "service_name": [
+            "Azure Functions"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 115,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Engineers identified a software issue within a recent deployment as the potential root cause."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "perform manual patches",
+                "roll out a deployment "
+            ],
+            "details": "Engineers performed manual patches and rolled out a deployment update to mitigate ",
+            "troubleshooting": {
+                "1": "Engineers identified a software issue within a recent deployment as the potential root cause.",
+                "2": "Engineers performed manual patches and rolled out a deployment update to mitigate . "
+            }
+        },
+        "propagation pass": {
+            "1": "Azure functions"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20161222-1": {
+        "title": "Visual Studio Team Services",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2016.11.21-2016.12.23.pdf"
+        ],
+        "time": "12/22/2016",
+        "summary": "Between 23:55 UTC on 21 Dec 2016 to 01:15 UTC on 22 Dec 2016, you were identified as a customer using Visual Studio Team Services, Visual Studio Team Services \\ Build & Deployment, and Visual Studio Team Services \\ Load Testing who may have intermittently experienced degraded performance and slowness while accessing accounts or navigating through Visual Studio Online workspaces.",
+        "details": "Summary of impact: Between 23:55 UTC on 21 Dec 2016 to 01:15 UTC on 22 Dec 2016, you were identified as a customer using Visual Studio Team Services, Visual Studio Team Services \\ Build & Deployment, and Visual Studio Team Services \\ Load Testing who may have intermittently experienced degraded performance and slowness while accessing accounts or navigating through Visual Studio Online workspaces.",
+        "service_name": [
+            "Visual Studio Team Services",
+            "Visual Studio Team Services Build & Deployment",
+            "Visual Studio Team Services Load Testing"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 80,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "degraded performance",
+                    "slow accessing"
+                ]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Engineers identified a recent configuration change as the potential root cause"
+        },
+        "operation": [
+            "change"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "revert the configuration change"
+            ],
+            "details": "Engineers reverted the configuration change to mitigate the issue.",
+            "troubleshooting": {
+                "1": " Engineers identified a recent configuration change as the potential root cause. ",
+                "2": "Engineers reverted the configuration change to mitigate the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "services"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20161211-1": {
+        "title": "RCA for Network Infrastructure in West Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2016.11.21-2016.12.23.pdf"
+        ],
+        "time": "12/11/2016",
+        "summary": "Between 22:29 and 23:45 UTC on the 10 Dec 2016, customers in the West Europe region may have experienced intermittent periods of connectivity issues.",
+        "details": "Summary of impact: Between 22:29 and 23:45 UTC on the 10 Dec 2016, customers in the West Europe region may have experienced intermittent periods of connectivity issues. This included elevated packet loss and latency to other Azure regions, and inbound/outbound Internet traffic. Network traffic within the region was unaffected during this time. The connectivity loss was a result of an issue in the traffic engineering software on our network routers that failed to route traffic around a fiber issue in the network. Approximately 10% of the traffic failed to reroute to the redundant fiber path.",
+        "service_name": [
+            "network"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 76,
+        "detection": {
+            "method": "automate",
+            "tool": "telemetry"
+        },
+        "manifestation": [
+            {
+                "business kpi": []
+            },
+            {
+                "system kpi": [
+                    "elevated packet loss and latency",
+                    "intermittent connectivity issues"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "others"
+                }
+            ],
+            "details": "We encountered a software issue on our network routers that caused routing calculations to take longer than expected during a fiber issue in West Europe. The path computation slowdown caused traffic to be dropped instead of moving to the redundant fiber path."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "shift traffic",
+                "add monitoring"
+            ],
+            "details": "Our telemetry detected the issue and we were able to shift traffic to an unaffected path before the underlying fiber problem was resolved.",
+            "troubleshooting": {
+                "1": "Our telemetry detected the issue and we were able to shift traffic to an unaffected path before the underlying fiber problem was resolved",
+                "2": "we have added monitoring for the software issue to alert us before the constraint can impact traffic"
+            }
+        },
+        "propagation pass": {
+            "1": "fiber",
+            "2": "router"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "router"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20161210-1": {
+        "title": "HDInsight - North Central US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2016.11.21-2016.12.23.pdf"
+        ],
+        "time": "12/10/2016",
+        "summary": "Between 22:30 UTC on 09 Dec 2016 and 05:10 UTC on 10 Dec 2016, customers using HDInsight in North Central US may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in this region. Existing clusters were not affected.",
+        "details": "Summary of impact: Between 22:30 UTC on 09 Dec 2016 and 05:10 UTC on 10 Dec 2016, customers using HDInsight in North Central US may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in this region. Existing clusters were not affected.",
+        "service_name": [
+            "HDInsight"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 400,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Engineers identified a recent change in backend systems as a possible underlying cause."
+        },
+        "operation": [
+            "change"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back the change"
+            ],
+            "details": "Engineers rolled back the change to backend systems to mitigate the issue",
+            "troubleshooting": {
+                "1": " Engineers identified a recent change in backend systems as a possible underlying cause. ",
+                "2": " Engineers rolled back the change to backend systems to mitigate the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "backend system",
+            "2": "service management"
+        },
+        "refined path": {
+            "1": "backend",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verifcation": "lixy"
+    },
+    "azure-20161209-1": {
+        "title": "SQL Database - North Central US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2016.11.21-2016.12.23.pdf"
+        ],
+        "time": "12/09/2016",
+        "summary": "Between approximately 10:00 and 19:00 UTC on 09 Dec 2016, customers using SQL Database in North Central US may have experienced issues performing service management operations.",
+        "details": "Summary of impact: Between approximately 10:00 and 19:00 UTC on 09 Dec 2016, customers using SQL Database in North Central US may have experienced issues performing service management operations.",
+        "service_name": [
+            "SQL Database"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 540,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            },
+            {
+                "system kpi": [
+                    "unhealthy state"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "A backend ecosystem fell into an unhealthy state."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "manually recover backend system"
+            ],
+            "details": "Engineers manually recovered the backend ecosystem, and have confirmed that the service is now in a healthy state.",
+            "troubleshooting": {
+                "1": "A backend ecosystem fell into an unhealthy state. ",
+                "2": " Engineers manually recovered the backend ecosystem, and have confirmed that the service is now in a healthy state. "
+            }
+        },
+        "propagation pass": {
+            "1": "backend ecosystem",
+            "2": "SQL database",
+            "3": "services"
+        },
+        "refined path": {
+            "1": "backend",
+            "2": "database",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20161209-2": {
+        "title": "Virtual Machines (v2) - South Central US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2016.11.21-2016.12.23.pdf"
+        ],
+        "time": "12/09/2016",
+        "summary": "Between approximately 20:00 UTC on 08 Dec 2016 and 00:47 UTC on 09 Dec 2016, customers using Virtual Machines (v2) in South Central US may have experienced failure notifications when attempting to perform networking-related update operations (such as network interfaces, NAT rules, or load balancing) to existing Virtual Machine (v2) configurations.",
+        "details": "Summary of impact: Between approximately 20:00 UTC on 08 Dec 2016 and 00:47 UTC on 09 Dec 2016, customers using Virtual Machines (v2) in South Central US may have experienced failure notifications when attempting to perform networking-related update operations (such as network interfaces, NAT rules, or load balancing) to existing Virtual Machine (v2) configurations. This only affected networking-related operations on Virtual Machines (v2) as all other service management operations (such as Start, Stop, Create, Delete) on all Virtual Machines were fully functional.",
+        "service_name": [
+            "Virtual Machines"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 287,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "failure notifications"
+                ]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "A software error on a recent deployment was determined as the underlying root cause."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy new update"
+            ],
+            "details": "Engineers created a new software build and deployed the update to mitigate.",
+            "troubleshooting": {
+                "1": "Engineers created a new software build and deployed the update to mitigate."
+            }
+        },
+        "propagation pass": {
+            "1": "network",
+            "2": "services"
+        },
+        "refined path": {
+            "1": "network",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20161207-1": {
+        "title": "RCA for Storage in North Europe affecting Multiple Services",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2016.11.21-2016.12.23.pdf"
+        ],
+        "time": "12/07/2016",
+        "summary": "Between 13:22 and 16:10 UTC on 07 December 2016, a subset of customers using Storage services in North Europe may have experienced difficulties whilst attempting to connect to their resources. In addition, customers using Virtual Machines (VMs) hosted in the affected region may have experienced VM restarts. App Service \\ Web App and Azure Search customers that have a dependency on Storage services may also have experienced availability issues in this region. ",
+        "details": "Summary of impact: Between 13:22 and 16:10 UTC on 07 December 2016, a subset of customers using Storage services in North Europe may have experienced difficulties whilst attempting to connect to their resources. In addition, customers using Virtual Machines (VMs) hosted in the affected region may have experienced VM restarts. App Service \\ Web App and Azure Search customers that have a dependency on Storage services may also have experienced availability issues in this region. The issue was due to a software bug in an extent management process of Storage services that resulted in the inability to process requests in a scale unit. Azure engineering received VM failures alerts, identified the issue and applied a temporary mitigation by failing over the affected processes. This restored the system to a healthy state. A further subset of customers were identified who may have required additional steps to fully restore system health afterVM reboots. Affected customers were notified via their management portal and were given instructions to follow the article https://aka.ms/vmrecovery to restore service health. We sincerely apologize for the extended impact to affected customers.",
+        "service_name": [
+            "Storage services",
+            "Virtual Machines",
+            "App Service Web App",
+            "Azure Search"
+        ],
+        "impact symptom": [
+            "availability",
+            "durability"
+        ],
+        "duration": 168,
+        "detection": {
+            "method": "automate",
+            "tool": "alert"
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": []
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource",
+                    "layer-3": "disk"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Additionally, the system has designed safeguards which control capacity of affected Storage scale unit if the system goes in extended failsafe mode operation by unpausing garbage collection. In this incident, a software bug in a storage unit reported a false positive for the above mentioned monitoring, in turn triggering the system to operate in failsafe mode. This software bug also suppressed the expected alerting from this monitoring, in turn not raising any warning to engineers to engage for recovery. Consequently, the system was operating in failsafe mode for an extended period. This should have automatically triggered the designed safeguard mechanism to free up space by a garbage collection process to maintain capacity. However in this incident the designed safeguard mechanism didn’t start as expected, thus resulting in eventual running out of space in some of nodes. Overall capacity in a scale unit was well below safeguard threshold although many individual nodes were almost full. We have a process that manages extents on each storage node that constantly communicates to a metadata server and signs up to take customer write requests based on available disk space. In a normal operation, a metadata server would have detected nodes with no available disk space and prevented accepting further write traffic. In this incident a software bug in an extent management process resulted in the incorrect reporting of available disk space and in turn, kept write traffic diverted to itself. Since these nodes didn’t have enough disk space to serve write traffic, this eventually resulted an extent management process failure. Once the process recovered from a failure, receiving again incorrect report of available disk space, this resulted in getting more write traffic assigned to itself and failing to serve write operation then again experiencing a failure. This cycle kept repeating itself for a portion of write requests to this scale unit. As a result of this, a subset storage accounts data was temporary unavailable and in turn causing IaaS Virtual Machines to crash. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "fail over the affected processes",
+                "manual recovery of the system",
+                "suppresse the false positive monitoring",
+                "roll out a software fix"
+            ],
+            "details": "Failures of IaaS Virtual Machines raised alarms in our system and engineers were engaged for manual recovery of the system. As soon as engineers suppressed the false positive monitoring, the system exited failsafe mode and returned to normal operation. Normal garbage collection process was resumed as well. This freed up space on all of affected nodes and relieved the system from capacity pressure and in turn returning to normal operation where all write requests were successfully fulfilled.",
+            "troubleshooting": {
+                "1": "Azure engineering received VM failures alerts, identified the issue",
+                "2": "apply a temporary mitigation by failing over the affected processes"
+            }
+        },
+        "propagation pass": {
+            "1": "Storage services",
+            "2": "Virtual Machines, App Service, Web App, Azure Search"
+        },
+        "refined path": {
+            "1": "database",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20161130-1": {
+        "title": "Traffic Manager impacting Multiple Services",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2016.11.21-2016.12.23.pdf"
+        ],
+        "time": "11/30/2016",
+        "summary": "Between 19:45 and 20:05 UTC on 30 Nov 2016, customers located primarily in the Asia-Pacific geographic region may have experienced failures attempting to connect to a subset of Azure customer resources and platform services.",
+        "details": "Summary of impact: Between 19:45 and 20:05 UTC on 30 Nov 2016, customers located primarily in the Asia-Pacific geographic region may have experienced failures attempting to connect to a subset of Azure customer resources and platform services. Alerts were received, and engineers were able to correlate failures to Azure Traffic Manager services. During this time, DNS resolution requests for domain records on the Azure Traffic Manager services in the Asia-Pacific region did not receive a response, resulting in timeouts. To mitigate the impact on customers and their services, engineers removed the Asia-Pacific Traffic Manager services from the Anycast advertisement. Traffic Manager services in other regions handled these requests until the Asia-Pacific regional services were fully restored.",
+        "service_name": [
+            "Azure customer resources and platform services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 20,
+        "detection": {
+            "method": "automate",
+            "tool": "telemtry"
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "timeout"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Maintenance was being completed on network devices in the Asia-Pacific region. Work to be completed increased resiliency and scalability of our network infrastructure. A misconfiguration resulted in inbound routing failure through one of the devices critical to the path of the Traffic Manager services. Telemetry used in monitoring this change in real-time was afterward determined to have been insufficient for this class of device. "
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "withdrew the devices",
+                "fix bug"
+            ],
+            "details": "The engineers performing this maintenance activity received alerts for Traffic Manager, and withdrew the devices in the Asia-Pacific region mitigating the availability impact. Engineers identified the problem, reviewed the proposed fix, and implemented the fix, fully restoring Traffic Manager services in the region.",
+            "troubleshooting": {
+                "1": "Alerts were received, and engineers were able to correlate failures to Azure Traffic Manager services. ",
+                "2": "withdrew the devices in the Asia-Pacific region mitigating the availability impact.",
+                "3": "Engineers identified the problem, reviewed the proposed fix, and implemented the fix, fully restoring Traffic Manager services in the region."
+            }
+        },
+        "propagation pass": {
+            "1": "inbound routing failure",
+            "2": "network devices",
+            "3": "platform services"
+        },
+        "refined path": {
+            "1": "network devices",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20161126-1": {
+        "title": "Virtual Machines - Central US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2016.11.21-2016.12.23.pdf"
+        ],
+        "time": "11/26/2016",
+        "summary": "Between 05:15 and 05:53 on 26 Nov 2016, a subset of customers using Virtual Machines in Central US may have experienced connection failures when trying to access Virtual Machines as well as Storage availability hosted in this region. Queues, Tables, Blobs, Files, and Virtual Machines with VHDs backed by the impacted storage scale unit were unavailable for the duration of impact.",
+        "details": "Summary of impact: Between 05:15 and 05:53 on 26 Nov 2016, a subset of customers using Virtual Machines in Central US may have experienced connection failures when trying to access Virtual Machines as well as Storage availability hosted in this region. Queues, Tables, Blobs, Files, and Virtual Machines with VHDs backed by the impacted storage scale unit were unavailable for the duration of impact.",
+        "service_name": [
+            "Virtual Machines"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 37,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "connection failures"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures"
+                }
+            ],
+            "details": "Engineers identified an unhealthy storage component that impacted availability."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "self-heal"
+            ],
+            "details": "Systems self-healed by the Azure platform and engineers monitored metrics to ensure stability.",
+            "troubleshooting": {
+                "1": "Engineers identified an unhealthy storage component that impacted availability. ",
+                "2": "Systems self-healed by the Azure platform and engineers monitored metrics to ensure stability. "
+            }
+        },
+        "propagation pass": {
+            "1": "storage component",
+            "2": "VM services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20161121-1": {
+        "title": "Microsoft Azure Portal – Errors using Azure Resource Manager to create Virtual Machines",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2016.11.21-2016.12.23.pdf"
+        ],
+        "time": "11/21/2016",
+        "summary": "Between 16:15 UTC and 22:20 UTC on 21 Nov 2016, customers attempting to use Azure Resource Manager (ARM) to create Virtual Machines (VMs) from the Microsoft Azure portal may have been unable to create ARM VMs with errors.",
+        "details": "Summary of impact: Between 16:15 UTC and 22:20 UTC on 21 Nov 2016, customers attempting to use Azure Resource Manager (ARM) to create Virtual Machines (VMs) from the Microsoft Azure portal may have been unable to create ARM VMs with errors. Customers who attempted using ARM to provision new Virtual Machine resources may have been successful by using PowerShell, Azure Command-Line Interface or REST APIs. Azure Engineering investigated this incident andidentified an issue with recent changes to the underlying code. Engineers deployed a hot fix which resolved the issue and ensured that Virtual Machine deployment processes returned to a healthy state.",
+        "service_name": [
+            "Azure Resource Manager",
+            "Virtual Machines"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 365,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "An issue with recent changes to the underlying code. Unfortunately the change had a side effect and caused a failure while validatingthe location of VM at a creation. This was not detected during the testing phase due to an issue with the testing framework that didn’t catch this error scenario. We will review the testing framework to be able to catch this sort of failures in future."
+        },
+        "operation": [
+            "change"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy a hotfix"
+            ],
+            "details": "Azure Engineering investigated this incident andidentified an issue with recent changes to the underlying code. Engineers deployed a hot fix which resolved the issue and ensured that Virtual Machine deployment processes returned to a healthy state.",
+            "troubleshooting": {
+                "1": "Azure Engineering investigated this incident and identified an issue with recent changes to the underlying code",
+                "2": "Engineers deployed a hotfix which resolved the issue and ensured that Virtual Machine deployment processes returned to a healthy state. "
+            }
+        },
+        "propagation pass": {
+            "1": "Azure resource manager",
+            "2": "Azure resources"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    }
+}

@@ -1,0 +1,22 @@
+Hook handler code in the TwoColConflict extension resulted in users who had the TwoColConflict Beta feature enabled facing core's edit conflict resolution interface when trying to preview or diff any edit.
+• 2018-11-02 14:52 (MEZ): gerrit:466937 containing the bug was merged.
+• 2018-11-06 21:40 (UTC): The wmf/1.33.0-wmf.3 branch containing the bug went live on group0.
+• 2018-11-07 16:59 (MEZ): A QWERTY team member started running into the issue. The issue was identified and fixed, and the backport gerrit:472175 scheduled for the next days SWAT.
+• 2018-11-07 20:12 (UTC): The unpatched wmf/1.33.0-wmf.3 branch went live on group1.
+• 2018-11-08 11:49 (MEZ): The extension got disabled via gerrit:472409.
+• The extension got re-enabled step by step.
+
+The team expected the MediaWiki core's tests to report a failure as fundamental as not being able to preview/diff an edit. This did not happened, because:
+• The relevant code in core is not covered by PHPUnit tests (see https://doc.wikimedia.org/cover/mediawiki-core/includes/EditPage.php.html).
+• A dedicated browser test for the preview/diff functionality does not exist.
+• The extensions CI was not set up to run core's browser tests.
+• Even if, the browser tests must then run with the Beta feature enabled.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.
+• Check if there really are browser tests in core covering the relevant feature set, e.g. "the user wants to create a new talk page, but preview it first, uninterrupted".
+• Run the core browser tests on a local dev machine and make sure at least one fails with the bug in place.
+• Result: Yes, 1 test case fails, the "should be undoable" one. Dedicated test cases for preview/diff do not exist, though.
+• Add a dedicated preview test case to core that fails with the bug in place.
+• Change the TwoColConflict CI configuration to run core's browser tests as part of every merge process, with the Beta feature enabled.

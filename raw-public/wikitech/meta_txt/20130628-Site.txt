@@ -1,0 +1,14 @@
+At ~04:30 UTC on 2013-06-28 the site went down during a deploy started by Roan K. Caused by an improperly deployed extension (WikibaseDataModel). This extension caused mergeMessageFileList.php to abort (due to a limitation in mergeMessageFileList.php).
+• extension-list was modified in git, but the change was not properly deployed.
+• WikibaseDataModel returns null from the file level of its extension setup file, causing mergeMessageFileList.php to abort even when the file was present.
+• Issue is that this code was moved out of the Wikibase "extension" (git repo) into a stand-alone git repo and extension. In the version of Wikibase in wmf8, it was loading the code from the Wikibase git repo and setting a define WIKIBASE_DATAMODEL_VERSION (or something). Then when it tries to load WikibaseDataModel, the constant is already set and code/classes already loaded, so the code returns instead of loading stuff again. Having it loaded twice could be a problem, as it could load the *wrong* version.
+• The intention is for WikibaseDataModel to be for wmf9 only. We could set configuration in CommonSettings and InitialiseSettings to help control things but it's error prone.
+• I think best is for the mergeMessageFileList.php to skip any missing extension files. (e.g. allow the extension to be present in wmf9 branch and not in wmf8) aude (talk) 19:11, 28 June 2013 (UTC)
+• A bug in mw-update-l10n causes errors from mergeMessageFileList.php to be ignored. A zero-length file is created by mktemp and copied into the production, then the l10n cache is rebuilt with no extensions defined. bugzilla:50347
+• mergeMessageFileList.php should support comments in its input file. Comments should be added to extension-list in git detailing deployment procedure and potential pitfalls.
+• bugzilla:50347 (mergeMessageFileList.php bug above) should be fixed. Done
+• Periodic backups of the /a/common directory including unversioned l10n cache files should be made, so that the site can rapidly be restored to a known-good state in the event of cache corruption.
+• Sanity checks should be done by scap before the files are pushed out, in addition to sanity checks done by MagicWord::get() at runtime.
+• Communication! Code pushes should be done during hours when ops are very likely to be awake, unless it is in emergency
+• Emergency procedures - we need to make emergency procedures such as "rollback first, fix later"
+• Update documentation at Heterogeneous_deployment#Add_new_extensions_to_extension-list (specifically, if an extension is added and needed in a new branch, it also needs to be added to older branches even if not used or enabled there?) or can the mergeMessageFileList.php be changed so that it ignores missing extensions, maybe with a warning? (see patch 71056, suggestions? any reason not to do this?)

@@ -1,0 +1,6 @@
+Wikimedia sites experienced an outage on 15th March 2013 from about 16:14 to about 16.23 PDT (23:14 to 23:23 UTC).
+• Duration: From about 23:14 UTC to 23:23 UTC; approximately 9 minutes
+• Impact: Wikimedia sites were not available for edits; Most users were able to continue use the sites for 'read'.
+• Cause: Database contention issues caused by the new version of AFTv5 that was deployed
+
+The culprit was query hooking into "my contributions", one I had completely overlooked. If you were to attempt to construct a query avoiding all possible indexed columns, this would have to be the leading example.

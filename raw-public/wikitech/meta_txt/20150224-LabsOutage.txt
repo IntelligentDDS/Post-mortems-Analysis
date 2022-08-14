@@ -1,0 +1,19 @@
+At 05:30 on 2015-02-24 all of the labs instances hosted on virt1012 lost network connectivity. Investigation turned up very little, so virt1012 was rebooted and each instance in turn reset and restarted. Instances were largely back to normal by 08:00.
+• [05:30] Instances drop off network. Shinken fails to notify IRC until much later, for unclear reasons. Because virt1012 contains mostly refugees from last week's outage, nearly all the same instances are affected as during that outage.
+• [06:00] Yuvi begins investigating, but is derailed by the fact that nova reports confusing host information for the migrated hosts:
+
+hypervisor_hostname seems to reflect the original host and doesn't reflect anything about current running state, but that's not at all obvious and the flag is poorly documented.
+• [06:30] Andrew Bogott joins the investigation, frantically restarts nova services on labnet1001 and virt1012 to no avail.
+• [06:45] Yuvi and Andrew (independently) decide that this is a networking issue, as nova seems happy to schedule new instances on virt1012 and they start up and are promptly unreachable. No actual network symptoms or warnings are evident, though.
+• [07:10] Andrew makes preparations for rebooting virt1012, runs a batch job to suspend all instances in hopes that they can be resumed after reboot and avoid actual instance reboots. Nova-compute crashes during the 'suspend', leaving lots of instances in an ERROR state
+• [07:15] Giuseppe joins investigation, looks for network issues, finds some suspicious log lines:
+• [07:35] Out of ideas, everyone agrees to reboot virt1012. It restarts, instance networking is restored, and we've learned nothing.
+• [07:55] To clear the ERROR and SHUTDOWN states of many instances, Andrew runs 'nova reset-state --active' and then 'nova reboot' for all instances. Most instances recover and are fine, a few remain in the ERROR state. A repeat of reset-state/reboot restores everything to working order.
+
+No explanation has been found for the cause of this problem. Next time it happens, a swift reboot is probably the best approach.
+
+Most actionables are identical to those listed for last week's outage -- in general we need to reduce Tools vulnerability to such failures.
+
+We should also investigate ways of improving shinken notification so that failures don't silence the exact warnings about those failures.
+
+Here is a complete list of instances affected, as reported by "nova list --all-tenants --host virt1012":

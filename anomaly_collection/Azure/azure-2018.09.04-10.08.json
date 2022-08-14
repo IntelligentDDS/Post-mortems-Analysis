@@ -1,0 +1,858 @@
+{
+    "azure-20180904-1": {
+        "title": "RCA - South Central US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "9/4/2018",
+        "summary": "In the early morning of September 4, 2018, high energy storms hit southern Texas in the vicinity of Microsoft Azure’s South Central US region. Multiple Azure datacenters in the region saw voltage sags and swells across utility feeds. At 08:42 UTC, lightning caused a large swell which was immediately followed by a large sag in one of the region’s datacenters, which fell below the required voltage specification for the chiller plant. By design this sag triggered the chillers to power down and lock out, to protect this equipment. The expected behavior in this occurrence is for the Mechanical Electrical Plumbing (MEP) management control system to invoke one of the redundant cooling systems in the facility until the chiller plant is able to recover. This is an automated operating procedure and is the standard design in many Microsoft datacenters around the world, having withstood similar situations without any issues. In the impacted datacenter, the redundant cooling system had been switched to manual mode for invoking the failover of cooling. It was set to a manual failover following the installation of new equipment in the facility where all testing had not been completed. The manual procedure for failing over the cooling mechanisms is part of our statement of operations and this was executed successfully in one of the other datacenters in the South Central US region, 30 mins prior to this event. Onsite engineers in the impacted datacenter received multiple alarms so were investigating several situations reported in the facility. Cooling alerts which should have been manually actioned were not. Consequently, temperatures began to rise, eventually reaching temperatures that triggered infrastructure devices and servers to shutdown. This shutdown mechanism is intended to protect infrastructure from overheating but, in this instance, temperatures increased so quickly in parts of the datacenter that a number of storage servers were damaged, as well as a small number of network devices. While storms were still active in the area, onsite teams took a series of actions to prevent further issues – including transferring the datacenter to generators, thereby stabilizing the power supply. Initial focus of recovery was the Azure networking infrastructure. The second focus was to recover the storage servers and the data on these servers. The decision was made to work towards recovery of data and not fail over to another datacenter, since a failover would have resulted in limited data loss due to the asynchronous nature of geo replication. Recovering the storage services involved replacing failed infrastructure components, migrating customer data from damaged servers to healthy servers, and validating the integrity of the recovered data. This process took time due to the number of servers that required manual intervention, and the need to work carefully to maintain customer data integrity above all else.",
+        "details": "Customer impact: [1] Impact to resources in South Central US Customer impact began at approximately 09:29 UTC when infrastructure devices and servers in the datacenter began shutting down as a result of the rising temperatures. This impacted a subset of customers using Azure services that depended on this infrastructure, specifically: Storage, Virtual Machines, Application Insights, Cognitive Services & Custom Vision API, Backup, App Service (and App Services for Linux and Web App for Containers), Azure Database for MySQL, SQL Database, Azure Automation, Site Recovery, Redis Cache, Cosmos DB, Stream Analytics, Media Services, Azure Resource Manager, Azure VPN gateways, PostgreSQL, Application Insights, Azure Machine Learning Studio, Azure Search, Data Factory, HDInsight, IoT Hub, Analysis Services, Key Vault, Log Analytics, Azure Monitor, Azure Scheduler, Logic Apps, Databricks, ExpressRoute, Container Registry, Application Gateway, Service Bus, Event Hub, Azure Portal IaaS Experiences- Bot Service, Azure Batch, Service Fabric and Visual Studio Team Services (VSTS). Although the majority of customers impacted by these services were mitigated by 11:00 UTC on 5 September, full mitigation was not until approximately 08:40 UTC on 7 September when the final storage accounts were brought back online. The extended Storage recovery was due to damaged infrastructure which required repairs while bringing Storage disks back online. In this incident, customers that had enabled RA-GRS still had read-only access to the geo-replicated copy of the impacted storage accounts. [2] Impact to Azure Service Manager (ASM) Insufficient resiliency for Azure Service Manager (ASM) led to the widest impact for customers outside of South Central US. ASM performs management operations for all ‘classic’ resource types. This is often used by customers who have not yet adopted Azure Resource Manager (ARM) APIs which have been made available in the past few years. ARM provides reliable, global resiliency by storing data in every Azure region. ASM stores metadata about these resources in multiple locations, but the primary site is South Central US. Although ASM is a global service, it does not support automatic failover. As a result of the impact in South Central US, ASM requests experienced higher call latencies, timeouts or failures when performing service management operations. To alleviate failures, engineers routed traffic to a secondary site. This helped to provide temporary relief, but the impact was fully mitigated once the associated South Central US storage servers were brought back online at 01:10 UTC on 5 September. [3] Impact to Azure Resource Manager (ARM) The ARM service instances in regions outside of South Central US were impacted due to the dependencies called out in [8] below, which includes subscription and RBAC role assignment operations. In addition, because ARM is used as a routing and orchestration layer (for example, when using ARM templates to interact with ‘classic’ resources) customers may have experienced latency, failures or timeouts when using PowerShell, CLI or the portal to manage resources through ARM that had underlying dependencies on ASM or other impacted services mentioned in this RCA. [4] Impact to Azure Active Directory (AAD) As infrastructure shutdown from 9:29 UTC, Azure AD authentication requests routed as expected to sites outside of South Central US. Requests were successfully being managed until 11:00 UTC when the first signs of degradation occurred for customers located in North America, predominantly due to three factors. First, the AAD autoscale operation that is designed to scale ahead of demand did not complete. The autoscale failure was due to a dependency on the Azure ASM API which, as discussed earlier, was unable to process service management operations. Second, as AAD sites neared safe utilization thresholds, Quality of Service throttling mechanisms engaged, resulting in authentication failures and timeouts. Third, the engineering team discovered a bug that triggered an unexpected behavior in Office clients which resulted in aggressive retry logic, exacerbating the increased load on the service. [5] Impact to Visual Studio Team Services (VSTS) VSTS organizations hosted in South Central US were down. Some VSTS services in this region provide capabilities used by services in other regions, which led to broader impact – slowdowns, errors in the VSTS Dashboard functionality, and inability to access user profiles stored in South Central US to name a few. Customers with organizations hosted in the US were unable to use Release Management and Package Management services. Build and release pipelines using the Hosted macOS queue failed. To avoid data loss, VSTS services did not failover and waitesd for the recovery of the Storage services. After VSTS services had recovered, additional issues for customers occurred in Git, Release Management, and some Package Management feeds due to Azure Storage accounts that had an extended recovery. This VSTS impact was fully mitigated by 00:05 UTC on 6 September. The full RCA for VSTS can be found at https://aka.ms/VSTS-CPD1PLG. [6] Impact to Azure Application Insights Application Insights resources across multiple regions experienced impact. This was caused by a dependency on Azure Active Directory and platform services that provide data routing. This impacted the ability to query data, to update/manage some types of resources such as Availability Tests, and significantly delayed ingestion. Engineers scaled out the services to more quickly process the backlog of data and recover the service. During recovery, customers experienced gaps in data, as seen in the Azure portal; Log Search alerts firing, based on latent ingested data; latency in reporting billing data to Azure commerce; and delays in results of Availability Tests. Although 90% of customers were mitigated by 16:16 UTC on 6 September, full mitigation was not until 22:12 UTC on 7 September.  [7] Impact to the Azure status page The Azure status page (status.azure.com) is a web app that uses multiple Azure services in multiple Azure regions. During the incident, the status page received a significant increase in traffic, which should have caused a scale out of resources as needed. The combination of the increased traffic and non-optimized auto-scale configuration settings prevented the web app from scaling properly to handle the increased load. This resulted in intermittent 500 errors for a subset of page visitors, starting at approximately 12:30 UTC. Once these configuration issues were identified, our engineers adjusted the auto-scale settings, so the web app could expand organically to support the traffic. The impact to the status page was fully mitigated by 23:05 UTC on 4 September. [8] Impact to Azure subscription management From 09:30 UTC on 4 September, Azure subscription management experienced five separate issues related to the South Central US datacenter impact. First, provisioning of new subscriptions experienced long delays as requests were queued for processing. Second, the properties of existing subscriptions could not be updated. Third, subscription metadata could not be accessed, and as a result billing portal requests failed. Fourth, customers may have received errors in the Azure management and/or billing portals when attempting to create support tickets or contacting support. Fifth, a subset of customers were incorrectly shown a banner asking that they contact support to discuss a billing system issue. Impact to subscription management was fully mitigated by 08:30 UTC on 5 September. Next steps:  We sincerely apologize for the impact to affected customers. Investigations have assessed the best ways to improve architectural resiliency and mitigate the issues that contributed to this incident and its widespread impact. A detailed forensic analysis of the impacted datacenter hardware and systems is complete, and thorough reviews of datacenter recovery procedures is ongoing. Several changes are underway:  1. Failure of the cooling redundancy via MEP automation is understood in this incident, and has been remediated – cooling systems in all datacenters in South Central US, and around the world, have been reviewed with no other systems requiring remediation. 2. A review with every Azure service to identify dependencies on the ASM API continues. Service teams are exploring paths to move these services from ASM to the newer ARM platform. Immediate efforts are to prioritize autoscale operations succeeding in the unlikely event of ASM degradation or failure.3. Additional improvements to AAD resiliency that would prevent customer impact in the case of a surge in authentication rates are in progress. This is particularly focused on ensuring that the ASM API responsible for the autoscale operation is highly available. 4. Necessary fixes have been released for Microsoft Office clients, to prevent the unexpected surge in authentication traffic. 5. An evaluation of the future hardware design of storage scale units is underway, to increase resiliency to environmental factors. In addition, for scenarios in which impact is unavoidable, we are determining software changes to automate and accelerate recovery. 6. Microsoft takes the responsibility of preserving your data seriously. If there is any chance of recovering the data in the primary region, Microsoft will delay the failover and focus on recovering your data. However, as announced at Ignite 2018, Azure Storage services are planning to allow customers using Geo-Redundant Storage (GRS) to make their own decision about failing over a Storage accounts to its geo-replicated region. This will give customers an option of bringing Storage accounts back online for both read and write access for workloads that can accept a potential risk of data loss due to the nature of asynchronous replication.7. Impacted customers will receive a credit pursuant to the Microsoft Azure Service Level Agreement, in their October billing statement.",
+        "service_name": [
+            "Multiple Azure datacenters in the vicinity of Microsoft Azure’s South Central US region"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance",
+            "scalability"
+        ],
+        "duration": 5148,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "alarms"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "latency",
+                    "timeouts",
+                    "error rate",
+                    "increase traffic",
+                    "intermittent 500 error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "power outage"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "cooling system"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "payload flood"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "At 08:42 UTC, lightning caused a large swell which was immediately followed by a large sag in one of the region’s datacenters, which fell below the required voltage specification for the chiller plant. By design this sag triggered the chillers to power down and lock out, to protect this equipment. Onsite engineers in the impacted datacenter received multiple alarms so were investigating several situations reported in the facility. Cooling alerts which should have been manually actioned were not. Consequently, temperatures began to rise, eventually reaching temperatures that triggered infrastructure devices and servers to shutdown. This shutdown mechanism is intended to protect infrastructure from overheating but, in this instance, temperatures increased so quickly in parts of the datacenter that a number of storage servers were damaged, as well as a small number of network devices."
+        },
+        "operation": [
+            "normal"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "route traffic",
+                "service throttling mechanisms",
+                "scale out services",
+                "adjust autoscale setting",
+                "stabilizing the power supply",
+                "replacing failed infrastructure components",
+                "migrating data"
+            ],
+            "details": "While storms were still active in the area, onsite teams took a series of actions to prevent further issues – including transferring the datacenter to generators, thereby stabilizing the power supply. Initial focus of recovery was the Azure networking infrastructure. The second focus was to recover the storage servers and the data on these servers. The decision was made to work towards recovery of data and not fail over to another datacenter, since a failover would have resulted in limited data loss due to the asynchronous nature of geo replication. Recovering the storage services involved replacing failed infrastructure components, migrating customer data from damaged servers to healthy servers, and validating the integrity of the recovered data. This process took time due to the number of servers that required manual intervention, and the need to work carefully to maintain customer data integrity above all else.",
+            "troubleshooting": {
+                "1": "transferring the datacenter to generators, thereby stabilizing the power supply.",
+                "2": "Initial focus of recovery was the Azure networking infrastructure.",
+                "3": "second focus was to recover the storage servers and the data on these servers.",
+                "4": "Recovering the storage services involved replacing failed infrastructure components, migrating customer data from damaged servers to healthy servers, and validating the integrity of the recovered data."
+            }
+        },
+        "propagation pass": {
+            "1": "utility feeds",
+            "2": "cooling system",
+            "3": "power",
+            "4": "infrastructure devices and servers",
+            "5": "datacenter and network devices",
+            "6": "Azure services that depended on this infrastructure"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "infrastructure devices and servers",
+            "3": "data center",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20180905-1": {
+        "title": "RCA - Azure Active Directory - Multiple Regions",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "09/05/2018",
+        "summary": "Between as early as 09:00 UTC on 05 Sept 2018 and as late as 05:50 UTC on 10 Sept 2018, a small subset of Azure Active Directory (AAD) customers may have experienced intermittent authentication failures when connecting to resources in the following regions: Japan, India, Australia, South Brazil, and East US 2.",
+        "details": "Root cause and mitigation: A recent change to the Azure VM platform resulted in interference with the HTTP settings used by the Azure Active Directory (AAD) proxy service. This led to the failure of a subset of HTTP requests arriving at the affected AAD regions. The issue was initially mitigated by rebooting the proxy servers in the affected regions and reverting to the required AAD settings. The issue was finally resolved by deploying an AAD proxy configuration change that prevented the interference from the platform change.",
+        "service_name": [
+            "Azure Active Directory (AAD)"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 7010,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "bussiness kpi": [
+                    "intermittent authentication failures"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "A recent change to the Azure VM platform resulted in interference with the HTTP settings used by the Azure Active Directory (AAD) proxy service. This led to the failure of a subset of HTTP requests arriving at the affected AAD regions."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "reboot the proxy servers",
+                "revert to the required AAD settings",
+                "deploy a new AAD proxy configuration"
+            ],
+            "details": "The issue was initially mitigated by rebooting the proxy servers in the affected regions and reverting to the required AAD settings. The issue was finally resolved by deploying an AAD proxy configuration change that prevented the interference from the platform change.",
+            "troubleshooting": {
+                "1": "initially mitigated by rebooting the proxy servers in the affected regions and reverting to the required AAD settings.",
+                "2": "finally resolved by deploying an AAD proxy configuration change that prevented the interference from the platform change."
+            }
+        },
+        "propagation pass": {
+            "1": "Azure VM platform",
+            "2": "AAD proxy service",
+            "3": "AAD service"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20180915-1": {
+        "title": "Metrics Missing - Germany",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "09/15/2018",
+        "summary": "Summary of impact: Between 06:30 UTC on 15 Sep 2018 and 22:35 UTC on 17 Sep 2018, a subset of customers may have experienced difficulties viewing Virtual Machines and/or other compute resource metrics. Metric graphs including CPU (average), Network (total), Disk Bytes (total) and Disk operations/sec (average) may have appeared empty within the Management Portal. Auto-scaling operations were potentially impacted as well.",
+        "details": "Root cause: Scheduled maintenance was being completed on a gateway component within the metric ingestion pipeline. During this time one instance was taken down, leaving up another instance to service traffic. When this transition occurred, it was not properly handled by the publishing agent, as the result it failed to continue publication for a subset of customers Virtual Machines metrics. In parallel, the agent uses a VIP to communicate with the ingestion gateway at the frontend. When the VIP was failed over, the agent did not properly detect and re-establish connectivity to the functioning instance during the maintenance period. The gateway did not use reserved IPs and received a new endpoint upon maintenance completion. These two triggers caused the agent to reach an invalid state it was not able to recover without manual mitigation. Mitigation: A change was made to the agent which forced it to recycle and re-establish a proper connection to the gateway component. Once this occurred, metric publication began flowing as expected. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. Steps specific to this incident include: 1. Further localization of the publication pipeline to minimize the potential of broad impact, when future maintenance is performed [In progress]. 2. Key monitoring gaps in the pipeline have been identified to more rapidly allow the issues of this nature to be detected and resolved without impact in the future. [In progress] 3. Failure recovery has been improved in the client to avoid long periods of publication to a non-healthy gateway",
+        "service_name": [
+            "Publishing Agent"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 3845,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "exception handling"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "When this transition occurred, it was not properly handled by the publishing agent, as the result it failed to continue publication for a subset of customers Virtual Machines metrics.  When the VIP was failed over, the agent did not properly detect and re-establish connectivity to the functioning instance during the maintenance period."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "change to agent",
+                "recycle and re-establish a proper connection"
+            ],
+            "details": "A change was made to the agent which forced it to recycle and re-establish a proper connection to the gateway component. ",
+            "troubleshooting": {
+                "1": "A change was made to the agent which forced it to recycle and re-establish a proper connection to the gateway component."
+            }
+        },
+        "propagation pass": {
+            "1": "publishing agent",
+            "2": "Virtual Machine and compute resources"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "VM"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20180919-1": {
+        "title": "Log Analytics - Latency, Timeouts and Service Management Failures",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "09/19/2018",
+        "summary": "Between 10:54 and 18:45 UTC on 19 Sep 2018, a subset of customers using Log Analytics and/or other downstream services may have experienced latency, timeouts or service management failures.",
+        "details": "Impacted services and experience: Log Analytics - Difficulties accessing data, high latency and timeouts when getting workspace information, running Log Analytics queries, and other operations related to Log Analytics workspaces. Service Map - Ingestion delays and latency. Automation- Difficulties accessing the Update management, Change tracking, Inventory, and Linked workspace blades. Network Performance Monitor - Incomplete data in tests configured. Preliminary root cause: A backend Log Analytics service experienced a large number of requests which caused failures in several other dependent services. Mitigation: Engineers applied a backend scaling adjustment to mitigate the issue.",
+        "service_name": [
+            "Log Analytics",
+            "Service Map",
+            "Automation",
+            "Network Performance Monitor"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 471,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "high latency",
+                    "timeouts",
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "excessive flow"
+                }
+            ],
+            "details": "A backend Log Analytics service experienced a large number of requests which caused failures in several other dependent services"
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "apply a backend scaling adjustment"
+            ],
+            "details": "Engineers applied a backend scaling adjustment to mitigate the issue.",
+            "troubleshooting": null
+        },
+        "propagation pass": {
+            "1": "backend Log Analytics service",
+            "2": "other downstream services"
+        },
+        "refined path": {
+            "1": "backend",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20180926-1": {
+        "title": "RCA - Multiple Services - Southeast Asia",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "09/26/2018",
+        "summary": "Between 09:52 and 12:28 UTC on 26 Sep 2018, a subset of customers in Southeast Asia may have experienced latency or difficulties connecting to Virtual Machines and/or Cloud Service resources hosted in this region. Customers using a number of related services including: App Services, Redis Cache, Application Insights, Stream Analytics, and API Management may have also experienced latency or difficulties connecting to these services in the region.",
+        "details": "Workaround: This incident impacted a single scale unit in the Southeast Asia region. Customers could have reduced the impact of this incident by using VM Scale Sets, or by deploying in more than one region and using Azure Traffic Manager to direct requests to a healthy deployment. Root cause and mitigation: In Azure's network architecture, each rack of servers in a data center row connects to 8 network switches located in the middle of the row. This provides 8-way network redundancy at the row level, and makes it very unlikely that failures of the row-level switches will impact customer traffic. In this incident, there was a failure of the RS-232 serial line aggregator that provides connectivity to the console ports of all 8 row-level switches. The flapping behavior of the console ports triggered a bug in the console line driver of the Operating System kernel running on the 8 row-level network switches, and caused a correlated failure of all 8 row-level switches. The failure of all 8 row-level switches led to loss of network connectivity to all servers in the racks located in that row.That, in turn, caused impact to all services hosted on the servers and caused the reboot of most VMs running on the servers. Engineers mitigated this incident by restarting the affected row-level switches and recovering impacted downstream services. ",
+        "service_name": [
+            "Virtual Machines",
+            "App Services",
+            "Redis Cache",
+            "Application Insights",
+            "Stream Analytics",
+            "API Management"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 156,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "latency"
+                ]
+            },
+            {
+                "system kpi": [
+                    "connectivity loss"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "The flapping behavior of the console ports triggered a bug in the console line driver of the Operating System kernel running on the 8 row-level network switches, and caused a correlated failure of all 8 row-level switches. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restart switches",
+                "recover downstearm services"
+            ],
+            "details": "Engineers mitigated this incident by restarting the affected row-level switches and recovering impacted downstream services. ",
+            "troubleshooting": {
+                "1": "Engineers mitigated this incident by restarting the affected row-level switches and recovering impacted downstream services. "
+            }
+        },
+        "propagation pass": {
+            "1": "8 row-kernal newtwork switches",
+            "2": "all servers in the rack in that row",
+            "3": "services and VMs on the servers"
+        },
+        "refined path": {
+            "1": "switch",
+            "2": "datacenter server",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20180930-1": {
+        "title": "Multiple Services - Korea South",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "09/30/2018",
+        "summary": "Between 13:50 and 19:10 UTC on 30 Sep 2018, a subset of Storage customers in Korea South may have experienced difficulties connecting to resources hosted in this region. Some services with dependencies on Storage in the region were also impacted. ",
+        "details": "Preliminary root cause: Engineers determined that a single storage scale unit experienced impact to a limited subset of its storage resources, and engineers are still investigating the underlying cause. Mitigation: Engineers manually restarted the impacted Storage nodes to mitigate the issue. ",
+        "service_name": [
+            "Storage services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 320,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [{
+                "layer-1": "external causes",
+                "layer-2": "insufficient resource"
+            }],
+            "details": "Engineers determined that a single storage scale unit experienced impact to a limited subset of its storage resources, and engineers are still investigating the underlying cause. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restart Storage nodes"
+            ],
+            "details": "Engineers manually restarted the impacted Storage nodes to mitigate the issue. ",
+            "troubleshooting": {
+                "1": "Engineers manually restarted the impacted Storage nodes to mitigate the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "Storage nodes",
+            "2": "Storage services"
+        },
+        "refined path": {
+            "1": "storage server",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20181002-1": {
+        "title": "ExpressRoute Circuit - Australia Southeast",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "10/02/2018",
+        "summary": "Between 01:00 UTC and 04:45 UTC on 02 Oct 2018, a subset of customers began facing intermittent packet loss in the Melbourne ExpressRoute location for Australia Southeast region. During the period of degradation, customers may have experienced intermittent packet loss when using an ExpressRoute circuit hosted on the Microsoft Enterprise Edge device (MSEE) experiencing this issue. Access to a Virtual Network and the corresponding resources using a Virtual Network Gateway and services hosted on public and Microsoft peering were also affected when connecting using the ExpressRoute service.",
+        "details": "Root cause and mitigation: ExpressRoute, as with other Azure services, is designed and implemented in a highly available manner and architecture. ExpressRoute has multiple redundancies implemented in both software and hardware to ensure maximum uptime for customers. It was identified that an upstream physical port experienced a partial failure causing the connection between the ExpressRoute routers and the Microsoft global network to intermittently drop packets. Due the partial failure, the physical port was not removed from rotation successfully causing impact to customers consuming services. Automatic detection mechanisms are in place to detect failure modes in the platform. The detection mechanisms triggered an internal alert and engineers engaged to begin troubleshooting. An unrelated issue had previously arisen that did not immediately make this issue apparent, causing a slight delay in mitigation. When engineers pinpointed the issue, the port was removed from rotation and services were immediately restored.",
+        "service_name": [
+            "ExpressRoute"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 225,
+        "detection": {
+            "method": "automate",
+            "tool": "Automatic detection mechanisms"
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "packet loss"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "it was identified that an upstream physical port experienced a partial failure causing the connection between the ExpressRoute routers and the Microsoft global network to intermittently drop packets."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "remove the physical port from rotation"
+            ],
+            "details": "When engineers pinpointed the issue, the port was removed from rotation and services were immediately restored",
+            "troubleshooting": {
+                "1": "triggered an internal alert and engineers engaged to begin troubleshooting.",
+                "2": "When engineers pinpointed the issue, the port was removed from rotation and services were immediately restored"
+            }
+        },
+        "propagation pass": {
+            "1": "physical port",
+            "2": "connection between the ExpressRoute routers and the Microsoft global network",
+            "3": "azure services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "network",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20181003-1": {
+        "title": "Azure DevOps",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "10/03/2018",
+        "summary": "Between 16:45 and 18:15 UTC on 03 Oct 2018, a subset of customers using Azure DevOps may have been unable to access DevOps resources. Additional information can be found at https://aka.ms/vstsblog .",
+        "details": "Preliminary root cause: Engineers determined that a network device experienced a hardware fault, causing a DevOps backend service to become unavailable. Mitigation: Engineers took the faulty network device out of rotation and rerouted network traffic to mitigate the issue.",
+        "service_name": [
+            "Azure DevOps"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 90,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "Engineers determined that a network device experienced a hardware fault, causing a DevOps backend service to become unavailable."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "take the faulty network device out of rotation",
+                "reroute network traffic"
+            ],
+            "details": "Engineers took the faulty network device out of rotation and rerouted network traffic to mitigate the issue.",
+            "troubleshooting": {
+                "1": "determined that a network device experienced a hardware fault",
+                "2": "took the faulty network device out of rotation",
+                "3": "rerouted network traffic to mitigate the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "network device",
+            "2": "DevOps backend service"
+        },
+        "refined path": {
+            "1": "network device",
+            "2": "backend"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20181004-1": {
+        "title": "Azure DevOps",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "10/04/2018",
+        "summary": "Between 17:47 and 18:40 UTC on 04 Oct 2018, users with Azure DevOps organizations in South Central US may have experienced errors while using the service.",
+        "details": "Preliminary root cause: Engineers determined that this was caused by a networking event that impacted communication between one Azure DevOps scale unit in South Central US from the rest of the world. Mitigation: After the network event was self-recovered, Azure DevOps performed a manual action to reset our web servers which expedited the recovery from the network incident.",
+        "service_name": [
+            "Azure DevOps"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 53,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "others"
+                }
+            ],
+            "details": "Engineers determined that this was caused by a networking event."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "self-recovered",
+                "reset web servers"
+            ],
+            "details": "After the network event was self-recovered, Azure DevOps performed a manual action to reset our web servers which expedited the recovery from the network incident.",
+            "troubleshooting": null
+        },
+        "propagation pass": {
+            "1": "network event",
+            "2": "communication between one Azure DevOps scale unit in South Central US from the rest of the world",
+            "3": "azure DevOps service"
+        },
+        "refined path": {
+            "1": "network",
+            "2": "storage scale unit",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20181008-1": {
+        "title": "Azure DevOps",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "10/08/2018",
+        "summary": "Between 11:40 and 13:30 UTC on 08 Oct 2018, a subset of Azure DevOps customers may have experienced error messages, latency, and/or authentication issues. For more information regarding this issue, please refer to: https://aka.ms/devopsincident. In addition, a small subset of Azure Portal customers may have experienced issues logging into the Azure portal.",
+        "details": "Preliminary root cause: Engineers determined that a network device experienced a hardware fault and that network traffic was not automatically rerouted. Mitigation: Engineers took the faulty network device out of rotation and rerouted network traffic to mitigate the issue.",
+        "service_name": [
+            "DevOps",
+            "Azure Portal"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 110,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "error messages",
+                    "latency",
+                    "authentication issues",
+                    "logging issues"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "softwares bugs",
+                    "layer-3": "exception handling"
+                }
+            ],
+            "details": "Engineers determined that a network device experienced a hardware fault and that network traffic was not automatically rerouted."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "remove the network device from rotation",
+                "reroute network traffic"
+            ],
+            "details": "Engineers took the faulty network device out of rotation and rerouted network traffic to mitigate the issue.",
+            "troubleshooting": null
+        },
+        "propagation pass": {
+            "1": "network device",
+            "2": "DevOps service",
+            "3": "azure Portal"
+        },
+        "refined path": {
+            "1": "network device",
+            "2": "app",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20181008-2": {
+        "title": "RCA - Service Bus - East US and West US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "10/08/2018",
+        "summary": "Summary of impact: Between 21:00 UTC on 08 Oct 2018 and 01:00 UTC on 10 Oct 2018, a subset of customers using Service Bus in East US 2 and West US may have experienced intermittent timeouts on runtime and management operations. Retries may have been successful for some customers.",
+        "details": "Root cause and mitigation: Service Bus and Event Hubs recently added support for Service Endpoints to support VNet scenarios. For this support to work, a VM Extension which provides service tunneling for Azure Services was added to the Service Bus and Event Hubs gateway VMs. The Service Bus and Event Hub gateway VMs also are configured with Direct Server Return (DSR) endpoints. Recently, the service tunneling extension was upgraded to v4.1. Under certain conditions, the way the service which configures DSR and the Service Tunneling extension interact can cause the Service Bus and Event Hubs gateway to lose the ability to receive load balanced traffic. On this incident, that condition was triggered when the Service Bus VMs received the monthly OS Patch. Once a VM was impacted, the load balance traffic was not recovered until the VMs were manually patched to fix the misconfiguration.",
+        "service_name": [
+            "Service Bus"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 240,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "intermittent timeouts"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Recently, the service tunneling extension was upgraded to v4.1. Under certain conditions, the way the service which configures DSR and the Service Tunneling extension interact can cause the Service Bus and Event Hubs gateway to lose the ability to receive load balanced traffic."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "manually patch the VMs",
+                "fix the misconfiguration"
+            ],
+            "details": "Once a VM was impacted, the load balance traffic was not recovered until the VMs were manually patched to fix the misconfiguration",
+            "troubleshooting": null
+        },
+        "propagation pass": {
+            "1": "Service Bus VMs"
+        },
+        "refined path": {
+            "1": "VM"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20181008-3": {
+        "title": "Availability Issues with Application Insights Portal",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+        ],
+        "time": "10/08/2018",
+        "summary": "Between 23:20 on 08 Oct 2018 and 00:20 UTC on 09 Oct 2018, a subset of customers using Application Insights may have experienced issues connecting to their Application Insights resources. Application Insight portal blades may have not loaded for some customers.",
+        "details": "Preliminary root cause: Engineers identified a configuration change that caused a backend service to become unhealthy, impacting the availability of the Application Insights portal for some customers. Mitigation: Engineers failed over to a healthy backend service to mitigate impact for customers.",
+        "service_name": [
+            "Application Insights"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 60,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Engineers identified a configuration change that caused a backend service to become unhealthy, impacting the availability of the Application Insights portal for some customers."
+        },
+        "operation": [
+            "configuration change"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "failed over to a healthy backend service"
+            ],
+            "details": "Engineers failed over to a healthy backend service to mitigate impact for customers.",
+            "troubleshooting": {
+                "1": "identified a configuration change as root cause",
+                "2": "failed over to a healthy backend service"
+            }
+        },
+        "propagation pass": {
+            "1": "backend service",
+            "2": "Application Insights portal"
+        },
+        "refined path": {
+            "1": "backend",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    }
+}

@@ -1,0 +1,6 @@
+Almost all labs instances suffered super high load / kernel stalls, to a point where they were basically dead. rsyncs running as a result of previous incident were basically eating up all io on labstore1001, causing knock on effects on all instances. Killing the rsyncs restored service, but ultimate cause is unknown since the rsync was running for hours without issue, and was resumed later and has completed in a few hours without issue.
+
+labstore being unavailable / overloaded basically kills all of labs, and is a SPOF. Our NFS setup should be modernized and lots more alerting / monitoring set up.
+• Thorough monitoring of our NFS setup https://phabricator.wikimedia.org/T94606
+• Spread knowledge of our NFS setup amongst our opsen better (Coren is doing a tech talk soon, I believe)
+• labstore1002 runs jessie, but switchover is not yet tested. Do switchover after a lot of testing, and re-install labstore1001 https://phabricator.wikimedia.org/T94607 and https://phabricator.wikimedia.org/T94609

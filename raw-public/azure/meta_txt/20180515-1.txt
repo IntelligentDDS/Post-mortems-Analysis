@@ -1,0 +1,4 @@
+Visual Studio App Center - Distribution Center
+Summary of impact: Between 17:15 and 20:00 UTC on 15 May 2018, a subset of customers using Visual Studio App Center may have received error notifications when attempting to use the distribute feature in Distribution Center.
+Mitigation: Engineers performed a manual restart of a backend service to mitigate the issue. 
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

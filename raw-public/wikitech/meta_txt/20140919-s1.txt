@@ -1,0 +1,21 @@
+At approx 2014-09-19 08:50:00 enwiki experienced a site outage. The apparent order of events was:
+
+2. Jobrunner write activity[1] from wikiadmin user on enwiki master increased substantially, with cirrus in the spotlight:
+
+Binlog showed substantial LinksUpdate hits (it is often in the top 10, but blends in with similar numbers to other traffic):
+
+The job activity occurred in waves with periods of very heavy writes, then minutes of nothing.
+
+3. enwiki slaves started to experience intermittent replication lag. The main offender was:
+
+4. Surges of wikiuser DB connections to slaves began appearing after each write surge above in #2. These hit max_connections on all slaves simultaneously, and apaches went critical. Note that there were no slow queries involved; just an order of magnitude more connections and queries than normal.
+
+5. Significant numbers of wikiadmin connections sat in SELECT MASTER_POS_WAIT due to #3, which reduced the available connections for #4.
+
+6. We killed masses of wikiadmin and wikiuser sleeping connections to make way for new ones.
+
+1. Batching the LinksUpdate DELETE and UPDATE queries would help with replag.
+
+2. The storm of wikiuser traffic after the jobs was due to cache invalidation and presumably a lot of duplicated effort? Could that be mitigated in another layer above the DBs?
+
+3. Can we throttle jobrunners more, or make them smarter in these situations?

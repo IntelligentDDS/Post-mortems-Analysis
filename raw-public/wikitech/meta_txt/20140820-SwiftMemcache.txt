@@ -1,0 +1,11 @@
+Starting 2014-08-19 multiple users reported intermittent failures when doing operations on files (esp. deletes in commons) resulting in bugzilla:69760 to be opened. Investigation into swift later revealed several timeouts while talking to memcache.
+• 2014-08-20T13:50:15Z bug escalated and investigated. An XFS issue on ms-be1003 was found as probably root cause and the machine rebooted, seemingly fixing the problem.
+• 2014-08-20T17:45:59Z more issues of the same type reported on the bug, however the failures were intermittent with users usually succeeding upon retry.
+• 2014-08-21T20:54:55Z after further investigation into the swift logs several timeouts from swift proxy talking to memcache have been observed
+• 2014-08-21T21:33:55Z https://gerrit.wikimedia.org/r/#/c/155629/ is deployed to increase maximum connections to memcache, thus fixing the frequent timeouts
+• The interactions between mw and swift have been historically troublesome and opaque to users, this has been no different.
+• The root cause was thought to be fixed by restarting a machine in trouble, however that was a red herring.
+• The real resolution was slowed down in part by the amount of logging swift does as part of its operation, masking potential problems. Another contributing factor was lack of deep insight into how mw and swift interact and what mw metrics are related to that.
+• Upon inspection the swift code involved in talking to memcache doesn't seem to provide any instrumentation and thus no metrics.
+• The default connection limit of 2 connections per worker was obviously not adequate with 4 memcache machines, however this doesn't seem to have caused such widespread problems in the past (compounded by the lack of error visibility too)
+• Status: Declined - improve visibility on the interactions between mw and swift and what metrics are affected

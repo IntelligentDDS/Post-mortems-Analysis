@@ -1,0 +1,296 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+November 08, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google App Engine](/incident/appengine/17007)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google App Engine Incident #17007
+
+The Memcache service has recovered from a disruption between 12:30 US/Pacific
+and 15:30 US/Pacific.
+
+Incident began at **2017-11-06 12:33** and ended at **2017-11-06 14:23** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Nov 07, 2017 | 10:59 |
+
+ISSUE SUMMARY
+
+On Monday 6 November 2017, the App Engine Memcache service experienced
+unavailability for applications in all regions for 1 hour and 50 minutes.
+
+We sincerely apologize for the impact of this incident on your application or
+service. We recognize the severity of this incident and will be undertaking a
+detailed review to fully understand the ways in which we must change our
+systems to prevent a recurrence.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Monday 6 November 2017 from 12:33 to 14:23 PST, the App Engine Memcache
+service experienced unavailability for applications in all regions.
+
+Some customers experienced elevated Datastore latency and errors while
+Memcache was unavailable. At this time, we believe that all the Datastore
+issues were caused by surges of Datastore activity due to Memcache being
+unavailable. When Memcache failed, if an application sent a surge of Datastore
+operations to specific entities or key ranges, then Datastore may have
+experienced contention or hotspotting, as described in
+<https://cloud.google.com/datastore/docs/best-practices#designing_for_scale.>
+Datastore experienced elevated load on its servers when the outage ended due
+to a surge in traffic. Some applications in the US experienced elevated
+latency on gets between 14:23 and 14:31, and elevated latency on puts between
+14:23 and 15:04.
+
+Customers running Managed VMs experienced failures of all HTTP requests and
+App Engine API calls during this incident. Customers using App Engine Flexible
+Environment, which is the successor to Managed VMs, were not impacted.
+
+ROOT CAUSE
+
+The App Engine Memcache service requires a globally consistent view of the
+current serving datacenter for each application in order to guarantee strong
+consistency when traffic fails over to alternate datacenters. The
+configuration which maps applications to datacenters is stored in a global
+database.
+
+The incident occurred when the specific database entity that holds the
+configuration became unavailable for both reads and writes following a
+configuration update. App Engine Memcache is designed in such a way that the
+configuration is considered invalid if it cannot be refreshed within 20
+seconds. When the configuration could not be fetched by clients, Memcache
+became unavailable.
+
+REMEDIATION AND PREVENTION
+
+Google received an automated alert at 12:34. Following normal practices, our
+engineers immediately looked for recent changes that may have triggered the
+incident. At 12:59, we attempted to revert the latest change to the
+configuration file. This configuration rollback required an update to the
+configuration in the global database, which also failed. At 14:21, engineers
+were able to update the configuration by sending an update request with a
+sufficiently long deadline. This caused all replicas of the database to
+synchronize and allowed clients to read the mapping configuration.
+
+As a temporary mitigation, we have reduced the number of readers of the global
+configuration, which avoids the contention during write and led to the
+unavailability during the incident. Engineering projects are already under way
+to regionalize this configuration and thereby limit the blast radius of
+similar failure patterns in the future.  
+  
+|
+
+ISSUE SUMMARY
+
+On Monday 6 November 2017, the App Engine Memcache service experienced
+unavailability for applications in all regions for 1 hour and 50 minutes.
+
+We sincerely apologize for the impact of this incident on your application or
+service. We recognize the severity of this incident and will be undertaking a
+detailed review to fully understand the ways in which we must change our
+systems to prevent a recurrence.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Monday 6 November 2017 from 12:33 to 14:23 PST, the App Engine Memcache
+service experienced unavailability for applications in all regions.
+
+Some customers experienced elevated Datastore latency and errors while
+Memcache was unavailable. At this time, we believe that all the Datastore
+issues were caused by surges of Datastore activity due to Memcache being
+unavailable. When Memcache failed, if an application sent a surge of Datastore
+operations to specific entities or key ranges, then Datastore may have
+experienced contention or hotspotting, as described in
+<https://cloud.google.com/datastore/docs/best-practices#designing_for_scale.>
+Datastore experienced elevated load on its servers when the outage ended due
+to a surge in traffic. Some applications in the US experienced elevated
+latency on gets between 14:23 and 14:31, and elevated latency on puts between
+14:23 and 15:04.
+
+Customers running Managed VMs experienced failures of all HTTP requests and
+App Engine API calls during this incident. Customers using App Engine Flexible
+Environment, which is the successor to Managed VMs, were not impacted.
+
+ROOT CAUSE
+
+The App Engine Memcache service requires a globally consistent view of the
+current serving datacenter for each application in order to guarantee strong
+consistency when traffic fails over to alternate datacenters. The
+configuration which maps applications to datacenters is stored in a global
+database.
+
+The incident occurred when the specific database entity that holds the
+configuration became unavailable for both reads and writes following a
+configuration update. App Engine Memcache is designed in such a way that the
+configuration is considered invalid if it cannot be refreshed within 20
+seconds. When the configuration could not be fetched by clients, Memcache
+became unavailable.
+
+REMEDIATION AND PREVENTION
+
+Google received an automated alert at 12:34. Following normal practices, our
+engineers immediately looked for recent changes that may have triggered the
+incident. At 12:59, we attempted to revert the latest change to the
+configuration file. This configuration rollback required an update to the
+configuration in the global database, which also failed. At 14:21, engineers
+were able to update the configuration by sending an update request with a
+sufficiently long deadline. This caused all replicas of the database to
+synchronize and allowed clients to read the mapping configuration.
+
+As a temporary mitigation, we have reduced the number of readers of the global
+configuration, which avoids the contention during write and led to the
+unavailability during the incident. Engineering projects are already under way
+to regionalize this configuration and thereby limit the blast radius of
+similar failure patterns in the future.  
+  
+| Nov 06, 2017 | 15:55 |
+
+The issue with Memcache availability has been resolved for all affected
+projects as of 15:30 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.
+
+This is the final update for this incident.  
+  
+|
+
+The issue with Memcache availability has been resolved for all affected
+projects as of 15:30 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.
+
+This is the final update for this incident.  
+  
+| Nov 06, 2017 | 15:26 |
+
+The Memcache service is still recovering from the outage. The rate of errors
+continues to decrease and we expect a full resolution of this incident in the
+near future.
+
+We will provide an update by 16:00 US/Pacific with current details.  
+  
+|
+
+The Memcache service is still recovering from the outage. The rate of errors
+continues to decrease and we expect a full resolution of this incident in the
+near future.
+
+We will provide an update by 16:00 US/Pacific with current details.  
+  
+| Nov 06, 2017 | 15:08 |
+
+The issue with Memcache and MVM availability should be resolved for the
+majority of projects and we expect a full resolution in the near future.
+
+We will provide an update by 15:30 US/Pacific with current details.  
+  
+|
+
+The issue with Memcache and MVM availability should be resolved for the
+majority of projects and we expect a full resolution in the near future.
+
+We will provide an update by 15:30 US/Pacific with current details.  
+  
+| Nov 06, 2017 | 14:44 |
+
+We are experiencing an issue with Memcache availability beginning at November
+6, 2017 at 12:30 pm US/Pacific. At this time we are gradually ramping up
+traffic to Memcache and we see that the rate of errors is decreasing. Other
+services affected by the outage, such as MVM instances, should be normalizing
+in the near future.
+
+We will provide an update by 15:15 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with Memcache availability beginning at November
+6, 2017 at 12:30 pm US/Pacific. At this time we are gradually ramping up
+traffic to Memcache and we see that the rate of errors is decreasing. Other
+services affected by the outage, such as MVM instances, should be normalizing
+in the near future.
+
+We will provide an update by 15:15 US/Pacific with current details.  
+  
+| Nov 06, 2017 | 14:31 |
+
+We are experiencing an issue with Memcache availability beginning at November
+6, 2017 at 12:30 pm US/Pacific. Our Engineering Team believes they have
+identified the root cause of the errors and is working to mitigate.
+
+We will provide an update by 15:00 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with Memcache availability beginning at November
+6, 2017 at 12:30 pm US/Pacific. Our Engineering Team believes they have
+identified the root cause of the errors and is working to mitigate.
+
+We will provide an update by 15:00 US/Pacific with current details.  
+  
+| Nov 06, 2017 | 13:57 |
+
+We are experiencing an issue with Memcache availability beginning at November
+6, 2017 at 12:30 pm US/Pacific. Current data indicates that all projects using
+Memcache are affected by this issue. For everyone who is affected, we
+apologize for any inconvenience you may be experiencing.
+
+We will provide an update by 14:30 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with Memcache availability beginning at November
+6, 2017 at 12:30 pm US/Pacific. Current data indicates that all projects using
+Memcache are affected by this issue. For everyone who is affected, we
+apologize for any inconvenience you may be experiencing.
+
+We will provide an update by 14:30 US/Pacific with current details.  
+  
+| Nov 06, 2017 | 13:31 |
+
+We are experiencing an issue with Memcache availability beginning at November
+6, 2017 at 12:30 pm US/Pacific. Current data indicate(s) that all projects
+using Memcache are affected by this issue. For everyone who is affected, we
+apologize for any inconvenience you may be experiencing.
+
+We will provide an update by 14:00 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with Memcache availability beginning at November
+6, 2017 at 12:30 pm US/Pacific. Current data indicate(s) that all projects
+using Memcache are affected by this issue. For everyone who is affected, we
+apologize for any inconvenience you may be experiencing.
+
+We will provide an update by 14:00 US/Pacific with current details.  
+  
+| Nov 06, 2017 | 13:11 |
+
+We are investigating an issue with Google App Engine and Memcache. We will
+provide more information by 13:30 US/Pacific.  
+  
+|
+
+We are investigating an issue with Google App Engine and Memcache. We will
+provide more information by 13:30 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

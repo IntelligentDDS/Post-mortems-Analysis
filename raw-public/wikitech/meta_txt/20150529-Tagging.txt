@@ -1,0 +1,7 @@
+Changes deployed on an emergency basis Friday, 2015-05-22, caused some tagging data to no longer be captured, causing an unrecoverable loss of data. This was feared to invalidate the Visual Editor A/B Pilot test in progress; however, that test used a different mechanism to gather data and was not affected.
+
+This is a step by step outline of what happened to cause the incident and how it was remedied. Please ensure to remove private information.
+
+What weakness did we learn about and how can we address them?
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.

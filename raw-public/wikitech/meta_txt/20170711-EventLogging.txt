@@ -1,0 +1,11 @@
+Within the previous month, we started importing EventBus generated events into the MySQL EventLogging Analytics database(s) for https://phabricator.wikimedia.org/T150369. These events have a different schema format and schema repository than the original EventLogging Analytics events.
+
+EventBus style events are versioned just like the EventLogging Analytics ones, but thus far, we had not bumped any version numbers for backwards compatible schema changes. However, now that MySQL is being used for these events, and MySQL tables are not automatically evolved, we must bump EventBus style schemas from now on. This was not done for a change that added a rev_content_changed field (https://gerrit.wikimedia.org/r/#/c/362321/). When events with this new field started flowing in from EventBus, the eventlogging process that was attempting to insert these events died. It was immediately restarted by upstart, but it flapped every 5 minutes, every time a batch of mediawiki_page_create events were attempted to be inserted.
+
+This caused minimal data loss from other unrelated schemas. These events were then backfilled from secondary log files into MySQL. Along the way, Otto forgot that we were now filtering out bot events, and inserted over 2 million extra events into the MySQL databases for the days of 2017-07-10 - 2017-07-12.
+
+https://gerrit.wikimedia.org/r/#/c/362322/ is merged. This is slowly deployed to wikis as part of the regular deploy train.
+
+Roan files https://phabricator.wikimedia.org/T170486. Otto investigates, realizes what happening. He then alters the existing eventbus event tables in MySQL to add the missing rev_content_changed field to allow insertions to happen. He also merges a puppet change (https://gerrit.wikimedia.org/r/#/c/364881/) to separate the processes responsible for inserting EventLogging Analytics events, and events from EventBus to prevent something like this from happening again.
+
+EventBus event schemas from here on out need to have version numbers bumped when we modify them.

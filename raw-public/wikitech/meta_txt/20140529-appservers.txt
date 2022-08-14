@@ -1,0 +1,7 @@
+At 20:25 UTC, change Ie5a860eb9 ("Remove wikimedia-task-appserver from app servers") was merged. There were two things wrong with it:
+• The package was configured to delete the mwdeploy and apache users upon removal. The apache user was not deleted because it was logged in, but the mwdeploy user was. The mwdeploy account was declared in Puppet, but there was a gap between the removal of the package and the next Puppet run during which the account would not be present.
+• The package included the symlinks /etc/apache2/wmf and /usr/local/apache/common, which were not Puppetized. These symlinks were unlinked when the package was removed.
+
+Apache was configured to load configuration files from /etc/apache2/wmf, and these include the files that declare the DocumentRoot and Directory directives for our sites. As a result, users were served with 404s. At 20:40 Faidon re-installed wikimedia-task-appserver on all Apaches. Since 404s are cached in Varnish, it took another five minutes for the rate of 4xx responses to return to normal (20:45).
+• Status: Done - wikimedia-task-appserver is no more, and site is operational.
+• Status: ongoing - The postrm script of packages should be inspected prior to their removal from nodes that power critical services.

@@ -1,0 +1,26 @@
+A broken config change briefly caused wikis with Wikibase Repository enabled (chiefly Wikidata and Commons) to be broken on the canary hosts (10% of hosts).
+• Functionality: all of MediaWiki, at least on Commons (assertion failure during initialization); unclear for Wikidata
+• Users: whoever got routed to the canary hosts (10% of hosts)
+
+See also T225212 for an overview of the errors that occurred; since it’s not yet known where the “undefined variable” errors came from nor what effect they had, the impact on Wikidata is unclear.
+
+scap automatically aborted the sync after detecting the high error rate on the canaries. A revert was manually created and synced afterwards.
+
+What went well?
+• The canaries detected the error just as they’re supposed to, and full deployment was stopped.
+• The error was not discovered during testing on mwdebug1002.
+• Deployer ( ) was not aware that the canary hosts would not be fixed until the second sync, and therefore delayed the fix by moving the commit through Gerrit first
+
+Where did we get lucky?
+• The errors did not cause the monitoring requests to fail (from Swagger, and from PyBall) because those only target enwiki. It was caught by the part of the Scap canary checker that queries Logstash for a change in overall error levels.
+• The rate of errors from these two wikis was sufficiently high to stand out from the on-going fluctuation of errors we have normally, which allowed Scap's Logstash query to detect the difference.
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+• Scap3/Migration Guide#Canary hosts and checks is the only documentation for the canary hosts that deployer ( ) is aware of
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.
+• Clarify on SWAT deploys/Deployers that still applies even if the scap sync was automatically aborted (done)
+• Enable scap to automatically roll back changes in MediaWiki (according to it already supports this for “services and stuff”) (T225207)
+• Investigate the errors and try to deploy the change again once they’re fixed (T225212)

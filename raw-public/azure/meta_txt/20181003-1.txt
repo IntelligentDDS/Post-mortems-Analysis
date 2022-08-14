@@ -1,0 +1,4 @@
+Azure DevOps
+Summary of impact: Between 16:45 and 18:15 UTC on 03 Oct 2018, a subset of customers using Azure DevOps may have been unable to access DevOps resources. Additional information can be found at https://aka.ms/vstsblog .
+Preliminary root cause: Engineers determined that a network device experienced a hardware fault, causing a DevOps backend service to become unavailable. Mitigation: Engineers took the faulty network device out of rotation and rerouted network traffic to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

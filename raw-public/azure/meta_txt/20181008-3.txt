@@ -1,0 +1,5 @@
+Availability Issues with Application Insights Portal
+Summary of impact: Between 23:20 on 08 Oct 2018 and 00:20 UTC on 09 Oct 2018, a subset of customers using Application Insights may have experienced issues
+connecting to their Application Insights resources. Application Insight portal blades may have not loaded for some customers.
+Preliminary root cause: Engineers identified a configuration change that caused a backend service to become unhealthy, impacting the availability of the Application Insights portal for some customers.
+Mitigation: Engineers failed over to a healthy backend service to mitigate impact for customers. Next steps: Engineers will continue to investigate the full root cause to prevent future occurrences.

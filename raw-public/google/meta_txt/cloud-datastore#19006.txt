@@ -1,0 +1,493 @@
+# [](//cloud.google.com)
+
+July 19, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Datastore](/incident/cloud-datastore/19006)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support-hub/). Learn more about what's
+posted on the dashboard in [ this
+FAQ](//cloud.google.com/support/docs/dashboard). For additional information on
+these services, please visit [cloud.google.com](//cloud.google.com).
+
+# Google Cloud Datastore Incident #19006
+
+We've received a report of an issue with Cloud Firestore.
+
+Incident began at **2019-11-11 03:15** and ended at **2019-11-11 05:36** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Nov 15, 2019 | 12:09 |
+
+# ISSUE SUMMARY
+
+On Monday 11 November, 2019, Google's internal key management system (KMS),
+suffered a failure which began to cause user facing impact in the us-east1,
+us-east4, and southamerica-east1 regions at 02:39 US/Pacific and recovered by
+03:27. Some services took longer to fully recover and continued to experience
+issues outside of this period. Google's commitment to user privacy and data
+security means that KMS is a common dependency across many infrastructure
+components. Specific service impact is outlined below.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Monday 11 November, 2019 from 02:39 to 03:27 US/Pacific various services in
+us-east1, us-east4, southamerica-east1 experienced varying degrees of impact
+as detailed below. Some global services were also impacted during this period.
+
+## Cloud IAM
+
+Cloud IAM saw an average error rate of 93.1% and 89.3% in us-east4 and
+southamerica-east1 respectively for the first 36 minutes of the incident.
+Cloud IAM in us-east1 saw an average error rate of 94.5% for the duration of
+the event.
+
+## Cloud Pub/Sub
+
+Cloud Pub/Sub saw an average error rate of 15% for Publish operations during
+the impact period.
+
+## Google Compute Engine (GCE)
+
+Google Compute Engine API requests saw a 16% error rate during the impact
+period. Persistent Disk control plane operations: Device Creation, Grow,
+Deletion, Attachment, Snapshot upload/download, and Image Restores failed in
+the us-east1, us-east4, and southamerica-east1 regions. Existing instances
+were unaffected.
+
+## Google App Engine (GAE)
+
+Google App Engine in us-east1 served an average elevated error rate of 10%
+(peaking to 15%). Applications in us-east4 served an average of 10% errors for
+the first 35 minutes of the incident and applications in southamerica-east1
+served an average of 3% errors for the first 35 minutes of the incident.
+
+## Cloud Functions
+
+Cloud Functions HTTP triggering was degraded in us-east1, us-east4 and
+southamerica-east1 with peak error rates of 1%, 1.7%, and 8.5% respectively.
+
+## Cloud Run
+
+Cloud Run experienced elevated error rates averaging 11% in us-east1 for the
+first 35 minutes of the incident. In all cases, the majority of serverless
+errors were due to permission checks--for example--if a user were an admin, or
+if a user were authorized to access a restricted endpoint. Errors were
+returned in the form of HTTP 5XX responses. The Serverless API served an
+average of 70% errors during the impact period due to requiring IAM permission
+checks.
+
+## Cloud Bigtable
+
+Cloud Bigtable instances in us-east1, us-east4, and southamerica-east1 were
+inaccessible for the first 18 minutes of the incident.
+
+## Cloud Memorystore
+
+Cloud Memorystore Delete Instance, Get Instance, List, and List Instance
+operations were unavailable during the impact period. Existing instances were
+unaffected.
+
+## Cloud DNS
+
+Cloud DNS API had an average error rate of 27% for the first 25 minutes of the
+incident. Domain resolution was unaffected.
+
+## Cloud Console
+
+The Cloud Console served an average of 4.7% errors for the impact duration.
+
+## Google Cloud Storage (GCS)
+
+Buckets in us-east1 served an average of 99% errors for the duration of the
+incident, buckets in us-east4 and southamerica-east1 served an average of 97%
+and 96% errors respectively for the first 36 minutes of the incident. Buckets
+in the US multiregion served an average of 1.7% errors from 02:39 to 05:54
+US/Pacific for a duration of 3 hours 15 minutes.
+
+## Google BigQuery
+
+BigQuery Dataset, Table, and Job operations were unavailable in us-east1, us-
+east4, and southamerica-east1 for the duration of the incident.
+
+## Google Cloud Load Balancing
+
+Health checks to new instances or instances that were live-migrated during the
+incident failed in us-east1-c and us-east1-d. Instances that fail health
+checks will generally not receive any traffic. Existing instances were
+unaffected unless they were migrated. 4% of Managed Instance Groups (MIGs) in
+us-east1-b failed to repair itself, while up to 85% MIG instance creations
+failed. This meant that instances were created successfully, but their health
+checks timed out and the instances were unable to receive traffic. Autohealing
+and MIG health checks failed for up to 60% of requests in us-east1-d and up to
+25% in us-east1-c. Up to 6% of Internal Load Balancer’s (ILB) backend health
+checks failed in us-east1-d and up to 3.5% in us-east1-c. Google Cloud HTTP(S)
+Load Balancing backends saw up to 0.5% health checks failed globally.
+
+## Stackdriver Logging
+
+Stackdriver Logging saw an average error rate of 11% globally, and up to a 98%
+error rate in us-east1, us-east4, and southamerica-east1.
+
+## Stackdriver Monitoring
+
+Stackdriver Monitoring was unavailable in us-east, us-east4, and southamerica-
+east1 from 02:44 to 03:03 US/Pacific.
+
+## G Suite
+
+The impact on G Suite users was different from and generally lower than the
+impact on Google Cloud Platform users due to differences in architecture and
+provisioning of these services. Please see the G Suite Status Dashboard
+(https://www.google.com/appsstatus) for details on affected G Suite services.
+
+# ROOT CAUSE AND REMEDIATION
+
+At Google, data security is a critical part of service design. To accomplish
+this, services depend on the KMS for performing cryptographic functions such
+as encrypting and decrypting the keys used for protecting user data. On Monday
+11 November, 2019 at 00:11 US/Pacific a new version of the KMS began to roll
+out, starting with a single zone in the us-east1 region. This binary added a
+new feature which was incompatible with older versions of related components.
+Six minutes later, an alert notified Google engineers of an increased error
+rate in the KMS. Additional alerts went off at 00:34 while investigation was
+ongoing. At this time there was no impact to Google Cloud users.
+
+In order to begin recovery, Google engineers started to roll forward a change
+in the affected region, bringing all tasks up to the same version. A roll
+forward was necessary due to the backwards-incompatible nature of the newest
+version of the KMS, as persisted keys could not be processed by other
+components. The roll forward began at 02:32, and resulted in a temporary
+increase of internal errors from the KMS as the ratio of tasks with the new
+incompatible version and the previous version changed. By 02:39 the error rate
+reached a point where external users began to see service degradation. KMS is
+a low level service and is a critical dependency for core services such as IAM
+and Storage. The dependency on these core services created distinct start and
+end times for impact across higher-level services.
+
+The roll forward completed by 02:59 and brought the KMS back to a healthy
+state. From 02:59 onward, services which depend on the KMS began to recover.
+Most services returned to a healthy state by 03:27, however, some services
+which integrate with the KMS in multiple locations, such as GCS, saw a longer
+tail of errors until other locations were brought back to a healthy state.
+
+# PREVENTION AND FOLLOW-UP
+
+A key reliability principle for GCP is that regions provide failure domain
+isolation; as a result, we will be modifying our processes to ensure that
+multiple regions are not impacted by a rollout of this particular component
+simultaneously. Projects are already in progress to split and isolate shared
+dependencies for the regions impacted by this incident. We are making changes
+to our canary and rollout validation processes to improve detection speed of
+similar incidents in future.
+
+An additional principle is the ability to mitigate incidents quickly,
+typically through rollbacks, and we will be introducing explicit backwards-
+compatibility testing for the components implicated in this outage to ensure
+we comply with that principle in future.  
+  
+|
+
+# ISSUE SUMMARY
+
+On Monday 11 November, 2019, Google's internal key management system (KMS),
+suffered a failure which began to cause user facing impact in the us-east1,
+us-east4, and southamerica-east1 regions at 02:39 US/Pacific and recovered by
+03:27. Some services took longer to fully recover and continued to experience
+issues outside of this period. Google's commitment to user privacy and data
+security means that KMS is a common dependency across many infrastructure
+components. Specific service impact is outlined below.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Monday 11 November, 2019 from 02:39 to 03:27 US/Pacific various services in
+us-east1, us-east4, southamerica-east1 experienced varying degrees of impact
+as detailed below. Some global services were also impacted during this period.
+
+## Cloud IAM
+
+Cloud IAM saw an average error rate of 93.1% and 89.3% in us-east4 and
+southamerica-east1 respectively for the first 36 minutes of the incident.
+Cloud IAM in us-east1 saw an average error rate of 94.5% for the duration of
+the event.
+
+## Cloud Pub/Sub
+
+Cloud Pub/Sub saw an average error rate of 15% for Publish operations during
+the impact period.
+
+## Google Compute Engine (GCE)
+
+Google Compute Engine API requests saw a 16% error rate during the impact
+period. Persistent Disk control plane operations: Device Creation, Grow,
+Deletion, Attachment, Snapshot upload/download, and Image Restores failed in
+the us-east1, us-east4, and southamerica-east1 regions. Existing instances
+were unaffected.
+
+## Google App Engine (GAE)
+
+Google App Engine in us-east1 served an average elevated error rate of 10%
+(peaking to 15%). Applications in us-east4 served an average of 10% errors for
+the first 35 minutes of the incident and applications in southamerica-east1
+served an average of 3% errors for the first 35 minutes of the incident.
+
+## Cloud Functions
+
+Cloud Functions HTTP triggering was degraded in us-east1, us-east4 and
+southamerica-east1 with peak error rates of 1%, 1.7%, and 8.5% respectively.
+
+## Cloud Run
+
+Cloud Run experienced elevated error rates averaging 11% in us-east1 for the
+first 35 minutes of the incident. In all cases, the majority of serverless
+errors were due to permission checks--for example--if a user were an admin, or
+if a user were authorized to access a restricted endpoint. Errors were
+returned in the form of HTTP 5XX responses. The Serverless API served an
+average of 70% errors during the impact period due to requiring IAM permission
+checks.
+
+## Cloud Bigtable
+
+Cloud Bigtable instances in us-east1, us-east4, and southamerica-east1 were
+inaccessible for the first 18 minutes of the incident.
+
+## Cloud Memorystore
+
+Cloud Memorystore Delete Instance, Get Instance, List, and List Instance
+operations were unavailable during the impact period. Existing instances were
+unaffected.
+
+## Cloud DNS
+
+Cloud DNS API had an average error rate of 27% for the first 25 minutes of the
+incident. Domain resolution was unaffected.
+
+## Cloud Console
+
+The Cloud Console served an average of 4.7% errors for the impact duration.
+
+## Google Cloud Storage (GCS)
+
+Buckets in us-east1 served an average of 99% errors for the duration of the
+incident, buckets in us-east4 and southamerica-east1 served an average of 97%
+and 96% errors respectively for the first 36 minutes of the incident. Buckets
+in the US multiregion served an average of 1.7% errors from 02:39 to 05:54
+US/Pacific for a duration of 3 hours 15 minutes.
+
+## Google BigQuery
+
+BigQuery Dataset, Table, and Job operations were unavailable in us-east1, us-
+east4, and southamerica-east1 for the duration of the incident.
+
+## Google Cloud Load Balancing
+
+Health checks to new instances or instances that were live-migrated during the
+incident failed in us-east1-c and us-east1-d. Instances that fail health
+checks will generally not receive any traffic. Existing instances were
+unaffected unless they were migrated. 4% of Managed Instance Groups (MIGs) in
+us-east1-b failed to repair itself, while up to 85% MIG instance creations
+failed. This meant that instances were created successfully, but their health
+checks timed out and the instances were unable to receive traffic. Autohealing
+and MIG health checks failed for up to 60% of requests in us-east1-d and up to
+25% in us-east1-c. Up to 6% of Internal Load Balancer’s (ILB) backend health
+checks failed in us-east1-d and up to 3.5% in us-east1-c. Google Cloud HTTP(S)
+Load Balancing backends saw up to 0.5% health checks failed globally.
+
+## Stackdriver Logging
+
+Stackdriver Logging saw an average error rate of 11% globally, and up to a 98%
+error rate in us-east1, us-east4, and southamerica-east1.
+
+## Stackdriver Monitoring
+
+Stackdriver Monitoring was unavailable in us-east, us-east4, and southamerica-
+east1 from 02:44 to 03:03 US/Pacific.
+
+## G Suite
+
+The impact on G Suite users was different from and generally lower than the
+impact on Google Cloud Platform users due to differences in architecture and
+provisioning of these services. Please see the G Suite Status Dashboard
+(https://www.google.com/appsstatus) for details on affected G Suite services.
+
+# ROOT CAUSE AND REMEDIATION
+
+At Google, data security is a critical part of service design. To accomplish
+this, services depend on the KMS for performing cryptographic functions such
+as encrypting and decrypting the keys used for protecting user data. On Monday
+11 November, 2019 at 00:11 US/Pacific a new version of the KMS began to roll
+out, starting with a single zone in the us-east1 region. This binary added a
+new feature which was incompatible with older versions of related components.
+Six minutes later, an alert notified Google engineers of an increased error
+rate in the KMS. Additional alerts went off at 00:34 while investigation was
+ongoing. At this time there was no impact to Google Cloud users.
+
+In order to begin recovery, Google engineers started to roll forward a change
+in the affected region, bringing all tasks up to the same version. A roll
+forward was necessary due to the backwards-incompatible nature of the newest
+version of the KMS, as persisted keys could not be processed by other
+components. The roll forward began at 02:32, and resulted in a temporary
+increase of internal errors from the KMS as the ratio of tasks with the new
+incompatible version and the previous version changed. By 02:39 the error rate
+reached a point where external users began to see service degradation. KMS is
+a low level service and is a critical dependency for core services such as IAM
+and Storage. The dependency on these core services created distinct start and
+end times for impact across higher-level services.
+
+The roll forward completed by 02:59 and brought the KMS back to a healthy
+state. From 02:59 onward, services which depend on the KMS began to recover.
+Most services returned to a healthy state by 03:27, however, some services
+which integrate with the KMS in multiple locations, such as GCS, saw a longer
+tail of errors until other locations were brought back to a healthy state.
+
+# PREVENTION AND FOLLOW-UP
+
+A key reliability principle for GCP is that regions provide failure domain
+isolation; as a result, we will be modifying our processes to ensure that
+multiple regions are not impacted by a rollout of this particular component
+simultaneously. Projects are already in progress to split and isolate shared
+dependencies for the regions impacted by this incident. We are making changes
+to our canary and rollout validation processes to improve detection speed of
+similar incidents in future.
+
+An additional principle is the ability to mitigate incidents quickly,
+typically through rollbacks, and we will be introducing explicit backwards-
+compatibility testing for the components implicated in this outage to ensure
+we comply with that principle in future.  
+  
+| Nov 11, 2019 | 12:15 |
+
+We have updated our initial incident description below to reflect impact more
+accurately.  
+  
+|
+
+We have updated our initial incident description below to reflect impact more
+accurately.  
+  
+| Nov 11, 2019 | 05:47 |
+
+We will publish analysis of this incident once we have completed our internal
+investigation.  
+  
+|
+
+We will publish analysis of this incident once we have completed our internal
+investigation.  
+  
+| Nov 11, 2019 | 05:36 |
+
+The issue with multiple products is resolved for most of projects and our
+Engineering Team is working on full resolution for Stackdriver Monitoring and
+Google Cloud Storage for US multi-region.
+
+If you have questions or are impacted, please open a case with the Support
+Team and we will work with you until this issue is resolved.
+
+No further updates will be provided here.  
+  
+|
+
+The issue with multiple products is resolved for most of projects and our
+Engineering Team is working on full resolution for Stackdriver Monitoring and
+Google Cloud Storage for US multi-region.
+
+If you have questions or are impacted, please open a case with the Support
+Team and we will work with you until this issue is resolved.
+
+No further updates will be provided here.  
+  
+| Nov 11, 2019 | 04:44 |
+
+Description: We are investigating an issue with an infrastructure component
+impacting multiple products. We believe we have identified the cause and are
+currently rolling out mitigation.
+
+We will provide an update by Monday, 2019-11-11 05:30 US/Pacific with current
+details.
+
+Diagnosis: None at this time
+
+Workaround: None at this time  
+  
+|
+
+Description: We are investigating an issue with an infrastructure component
+impacting multiple products. We believe we have identified the cause and are
+currently rolling out mitigation.
+
+We will provide an update by Monday, 2019-11-11 05:30 US/Pacific with current
+details.
+
+Diagnosis: None at this time
+
+Workaround: None at this time  
+  
+| Nov 11, 2019 | 04:00 |
+
+Description: Mitigation work is currently underway by our engineering team.
+
+We will provide more information by Monday, 2019-11-11 05:00 US/Pacific.
+
+Diagnosis: None at this time
+
+Workaround: None at this time  
+  
+|
+
+Description: Mitigation work is currently underway by our engineering team.
+
+We will provide more information by Monday, 2019-11-11 05:00 US/Pacific.
+
+Diagnosis: None at this time
+
+Workaround: None at this time  
+  
+| Nov 11, 2019 | 03:15 |
+
+Description: We are experiencing an issue with some Google Cloud APIs across
+us-east1, us-east4 and southamerica-east1, with some APIs impacted globally.
+This includes the APIs for Compute Engine, Cloud Storage, BigQuery, Dataflow,
+Dataproc, and Pub/Sub. App Engine applications in those regions are also
+impacted.
+
+Our engineering team continues to investigate the issue.
+
+We will provide an update by Monday, 2019-11-11 03:45 US/Pacific with current
+details.
+
+Diagnosis: None at this time
+
+Workaround: None at this time  
+  
+|
+
+Description: We are experiencing an issue with some Google Cloud APIs across
+us-east1, us-east4 and southamerica-east1, with some APIs impacted globally.
+This includes the APIs for Compute Engine, Cloud Storage, BigQuery, Dataflow,
+Dataproc, and Pub/Sub. App Engine applications in those regions are also
+impacted.
+
+Our engineering team continues to investigate the issue.
+
+We will provide an update by Monday, 2019-11-11 03:45 US/Pacific with current
+details.
+
+Diagnosis: None at this time
+
+Workaround: None at this time  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

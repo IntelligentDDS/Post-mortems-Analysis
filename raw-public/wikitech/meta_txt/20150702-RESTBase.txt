@@ -1,0 +1,11 @@
+On 2015-07-02, around approximately 10:18 UTC RESTBase started refusing connections because its workers were stuck due to a time-out error in executing Cassandra queries (stack trace), which were themselves caused by the Cassandra cluster's high load. In addition, RESTBase's automatic worker restart did not fire off.
+• 2015-07-02 10:21: mobrovac verifies the ports, which present themselves as up
+• 2015-07-02 10:24: mobrovac restarts one node, which brings it back to life
+• 2015-07-02 10:26: mobrovac rolling-restarts the rest of the nodes, normal operation resumes
+
+Due to limited monitoring checks (only an HTTP check on LVS), we were confused as to what was going on since the processes on the nodes were seemingly up and bound to the usual port. Moreover, statistics and logs indicate that RESTBase workers were dying off slowly over time (from approximately 2015-07-02 07:30 UTC onwards), which means that the incident had been undergoing for 2:30 before we received a notification.
+
+Furthermore, it was not clear to us why RESTBase workers were not automatically restarted, given that RESTBase was supposed to have automatic worker restarts.
+• Done Include HTTP checks for each RESTBase back-end
+• In progress Investigate the failure of RESTBase to restart workers
+• In progress Investigate why some workers did not actually die but were left hanging

@@ -1,0 +1,19 @@
+For approximately an hour, the traffic layer served bursts of 503 errors: up to ~50k/minute for several minutes at a time. It is unclear why this happened, and whether misbehavior at the traffic layer or at the appserver layer was actually at fault.
+
+Approximately 553,000 HTTP 503 errors were served across all sites. https://logstash.wikimedia.org/goto/accfe83bffa587f460110942361af4a1
+
+Automated monitoring (Icinga alerts on traffic availability) plus multiple staff/user reports in #wikimedia-operations.
+• 18:26: first alert from Icinga <+icinga-wm> PROBLEM - HTTP availability for Varnish at esams on icinga1001 is CRITICAL: job=varnish-text site=esams https://grafana.wikimedia.org/dashboard/db/frontend-traffic?panelId=3&fullscreen&refresh=1m&orgId=1
+• 18:55: cdanis depools cp1085 after looking at Varnish mailbox lag console and https://phabricator.wikimedia.org/T145661
+• Spikes of connections from Varnish backends to appservers correlate with the 503s: https://grafana.wikimedia.org/d/000000439/varnish-backend-connections?orgId=1&from=1555438200000&to=1555442400000
+
+It is unclear what of the above are symptoms vs causes.
+
+What went well?
+
+Where did we get lucky?
+• Whatever was causing the issue stopped happening.
+• The outage was not more widespread
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+• Continue working on moving to ATS. Similar incidents have happened before, and continuing to investigate these failures of Varnish is not a good use of time.

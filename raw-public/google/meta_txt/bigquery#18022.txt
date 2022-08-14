@@ -1,0 +1,323 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+November 09, 2017  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/18022)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #18022
+
+BigQuery Streaming API failing
+
+Incident began at **2016-11-08 16:00** and ended at **2016-11-08 20:00** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Nov 11, 2016 | 13:14 |
+
+Small correction to the incident report. The resolution time of the incident
+was 20:00 US/Pacific, not 20:11 US/Pacific. Similarly, total downtime was 4
+hours.  
+  
+|
+
+Small correction to the incident report. The resolution time of the incident
+was 20:00 US/Pacific, not 20:11 US/Pacific. Similarly, total downtime was 4
+hours.  
+  
+| Nov 11, 2016 | 12:14 |
+
+SUMMARY:
+
+On Tuesday 8 November 2016, Google BigQuery’s streaming service, which
+includes streaming inserts and queries against recently committed streaming
+buffers, was largely unavailable for a period of 4 hours and 11 minutes. To
+our BigQuery customers whose business analytics were impacted during this
+outage, we sincerely apologize. We will be providing an SLA credit for the
+affected timeframe. We have conducted an internal investigation and are taking
+steps to improve our service.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday 8 November 2016 from 16:00 to 20:11 US/Pacific, 73% of BigQuery
+streaming inserts failed with a 503 error code indicating an internal error
+had occurred during the insertion. At peak, 93% of BigQuery streaming inserts
+failed. During the incident, queries performed on tables with recently-
+streamed data returned a result code (400) indicating that the table was
+unavailable for querying. Queries against tables in which data were not
+streamed within the 24 hours preceding the incident were unaffected. There
+were no issues with non-streaming ingestion of data.
+
+ROOT CAUSE:
+
+The BigQuery streaming service requires authorization checks to verify that it
+is streaming data from an authorized entity to a table that entity has
+permissions to access. The authorization service relies on a caching layer in
+order to reduce the number of calls to the authorization backend. At 16:00
+US/Pacific, a combination of reduced backend authorization capacity coupled
+with routine cache entry refreshes caused a surge in requests to the
+authorization backends, exceeding their current capacity. Because BigQuery
+does not cache failed authorization attempts, this overload meant that new
+streaming requests would require re-authorization, thereby further increasing
+load on the authorization backend. This continual increase of authorization
+requests on an already overloaded authorization backend resulted in continued
+and sustained authorization failures which propagated into streaming request
+and query failures.
+
+REMEDIATION AND PREVENTION:
+
+Google engineers were alerted to issues with the streaming service at 16:21
+US/Pacific. Their initial hypothesis was that the caching layer for
+authorization requests was failing. The engineers started redirecting requests
+to bypass the caching layer at 16:51. After testing the system without the
+caching layer, the engineers determined that the caching layer was working as
+designed, and requests were directed to the caching layer again at 18:12. At
+18:13, the engineering team was able to pinpoint the failures to a set of
+overloaded authorization backends and begin remediation.
+
+The issue with authorization capacity was ultimately resolved by incrementally
+reducing load on the authorization system internally and increasing the cache
+TTL, allowing streaming authorization requests to succeed and populate the
+cache so that internal services could be restarted. Recovery of streaming
+errors began at 19:34 US/Pacific and the streaming service was fully restored
+at 20:11.
+
+To prevent short-term recurrence of the issue, the engineering team has
+greatly increased the request capacity of the authorization backend.
+
+In the longer term, the BigQuery engineering team will work on several
+mitigation strategies to address the currently cascading effect of failed
+authorization requests. These strategies include caching intermediary
+responses to the authorization flow for the streaming service, caching failure
+states for authorization requests and adding rate limiting to the
+authorization service so that large increases in cache miss rate will not
+overwhelm the authorization backend.
+
+In addition, the BigQuery engineering team will be improving the monitoring of
+available capacity on the authorization backend and will add additional
+alerting so capacity issues can be mitigated before they become cascading
+failures. The BigQuery engineering team will also be investigating ways to
+reduce the spike in authorization traffic that occurs daily at 16:00
+US/Pacific when the cache is rebuilt to more evenly distribute requests to the
+authorization backend.
+
+Finally, we have received feedback that our communications during the outage
+left a lot to be desired. We agree with this feedback. While our engineering
+teams launched an all-hands-on-deck to resolve this issue within minutes of
+its detection, we did not adequately communicate both the level-of-effort and
+the steady progress of diagnosis, triage and restoration happening during the
+incident. We clearly erred in not communicating promptly, crisply and
+transparently to affected customers during this incident. We will be
+addressing our communications — for all Google Cloud systems, not just
+BigQuery — as part of a separate effort, which has already been launched.
+
+We recognize the extended duration of this outage, and we sincerely apologize
+to our BigQuery customers for the impact to your business analytics.  
+  
+|
+
+SUMMARY:
+
+On Tuesday 8 November 2016, Google BigQuery’s streaming service, which
+includes streaming inserts and queries against recently committed streaming
+buffers, was largely unavailable for a period of 4 hours and 11 minutes. To
+our BigQuery customers whose business analytics were impacted during this
+outage, we sincerely apologize. We will be providing an SLA credit for the
+affected timeframe. We have conducted an internal investigation and are taking
+steps to improve our service.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday 8 November 2016 from 16:00 to 20:11 US/Pacific, 73% of BigQuery
+streaming inserts failed with a 503 error code indicating an internal error
+had occurred during the insertion. At peak, 93% of BigQuery streaming inserts
+failed. During the incident, queries performed on tables with recently-
+streamed data returned a result code (400) indicating that the table was
+unavailable for querying. Queries against tables in which data were not
+streamed within the 24 hours preceding the incident were unaffected. There
+were no issues with non-streaming ingestion of data.
+
+ROOT CAUSE:
+
+The BigQuery streaming service requires authorization checks to verify that it
+is streaming data from an authorized entity to a table that entity has
+permissions to access. The authorization service relies on a caching layer in
+order to reduce the number of calls to the authorization backend. At 16:00
+US/Pacific, a combination of reduced backend authorization capacity coupled
+with routine cache entry refreshes caused a surge in requests to the
+authorization backends, exceeding their current capacity. Because BigQuery
+does not cache failed authorization attempts, this overload meant that new
+streaming requests would require re-authorization, thereby further increasing
+load on the authorization backend. This continual increase of authorization
+requests on an already overloaded authorization backend resulted in continued
+and sustained authorization failures which propagated into streaming request
+and query failures.
+
+REMEDIATION AND PREVENTION:
+
+Google engineers were alerted to issues with the streaming service at 16:21
+US/Pacific. Their initial hypothesis was that the caching layer for
+authorization requests was failing. The engineers started redirecting requests
+to bypass the caching layer at 16:51. After testing the system without the
+caching layer, the engineers determined that the caching layer was working as
+designed, and requests were directed to the caching layer again at 18:12. At
+18:13, the engineering team was able to pinpoint the failures to a set of
+overloaded authorization backends and begin remediation.
+
+The issue with authorization capacity was ultimately resolved by incrementally
+reducing load on the authorization system internally and increasing the cache
+TTL, allowing streaming authorization requests to succeed and populate the
+cache so that internal services could be restarted. Recovery of streaming
+errors began at 19:34 US/Pacific and the streaming service was fully restored
+at 20:11.
+
+To prevent short-term recurrence of the issue, the engineering team has
+greatly increased the request capacity of the authorization backend.
+
+In the longer term, the BigQuery engineering team will work on several
+mitigation strategies to address the currently cascading effect of failed
+authorization requests. These strategies include caching intermediary
+responses to the authorization flow for the streaming service, caching failure
+states for authorization requests and adding rate limiting to the
+authorization service so that large increases in cache miss rate will not
+overwhelm the authorization backend.
+
+In addition, the BigQuery engineering team will be improving the monitoring of
+available capacity on the authorization backend and will add additional
+alerting so capacity issues can be mitigated before they become cascading
+failures. The BigQuery engineering team will also be investigating ways to
+reduce the spike in authorization traffic that occurs daily at 16:00
+US/Pacific when the cache is rebuilt to more evenly distribute requests to the
+authorization backend.
+
+Finally, we have received feedback that our communications during the outage
+left a lot to be desired. We agree with this feedback. While our engineering
+teams launched an all-hands-on-deck to resolve this issue within minutes of
+its detection, we did not adequately communicate both the level-of-effort and
+the steady progress of diagnosis, triage and restoration happening during the
+incident. We clearly erred in not communicating promptly, crisply and
+transparently to affected customers during this incident. We will be
+addressing our communications — for all Google Cloud systems, not just
+BigQuery — as part of a separate effort, which has already been launched.
+
+We recognize the extended duration of this outage, and we sincerely apologize
+to our BigQuery customers for the impact to your business analytics.  
+  
+| Nov 08, 2016 | 20:21 |
+
+The issue with the BigQuery Streaming API should have been resolved for all
+affected tables as of 20:07 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+|
+
+The issue with the BigQuery Streaming API should have been resolved for all
+affected tables as of 20:07 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+| Nov 08, 2016 | 20:00 |
+
+We're continuing to work to restore the service to the BigQuery Streaming API.
+We will add an update at 20:30 US/Pacific with further information.  
+  
+|
+
+We're continuing to work to restore the service to the BigQuery Streaming API.
+We will add an update at 20:30 US/Pacific with further information.  
+  
+| Nov 08, 2016 | 19:44 |
+
+We are continuing to investigate the issue with BigQuery Streaming API. We
+will add an update at 20:00 US/Pacific with further information.  
+  
+|
+
+We are continuing to investigate the issue with BigQuery Streaming API. We
+will add an update at 20:00 US/Pacific with further information.  
+  
+| Nov 08, 2016 | 19:00 |
+
+We have taken steps to mitigate the issue, which has led to some improvements.
+The issue continues to impact the BigQuery Streaming API and tables with a
+streaming buffer. We will provide a further status update at 19:30 US/Pacific
+with current details  
+  
+|
+
+We have taken steps to mitigate the issue, which has led to some improvements.
+The issue continues to impact the BigQuery Streaming API and tables with a
+streaming buffer. We will provide a further status update at 19:30 US/Pacific
+with current details  
+  
+| Nov 08, 2016 | 18:30 |
+
+We are continuing to investigate the issue with BigQuery Streaming API. The
+issue may also impact tables with a streaming buffer, making them
+inaccessible. This will be clarified in the next update at 19:00 US/Pacific
+with current details.  
+  
+|
+
+We are continuing to investigate the issue with BigQuery Streaming API. The
+issue may also impact tables with a streaming buffer, making them
+inaccessible. This will be clarified in the next update at 19:00 US/Pacific
+with current details.  
+  
+| Nov 08, 2016 | 18:00 |
+
+We are still investigating the issue with BigQuery Streaming API. There are no
+other details to share at this time but we are actively working to resolve
+this. We will provide another status update by 18:30 US/Pacific with current
+details.  
+  
+|
+
+We are still investigating the issue with BigQuery Streaming API. There are no
+other details to share at this time but we are actively working to resolve
+this. We will provide another status update by 18:30 US/Pacific with current
+details.  
+  
+| Nov 08, 2016 | 17:30 |
+
+We are still investigating the issue with the BigQuery Streaming API. Current
+data indicates that all projects are affected by this issue. We will provide
+another status update by 18:00 US/Pacific with current details.  
+  
+|
+
+We are still investigating the issue with the BigQuery Streaming API. Current
+data indicates that all projects are affected by this issue. We will provide
+another status update by 18:00 US/Pacific with current details.  
+  
+| Nov 08, 2016 | 17:28 |
+
+We are investigating an issue with the BigQuery Streaming API. We will provide
+more information by 17:30 US/Pacific.  
+  
+|
+
+We are investigating an issue with the BigQuery Streaming API. We will provide
+more information by 17:30 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

@@ -1,0 +1,134 @@
+
+[02/22/2013][Details of the February 22nd 2013 Windows Azure Storage Disruption]
+http://azure.microsoft.com/blog/2013/03/01/details-of-the-february-22nd-2013-windows-azure-storage-disruption/
+http://www.neowin.net/news/windows-azure-suffers-yet-another-extended-outage
+http://redmondmag.com/articles/2013/02/22/worldwide-windows-azure-storage-outage.aspx
+r-upgrade
+r-admin
+i-down
+t-11h40m
+p-no
+f-fix
+
+[02/29/2012][Summary of Windows Azure Service Disruption on Feb 29th, 2012]
+http://azure.microsoft.com/blog/2012/03/09/summary-of-windows-azure-service-disruption-on-feb-29th-2012/
+http://redmondmag.com/articles/2012/02/29/outages-hit-microsoft-azure.aspx
+http://blogs.gartner.com/kyle-hilgendorf/2012/03/09/azure-outage-customer-insights-a-week-later/
+http://arstechnica.com/information-technology/2012/02/prolonged-microsoft-azure-outtage-casts-dark-cloud-over-customers/
+r-bug
+i-down
+t-12h
+p-no
+f-fix
+
+[03/17/2015][Microsoft Gets Another Headache: Azure Outage Redux]
+http://www.crn.com/news/cloud/300076173/microsoft-gets-another-headache-azure-outage-redux.htm
+http://www.crn.com/slide-shows/cloud/300077635/the-10-biggest-cloud-outages-of-2015-so-far.htm/pgno/0/6
+http://www.crn.com/news/cloud/300076160/network-glitch-takes-down-microsofts-azure-iaas-paas-services-for-central-u-s-customers.htm?itc=hp_tax_cloud
+r-fail
+t-2h19m
+i-down
+p-no
+
+[04/21/2010][Windows Azure Live DNS Brief Outage at All Data Centers on 4/21/2010 at ~ 2:30 PM PDT]
+http://oakleafblog.blogspot.com/2010/04/windows-azure-live-dns-brief-outage-at.html
+r-fail
+i-down
+t-40m
+p-no
+
+[07/02/2015][ Unknown network fault leaves customers cloudless]
+http://www.itnews.com.au/news/microsoft-azure-australia-east-hit-by-outage-406110
+r-fail
+t-7h
+i-down
+p-no
+
+[07/26/2012][Errant ‘Safety Valve’ Caused Windows Azure Outage]
+http://www.datacenterknowledge.com/archives/2012/08/03/errant-safety-valve-caused-windows-azure-outage/
+http://allthingsd.com/20120726/microsofts-azure-cloud-service-experiences-a-bump-in-europe-overnight/
+http://allthingsd.com/20120803/microsoft-explains-last-weeks-azure-outage-whoops/
+r-fail
+r-admin
+r-config
+r-bug
+i-down
+t-2h24m
+p-no
+f-add
+
+[08/18/2014][Microsoft Azure Cloud services down!]
+http://www.bloomberg.com/news/articles/2014-08-18/microsoft-s-cloud-computing-service-azure-experiencing-outage
+http://www.datacenterknowledge.com/archives/2014/08/18/cloud-outages-make-for-rough-monday-at-microsoft-azure/
+r-unk
+i-down
+t-5h
+p-no
+
+[09/07/2010][SQL Azure Portal Database Provisioning Outage on 9/7/2010]
+http://oakleafblog.blogspot.com/2010/09/sql-azure-portal-database-provisioning.html
+r-unk
+i-down
+t-3h
+p-no
+
+[10/30/2013][Windows Azure Compute cloud goes TITSUP PLANET-WIDE]
+http://www.theregister.co.uk/2013/10/30/windows_azure_global_fail/
+http://www.pcworld.com/article/2059901/microsofts-windows-azure-cloud-hit-by-worldwide-management-interuption.html
+r-unk
+i-down
+t-8h
+p-no
+
+[11/19/2014][Final Root Cause Analysis and Improvement Areas: Nov 18 Azure Storage Service Interruption]
+http://azure.microsoft.com/blog/2014/12/17/final-root-cause-analysis-and-improvement-areas-nov-18-azure-storage-service-interruption/
+http://azure.microsoft.com/blog/2014/11/19/update-on-azure-storage-service-interruption/
+http://www.computerworld.com/article/2860833/human-error-root-cause-of-november-microsoft-azure-outage.html
+r-config
+r-admin
+r-bug
+r-bug
+i-down
+t-10h55m
+f-roll
+f-fix
+p-no
+
+[11/21/2012][Major Microsoft Cloud Outage Blamed on DNS Failure]
+http://redmondmag.com/Blogs/The-Schwartz-Report/2013/11/Outage-Blamed-on-DNS-Failure.aspx
+http://redmondmag.com/articles/2013/11/21/windows-azure-outages.aspx
+r-cross
+r-fail
+i-down
+t-1h
+f-cross
+p-no
+
+[12/03/2015][Microsoft Office 365, Azure portals offline for many users in Europe]
+http://www.theregister.co.uk/2015/12/03/office_365_goes_offline/
+http://www.computerweekly.com/news/4500259905/European-Office-365-and-Microsoft-Azure-users-hit-by-service-outage
+r-config
+r-bug
+t-unk
+i-down
+p-no
+
+[12/18/2015][Another Microsoft Office 365 and Azure outage hits UK and Europe]
+http://www.computing.co.uk/ctg/news/2439832/another-microsoft-office-365-and-azure-outage-hits-uk-and-europe
+r-unk
+t-2h5m
+i-down
+p-no
+
+[12/28/2012][Details of the December 28th, 2012 Windows Azure Storage Disruption in US South]
+http://azure.microsoft.com/blog/2013/01/16/details-of-the-december-28th-2012-windows-azure-storage-disruption-in-us-south/
+http://redmondmag.com/articles/2013/01/17/microsoft-december-windows-azure-outage.aspx
+http://www.zdnet.com/microsofts-december-azure-outage-what-went-wrong-7000010021/
+r-admin
+r-config
+i-down
+i-loss
+t-2d14h23m
+p-no
+f-restore
+

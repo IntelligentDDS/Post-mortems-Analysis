@@ -1,0 +1,7 @@
+Labstore1001 became unresponsive to NFS because its block device subsystem was overloaded. A combination of factors caused a cascade failure resulting in complete resource starvation for NFS.
+
+There seems to be no single, isolable cause to the outage. Rather, a combination of factors seem to have resulted in the demand on disk bandwidth to exceed the capacity of the system to the point where cascading failure was reached. The kernel stripe_cache_size being set to the default (too small) kernel value amplified the drain on resources caused by the raid resync to the point where a buffer flush initiated by the kernel ended up starving all processes out of disk bandwidth. In addition, the older kernel (from Precise) has a bottleneck on raid6 checksum calculation being single-CPU bound that aggravated matters.
+• Move to a more modern kernel as swiftly as practical https://phabricator.wikimedia.org/T94609
+• make certain the stripe_cache_size setting is puppetized and applied at boot https://phabricator.wikimedia.org/T96045
+• Formulate plans for getting off of raid6 for labs NFS storage. https://phabricator.wikimedia.org/T96063
+• Formulate plans for reducing unnecessary NFS I/O by pushing projects to use local storage for heavy i/o traffic. https://phabricator.wikimedia.org/T96065

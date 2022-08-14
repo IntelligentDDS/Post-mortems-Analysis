@@ -1,0 +1,6 @@
+All wikis using CirrusSearch experienced a significant increase in search failures. I haven't dug into exactly how many, but thousands an hour.
+
+Sorry about not being as accurate as I normally am. I don't have great times on this one: We got a bit over aggressive about pushing Cirrus as the primary search backend for bigger wikis and pushed ourselves over the edge but in slow motion. Things started breaking down during Europe's peak time on Tuesday. I wrestled with the production system all day trying get an accurate fix on exactly how we were failing and to stem the tide. I thought I had it by the end of my day on Tuesday. On my Wednesday morning (Europe's afternoon) I woke to see us slipping again. So I rolled back all the recent deploys making Cirrus primary all the way back to the commons deploy.
+• Cirrus is just too slow as is. We need to make it faster.
+• Status: Declined - Cirrus needs to decrease the working set size required to usefully serve traffic.
+• Started by producing two weighted fields that we can query instead of 16 different fields. merged but not deployed. Production and testing must come before actual use as well.

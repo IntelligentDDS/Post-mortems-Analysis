@@ -1,0 +1,167 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+October 19, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Storage](/incident/storage/17005)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Storage Incident #17005
+
+Elevated GCS Errors from Canada
+
+Incident began at **2017-10-12 12:47** and ended at **2017-10-13 10:12** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Oct 19, 2017 | 12:49 |
+
+ISSUE SUMMARY
+
+Starting Thursday 12 October 2017, Google Cloud Storage clients located in the
+Northeast of North America experienced up to a 10% error rate for a duration
+of 21 hours and 35 minutes when fetching objects stored in multi-regional
+buckets in the US.
+
+We apologize for the impact of this incident on your application or service.
+The reliability of our service is a top priority and we understand that we
+need to do better to ensure that incidents of this type do not recur.
+
+DETAILED DESCRIPTION OF IMPACT
+
+Between Thursday 12 October 2017 12:47 PDT and Friday 13 October 2017 10:12
+PDT, Google Cloud Storage clients located in the Northeast of North America
+experienced up to a 10% rate of 503 errors and elevated latency. Some users
+experienced higher error rates for brief periods. This incident only impacted
+requests to fetch objects stored in multi-regional buckets in the US; clients
+were able to mitigate impact by retrying. The percentage of total global
+requests to Cloud Storage that experienced errors was 0.03%.
+
+ROOT CAUSE
+
+Google ensures balanced use of its internal networks by throttling outbound
+traffic at the source host in the event of congestion. This incident was
+caused by a bug in an earlier version of the job that reads Cloud Storage
+objects from disk and streams data to clients. Under high traffic conditions,
+the bug caused these jobs to incorrectly throttle outbound network traffic
+even though the network was not congested.
+
+Google had previously identified this bug and was in the process of rolling
+out a fix to all Google datacenters. At the time of the incident, Cloud
+Storage jobs in a datacenter in Northeast North America that serves requests
+to some Canadian and US clients had not yet received the fix. This datacenter
+is not a location for customer buckets
+(https://cloud.google.com/storage/docs/bucket-locations), but objects in
+multi-regional buckets can be served from instances running in this datacenter
+in order to optimize latency for clients.
+
+REMEDIATION AND PREVENTION
+
+The incident was first reported by a customer to Google on Thursday 12 October
+14:59 PDT. Google engineers determined root cause on Friday 13 October 09:47
+PDT. We redirected Cloud Storage traffic away from the impacted region at
+10:08 and the incident was resolved at 10:12.
+
+We have now rolled out the bug fix to all regions. We will also add external
+monitoring probes for all regional points of presence so that we can more
+quickly detect issues of this type.  
+  
+|
+
+ISSUE SUMMARY
+
+Starting Thursday 12 October 2017, Google Cloud Storage clients located in the
+Northeast of North America experienced up to a 10% error rate for a duration
+of 21 hours and 35 minutes when fetching objects stored in multi-regional
+buckets in the US.
+
+We apologize for the impact of this incident on your application or service.
+The reliability of our service is a top priority and we understand that we
+need to do better to ensure that incidents of this type do not recur.
+
+DETAILED DESCRIPTION OF IMPACT
+
+Between Thursday 12 October 2017 12:47 PDT and Friday 13 October 2017 10:12
+PDT, Google Cloud Storage clients located in the Northeast of North America
+experienced up to a 10% rate of 503 errors and elevated latency. Some users
+experienced higher error rates for brief periods. This incident only impacted
+requests to fetch objects stored in multi-regional buckets in the US; clients
+were able to mitigate impact by retrying. The percentage of total global
+requests to Cloud Storage that experienced errors was 0.03%.
+
+ROOT CAUSE
+
+Google ensures balanced use of its internal networks by throttling outbound
+traffic at the source host in the event of congestion. This incident was
+caused by a bug in an earlier version of the job that reads Cloud Storage
+objects from disk and streams data to clients. Under high traffic conditions,
+the bug caused these jobs to incorrectly throttle outbound network traffic
+even though the network was not congested.
+
+Google had previously identified this bug and was in the process of rolling
+out a fix to all Google datacenters. At the time of the incident, Cloud
+Storage jobs in a datacenter in Northeast North America that serves requests
+to some Canadian and US clients had not yet received the fix. This datacenter
+is not a location for customer buckets
+(https://cloud.google.com/storage/docs/bucket-locations), but objects in
+multi-regional buckets can be served from instances running in this datacenter
+in order to optimize latency for clients.
+
+REMEDIATION AND PREVENTION
+
+The incident was first reported by a customer to Google on Thursday 12 October
+14:59 PDT. Google engineers determined root cause on Friday 13 October 09:47
+PDT. We redirected Cloud Storage traffic away from the impacted region at
+10:08 and the incident was resolved at 10:12.
+
+We have now rolled out the bug fix to all regions. We will also add external
+monitoring probes for all regional points of presence so that we can more
+quickly detect issues of this type.  
+  
+| Oct 13, 2017 | 10:08 |
+
+The issue with Google Cloud Storage request failures for users in Canada and
+Northeast North America has been resolved for all affected users as of Friday,
+2017-10-13 10:08 US/Pacific. We will conduct an internal investigation of this
+issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+|
+
+The issue with Google Cloud Storage request failures for users in Canada and
+Northeast North America has been resolved for all affected users as of Friday,
+2017-10-13 10:08 US/Pacific. We will conduct an internal investigation of this
+issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+| Oct 13, 2017 | 09:31 |
+
+We are investigating an issue with Google Cloud Storage users in Canada and
+Northeast North America experiencing HTTP 503 failures. We will provide more
+information by 10:30 US/Pacific.  
+  
+|
+
+We are investigating an issue with Google Cloud Storage users in Canada and
+Northeast North America experiencing HTTP 503 failures. We will provide more
+information by 10:30 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

@@ -1,0 +1,9 @@
+RCA - MSA Login Failures (Tracking ID CT05-PC0)
+Summary of impact: Between 00:00 UTC and 04:41 UTC on Feb 22, 2020, a subset of our customers may have been unable to sign in with their Microsoft Service accounts (MSA) to
+access their Azure resources. Users signing in with non-Microsoft accounts would have been unaffected. Users may also have been unable to create new Microsoft accounts.
+Root Cause: Engineers determined that a server authentication component reached an operational threshold which resulted in increased failures and the unavailability of the service metadata required for successful user sign-in. The issue occurred during planned server maintenance and was detected by internal monitoring.
+Mitigation: Engineers added additional resources to address the server authentication component hitting a threshold but complete service restoration required a full recovery of the domain controllers followed by service metadata store restarts which extended the duration of the issue. Service was monitored using telemetry to verify the issue was fully mitigated.
+Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but not limited to):
+Adding additional capacity and resiliency features for this component to prevent future occurrences. Updating datacenter decommission and capacity planning documentation.
+Updating internal monitoring to quickly flag capacity issues when they arise.
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/CT05-PC0

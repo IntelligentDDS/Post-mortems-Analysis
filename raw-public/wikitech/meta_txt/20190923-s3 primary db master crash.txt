@@ -1,0 +1,29 @@
+s3 primary database master had a RAID backup batery failure which cause the host to completely crash. It had to be power cycle from the idrac.
+
+All the s3 wikis (https://raw.githubusercontent.com/wikimedia/operations-mediawiki-config/master/dblists/s3.dblist) went read-only as the master wasn't available for writes. Reads were not affected, all the replicas were available.
+• The problem was clear when we saw that db1075 reported HOST DOWN - however, that only sends an IRC alert, not a page. Masters should probably page for HOST DOWN.
+• Alerts were sent to IRC and pages.
+• 19:02 Host rebooted from the idrac after seeing it is a BBU issue and the host is not responsive
+• 19:04 Manual puppet run ran (but failed and went unnoticed)
+
+The master lost its BBU and that resulted on a completely host crash, which is something that has been seen before with HP hosts https://phabricator.wikimedia.org/T231638 https://phabricator.wikimedia.org/T225391
+
+The master being unavailable means that writes cannot happen: https://grafana.wikimedia.org/d/000000278/mysql-aggregated?orgId=1&var-dc=eqiad%20prometheus%2Fops&var-group=core&var-shard=s3&var-role=master&from=1569174586143&to=1569181181947
+
+This is is part of a batch of 6 servers, and 3 of them have already had BBU issues: https://phabricator.wikimedia.org/T233569 so we'd need to evaluate if what to do with then next. Definitely replacing the current master and promoting another one which is not part of that batch is what is happening next: https://phabricator.wikimedia.org/T230783
+
+What went well?
+• Rebooting the host from the idrac was successful
+• Race condition between pt-hearbeat being ran via puppet but mysql wasn't still fully up failed (and went unnoticed) resulted on lag being reported while everything was up, resulting in 8 minutes more of an outage until the second manual puppet run was done.
+• A BBU failure shoulnd't result on a completely host crash (but we haven see that before with HP hosts)
+
+Where did we get lucky?
+• The master was able to come back after the hardware issue. We had to restart it via idrac but it came back clean, otherwise, we'd have needed to do a fully master failover manually to promote a new replica to master.
+• Volunteers and staff noticed the failure even before the alerts caught them
+
+How many people were involved in the remediation?
+• Implement (or refactor) a script to move replicas when the master is not available (this wasn't needed yesterday, but could be needed in future issues): https://phabricator.wikimedia.org/T196366
+• Fix mediawiki heartbeat model, change pt-heartbeat model to not use super-user, avoid SPOF and switch automatically to the real master without puppet dependency: https://phabricator.wikimedia.org/T172497
+• Decide what to do with the same batch of hosts that have already had BBU issues: https://phabricator.wikimedia.org/T233569
+• Make sure primary database masters page on HOST DOWN https://phabricator.wikimedia.org/T233684
+• Better tracking of hardware errors in Netbox https://phabricator.wikimedia.org/T233774

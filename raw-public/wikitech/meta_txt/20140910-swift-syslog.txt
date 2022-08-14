@@ -1,0 +1,5 @@
+swift frontends were maxed out on CPU following an rsyslog configuration change, impacting the image scaler cluster and regular swift traffic
+• 2014-09-10T08:52 https://gerrit.wikimedia.org/r/#/c/159348/ is submitted and merged, changing rsyslog and swift proxy configuration
+• 2014-09-10T08:59 impact seen on image scalers, LVS alarm for rendering.svc.eqiad.wmnet
+
+This was an instance of Incident_documentation/20131205-Swift in which swift busyloops when the syslog socket goes away. The issue was thought to be fixed by latest swift upstream and confirmed during testing. The testing has proven to not replicate the exact conditions for reoccurrence however, as this incident demonstrates. Extra care should be put when deploying rsyslog configuration changes that restart rsyslog as a side effect.

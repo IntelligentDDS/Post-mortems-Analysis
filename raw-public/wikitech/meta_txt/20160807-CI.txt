@@ -1,0 +1,7 @@
+CI had a roughly 4 hours outage which unfortunately was due to a known issue where Nodepool tries to create too many files (and thus exhausting inodes) on the Jenkins master.
+• 11:01 < Amir1> Zuul seems to be extremely slow: https://integration.wikimedia.org/zuul/
+• 11:03 < paladox> Hi nodepool seems to be down in zuul
+• 11:08 <+ Reedy> Aug 07 11:07:54 labnodepool1001 nodepoold[16727]: Forbidden: Quota exceeded for instances: Requested 1, but already used 10 of 10 instances (HTTP 403)
+• Diagnosis/attempts to fix by deleting unused nodepool instances that were stuck
+• We need to cleanup unused config files on a schedule
+• Jenkins files under /var/lib/jenkins/config-history/config need to be garbage collected - (Task T126552)

@@ -1,0 +1,183 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+May 17, 2017  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud SQL](/incident/cloud-sql/17010)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud SQL Incident #17010
+
+Issues with Cloud SQL First Generation instances
+
+Incident began at **2016-05-17 04:15** and ended at **2016-05-17 08:37** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| May 20, 2016 | 11:09 |
+
+SUMMARY:
+
+On Tuesday 17 May 2016, connections to Cloud SQL instances in the Central
+United States region experienced an elevated error rate for 130 minutes.
+
+We apologize to customers who were affected by this incident. We know that
+reliability is critical for you and we are committed to learning from
+incidents in order to improve the future reliability of our service.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday 17 May 2016 from 04:15 to 06:12 and from 08:24 to 08:37 PDT,
+connections to Cloud SQL instances in the us-central1 region experienced an
+elevated error rate. The average rate of connection errors to instances in
+this region was 10.5% during the first part of the incident and 1.9% during
+the second part of the incident. 51% of in-use Cloud SQL instances in the
+affected region were impacted during the first part of the incident; 4.2% of
+in-use instances were impacted during the second part. Cloud SQL Second
+Generation instances were not impacted.
+
+ROOT CAUSE:
+
+Clients connect to a Cloud SQL frontend service that forwards the connection
+to the correct MySQL database server. The frontend calls a separate service to
+start up a new Cloud SQL instance if a connection arrives for an instance that
+is not running.
+
+This incident was triggered by a Cloud SQL instance that could not
+successfully start. The incoming connection requests for this instance
+resulted in a large number of calls to the start up service. This caused
+increased memory usage of the frontend service as start up requests backed up.
+The frontend service eventually failed under load and dropped some connection
+requests due to this memory pressure.
+
+REMEDIATION AND PREVENTION:
+
+Google received its first customer report at 04:39 PDT and we tried to
+remediate the problem by redirecting new connections to different datacenters.
+This effort proved unsuccessful as the start up capacity was used up there
+also. At 06:12 PDT, we fixed the issue by blocking all incoming connections to
+the misbehaving Cloud SQL instance. At 08:24 PDT, we moved this instance to a
+separate pool of servers and restarted it. However, the separate pool of
+servers did not provide sufficient isolation for the service that starts up
+instances, causing the incident to recur. We shutdown the instance at 08:37
+PDT which resolved the incident.
+
+To prevent incidents of this type in the future, we will ensure that a single
+Cloud SQL instance cannot use up all the capacity of the start up service.
+
+In addition, we will improve our monitoring in order to detect this type of
+issue more quickly.
+
+We apologize for the inconvenience this issue caused our customers.  
+  
+|
+
+SUMMARY:
+
+On Tuesday 17 May 2016, connections to Cloud SQL instances in the Central
+United States region experienced an elevated error rate for 130 minutes.
+
+We apologize to customers who were affected by this incident. We know that
+reliability is critical for you and we are committed to learning from
+incidents in order to improve the future reliability of our service.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday 17 May 2016 from 04:15 to 06:12 and from 08:24 to 08:37 PDT,
+connections to Cloud SQL instances in the us-central1 region experienced an
+elevated error rate. The average rate of connection errors to instances in
+this region was 10.5% during the first part of the incident and 1.9% during
+the second part of the incident. 51% of in-use Cloud SQL instances in the
+affected region were impacted during the first part of the incident; 4.2% of
+in-use instances were impacted during the second part. Cloud SQL Second
+Generation instances were not impacted.
+
+ROOT CAUSE:
+
+Clients connect to a Cloud SQL frontend service that forwards the connection
+to the correct MySQL database server. The frontend calls a separate service to
+start up a new Cloud SQL instance if a connection arrives for an instance that
+is not running.
+
+This incident was triggered by a Cloud SQL instance that could not
+successfully start. The incoming connection requests for this instance
+resulted in a large number of calls to the start up service. This caused
+increased memory usage of the frontend service as start up requests backed up.
+The frontend service eventually failed under load and dropped some connection
+requests due to this memory pressure.
+
+REMEDIATION AND PREVENTION:
+
+Google received its first customer report at 04:39 PDT and we tried to
+remediate the problem by redirecting new connections to different datacenters.
+This effort proved unsuccessful as the start up capacity was used up there
+also. At 06:12 PDT, we fixed the issue by blocking all incoming connections to
+the misbehaving Cloud SQL instance. At 08:24 PDT, we moved this instance to a
+separate pool of servers and restarted it. However, the separate pool of
+servers did not provide sufficient isolation for the service that starts up
+instances, causing the incident to recur. We shutdown the instance at 08:37
+PDT which resolved the incident.
+
+To prevent incidents of this type in the future, we will ensure that a single
+Cloud SQL instance cannot use up all the capacity of the start up service.
+
+In addition, we will improve our monitoring in order to detect this type of
+issue more quickly.
+
+We apologize for the inconvenience this issue caused our customers.  
+  
+| May 17, 2016 | 06:28 |
+
+The issue with Cloud SQL should have been resolved for all affected Cloud SQL
+instances as of 06:20 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+|
+
+The issue with Cloud SQL should have been resolved for all affected Cloud SQL
+instances as of 06:20 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+| May 17, 2016 | 06:05 |
+
+The issue is confirmed to be confined to a subset of Cloud SQL First
+Generation instances. We have started to apply mitigation measures. We will
+provide next update by 07:00 US/Pacific.  
+  
+|
+
+The issue is confirmed to be confined to a subset of Cloud SQL First
+Generation instances. We have started to apply mitigation measures. We will
+provide next update by 07:00 US/Pacific.  
+  
+| May 17, 2016 | 05:52 |
+
+We are currently experiencing an issue with Cloud SQL that affects Cloud SQL
+First Generation instances, and applications depending on them.  
+  
+|
+
+We are currently experiencing an issue with Cloud SQL that affects Cloud SQL
+First Generation instances, and applications depending on them.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

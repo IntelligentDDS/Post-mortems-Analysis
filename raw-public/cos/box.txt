@@ -1,0 +1,146 @@
+
+[05/22/2012][Box cloud storage hits a glitch]
+http://www.huddle.com/blog/enterprise-content-management/
+http://www.wired.com/2012/05/cloud-outages-brand-equity/
+r-unk
+i-op
+t-2h
+p-no
+
+[09/10/2014][Some customers unable to access files]
+http://status.box.com/incidents/y5hmplf84qh0
+r-unk
+i-op
+t-1h8m
+p-no
+
+[09/15/2014][Some customers may experience issues downloading files]
+http://status.box.com/incidents/m2mfw12lrb6w
+r-unk
+i-op
+t-34m
+p-no
+
+[09/16/2014][Delayed email notification]
+http://status.box.com/incidents/74f49c5w1sqh
+http://status.box.com/incidents/v7880vbp185x
+r-unk
+i-op
+p-no
+t-9h36m
+
+[09/17/2014][Uploads and download degraded]
+http://status.box.com/incidents/426jdswkyvqm
+r-unk
+t-3h8m
+p-no
+
+[09/22/2014][Uploads and download degraded]
+http://status.box.com/incidents/zzlwbnf7sp7s
+r-unk
+i-op
+t-5m
+p-no
+
+[09/23/2014][Degraded performance "Uploads"]
+http://status.box.com/incidents/l8dbjm2rq22m
+r-unk
+t-5h15m
+p-no
+
+[09/24/2014][Degraded performance "Uploads"]
+http://status.box.com/incidents/prh606wm8ng8
+r-unk
+i-op
+t-29m
+p-no
+
+[10/01/2014][Content preview may be degraded for some users]
+http://status.box.com/incidents/d4vg83jvn15l
+r-unk
+i-op
+t-2h16m
+p-no
+
+[10/03/2014][Uploads and downloads degraded]
+http://status.box.com/incidents/xl4bwhzj1y19
+r-unk
+i-op
+t-35m
+p-no
+
+[10/06/2014][Slower uploads and downloads]
+http://status.box.com/incidents/596mcgcg5sz8
+r-unk
+i-op
+t-3h14m
+p-no
+
+[10/08/2014][Box services degraded]
+http://status.box.com/incidents/9tr4yb5ly3ps
+http://status.box.com/incidents/c0622mxbbl9c
+r-unk
+t-4h49m
+p-no
+
+[10/09/2014][Uploads/downloads degraded]
+http://status.box.com/incidents/l69m16wqhfbl
+r-unk
+i-op
+t-2h14m
+p-no
+
+[10/13/2014][Degraded performance "Content Preview and Workflow"]
+http://status.box.com/incidents/qf6w0shvms35
+http://status.box.com/incidents/9vyp2r16w25y
+r-unk
+t-5h12m
+p-no
+
+[10/14/2014][Slower downloads]
+http://status.box.com/incidents/l63448k1kd22
+r-unk
+i-op
+t-8h37m
+p-no
+
+[10/15/2014][Degraded performance "Box Notes"]
+http://status.box.com/incidents/syjm24k9gxrk
+r-unk
+i-op
+t-29m
+p-no
+
+[10/20/2014][Slower content previews]
+http://status.box.com/incidents/thtb4zbgs9mt
+r-unk
+i-op
+t-3h18m
+p-no
+
+[11/06/2014][Degraded Performance: Box Notes, Box Sync, Content API]
+http://status.box.com/incidents/4g08pwl1qzm7
+r-unk
+t-3h9m
+p-no
+
+[11/09/2015][Box Web Application may be unavailable for some users]
+r-unk
+t-2h25m
+i-down
+p-no
+
+[11/20/2014][FTP degraded]
+http://status.box.com/incidents/t71kl8l0w1yd
+r-unk
+t-1h48m
+p-no
+
+[11/24/2014][Issues with SSO Login]
+http://status.box.com/incidents/rcg3jr6nlwwn
+r-unk
+i-op
+t-4h46m
+f-fix
+p-no
+

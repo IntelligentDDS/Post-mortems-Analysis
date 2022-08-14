@@ -1,0 +1,33 @@
+From 20:00 UTC to 22:15 UTC, jobs submitted to SGE were queued but not executed, or executed with a large delay. Around 22:15 UTC, all queued jobs had started.
+
+See also Tools Server admin log entries during this time
+
+Yuvipanda and valhallasw are working on phab:T123270, which required changes to the SGE configuration. This change would limit the number of concurrent jobs per user.
+• 19:59:06 YuviPanda sets (max concurrent jobs per user) on gridengine to 128
+• 20:02:11 valhallasw tests by submitting ~150 jobs. This doesn't cause an error, but some jobs do get into an error state. valhallasw qdels jobs.
+• 20:10 valhallasw tries again, submitting ~150 jobs into the queue (which only queues and never executes for non-cyberbot). No error.
+• 20:10 we figure out we are using the wrong configuration setting.
+• 21:15:54 <rohit-dua> my jstart jobs is in a state of qw..(including cron) is this a labs error?
+
+this takes a while to get noted,
+• 21:33:22 <akoopal> hmm, can't get the webservice of the erwin85 tools restarted
+• valhallasw checks result of and notices a lot of queues in overload state because of the number of jobs recently started. Connects this to phab:T110994
+• 21:38 valhallasw suggests to reduce the "number of jobs started in the last X minutes" counter by setting load_adjustment_decay_time to something low and back to 7:30
+• 21:42:44 valhallasw resets load_adjustment_decay_time to 0:7:30, as it's not having the intended effect
+• 21:53:29 valhallasw notices lighttpd queues are not overloaded, but lighttpd jobs are also not starting
+• 21:55:59 valhallasw sets job_load_adjustments_decay_time = 0:0:0
+• this clears the list of overloaded queues, but jobs are still not scheduling
+• 21:58:06 YuviPanda notes some lighttpd queues are also overloaded
+• 22:05:53 valhallasw reverts config change, but this does not change anything
+• 22:07:41 valhallasw removes all load adjustments by setting to and to 0:0:0. No effect.
+• 22:12:30 YuviPanda restarts grid master again (maybe the configuration needs to be force-reloaded?)
+• this drops the number of jobs in queue to 406, but then the number increases again
+• 22:14 valhallasw qdels 2221233 and all jobs in the queue are immediately submitted
+• solution was deleting the job the scheduler was confused about
+• solving the issue took long because we chased a red herring (the testing we did earlier), and completely missed the information in the file
+
+What weakness did we learn about and how can we address them?
+• We are still dealing with the outfall from the Dec 30 bdb issue. We don't have enough SGE knowledge to effectively solve these issues, and learning by doing is a slow process.
+• We don't have a protocol for solving an overloaded scheduler, causing us to chase that red herring for too long.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.

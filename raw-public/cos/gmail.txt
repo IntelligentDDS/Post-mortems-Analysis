@@ -1,0 +1,280 @@
+
+[01/24/2014][Today's outage for several Google services]
+http://googleblog.blogspot.com/2014/01/todays-outage-for-several-google.html
+http://www.datacenterknowledge.com/archives/2014/01/24/gmail-go-january-2014-edition/
+http://techcrunch.com/2014/01/24/gmail-goes-down-across-the-world/
+http://mashable.com/2014/01/24/google-gmail-outage-response/
+r-config
+r-bug
+t-30m
+i-down
+f-fix
+p-no
+
+[02/24/2009][Google blames Gmail outage on data centre collapse]
+http://www.theregister.co.uk/2009/02/25/google_gmail_data_centre_fail/
+http://www.computerworld.com/article/2531010/cloud-computing/google-gets-gmail-back-on-its-feet-after-outage.html
+http://googleblog.blogspot.com/2009/02/current-gmail-outage.html
+http://googleblog.blogspot.com/2009/02/update-on-gmail.html
+http://gmailblog.blogspot.com/2009/02/update-on-todays-gmail-outage.html
+t-2h30m
+r-upgrade
+r-bug
+i-down
+p-no
+
+[02/28/2011][Gmail back soon for everyone]
+http://static.googleusercontent.com/media/www.google.com/en//appsstatus/ir/0vj093461jiuhkr.pdf
+http://gmailblog.blogspot.co.id/2011/02/gmail-back-soon-for-everyone.html
+http://fortune.com/2011/02/28/gmail-outage-passes-24-hours-for-some-updated/
+http://gmailblog.blogspot.com/2011/02/gmail-back-soon-for-everyone.html
+r-upgrade
+r-bug
+t-5d30m
+i-loss
+i-op
+i-down
+f-roll
+f-restore
+p-no
+
+[03/05/2015][Widespread Google service disruptions reported including Gmail, Hangouts, & Play Store]
+http://9to5google.com/2015/03/05/google-service-disruptions/
+r-unk
+t-unk
+i-down
+p-no
+
+[03/14/2014][Gmail Down Again World Wide. Second Time Since January 24]
+http://beforeitsnews.com/alternative/2014/03/gmail-down-again-world-wide-second-time-since-january-24-2918766.html
+r-unk
+t-unk
+i-down
+p-no
+
+[03/17/2014][Google Drive Down: Gmail Chat, GChat ,Hangouts, Google Docs Get 502 Error, Outage Suffered by Many]
+http://www.theepochtimes.com/n3/567037-google-drive-down-google-docs-outage-suffered-by-many/
+http://static.googleusercontent.com/media/www.google.com/en/us/appsstatus/ir/foyrkcdqoojjapj.pdf
+http://www.infoworld.com/article/2606209/cloud-computing/162288-The-worst-cloud-outages-of-2014-so-far.html#slide5
+r-config
+t-3h30m
+i-down
+f-fix
+f-add
+p-no
+
+[03/30/2015][Google Investigating Gmail Problems]
+http://sea.pcmag.com/e-mail-products/2570/news/google-investigating-gmail-problems
+http://mashable.com/2015/03/30/gmail-is-down-5/#x4uykXk.tuqr
+r-unk
+t-4h40m
+i-down
+p-no
+
+[04/17/2012][Gmail outage for some users sparks anger]
+http://blog.chron.com/newswatch/2012/04/gmail-outage-for-some-users-sparks-anger/
+http://www.huddle.com/blog/google-gmail-and-docs-blackout/
+http://www.theverge.com/2012/4/17/2954949/gmail-outage-april-2012
+http://gizmodo.com/5902707/gmail-is-down-developing
+http://www.huffingtonpost.com/2012/04/17/gmail-down-google-email-s_n_1431918.html
+http://techcrunch.com/2012/04/17/gmail-suffers-downtime-google-is-investigating/
+http://www.zdnet.com/article/gmail-hit-by-massive-outage-up-to-35-million-affected/
+r-unk
+i-down
+t-1h4m
+p-no
+
+[04/17/2013][Google Mail, Groups, Drive, Documents, Spreadsheets, Presentations and API down]
+http://iwgcr.org/google-mail-groups-drive-documents-spreadsheets-presentations-and-api-down/
+http://www.huffingtonpost.com/2014/03/17/gchat-down_n_4979836.html
+http://www.networkworld.com/article/2165412/softwarearge-scale-google-outage-affects-customers/software/large-scale-google-outage-affects-customers-worldwide.html
+r-unk
+t-45m
+i-down
+p-no
+
+[05/03/2013][Gmail bounces back after disruption that affected web interface]
+http://tech.firstpost.com/news-analysis/gmail-bounces-back-after-disruption-that-affected-web-interface-85561.html
+http://tech.firstpost.com/news-analysis/is-google-feeling-the-may-heat-after-third-outage-this-month-86014.html
+r-unk
+t-1h
+i-down
+p-no
+f-fix
+
+[05/08/2013][Is Google feeling the May heat after third outage this month?]
+http://tech.firstpost.com/news-analysis/gmail-hit-by-service-disruption-85800.html
+http://daily.bhaskar.com/article/NAT-TOP-google-apps-hit-with-partial-outages-problem-google-apologizes-4262669-NOR.html
+r-cross
+t-unk
+i-down
+p-no
+f-cross
+
+[05/13/2013][Google apologises after outage disrupts applications]
+http://daily.bhaskar.com/article/NAT-TOP-google-apps-hit-with-partial-outages-problem-google-apologizes-4262669-NOR.html
+http://ibnlive.in.com/news/googles-gmail-faces-yet-another-outage-shows-502-error/390359-11.html
+http://www.comboupdates.com/2013/05/gmail-down-for-almost-2-hours-today-in.html
+r-unk
+i-down
+t-2h
+p-no
+
+[05/14/2009][Widespread Google outages rattle users]
+http://www.cnet.com/news/widespread-google-outages-rattle-users/
+http://googleblog.blogspot.com/2009/05/this-is-your-pilot-speaking-now-about.html
+r-bug
+r-fail
+t-1h
+p-no
+
+[06/06/2012][Google Australian services hit by data centre outage]
+http://www.itnews.com.au/News/303933,google-australian-services-hit-by-data-centre-outage.aspx
+t-50m
+r-fail
+p-no
+f-fix
+
+[06/08/2012][Gmail Outage Likely Hit Several Million on Thursday]
+http://www.datamation.com/news/gmail-outage-likely-hit-several-million-on-thursday.html
+http://www.pcworld.com/article/257177/gmail_outage_likely_hit_several_million_on_thursday.html
+r-unk
+t-1h30m
+i-down
+p-no
+
+[06/12/2013][India users experience Gmail outage with 502 error]
+http://tech.firstpost.com/news-analysis/india-users-experience-gmail-outage-with-502-error-214146.html
+r-unk
+t-unk
+i-down
+p-no
+
+[07/02/2010][So how often does Gmail go down?]
+http://blog.backupify.com/2010/07/15/so-how-often-does-gmail-go-down/
+http://cloutage.org/incidents/152-google-inc-gmail
+r-unk
+t-95m
+i-down
+p-no
+
+[07/03/2014][Gmail is down for some in the UK]
+http://m.theinquirer.net/inquirer/news/2353526/gmail-is-down-for-some-in-the-uk
+t-3h
+i-down
+r-unk
+p-no
+
+[07/10/2013][The worst cloud outages of 2013 (part 2)]
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide3
+http://www.computerworld.com/article/2483733/web-apps/google-outage-takes-down-gmail--docs--calendar.html
+http://storageservers.wordpress.com/2013/07/11/google-outage-caused-due-to-backlash-at-us-nsa-prism/
+r-unk
+t-40m
+i-down
+p-no
+
+[07/11/2013][Gmail’s IMAP server is down, affecting many users of the Google email service]
+http://thenextweb.com/google/2013/07/11/gmails-imap-server-is-down-affecting-many-users-of-the-google-email-service/
+http://9to5google.com/2013/07/11/gmail-suffers-outage-to-imap-service-since-restored/
+r-unk
+t-3h
+i-op
+p-no
+
+[07/22/2010][Google Apps Incident Report Gmail Delivery Delays - June 22, 2010]
+http://static.googleusercontent.com/media/www.google.com/en//appsstatus/ir/bjpwgm2u24jm1b8.pdf
+http://cloutage.org/incidents/151-google-inc-gmail
+t-6h10m
+f-restart
+p-no
+
+[08/16/2013][A Brief Google Outage Made Total Internet Traffic Drop By 40%]
+http://www.fastcompany.com/3015942/most-innovative-companies-2013/a-brief-google-outage-made-total-internet-traffic-drop-by-40
+http://www.hadeninteractive.com/lessons-from-googles-outage/
+http://tech.slashdot.org/story/13/08/19/0147224/google-outage-internet-traffic-plunges-40
+http://www.businessinsider.com/microsoft-apologizes-for-outage-2013-8?IR=T&
+http://venturebeat.com/2013/08/16/3-minute-outage-costs-google-545000-in-revenue/
+http://www.nydailynews.com/news/national/google-minutes-web-traffic-plummets-article-1.1429712
+r-fail
+t-5m
+i-down
+p-no
+f-fix
+
+[09/01/2009][Gmail’s Down. Here’s How to Check Its Status]
+http://gadgetwise.blogs.nytimes.com/2009/09/01/gmails-down-heres-how-to-check-its-status/
+http://www.theguardian.com/technology/2009/sep/02/google-gmail-outage
+http://www.wired.com/2009/09/gmail-down-again/
+http://gmailblog.blogspot.com/2009/09/more-on-todays-gmail-issue.html
+r-upgrade
+t-1h45m
+i-down
+f-add
+p-no
+
+[09/23/2011][Users report Gmail outage]
+http://www.geekwire.com/2011/internet-users-report-gmail-outage/
+http://bostinno.streetwise.co/2011/09/23/gmail-is-down-for-users-breaking/
+http://readwrite.com/2011/09/23/gmail_goes_down_breaking
+r-unk
+t-15m
+i-down
+p-no
+http://downrightnow.com/gmail
+
+[09/23/2013][More On Gmail's Delivery Delays]
+http://googleenterprise.blogspot.co.uk/2013/09/more-on-gmails-delivery-delays.html
+http://www.theverge.com/2013/9/24/4765880/gmail-outage-delayed-some-messages-by-over-two-hours
+http://www.theverge.com/2013/9/23/4763074/major-gmail-disruptions-to-resolve-soon
+http://www.bbc.com/news/technology-24218408
+http://thenextweb.com/google/2013/09/24/google-apologizes-for-11-hours-of-gmail-issues-affecting-29-of-emails-blames-dual-network-failure/
+http://storageservers.wordpress.com/2013/09/25/microsoft-skydrive-offers-200gb-free-storage-for-surface-2-tablet-users-and-starts-wrestling-with-outage/
+http://www.v3.co.uk/v3-uk/news/2296603/google-explains-gmail-outage-caused-by-rare-double-network-failure
+http://www.androidcentral.com/google-says-gmail-outage-caused-dual-network-failure-apologizes-downtime
+http://gmailblog.blogspot.com.br/2013/09/more-on-gmails-delivery-delays.html
+r-fail
+t-10h15m
+i-down
+i-op
+p-no
+f-fix
+f-add
+
+[10/02/2011][Google says: Gmail and Android Market Outage is Our Bad, Not a China Block]
+http://www.techinasia.com/gmail-android-market-china-outage/
+http://www.cnet.com/news/google-android-com-market-back-up-in-china/
+r-upgrade
+t-60h
+i-down
+p-no
+
+[10/22/2014][Gmail outage currently causing problems in Hangouts, Google+ and Google Drive]
+http://tech.firstpost.com/news-analysis/gmail-outage-currently-causing-problems-hangouts-google-google-drive-238679.html
+t-unk
+r-unk
+i-down
+p-no
+
+[11/15/2011][Gmail Down? Problems Plague Many Tuesday Morning (UPDATE)]
+http://www.huffingtonpost.com/2011/11/15/gmail-down-problems_n_1094689.html
+r-unk
+t-7h
+i-down
+p-no
+
+[12/10/2012][Google Apps Incident Report Gmail Partial Outage ­ December 10, 2012]
+http://static.googleusercontent.com/external_content/untrusted_dlcp/www.google.com/en/us/appsstatus/ir/plibxfjh8whr44h.pdf
+http://www.forbes.com/sites/eliseackerman/2012/12/11/gmail-outage-embarrasses-internet-giant/
+http://www.huffingtonpost.com/2012/12/10/gmail-down_n_2271532.html
+http://www.cbsnews.com/news/gmail-google-drive-chrome-experience-outages/
+http://techcrunch.com/2012/12/10/gmail-experiences-a-widespread-outage-most-users-affected/
+http://arstechnica.com/information-technology/2012/12/why-gmail-went-down-google-misconfigured-chromes-sync-server/
+r-upgrade
+r-bug
+t-18m
+i-down
+f-roll
+f-restore
+p-no
+

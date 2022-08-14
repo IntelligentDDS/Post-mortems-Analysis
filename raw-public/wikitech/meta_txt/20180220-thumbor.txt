@@ -1,0 +1,11 @@
+Thumbor was unavailable for a brief period of time following a configuration deployment.
+
+Thumbor, the image scaling service, became unavailable following a configuration deployment.
+• 14:44 The first errors of puppet failed on thumbor machines start coming in.
+• 14:51 Revert of https://gerrit.wikimedia.org/r/407608 is merged on the puppet masters
+
+The puppet module for thumbor is configured to restart the thumbor instances (via systemd unit, a meta-unit used to do mass actions on all thumbor instances configured on the host) upon config change. puppet issued a 'stop' to 'thumbor-instances' and subsequently a 'start'. Upon receiving a 'stop' all thumbor instances exited with status code 1 and considered in 'failed' state by systemd. The subsequent 'start' to 'thumbor-instances' failed to start the instances properly.
+
+Recovery of thumbor happened on the next puppet run when the "ensure" mechanism of puppet made sure all thumbor instances configured were running as expected. During the outage there has been also a fair amount of monitoring spam due to individual alerts for each thumbor instance in 'failed' state.
+
+During the incident, about 0.08% of requests for thumbnails failed and end users experienced the 5xx emitted during unavailability for about 10 minutes.

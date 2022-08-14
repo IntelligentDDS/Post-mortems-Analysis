@@ -1,0 +1,5 @@
+A Kafka broker was rebooted as part of a standard upgrade. The MediaWiki API cluster failed as a result, due to an overwhelming number of piled up connection attempts to that particular Kafka broker. The broker was ultimately depooled from mediawiki-config as part of the incident response and the service was ultimately restored, 25 minutes after it first started failing.
+• 12:53 Luca follows the safe broker restart process and stops Kafka on kafka1012 for a host reboot for a kernel upgrade
+• 13:49 Giuseppe notices a lot of HHVM threads stuck at attempting to connect, then a large number of connections to kafka1012 in a SYN_SENT state.
+• 13:53 Faidon pushes a patch to remove kafka1012 from mediawiki-config and syncs it to the appserver fleet
+• 13:58 File is synced across the fleet, traffic recovers

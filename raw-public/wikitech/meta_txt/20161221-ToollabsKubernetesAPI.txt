@@ -1,0 +1,18 @@
+Kubernetes was down a for a about 1 hour due to a faulty puppet patch, a deployment script not doing much error handling and human error
+• Dec 21 2016 ~12:10 UTC Alex merges the first (kube-apiserver) of the 3 patches https://gerrit.wikimedia.org/r/326441, https://gerrit.wikimedia.org/r/326430 and https://gerrit.wikimedia.org/r/326429' on tools-puppetmaster
+• Dec 21 2016 ~12:15 UTC Alex merges the kube-scheduler one (https://gerrit.wikimedia.org/r/326429) after the kube-apiserver one is succesfull
+• 8 Dec 21 2016 ~12:16 UTC Alex notes the kube-scheduler not starting with an error of--leader-elect=true not being a valid parameter. Realizes something has gone wrong version wise and finds out /usr/local/bin/kube-scheduler is now a symlink to /usr/bin/kube-schedular. That's a mistake in the patch, should have been vice-versa. /usr/bin/kube-scheduler is a left over on tools-k8s-master-01 from a previous unrelated deployment method.
+• Dec 21 2016 12:20 UTC Alex runs /usr/local/bin/deploy-master since that is the deployment method that was used for that binary in the first place in order to restore the correct version. The script has a bug and truncates /usr/local/bin/kube-apiserver, but that goes unnoticed for a while.
+• Dec 21 2016 12:21 UTC Alex, decides to rollback the kube-apiserver puppet patch as well. Turns out that was a mistake, puppet restarts the service and the empty binary now fails to start (obviously). Now both services are down.
+• Dec 21 2016 12:30 UTC After some discussion on IRC, Yuvi kicks off a new kubernetes build to get a working binary
+• Dec 21 2016 ~12:35 UTC Alex realizes that puppet clientbucket can save some work and get kube-scheduler restored. kube-apiserver still missing though
+• Dec 21 2016 ~12:45 UTC Alex, since everything API is down anyway, tries the 3rd patch just to see if it works (it did!), while waiting for the build to finish.
+• Dec 21 2016 13:03 UTC Yuvi is done with the build partially. The build had failed due to some disk space issue but what at least generated the kube-apiserver, kube-scheduler and kube-controller-manager binaries, but not kubectl.
+• Dec 21 2016 ~13:05 UTC deploy-master is ran by Yuvi, deploys the above binaries and truncates kubectl
+• Dec 21 2016 13:09 UTC Alex sees everything running now on tools-puppetmaster
+• Dec 21 2016 13:10 UTC Yuvi notes kubectl not returning anything. Some confusion ensues.
+• Dec 21 2016 13:16 UTC The truncated binary is noticed and a copy is brought in from a worker.
+• Dec 21 2016 13:21 UTC Everything is up and running
+• Half-baked deployment script are land mines waiting to be stepped on. That specific one is going away
+• More communication before deployment of puppet changes can be useful
+• Have labs use the debian packages for kubernetes

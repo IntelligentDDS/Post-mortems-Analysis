@@ -1,0 +1,615 @@
+{
+    "azure-20170528-1": {
+        "title": "Multiple Services - Central Canada ",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-06.11.pdf"
+        ],
+        "time": "05/28/2017",
+        "summary": "Between 16:47 and 17:20 UTC on 28 May 2017, a subset of customers in Canada Central may have intermittently experienced degraded performance, network drops or time outs when accessing their Azure resources hosted in this region. Engineers have determined that this is caused by an underlying Network Infrastructure Event in this region. ",
+        "details": "Preliminary root cause: Monitoring alerted engineers of network flapping through one network device. Mitigation: Engineering teams immediately removed the router from rotation and allowed traffic to failover to healthy routes. Once it was established that the network traffic flapping had stopped, engineers brought the removed device back into rotation. Next steps: Engineers will continue to monitor the health of traffic in the region and work with partners to understand the cause of the packet drops. ",
+        "service_name": [
+            "Azure multiple services"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 33,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "monitoring"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "degraded performance",
+                    "network drop",
+                    "timeout"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "Monitoring alerted engineers of network flapping through one network device. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "remove the router from the rotation",
+                "allow traffic to failover to healthy routes"
+            ],
+            "details": "Engineering teams immediately removed the router from rotation and allowed traffic to failover to healthy routes. Once it was established that the network traffic flapping had stopped, engineers brought the removed device back into rotation.",
+            "troubleshooting": {
+                "1": "Monitoring alerted engineers of network flapping through one network device.",
+                "2": "Engineering teams immediately removed the router from rotation",
+                "3": "allowed traffic to failover to healthy routes."
+            }
+        },
+        "propagation pass": {
+            "1": "router",
+            "2": "services"
+        },
+        "refined path": {
+            "1": "router",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20170529-1": {
+        "title": "IoT Hub – Error message when deploying",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-06.11.pdf"
+        ],
+        "time": "05/28/2017",
+        "summary": "Between 00:00 UTC on 26 May 2017 and 16:30 UTC on 29 May 2017, a subset of customers using Azure IoT Hub may have received the error message 'Cannot read property 'value' of undefined or null reference' when trying to deploy IoT Hub resources. This issue only affected new subscriptions attempting to deploy their first IoT Hub - existing IoT Hubs were not affected. Customers could deploy IoT Hubs using Azure Resource Manager (ARM) templates as a workaround.",
+        "details": "Preliminary root cause: Engineers determined that a recent deployment introduced a new software task that was not properly validating new subscriptions. Mitigation: Engineers deployed a platform hotfix to bypass this software task and mitigate the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.",
+        "service_name": [
+            "Azure IoT hub"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 990,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Engineers determined that a recent deployment introduced a new software task that was not properly validating new subscriptions."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deployed a platform hotfix"
+            ],
+            "details": "Engineers deployed a platform hotfix to bypass this software task and mitigate the issue.",
+            "troubleshooting": {
+                "1": "Engineers determined that a recent deployment introduced a new software task that was not properly validating new subscriptions.",
+                "2": "Engineers deployed a platform hotfix to bypass this software task and mitigate the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "IoT hubs"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20170531-1": {
+        "title": "App Service Web Apps - West Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-06.11.pdf"
+        ],
+        "time": "05/31/2017",
+        "summary": "Between 22:50 and 23:30 UTC on 30 May 2017, a subset of customers using App Service Web Apps in West Europe may have received intermittent HTTP 5xx errors, timeouts or have experienced high latency when accessing Web Apps deployments hosted in this region.",
+        "details": "Preliminary root cause: Engineering have determined that the issue was caused by an underlying Storage issue. Mitigation: The issue was self-healed by the Azure platform. Next steps: Engineers will continue to monitor the health of Web Apps in the region and look to establish the cause of the Storage issue. ",
+        "service_name": [
+            "App service",
+            "Web apps"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 40,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "HTTP 5xx errors",
+                    "timeout",
+                    "high latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "Engineering have determined that the issue was caused by an underlying Storage issue. "
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "self heal"
+            ],
+            "details": "The issue was self-healed by the Azure platform.",
+            "troubleshooting": {
+                "1": "Engineering have determined that the issue was caused by an underlying Storage issue. ",
+                "2": "The issue was self-healed by the Azure platform"
+            }
+        },
+        "propagation pass": {
+            "1": "storage",
+            "2": "app service"
+        },
+        "refined path": {
+            "1": "database",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20170531-2": {
+        "title": "Service Management Operations Failures - Multiple Regions",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-06.11.pdf"
+        ],
+        "time": "05/31/2017",
+        "summary": "Between 18:35 and 19:54 UTC on 31 May 2017, customers experienced Service Management operation failures in North Central US, Central US, West US, West US 2, East US, East US 2, Canada East, and Canada Central, with resources containing permissions inherited from security groups. Customers could have experienced errors when viewing resources in the Azure Portal. ",
+        "details": "Preliminary root cause: At this stage engineers do not have a definitive root cause. Mitigation: Engineers manually increased backend processes to mitigate the incident. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. ",
+        "service_name": [
+            "service management",
+            "Azure Portal"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 990,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "At this stage engineers do not have a definitive root cause. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "increase backend processes"
+            ],
+            "details": "Engineers manually increased backend processes to mitigate the incident. ",
+            "troubleshooting": {
+                "1": "Engineers manually increased backend processes to mitigate the incident. "
+            }
+        },
+        "propagation pass": {
+            "1": "app service"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20170601-1": {
+        "title": "Issue with accessing Azure services through Mozilla Firefox ",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-06.11.pdf"
+        ],
+        "time": "05/31/2017",
+        "summary": "From approximately 20:18 UTC on 28 May 2017 to 03:00 UTC on 1 June 2017, customers leveraging Mozilla Firefox may have been unable to access Azure services, including Azure Management Portal (https://portal.azure.com), Web Apps, Azure Data Lake Analytics, Azure Data Lake Store, Visual Studio Team Services, Azure Service Fabric, Service Bus, and Storage. As a workaround, Firefox users had to use an alternative browser such as Internet Explorer, Safari, Edge, or Chrome.  ",
+        "details": "Root cause and mitigation: This incident was caused by a bug in the service that verifies status of Microsoft services’ certificates via the OCSP protocol. In a rare combination of circumstances this service generated OCSP responses whose validity period exceeded that of the certificate that signed the responses. This issue was detected and fixed. However, the previously generated responses were cached on Azure servers. These cached responses were served to clients via a feature called OCSP stapling that is used commonly to improve user experience. Firefox clients interpreted these OCSP responses as invalid and displayed an authentication failure. Other clients succeeded because they re-tried by directly calling the OCSP service, which had been fixed by then. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): 1. Fix the bug in the OCSP service that resulted in OCSP responses with validity longer than the certificate that signs the responses. 2. Add validation to servers that implement OCSP stapling, to ensure that invalid OCSP responses are not passed through to clients. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://survey.microsoft.com/379176 ",
+        "service_name": [
+            "Azure Management Portal",
+            "Web Apps",
+            "Azure Data Lake Analytics",
+            "Azure Data Lake Store",
+            "Visual Studio Team Services",
+            "Azure Service Fabric",
+            "Service Bus",
+            "Storage"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 4722,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "timing bug"
+                }
+            ],
+            "details": "This incident was caused by a bug in the service that verifies status of Microsoft services’ certificates via the OCSP protocol. In a rare combination of circumstances this service generated OCSP responses whose validity period exceeded that of the certificate that signed the responses. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "fix"
+            ],
+            "details": "This issue was detected and fixed. ",
+            "troubleshooting": {
+                "1": "This issue was detected and fixed."
+            }
+        },
+        "propagation pass": {
+            "1": "Azure services"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20170603-1": {
+        "title": "Root Cause Analysis - ExpressRoute/ ExpressRoute Circuits Amsterdam",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-06.11.pdf"
+        ],
+        "time": "06/03/2017",
+        "summary": "Between 21:03 UTC on 01 Jun 2017 and 22:04 UTC on the 02 Jun 2017, ExpressRoute customers connecting to Azure services through ExpressRoute public peering in Amsterdam may have experienced a loss in network connectivity. Customers with redundant connectivity configurations may have experienced a partial loss in connectivity. This was caused by an ExpressRoute router configuration size which overloaded router resources. Once the issue was detected, configuration was partitioned across multiple devices to mitigate the issue. During this time customers could have failed over to using a 2nd ExpressRoute circuit in the geo or could have failed back to the internet",
+        "details": "Root cause and mitigation: A subset of ExpressRoute edge routers in Amsterdam were overloaded due to the size of configuration. The source NAT on the public peering was overloaded and resulted in loss of connectivity. ExpressRoute routers are redundant in an active/active configuration. A device failover restored connectivity for some time during this period. Upon failover, the second device also got affected by overload and experienced impact. Next steps: We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future, and in this case it includes (but is not limited to): 1. [Ongoing] Prevent configuration overload on devices. 2. [Ongoing] Reinforce existing recommend that all customers deploy ExpressRoute with an active-active configuration. 3. [Ongoing] Enhance router resource monitoring to alert before resource limits are reached. 4. [Coming] Support ExpressRoute public peering prefixes on MSFT peering that does not use device NAT. 5. [Coming] Add ability to re-balance load automatically. Direct new connections to new routers in the same location. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://survey.microsoft.com/380673 ",
+        "service_name": [
+            "Express Route",
+            "Azure services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 1501,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "loss in network connectivity"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "excessive flow"
+                }
+            ],
+            "details": "A subset of ExpressRoute edge routers in Amsterdam were overloaded due to the size of configuration. The source NAT on the public peering was overloaded and resulted in loss of connectivity. ExpressRoute routers are redundant in an active/active configuration"
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "failover device"
+            ],
+            "details": "A device failover restored connectivity for some time during this period. Upon failover, the second device also got affected by overload and experienced impact. ",
+            "troubleshooting": null
+        },
+        "propagation pass": {
+            "1": "edge router",
+            "2": "NAT",
+            "3": "Azure services"
+        },
+        "refined path": {
+            "1": "router",
+            "2": "NAT",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20170607-1": {
+        "title": "Automation - East US 2",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-06.11.pdf"
+        ],
+        "time": "06/07/2017",
+        "summary": "Between 11:00 and 16:15 UTC on 07 Jun 2017, a limited subset of customers using Automation in East US 2 may have experienced intermittent issues viewing accounts, schedules, assets or starting jobs in the Azure Portal (https://portal.azure.com). Any clients using APIs would have also been impacted, such as PowerShell or SDKs. Jobs which were already submitted would have seen a delayed execution and would have eventually been processed. These start operations should not have been resubmitted. This issue could have impacted up to 3% of customers in the region. ",
+        "details": "Preliminary root cause: Engineers identified a query that consumed CPU resources on a single backend database, which impacted other queries from completing successfully. Mitigation: Engineers performed a failover to a secondary database to start with fresh resources and optimized configurations on the offending query. Next steps: Engineers will continue to optimize query configurations and investigate the underlying cause to prevent future occurrences",
+        "service_name": [
+            "Automation"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 315,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "delayed job execution"
+                ]
+            },
+            {
+                "systme kpi": [
+                    "high cpu usage"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource",
+                    "layer-3": "CPU"
+                }
+            ],
+            "details": "Engineers identified a query that consumed CPU resources on a single backend database, which impacted other queries from completing successfully. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "perform a failover to a secondary database"
+            ],
+            "details": "Engineers performed a failover to a secondary database to start with fresh resources and optimized configurations on the offending query. ",
+            "troubleshooting": {
+                "1": "Engineers identified a query that consumed CPU resources on a single backend database, which impacted other queries from completing successfully. ",
+                "2": "Engineers performed a failover to a secondary database to start with fresh resources and optimized configurations on the offending query."
+            }
+        },
+        "propagation pass": {
+            "1": "backend database",
+            "2": "services"
+        },
+        "refined path": {
+            "1": "database",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20170610-1": {
+        "title": "Log Analytics - West Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-06.11.pdf"
+        ],
+        "time": "06/10/2017",
+        "summary": "Between 22:50 UTC on 09 Jun 2017 and 01:20 UTC on 10 Jun 2017, customers using Log Analytics in West Europe may have experienced difficulties when trying to login to the OMS Portal (https://mms.microsoft.com) or when connecting to resources hosted in this region. The OMS Solutions within West Europe workspaces may have failed to properly load and display data. This includes OMS Solutions for Service Map, Insight & Analytics, Security & Compliance, Protection & Recovery, and Automation & Control offerings for OMS. ",
+        "details": "Preliminary root cause: Engineers determined that some instances of a backend service responsible for processing service management requests had reached an operational threshold, preventing requests from completing. Mitigation: Engineers scaled out backend instances to increase service bandwidth and mitigate the issue. ",
+        "service_name": [
+            "Log Analytics",
+            "OMS portal"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 140,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource",
+                    "layer-3": "service capacity"
+                }
+            ],
+            "details": "Engineers determined that some instances of a backend service responsible for processing service management requests had reached an operational threshold, preventing requests from completing. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "scaled out backend instances"
+            ],
+            "details": "Engineers scaled out backend instances to increase service bandwidth and mitigate the issue. ",
+            "troubleshooting": {
+                "1": "Engineers determined that some instances of a backend service responsible for processing service management requests had reached an operational threshold, preventing requests from completing",
+                "2": "Engineers scaled out backend instances to increase service bandwidth and mitigate the issue. "
+            }
+        },
+        "propagation pass": {
+            "1": "backend instances",
+            "2": "backend services"
+        },
+        "refined path": {
+            "1": "backend instances",
+            "2": "backend services"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20170611-1": {
+        "title": "RCA - Network Infrastructure Impacting Multiple Services - Australia East",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-06.11.pdf"
+        ],
+        "time": "06/11/2017",
+        "summary": "Between 1:48 and 5:15 UTC on June 11, 2017, a subset of customers may have encountered reachability failures for some of their resources in Australia East. Starting at 1:48 UTC, outbound network connectivity in the region was interrupted for a subset of customers, which caused DNS lookups and Storage connections to fail and as a result some customer Virtual Machines shut down and restarted. Engineers investigated and found that a deployment of a new instance of the Azure Load Balancer service was underway in the region. At 3:40 UTC, the new deployment was disabled, after which customer impact for networking services was mitigated. A subset of impacted services experienced a delayed recovery, and engineers confirmed all services were fully mitigated at 5:15 UTC. Deployment activities were paused until a full RCA could be completed, and necessary repairs resolved. ",
+        "details": "Customer impact: Due to outbound connectivity failure, the impacted services which are dependent on resources internal and/or external to Azure would have seen reachability failures for the duration of this incident. Customer Virtual Machines would have shut down as designed after losing connectivity to the correlating storage services. A subset of customers would have experienced the following impact for affected services: Redis Cache - unable to connect to Redis caches Azure Search - search service unavailable Azure Media Services - media streaming failures App Services - availability close to 0% Backup - backup management operation failures Azure Stream Analytics - cannot create jobs Azure Site Recovery - protection and failover failures Visual Studio Team Services - connection failures Azure Key Vault - connection failures Root cause and mitigation: A deployment of configuration settings for the Azure Load Balancer service caused an outage when a component of the new deployment began advertising address ranges already advertised by an existing instance of the Azure Load Balancer service. The new deployment was a shadow environment specifically configured to be inactive (and hence, not to advertise any address ranges) in terms of customer traffic. Because the route advertisement from this new service was more specific than the existing route advertisement, traffic was diverted to the new inactive deployment. When this occurred, outbound connectivity was interrupted for a subset of services in the region. The event was triggered by a software bug within the new deployment. The new deployment was passively ingesting state from the existing deployment and validating it. A configuration setting was in place to prevent this ingested state to go beyond validation and result in route advertisement. Due the software bug, this configuration setting failed. The software bug was not detected in deployments in prior regions because it only manifested under specific combinations of the services own address range configuration. Australia East was the first time this combination occurred. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, we will: 1. Repair the software bug to ensure address ranges marked as DO NOT advertise are NOT advertised. 2. Implement additional automatic rollback capabilities of deployments based on health probe for data plane impacting deployments (control plane impacting deployments are already automatically rolled back). 3. Ensure all Azure Load Balancer deployments pass address-range health checks before reaching production. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://survey.microsoft.com/387244 ",
+        "service_name": [
+            "DNS lookups",
+            "Storage connections",
+            "Virtual machines",
+            "Azure Load Balancer",
+            "Redis Cache",
+            "Azure Search",
+            "Azure Media services",
+            "App service",
+            "Backup",
+            "Azure Stream Analytics",
+            "Azure Site Recovery",
+            "Visual Studio Team Services",
+            "Azure Key Vault"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 207,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "connection error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "A deployment of configuration settings for the Azure Load Balancer service caused an outage when a component of the new deployment began advertising address ranges already advertised by an existing instance of the Azure Load Balancer service. The new deployment was a shadow environment specifically configured to be inactive (and hence, not to advertise any address ranges) in terms of customer traffic. Because the route advertisement from this new service was more specific than the existing route advertisement, traffic was diverted to the new inactive deployment. When this occurred, outbound connectivity was interrupted for a subset of services in the region. The event was triggered by a software bug within the new deployment. The new deployment was passively ingesting state from the existing deployment and validating it. A configuration setting was in place to prevent this ingested state to go beyond validation and result in route advertisement. Due the software bug, this configuration setting failed. The software bug was not detected in deployments in prior regions because it only manifested under specific combinations of the services own address range configuration. Australia East was the first time this combination occurred."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "repair the software bug"
+            ],
+            "details": "We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, we will: 1. Repair the software bug to ensure address ranges marked as DO NOT advertise are NOT advertised. 2. Implement additional automatic rollback capabilities of deployments based on health probe for data plane impacting deployments (control plane impacting deployments are already automatically rolled back). 3. Ensure all Azure Load Balancer deployments pass address-range health checks before reaching production.",
+            "troubleshooting": null
+        },
+        "propagation pass": {
+            "1": "Azure load balancer",
+            "2": "azure services"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    }
+}

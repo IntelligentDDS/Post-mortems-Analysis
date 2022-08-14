@@ -1,0 +1,10 @@
+Log Analytics - Latency, Timeouts and Service Management Failures
+Summary of impact: Between 10:54 and 18:45 UTC on 19 Sep 2018, a subset of customers using Log Analytics and/or other downstream services may have
+experienced latency, timeouts or service management failures.
+Impacted services and experience:
+Log Analytics - Difficulties accessing data, high latency and timeouts when getting workspace information, running Log Analytics queries, and other operations related to Log Analytics workspaces.
+Service Map - Ingestion delays and latency.
+Automation- Difficulties accessing the Update management, Change tracking, Inventory, and Linked workspace blades.
+Network Performance Monitor - Incomplete data in tests configured.
+Preliminary root cause: A backend Log Analytics service experienced a large number of requests which caused failures in several other dependent services. Mitigation: Engineers applied a backend scaling adjustment to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

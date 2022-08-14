@@ -1,0 +1,17 @@
+While reloading the OSM data on maps eqiad cluster, maps1004 was depooled. The cluster became overloaded and started to timeout. The codfw cluster was depooled at that time. Traffic was switched to the codfw cluster and this allowed the cluster to recover.
+
+The maps service was having an increased error rate from ~12:40 UTC to ~13:05 UTC.
+
+Alerts were raised by Icinga (LVS checks) and we were watching the service closely since this was during an ongoing maintenance operation.
+• 12:43 Icinga "Kartotherian LVS eqiad on kartotherian.svc.eqiad.wmnet (get a tile in the middle of the ocean)" start to fail with timeout OUTAGE BEGINS
+• 12:50 restart of kartotherian on maps1002, the load climbs back up after the restart
+• 12:54 shutting down tilerator on all maps eqiad nodes to free some CPU, no effect
+• 12:59 realize that maps codfw was depooled, repooling it to absorb some of the load
+• 12:59 depool maps eqiad (all traffic now served by codfw)
+
+Average load on the maps eqiad cluster increased significantly after June 1. The restart during this incident brought the load back to its usual value. Surprisingly the number of tiles served during the same period did not change much.
+
+We need to do further investigation into the causes of that increased load. We might want to review the sizing of the maps clusters to ensure they are ready to support the full load in a single data center.
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+• Validate the sizing of the maps clusters phab:T228497.

@@ -1,0 +1,12 @@
+During a planned cleanup of Tools NFS log/err/out files over 100M, an unexpected/unplanned truncate of a large number of files across tools that were over 100M occurred. No tools were reported to be down because of this, and almost all unintended erased files are being restored from the backups in codfw.
+• [19:02] Madhu makes list of files intended to be truncated in the cleanup and posts it on Task T156982#3085020
+• [19:50] She runs `cat gt100M | truncate -s 0` on the list of files on labstore1005
+• [19:54] Looks at tools usage post truncate and realizes something went horribly wrong
+• [20:00] She tells Chase, and they realize that the list of files was all the files > 100M, and didn't contain the final filtered list posted on task.
+• [20:04] Madhu posts the list of affected files https://phabricator.wikimedia.org/P5030 and makes lists of files intended to restore, and not being restored(log/err/out files that should have been truncated in the first place)
+• [20:20] The last backup in codfw is from ~23 hours before the data loss in eqiad, and Madhu starts an rsync of all the files that should be restored (https://phabricator.wikimedia.org/P5030#26707)
+• The rsync completed 1 day later and the error log (with list of files that couldn't be restored) is here - https://phabricator.wikimedia.org/P5030#26817
+• This was mostly human error, caused by not super carefully verifying that the list of files being truncated was correct. Thankfully since it was files only over 100M, no running tools/services seemed to be affected, and most of the data lost seemed to historical/large files generated from dumps stored in tools/videos etc. Except for the files that were generated in the 23 hours after the backup snapshot was created at 2017-03-07 20:00:03, everything is recoverable.
+• This is also a process error, in that we still do this file cleanup in order to do space conservation manually, and if a well tested automated process to handle this existed, this could have been entirely avoided. This work is already in progress, and we hope to move to that and will stop doing this manually.
+• Complete work on https://gerrit.wikimedia.org/r/#/c/326153/ - which well let us truncate logs periodically in an automated way, which will prevent this type of incident in future
+• Done Update mailing lists after the rsync completes on status and files that were lost in the 23 hour period between the backup and the truncate happening.

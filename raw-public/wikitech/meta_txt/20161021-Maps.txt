@@ -1,0 +1,6 @@
+Between 18:50 UTC and 19:20 UTC, October 21st, maps.wikimedia.org stopped rendering tiles due to Cassandra backend being unavailable.
+• 18:50 UTC: cassandra wrongly reinitialized on maps2004.codfw.wmnet, deleting all cassandra data on maps2004. Kartotherian starts failing with .
+• 19:20 UTC: traffic redirected to maps eqiad cluster, user traffic is served again without error
+• 21:13 UTC: permissions are reset on maps/cassandra codfw cluster, kartotherian starts working again on the codfw clsuter
+• The main trigger for this is human error.
+• maps/cassandra has a replication factor of 1 on the "system_auth" keyspace. This means that loosing one node potentially breaks authentication.

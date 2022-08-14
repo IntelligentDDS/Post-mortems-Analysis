@@ -1,0 +1,6 @@
+Azure Portal and DevOps Accessibility
+Summary of impact: Between 15:59 UTC and 18:35 UTC on 11 Oct 2018, A subset of customers may have experienced intermittent issues when attempting to sign-in
+to the Azure Portal and DevOps services.
+Preliminary root cause: Engineers determine that a CDN endpoint that is responsible for processing authentication requests became unreachable.
+Mitigation: Engineers responded to alerts and were in the process of deploying new CDN endpoints for authentication requests. This had been deployed in staging environments to validate mitigation before this was deployed to production. During the validation, engineers became aware that some customers may not have had these new endpoints whitelisted and so engineers began to troubleshoot this issue before any deployment into production. During the investigation, it was validated that the existing endpoints had become accessible and stable. Once engineers validated the stability and tested the existing CDN endpoints, engineers routed traffic back to the original CDN endpoints.
+Next steps: Engineering teams are closely monitoring the existing CDN endpoints for any unusual activity. They will work to understand why the CDN endpoint became unreachable and why redundant mechanisms were not invoked automatically.

@@ -1,0 +1,11 @@
+There was a 50-second flash of 5xx responses which corresponds to a spike of "Too many connections" errors for es1006 in dberror.log.
+
+Mean CPU utilization since the 12th is up around 90% compared to the previous ten day period:
+
+In fact it is a general load jump for external storage that has been causing similar glitches for some days. There is a corresponding jump also starting on the 12th on the S5 slaves (dewiki, wikidatawiki). None of the other shards show the pattern.
+
+During IRC discussion a probable spike in Wikidata traffic was identified; mostly Wikibase\Lib\Store\WikiPageEntityLookup::selectRevisionRow which would also hit ES. Aude and Hoo investigated and found a latent Wikidata caching bug.
+
+Traffic increased on ES and S5. Probable cause was a latent Wikidata bug.
+• Status: Done An additional S5 slave has been deployed.
+• Status: Done DB traffic sampling has been deployed to S5.

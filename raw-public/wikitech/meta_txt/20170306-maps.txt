@@ -1,0 +1,10 @@
+Map of Tasmania is covered in water at zoom level >= 10.
+
+On Sunday March 5 Tasmania started to be rendered as mostly water Task T159631.
+
+The task was triage as UBN! on Monday Mar 6.
+
+The problem was a combination of problematic data in OSM upstream (The whole Tasmania was marked as natural=bay) and the fact that our styling identifies water in a different way than most OSM styles. A detailed postmortem is available on Task T159631#3078163.
+
+Investigation was longer and more difficult that it should be due to missing knowledge and missing investigation tools.
+• A detailed post mortem is available on Task T159631#3078163, actionables are still being created as subtasks.

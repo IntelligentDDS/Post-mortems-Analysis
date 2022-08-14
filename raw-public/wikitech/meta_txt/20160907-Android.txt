@@ -1,0 +1,24 @@
+On September 7, for approximately five hours, the Wikipedia app for Android crashed on startup (or navigation to the feed activity) for all users of the current version of the app with an app language other than English. The proximate cause was a change in how feed content responses are composed in RESTBase. Both the beta and stable versions of the app were affected.
+
+13:31: A change is deployed in RESTBase so that it composes content for the production app feed endpoint from individual feed component endpoints in the mobile content service, rather than from the mobile content service's own aggregated feed endpoint. However, there was a bug in the individual feed endpoints which prompted RESTBase to return a 500 code (relayed from the Mobile Content Service) for aggregated feed requests for all non-English requests. This limits the content available in the feed for non-English language users to locally derived items (e.g., "continue reading") but does not cause a crash.
+
+14:55: The bug fix for the above internal error is deployed. From this point, production feed endpoint responses for non-English users contain empty JSON objects that the app does not expect and can't handle, causing it to crash.
+
+17:14: A Phabricator ticket is filed stating that the app is crashing on startup.
+
+18:35: A user reports on #wikimedia-mobile that the app is crashing on startup and the apps and services engineers begin to investigate. It's soon determined that the crash affects at least all Hebrew and German language users.
+
+19:52: Fixes to RESTBase and the mobile content service are deployed and the RESTBase cache is cleared, fixing the crash.
+
+The mobile content service, which provides the content for the app's Explore feed feature, can surface a Wikipedia's featured article for the day. Currently, this is enabled for English only.
+
+In production, RESTBase obtains the feed endpoint response from the mobile content service and stores it for faster retrieval. Previously, RESTBase obtained this content from the mobile content service's aggregated feed content endpoint, which obtains and combines content from internal service endpoints for single pieces of feed content. This response omits empty properties from the response object, including featured articles for languages for which the featured article is not to be included in the response.
+
+After the 13:31 deployment, RESTBase changed to instead request content from the mobile content service's individual internal feed content endpoints and compose the response on its own. This change was intended to improve performance, since the aggregated response is currently updated every two seconds. Unfortunately, for languages other than English, the mobile content service was returning a 500 error that RESTBase would pass along to requesting clients in turn.
+
+At 14:55, a bug fix was deployed to fix the 500 errors. After this, the feed endpoint response composed by RESTBase for languages other than English contained empty JSON objects that the app did not expect and was not prepared to handle. Encountering these while unmarshalling the response caused the app to crash. Since the app starts on the feed activity by default, this most often would have manifested as a crash on startup.
+
+It should be noted that aggregated feed content responses from the mobile content service always omitted empty objects as intended, and thus our content service unit testing did not surface the bug before it hit production.
+• The app should be made more resilient, so that it can handle unmarshalling errors without crashing.
+• Unit tests should be added to RESTBase to ensure the absence of unexpected fields and empty JSON objects in feed endpoint responses.
+• RESTBase changes that affect output consumed by the apps should be tested manually by an apps engineer on a local RESTBase instance before deployment.

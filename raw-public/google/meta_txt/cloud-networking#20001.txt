@@ -1,0 +1,216 @@
+# [](//cloud.google.com)
+
+July 19, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Networking](/incident/cloud-networking/20001)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support-hub/). Learn more about what's
+posted on the dashboard in [ this
+FAQ](//cloud.google.com/support/docs/dashboard). For additional information on
+these services, please visit [cloud.google.com](//cloud.google.com).
+
+# Google Cloud Networking Incident #20001
+
+Google’s production network experienced a temporary reduction in capacity, due
+to multiple fiber cuts in optical links interconnecting Sofia, Bulgaria
+
+Incident began at **2019-12-18 23:43** and ended at **2019-12-19 00:44** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jan 09, 2020 | 14:14 |
+
+### ISSUE SUMMARY
+
+On Wednesday, 18 December, 2019, a part of Google’s production network
+experienced a temporary reduction in capacity, due to multiple fiber cuts in
+optical links interconnecting Sofia, Bulgaria with other points-of-presence.
+This resulted in severe congestion on remaining links to Sofia for a duration
+of 1 hour and 1 minute.
+
+Access to Google Cloud products and services through Internet Service
+Providers (ISPs) in Bulgaria, Turkey, Northern Macedonia, Azerbaijan, Greece,
+Cyprus, Kosovo, Serbia and Iraq, which rely heavily on the Google point-of-
+presence in Sofia, Bulgaria was degraded. Users outside the affected countries
+were not impacted by this issue.
+
+### DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday, 18 December, 2019, from 23:43 to Thursday, 19 December, 2019 at
+00:44 US/Pacific, access to Google products and services (including Google
+Cloud Platform) through ISPs in Bulgaria, Turkey, Northern Macedonia,
+Azerbaijan, Greece, Cyprus, Bosnia, Kosovo, Serbia and Iraq, which rely
+heavily on the Google point-of-presence in Sofia, Bulgaria, experienced severe
+congestion for a duration of 1 hour and 1 minute.
+
+End users, who use ISPs which rely heavily on the Google peering links in
+Sofia to access Google Cloud services, were affected by the severe congestion
+between the Sofia point-of-presence and Cloud Regions across the globe. Cloud
+traffic to/from the region dropped by 60% during the one hour window with
+degraded connectivity. End-users in Turkey, who generated the bulk of the
+Cloud traffic to/from the region, experienced up to a 77% drop in traffic
+during the incident window.
+
+### ROOT CAUSE
+
+Google maintains a network point-of-presence (PoP) with caching and peering
+infrastructure in Sofia, Bulgaria. The Sofia PoP provides network peering to
+many providers in Eastern Europe. These network providers in turn enable
+access to Google services to users in Bulgaria, Turkey, Northern Macedonia,
+Azerbaijan, Greece, Cyprus, Bosnia, Kosovo, Serbia and Iraq. Sofia is
+connected to the rest of Google’s production network through multiple
+independent optical pathways located throughout Europe.
+
+This incident was triggered by dual, unrelated (yet overlapping), faults on
+high-capacity optical network links in both Bucharest, Romania and Munich,
+Germany that significantly reduced the network capacity of the interconnect
+between Sofia and the Google production network.
+
+Prior to the outage there was a fiber cut in Bucharest/Romania severing the
+connectivity between Frankfurt/Germany and Sofia/Bulgaria.
+
+A second fiber cut in Munich/Germany impacted two separate optical paths:
+
+\-- Circuits between Frankfurt/Germany and Sofia/Bulgaria were rendered
+inoperable.
+
+\-- Circuits between Munich/Germany and Sofia/Bulgaria were left with less
+than 10% of its normal capacity.
+
+Once these links were disrupted, the small amount of remaining capacity
+between the Sofia and Munich metros continued to attract traffic while unable
+to fully support it. This brief period of reduced capacity resulted in severe
+congestion for customers of ISPs heavily reliant on the peering links in
+Sofia, Bulgaria for accessing Google products and services. Once all traffic
+that was being sent through peering links in Sofia was redirected through
+alternative, operational points of presence, the incident was fully mitigated.
+
+### REMEDIATION AND PREVENTION
+
+Google Engineers were automatically alerted to packet loss between the Munich
+and Sofia metros on 2019-12-18 at 23:47 US/Pacific and immediately began
+investigating. On 2019-12-19 at 00:24 Google Engineers identified the root
+cause of the packet loss and took decisive mitigation action to redirect
+traffic away from the peering links in Sofia, Bulgaria. By 00:44 all impacted
+traffic was successfully redirected to adjacent functional network links,
+fully mitigating the impact to Google Cloud customers.
+
+In addition to addressing the root cause of the network link disruption, we
+will be improving the processes for detecting network PoPs with severely
+constrained connectivity, and implementing a new feature in our existing
+networking administration tooling to effectively redirect traffic away from
+these PoPs without delay. This will reduce the total time to resolution for
+similar classes of issues in the future. To ensure this feature is properly
+utilized during emergency situations, training will be delivered to Google
+Engineers.
+
+Google is committed to quickly and continually improving our technology and
+operations to prevent service disruptions. We appreciate your patience and
+apologize again for the impact on your organization. We thank you for your
+business.  
+  
+|
+
+### ISSUE SUMMARY
+
+On Wednesday, 18 December, 2019, a part of Google’s production network
+experienced a temporary reduction in capacity, due to multiple fiber cuts in
+optical links interconnecting Sofia, Bulgaria with other points-of-presence.
+This resulted in severe congestion on remaining links to Sofia for a duration
+of 1 hour and 1 minute.
+
+Access to Google Cloud products and services through Internet Service
+Providers (ISPs) in Bulgaria, Turkey, Northern Macedonia, Azerbaijan, Greece,
+Cyprus, Kosovo, Serbia and Iraq, which rely heavily on the Google point-of-
+presence in Sofia, Bulgaria was degraded. Users outside the affected countries
+were not impacted by this issue.
+
+### DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday, 18 December, 2019, from 23:43 to Thursday, 19 December, 2019 at
+00:44 US/Pacific, access to Google products and services (including Google
+Cloud Platform) through ISPs in Bulgaria, Turkey, Northern Macedonia,
+Azerbaijan, Greece, Cyprus, Bosnia, Kosovo, Serbia and Iraq, which rely
+heavily on the Google point-of-presence in Sofia, Bulgaria, experienced severe
+congestion for a duration of 1 hour and 1 minute.
+
+End users, who use ISPs which rely heavily on the Google peering links in
+Sofia to access Google Cloud services, were affected by the severe congestion
+between the Sofia point-of-presence and Cloud Regions across the globe. Cloud
+traffic to/from the region dropped by 60% during the one hour window with
+degraded connectivity. End-users in Turkey, who generated the bulk of the
+Cloud traffic to/from the region, experienced up to a 77% drop in traffic
+during the incident window.
+
+### ROOT CAUSE
+
+Google maintains a network point-of-presence (PoP) with caching and peering
+infrastructure in Sofia, Bulgaria. The Sofia PoP provides network peering to
+many providers in Eastern Europe. These network providers in turn enable
+access to Google services to users in Bulgaria, Turkey, Northern Macedonia,
+Azerbaijan, Greece, Cyprus, Bosnia, Kosovo, Serbia and Iraq. Sofia is
+connected to the rest of Google’s production network through multiple
+independent optical pathways located throughout Europe.
+
+This incident was triggered by dual, unrelated (yet overlapping), faults on
+high-capacity optical network links in both Bucharest, Romania and Munich,
+Germany that significantly reduced the network capacity of the interconnect
+between Sofia and the Google production network.
+
+Prior to the outage there was a fiber cut in Bucharest/Romania severing the
+connectivity between Frankfurt/Germany and Sofia/Bulgaria.
+
+A second fiber cut in Munich/Germany impacted two separate optical paths:
+
+\-- Circuits between Frankfurt/Germany and Sofia/Bulgaria were rendered
+inoperable.
+
+\-- Circuits between Munich/Germany and Sofia/Bulgaria were left with less
+than 10% of its normal capacity.
+
+Once these links were disrupted, the small amount of remaining capacity
+between the Sofia and Munich metros continued to attract traffic while unable
+to fully support it. This brief period of reduced capacity resulted in severe
+congestion for customers of ISPs heavily reliant on the peering links in
+Sofia, Bulgaria for accessing Google products and services. Once all traffic
+that was being sent through peering links in Sofia was redirected through
+alternative, operational points of presence, the incident was fully mitigated.
+
+### REMEDIATION AND PREVENTION
+
+Google Engineers were automatically alerted to packet loss between the Munich
+and Sofia metros on 2019-12-18 at 23:47 US/Pacific and immediately began
+investigating. On 2019-12-19 at 00:24 Google Engineers identified the root
+cause of the packet loss and took decisive mitigation action to redirect
+traffic away from the peering links in Sofia, Bulgaria. By 00:44 all impacted
+traffic was successfully redirected to adjacent functional network links,
+fully mitigating the impact to Google Cloud customers.
+
+In addition to addressing the root cause of the network link disruption, we
+will be improving the processes for detecting network PoPs with severely
+constrained connectivity, and implementing a new feature in our existing
+networking administration tooling to effectively redirect traffic away from
+these PoPs without delay. This will reduce the total time to resolution for
+similar classes of issues in the future. To ensure this feature is properly
+utilized during emergency situations, training will be delivered to Google
+Engineers.
+
+Google is committed to quickly and continually improving our technology and
+operations to prevent service disruptions. We appreciate your patience and
+apologize again for the impact on your organization. We thank you for your
+business.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

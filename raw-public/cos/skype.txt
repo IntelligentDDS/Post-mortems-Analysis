@@ -1,0 +1,322 @@
+
+[01/10/2013][Problems signing in to Skype with Microsoft account]
+http://heartbeat.skype.com/2013/01/problems_signing_in_with_micro.html
+r-unk
+i-op
+t-unk
+p-no
+
+[01/13/2009][Delays with credit card purchases]
+http://heartbeat.skype.com/2009/01/delays_with_credit_card_purcha.html
+r-unk
+t-2d
+p-no
+
+[01/15/2014][Incoming calls via Skype Connect and Call Forwarding]
+http://heartbeat.skype.com/2014/01/incoming_calls_via_skype_conne.html
+r-unk
+i-op
+t-unk
+p-no
+
+[01/17/2012][Payment issues]
+http://heartbeat.skype.com/2012/01/payment_issues.html
+r-unk
+i-op
+t-23h
+p-no
+
+[01/21/2014][Problem with PayPal payments]
+http://heartbeat.skype.com/2014/01/problem_with_paypal_payments.html
+r-unk
+i-op
+t-unk
+p-no
+
+[01/29/2015][Problems with Skype sign-in]
+http://heartbeat.skype.com/2015/01/post_28.html
+r-unk
+t-unk
+i-down
+p-no
+
+[01/31/2014][Group video calling]
+http://heartbeat.skype.com/2014/01/group_video_calling.html
+r-unk
+i-op
+t-unk
+p-no
+
+[02/02/2010][Delays in Auto-Recharge and Recurring payments]
+http://heartbeat.skype.com/2010/02/delays_in_autorecharge_and_rec.html
+r-unk
+i-op
+t-2h53m
+p-no
+
+[02/05/2009][Auto-Recharge and Recurring payments delayed]
+http://heartbeat.skype.com/2009/02/autorecharge_and_recurring_pay.html
+r-unk
+t-12h
+p-no
+
+[02/10/2014][Problems with making payments]
+http://heartbeat.skype.com/2014/02/problems_with_making_payments.html
+r-unk
+i-op
+t-unk
+p-no
+
+[02/17/2014][Password reset problem]
+http://heartbeat.skype.com/2014/02/password_reset_problem.html
+r-unk
+i-op
+t-unk
+p-no
+
+[02/18/2009][Skype maintenance notification]
+http://heartbeat.skype.com/2009/02/skype_maintenance_notification.html
+r-upgrade
+i-down
+t-3d
+p-yes
+
+[02/25/2010][Upcoming payment systems maintenance: 25th February- 26th February]
+http://heartbeat.skype.com/2010/02/upcoming_payment_systems_maint_2.html
+r-upgrade
+i-op
+t-unk
+p-yes
+
+[03/02/2010][Credit Card payment maintenance on 2nd March from 0800UTC]
+http://heartbeat.skype.com/2010/03/credit_card_payment_maintenanc_1.html
+r-upgrade
+i-op
+t-4h
+p-yes
+
+[03/03/2010][Credit card payment maintenance on 3rd March from 09:00 UTC]
+http://heartbeat.skype.com/2010/03/credit_card_payment_maintenanc_2.html
+r-upgrade
+i-op
+t-3h
+p-yes
+
+[03/17/2009][Planned maintenance on Tuesday]
+http://heartbeat.skype.com/2009/03/planned_maintenance_on_tuesday.html
+r-upgrade
+i-op
+t-2h
+p-yes
+
+[03/24/2009][Skype maintenance 24th March between 6am GMT to 8am GMT]
+http://heartbeat.skype.com/2009/03/skype_maintenance_24th_march_b.html
+r-upgrade
+i-op
+t-3h
+p-yes
+
+[04/01/2009][Skype maintenance notification]
+http://heartbeat.skype.com/2009/03/skype_maintenance_notification_1.html
+r-upgrade
+i-op
+t-2d
+p-yes
+
+[04/01/2014][Skype and Lync integration problems]
+http://heartbeat.skype.com/2014/04/lync_--_skype_and_skype_--_lyn.html
+r-unk
+i-op
+t-unk
+p-no
+
+[04/02/2009][Skype names created with iPhone are redirected to PCHome when buying Skype Credit]
+http://heartbeat.skype.com/2009/04/skype_names_created_with_iphon.html
+r-unk
+i-op
+t-4d
+p-no
+
+[04/03/2014][Problems with creating new Skype accounts]
+http://heartbeat.skype.com/2014/04/problems_with_creating_new_sky.html
+r-unk
+i-op
+t-unk
+p-no
+
+[04/07/2014][Skype to Lync Calls are failing]
+http://heartbeat.skype.com/2014/04/skype_to_lync_calls_are_failin.html
+r-unk
+i-op
+t-unk
+p-no
+
+[04/21/2010][Upcoming system maintenance]
+http://heartbeat.skype.com/2010/04/upcoming_systems_maintenance.html
+r-upgrade
+i-op
+t-9h
+p-yes
+
+[05/10/2009][Skype maintenance notification]
+http://heartbeat.skype.com/2009/05/skype_maintenance_notification_2.html
+r-upgrade
+i-op
+t-4d
+p-yes
+
+[05/26/2011][Skype goes down globally, investigation underway (update: restored)]
+http://www.engadget.com/2011/05/26/skype-goes-down-globally-investigation-underway/
+http://www.theregister.co.uk/2011/05/27/skype_outage_update/
+http://www.cnet.com/news/skype-suffers-outage-delivers-quick-fix/
+http://heartbeat.skype.com/2011/05/an_update_on_todays_downtime.html
+http://heartbeat.skype.com/2011/05/problems_signing_into_skype_an.html
+r-bug
+i-down
+t-unk
+p-no
+
+[05/29/2012][Planned maintenance on May 29th]
+http://heartbeat.skype.com/2013/05/planned_maintenance_on_may_29t.html
+r-upgrade
+i-op
+t-unk
+p-yes
+
+[06/04/2010][Problems redeeming Skype vouchers]
+http://heartbeat.skype.com/2010/06/problems_redeeming_vouchers.html
+r-unk
+t-30h40m
+i-op
+p-no
+
+[06/07/2011][Skype says outage hitting 'small number' of users]
+http://www.cnet.com/news/skype-says-outage-hitting-small-number-of-users/
+http://www.forbes.com/sites/parmyolson/2011/06/07/skype-scrambles-to-fix-another-outage/
+http://heartbeat.skype.com/2011/06/problems_signing_in_to_skype_f.html
+http://heartbeat.skype.com/2011/06/update_to_this_weeks_sign-in_p.html
+r-config
+i-down
+t-unk
+p-no
+
+[06/14/2010][Skype stores closed 14 June, 2010 07:35 GMT - 07:45 GMT]
+http://heartbeat.skype.com/2010/06/skype_stores_closed_14_june_20.html
+r-upgrade
+i-op
+t-15m
+p-yes
+
+[06/27/2012][Planned maintenance for account creation]
+http://heartbeat.skype.com/2012/06/planned_maintenance_for_accoun.html
+r-upgrade
+i-op
+t-1h
+p-yes
+
+[07/04/2014][Skype for Xbox One issues]
+http://heartbeat.skype.com/2014/07/skype_for_xbox_one_issues.html
+r-unk
+i-op
+t-unk
+p-no
+
+[07/12/2014][Problems connecting to Skype with Facebook credentials]
+http://heartbeat.skype.com/2014/02/problems_connecting_to_skype_w.html
+r-unk
+i-op
+t-unk
+p-no
+
+[07/15/2014][Skype Account Portal is Unavailable]
+http://heartbeat.skype.com/2014/08/issue_with_payments.html
+http://heartbeat.skype.com/2014/07/skype_account_portal_is_unavai.html
+r-unk
+i-op
+i-op
+t-unk
+p-no
+
+[07/19/2011][Credit card payment maintenance]
+http://heartbeat.skype.com/2011/07/credit_card_payment_maintenanc_3.html
+r-upgrade
+i-op
+t-1h
+p-yes
+
+[09/01/2009][Skype credit card payments maintenance]
+http://heartbeat.skype.com/2009/08/skype_credit_card_payments_mai.html
+r-upgrade
+i-op
+t-1h30m
+p-yes
+
+[09/05/2012][Planned Maintanence - Paid Products]
+http://heartbeat.skype.com/2012/09/planned_maintanence_-_paid_pro.html
+r-upgrade
+i-op
+t-3h
+p-yes
+
+[09/21/2015][Skype DOWN: Microsoft messenger and video chat app NOT working across the GLOBE]
+http://heartbeat.skype.com/2015/09/skype_presence_issues.html
+http://www.express.co.uk/life-style/science-technology/606780/Skype-DOWN-Microsoft-Messenger-Not-Working-Europe-Australia-USA
+r-fail
+t-12h53m
+i-down
+p-no
+
+[09/26/2012][Planned Maintanence for SMS to U.S. Numbers]
+http://heartbeat.skype.com/2012/09/planned_maintanence_for_sms_to_1.html
+r-upgrade
+i-op
+t-2h48m
+p-yes
+
+[09/30/2009][Temporary System Problems]
+http://heartbeat.skype.com/2009/09/temporary_system_problems.html
+r-unk
+i-op
+t-25m
+p-no
+
+[11/03/2009][Credit card payment maintenance on the 3rd November from 0800-0930 UTC]
+http://heartbeat.skype.com/2009/10/credit_card_payment_maintenanc.html
+r-upgrade
+i-op
+t-1h30m
+p-yes
+
+[11/19/2013][Payment systems maintenance]
+http://heartbeat.skype.com/2013/11/payment_systems_maintenance_2.html
+r-upgrade
+i-op
+t-5h5m
+p-yes
+
+[11/19/2015][Issues with Skype login and contacts]
+http://heartbeat.skype.com/2015/11/
+r-unk
+t-unk
+i-down
+p-no
+
+[12/02/2009][Upcoming payment systems maintenance: 2nd December - 10th December]
+http://heartbeat.skype.com/2009/12/upcoming_payment_systems_maint_1.html
+r-upgrade
+i-op
+t-unk
+p-yes
+
+[12/22/2010][Skype Holiday Present – Down for a Day]
+http://www.availabilitydigest.com/public_articles/0601/skype.pdf
+http://www.foxnews.com/tech/2010/12/22/skype-outage-millions-affected-worldwide/
+http://www.disruptivetelephony.com/2010/12/
+http://www.computerworld.com/article/2470070/mobile-apps/skype-still-down-today-after-supernode-outage.html
+http://gigaom.com/2010/12/23/skype-ceo-tony-bates-i-am-sorry-here-is-an-update/
+r-bug
+i-down
+t-1d
+f-fix
+p-no
+

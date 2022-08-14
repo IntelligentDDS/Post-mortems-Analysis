@@ -1,0 +1,20 @@
+A wrong change was merged cause varnish upload cache to spit out 301 to all requests. The change was soon reverted and service was restored. The impact was upload.wikimedia.org and maps.wikimedia.org were not really accessible for the duration of the incident.
+
+All times are in UTC
+• 16:43 https://gerrit.wikimedia.org/r/#/c/operations/puppet/+/488445/ gets merged after having received review and a PCC run was executed on it. The patch is being deployed on the usual automatic puppet schedule
+• 16:55 First report of the problem on IRC, investigation starts. First reports are confining it to mobile, something that was not true.
+• 16:59 Corresponding spike on 301s noticed by bblack
+• 17:02 bblack reverts the change and starts deploying it
+• 17:02 akosiaris, _joe_, gtirloni have already jumped in and help with the investigation
+• 17:03 icinga-wm notices the issue and alerts because the test returned 301 instead of 200. But the alert was specific to maps. But by now the nature of the problem was clear.
+• 17:06 reports of desktop being broken arrive as well, further confirming the theory that the change was related.
+• 17:07 icinga-wm reports CRITICAL for the nginx-ssl terminators as well
+• 17:06 discussion in to whether we need to issue purges, bblack confirms that is not needed.
+• bblack: 1) The patch was missing a bit for the cache_upload case, which caused the wikimedia_nets/wikimedia_trust ACLs to puppetize as empty sets
+• bblack: 2) The caches only trust the "X-Forwarded-For: https" header based on those ACLs, so it was blanking out that header which it got from our local nginx TLS proxy
+• bblack: 3) Therefore it thought HTTPS traffic was not HTTPS, and emitted a 301 redirect to https:// (same URI)
+• A more complete PCC might have caught that.
+• icinga was a tad late in noticing this, delayed by some 10mins
+• Investigate if icinga should report sooner on the failed check above https://gerrit.wikimedia.org/r/#/c/operations/puppet/+/490612
+• Standardize and/or automate doing these kinds of verifications for VCL patches against all cluster/dc combos T216140
+• Possibly: add support to PCC to have pre-set groups of nodes, making this easy

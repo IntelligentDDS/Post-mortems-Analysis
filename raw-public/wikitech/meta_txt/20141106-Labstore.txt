@@ -1,0 +1,14 @@
+The primary storage server for Labs (labstore1001.eqiad.wmnet) went down, preventing access to shared Labs filesystem and therefore stalling user logins and many processes in Labs.
+• 2014-11-06 16:22 UTC - Icinga reports labstore1001 goes down, pretty much simultaneously with user reports of issues.
+• 2014-11-06 16:36 UTC - Coren begins preleminary diagnostic; box has gone down hard and requires power cycle
+• 2014-11-06 16:43 UTC - Diagnostics show two of the disk shelves as invisible from the server; suspect hardware issue
+• 2014-11-06 16:54 UTC - cmjohnson on site, begins to help diagnostics by kicking the shelves
+• 2014-11-06 18:53 UTC - after a lot of hardware swaps, finally isolate the fault to cabling
+• 2014-11-06 19:08 UTC - swapping cabling made shelves visible again; restarting labstore1001 in stages to watch for corruption
+• 2014-11-06 19:26 UTC - all is now well, service goes back up
+
+Having the hardware mirrored turns out to have been a wise move (because it made fault isolation possible without having to involve vendor support); and once we had determined the actual disk enclosures worked properly we had the option to bring up the backup server - which we would have done within the next half-hour or so had we not gotten a reasonable probability of resolution. During the diagnostic steps however, we realized there remains one piece of hardware that does not have an available spare at hand and which would have prevented resolution: a disk enclosure. They have redundant power supplies, redundant controllers and redundant data paths - making complete failure improbable - but not having a shelf we could swap the drives to means that if the failure was located there we would have had to wait for vendor replacement before being able to restore service.
+
+It also appears that Icinga alerts of labstore1001 did not lead to opsen being paged; this did not have consequences this time because the failure occured during normal North-American working hours and staff were at hand but needs to to be verified and fixed.
+• Ensure that opsen are paged on failure of labstore1001's NFS service
+• Order (and rack?) a spare enclosure for labstore1001 to allow migration of the disks away from a failed shelf. (RT:8827)

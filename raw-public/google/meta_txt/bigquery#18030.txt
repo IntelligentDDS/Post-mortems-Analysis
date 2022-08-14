@@ -1,0 +1,167 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+July 11, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/18030)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #18030
+
+Streaming API errors
+
+Incident began at **2017-06-28 18:00** and ended at **2017-06-28 19:17** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jul 10, 2017 | 23:02 |
+
+ISSUE SUMMARY
+
+On Wednesday 28 June 2017, streaming data into Google BigQuery experienced
+elevated error rates for a period of 57 minutes. We apologize to all users
+whose data ingestion pipelines were affected by this issue. We understand the
+importance of reliability for a process as crucial as data ingestion and are
+taking committed actions to prevent a similar recurrence in the future.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 28 June 2017 from 18:00 to 18:20 and from 18:40 to 19:17
+US/Pacific time, BigQuery's streaming insert service returned an increased
+error rate to clients for all projects. The proportion varied from time to
+time, but failures peaked at 43% of streaming requests returning HTTP response
+code 500 or 503. Data streamed into BigQuery from clients that experienced
+errors without retry logic were not saved into target tables during this
+period of time.
+
+ROOT CAUSE
+
+Streaming requests are routed to different datacenters for processing based on
+the table ID of the destination table. A sudden increase in traffic to the
+BigQuery streaming service combined with diminished capacity in a datacenter
+resulted in that datacenter returning a significant amount of errors for
+tables whose IDs landed in that datacenter. Other datacenters processing
+streaming data into BigQuery were unaffected.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were notified of the event at 18:20, and immediately started
+to investigate the issue. The first set of errors had subsided, but starting
+at 18:40 error rates increased again. At 19:17 Google engineers redirected
+traffic away from the affected datacenter. The table IDs in the affected
+datacenter were redistributed to remaining, healthy streaming servers and
+error rates began to subside.
+
+To prevent the issue from recurring, Google engineers are improving the load
+balancing configuration, so that spikes in streaming traffic can be more
+equitably distributed amongst the available streaming servers. Additionally,
+engineers are adding further monitoring as well as tuning existing monitoring
+to decrease the time it takes to alert engineers of issues with the streaming
+service. Finally, Google engineers are evaluating rate-limiting strategies for
+the backend to prevent them from becoming overloaded.  
+  
+|
+
+ISSUE SUMMARY
+
+On Wednesday 28 June 2017, streaming data into Google BigQuery experienced
+elevated error rates for a period of 57 minutes. We apologize to all users
+whose data ingestion pipelines were affected by this issue. We understand the
+importance of reliability for a process as crucial as data ingestion and are
+taking committed actions to prevent a similar recurrence in the future.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 28 June 2017 from 18:00 to 18:20 and from 18:40 to 19:17
+US/Pacific time, BigQuery's streaming insert service returned an increased
+error rate to clients for all projects. The proportion varied from time to
+time, but failures peaked at 43% of streaming requests returning HTTP response
+code 500 or 503. Data streamed into BigQuery from clients that experienced
+errors without retry logic were not saved into target tables during this
+period of time.
+
+ROOT CAUSE
+
+Streaming requests are routed to different datacenters for processing based on
+the table ID of the destination table. A sudden increase in traffic to the
+BigQuery streaming service combined with diminished capacity in a datacenter
+resulted in that datacenter returning a significant amount of errors for
+tables whose IDs landed in that datacenter. Other datacenters processing
+streaming data into BigQuery were unaffected.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were notified of the event at 18:20, and immediately started
+to investigate the issue. The first set of errors had subsided, but starting
+at 18:40 error rates increased again. At 19:17 Google engineers redirected
+traffic away from the affected datacenter. The table IDs in the affected
+datacenter were redistributed to remaining, healthy streaming servers and
+error rates began to subside.
+
+To prevent the issue from recurring, Google engineers are improving the load
+balancing configuration, so that spikes in streaming traffic can be more
+equitably distributed amongst the available streaming servers. Additionally,
+engineers are adding further monitoring as well as tuning existing monitoring
+to decrease the time it takes to alert engineers of issues with the streaming
+service. Finally, Google engineers are evaluating rate-limiting strategies for
+the backend to prevent them from becoming overloaded.  
+  
+| Jun 28, 2017 | 20:00 |
+
+The issue with BigQuery Streaming insert has been resolved for all affected
+users as of 19:17 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence.
+
+We will provide a more detailed analysis of this incident once we have
+completed our internal investigation.  
+  
+|
+
+The issue with BigQuery Streaming insert has been resolved for all affected
+users as of 19:17 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence.
+
+We will provide a more detailed analysis of this incident once we have
+completed our internal investigation.  
+  
+| Jun 28, 2017 | 19:38 |
+
+Our Engineering Team believes they have identified the root cause of the
+errors and have mitigated the issue by 19:17 US/Pacific. We will provide
+another status update by 20:30 US/Pacific.  
+  
+|
+
+Our Engineering Team believes they have identified the root cause of the
+errors and have mitigated the issue by 19:17 US/Pacific. We will provide
+another status update by 20:30 US/Pacific.  
+  
+| Jun 28, 2017 | 19:15 |
+
+We are investigating an issue with BigQuery Streaming insert. We will provide
+more information by 19:35 US/Pacific.  
+  
+|
+
+We are investigating an issue with BigQuery Streaming insert. We will provide
+more information by 19:35 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

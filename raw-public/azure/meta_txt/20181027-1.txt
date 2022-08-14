@@ -1,0 +1,5 @@
+Virtual Machines/VM Scale Sets - West US 2
+Summary of impact: Between 02:50 and 10:37 UTC on 27 Oct 2018, a subset of customers using Virtual Machines and/or Virtual Machine Scale Sets in West US 2 may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in this region.
+Preliminary root cause: Engineers determined that some instances of a backend service responsible for interservice communication became unhealthy which in turn, caused requests between Storage and dependent resources to fail.
+Mitigation: Engineers performed a change to the backend service to achieve mitigation. Platform telemetry was then observed and service team engineers from affected services confirmed all requests completed successfully.
+Next steps: Engineers will continue to investigate to establish the full root cause to prevent future occurrences.

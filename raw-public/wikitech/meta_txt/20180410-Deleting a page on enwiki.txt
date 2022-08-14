@@ -1,0 +1,24 @@
+An alter table running on the archive table on the English Wikipedia master database server caused deletion of pages to fail for en.wikipedia.org for ~40 minutes.
+
+It was originally reported at: Task T191875 According to logtash 85 errors happened during that time
+• 5:20 an ALTER table on enwiki master (db1052) on the externallinks table was started
+• 8:20 an ALTER table on enwiki master (db1052) on the archive table was started
+• 8:30 Some errors pop in the error log: https://logstash.wikimedia.org/goto/becc429ddb975af71624b66402c3f6bb
+
+Read timeout is reached (10.64.16.77) INSERT INTO archive (ar_namespace,ar_title,ar_timestamp,ar_minor_edit,ar_rev_id,ar_parent_id,ar_text_id,ar_text,ar_flags,ar_len,ar_page_id,ar_deleted,ar_sha1,ar_comment,ar_comment_id,ar_user,ar_user_text,ar_content_model,ar_content_format) VALUES ('14','Articles_needing_sections_from_August_2015','xx','0','xx','0','xx',,,'xx','xx','0','xx','Creating monthly dated maintenance category for current month','xx','xx','xx',NULL,NULL)
+• 9:19: Alter table finished and errors are gone
+• 9:22 it is confirmed that everything works again at: Task T191875#4119589
+
+A total of 85 errors happened between 08:20 and 09:19
+
+The following ALTER table caused issues on db1052 (enwiki master) when deleting (and probably when moving) a page but not on the other 6 masters it was executed before: SET SESSION innodb_lock_wait_timeout=1; SET SESSION lock_wait_timeout=30; ALTER TABLE archive MODIFY COLUMN ar_text mediumblob NULL, MODIFY COLUMN ar_flags tinyblob NULL;
+
+There were a total of 85 errors during the time of the incident.
+
+It was also noticed that the master had ongoing queries (Task T191875#4119715) for the archive table, that might have also contributed to this issue. Whether it is the cause or the consequence is still unknown.
+
+As described at: Task T191875#4119820 this ALTER is fully online (and has not caused issues anywhere else)
+
+We are still investigating why this has been caused, but so far everything looks like a race condition.
+
+The following task has also been created to try to check if the new queries may be creating additional contention (although it is not yet clear this is the root/only cause of the incident)

@@ -1,0 +1,7 @@
+Event volume grew beyond what EventLogging's database writer could handle, and not all events could get written to the database between 2014-11-14T01:00 and 2014-11-21T21:00
+• Having multiple EventLogging issues at the same time does not help when trying to find root causes :-(
+• Teams are not to trust when asking whether or not an increase in numbers is expected. We need to be able to walk the deployment lists on our own and find out what code the teams deployed when and what numbers they should expect. This is frustrating, as it explodes the code base we need to understand and be able to cover.
+• Monitoring throughput only at EventLogging's “front-end” processors is not sufficient. We need monitoring that checks whether all events could get written to the database during peak hours.
+• We need to re-evaluate the monitoring thresholds for EventLogging's throughput monitoring. They are tuned to the volume that event validation can take. But here the bottle-neck of the database writer became relevant before the event validation bottle-neck became relevant.
+• Status: Done Make sure that log files exist for the affected period, so we can backfill.
+• Status: Unresolved Implement monitoring that makes sure that the expected volume of events end up in the database.

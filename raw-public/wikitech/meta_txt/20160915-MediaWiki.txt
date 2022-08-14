@@ -1,0 +1,53 @@
+Deployment of caused jobs to fail when invoking . That initially caused Wikidata to no more dispatch updates to the wiki clients (until Thursday 15th 20:55 UTC) and prevented any account creation from Thursday 15th 19:10UTC to Friday 16th 12:50 UTC.
+
+Reverting all wikis to solved the problem.
+
+The root cause is a failure to update the HHVM bytecode cache because of a filesize limit of 512MBytes enforced via . The rough chain of call being:
+• HHVM in CLI mode attempting to write to either /var/cache/hhvm/fcgi.sq3 or /var/cache/hhvm/cli.sq3 (undetermined).
+
+As a result wfShellExec() fails with exit code 153 (which is 128 + value of Posix signal SIGXFSZ 25), since the job fails to get configuration from the shell call, it errors out.
+
+The extensive debugging details are on Task T145819.
+
+As a result ALL wikis are at as of Friday 15th 12:50 UTC.
+
+This is a wall of text, you can probably skip it entirely and move straight to Conclusions below.
+
+is pushed to group0 as scheduled. That caused renames to get stuck on mediawiki.org (Task T145596) fixed via https://phabricator.wikimedia.org/rECAU20f54121d177f996c155d5feea6c799a8c9ed242
+
+pushed to group1. It is promptly reverted due to MediaWiki:Common.css no more being included (Task T145673), first noticed on the Hebrew Wikipedia which has the Infobox on the left instead of floating on the right.
+
+After the rollback train conductor Antoine unblocks stuck renames on mediawiki.org (Task T145596). They originally failed due to a database related issue (commit)
+
+The renaming being fixed, is pushed to group1 at 19:10 UTC. A user notice that Wikidata is lagged. The Wikidata process that dispatch updates to client Wikis is lagging. Aude assumes it is a temporary spike and but we fill Task T145819 nonetheless. After more monitoring it is evident the lag is not resolving, the Grafana boards for Wikidata Dispatch having all the informations.
+
+We rollback Wikidata to . The Wikidata dispatch jobs are processed again. The situation seems to be resolved.
+
+After some more monitoring, and to stay on schedule with the train deployment all wikis but wikidata ones are upgraded to at 20:55 UTC. The account renaming have been fixed the day before, the Wikidata dispatch works fine, there is not much error in fatalmonitor. It is assumed that every is fine.
+
+At 22:00 UTC everything looks fine.
+
+Night goes on in Europe
+
+Friday 16th at 8:00 UTC Antoine dig and further investigate the Wikidata issue. The extensive debugging is show on Task T145819 with support from Addshore. That points out a rather messy situation with MediaWiki has a web service having to shell out to mwscript maintenance/getConfiguration.php T111441. Since that is invoked in the context of the webservice, ulimit is applied and restrict file size to 512 MBytes. Turns out that an unknown reason, HHVM attempt to refresh its Sqlite3 bytecode cache when being run on but not on .
+
+The error is manually reproducible from the CLI on terbium. At 12:00 UTC, Antoine deletes and the error is gone.
+
+12:40 UTC, Antoine announces decision to rollback all wikis to , with the hope that HHVM would not have to trigger the write to the cli cache since did not. That is the safe thing to do on a Friday, potentially a hack to remove the filesize limit would have worked as well.
+
+12:45 UTC Antoine notices quite late that Account creation are 100% erroring out since deployment at 19:10 UTC the day before (see comment and graph on T145839). That confirms rollbacking.
+
+12:50 UTC rebuilt wikiversions.php and synchronized wikiversions files: All wikis back to :( T145819
+
+Monitoring ensue, the jobs are all happy.
+• Despite an enormous amount of metrics being collected for the infrastructure or the MediaWiki stack, most do not generate an alarm. The 100% account creation error rate must be made a critical alarm.
+• Antoine could not find a good dashboard or overview of jobs failure by type of job/wiki/version/error reason
+• Having MediaWiki as a web service shelling out to run a maintenance script is absolutely terrible and confusing
+• It has been absolutely not trivial to find out that HHVM tried to write to the bytecode cache and got denied. The shell out fails to capture standard error.
+• Investigate HHVM writing to the bytecode cache even when got deployed everywhere. (Task to be filled)
+• Have the train deployment to purge HHVM bytecode cache for both cli and fcgi. (Task T146226)
+• Add monitoring alarm for global and type of jobs errors (Task to be filled)
+• job errors are not easily discoverable:
+• RunJobs logs in logstash should be enhanced to support filtering by job type (Task T146469)
+• Decide a plan to push again. To be discussed by Release Engineering team on September 19th team meeting.
+• See the thread on wikitech-l for status/plan.

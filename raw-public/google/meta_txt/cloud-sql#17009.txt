@@ -1,0 +1,129 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud SQL](/incident/cloud-sql/17009)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud SQL Incident #17009
+
+Issues connecting to Google Cloud SQL instances
+
+Incident began at **2015-08-14 03:28** and ended at **2015-08-14 08:35** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 18, 2015 | 02:26 |
+
+SUMMARY:
+
+On Friday, 14 August 2015, Google Cloud SQL instances in the US Central region
+experienced intermittent connectivity issues over an interval of 6 hours 50
+minutes. If your service or application was affected, we apologize — this is
+not the level of quality and reliability we strive to offer you, and we are
+taking immediate steps to improve the platform’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Friday, 14 August 2015 from 03:24 to 10:16 PDT, some attempts to connect to
+Google Cloud SQL instances in the US Central region failed. Approximately 12%
+of all active Cloud SQL instances experienced a denied connection attempt.
+
+ROOT CAUSE:
+
+On Wednesday, 12 August 2015, a standard rollout was performed for Google
+Cloud SQL which introduced a memory leak in the serving component. Before the
+rollout, an unrelated periodic maintenance activity necessitated disabling
+some automated alerts, and these were not enabled again once maintenance was
+complete. As a result, Google engineers were not alerted to high resource
+usage until Cloud SQL serving tasks began exceeding resource limits and
+rejecting more incoming connections.
+
+REMEDIATION AND PREVENTION:
+
+At 07:47, Google engineers were alerted to high reported error rates and began
+allocating more resources for Cloud SQL serving tasks, which provided an
+initial reduction in error rates. Finally, a restart of running Cloud SQL
+serving tasks eliminated remaining connectivity issues by 10:16.
+
+To prevent the issue from recurring, we are implementing mitigation and
+monitoring changes as a result of this incident, which include rolling back
+the problematic update, making the Cloud SQL serving component more resilient
+to high resource usage, and improving monitoring procedures to reduce the time
+taken to detect and isolate similar problems.  
+  
+|
+
+SUMMARY:
+
+On Friday, 14 August 2015, Google Cloud SQL instances in the US Central region
+experienced intermittent connectivity issues over an interval of 6 hours 50
+minutes. If your service or application was affected, we apologize — this is
+not the level of quality and reliability we strive to offer you, and we are
+taking immediate steps to improve the platform’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Friday, 14 August 2015 from 03:24 to 10:16 PDT, some attempts to connect to
+Google Cloud SQL instances in the US Central region failed. Approximately 12%
+of all active Cloud SQL instances experienced a denied connection attempt.
+
+ROOT CAUSE:
+
+On Wednesday, 12 August 2015, a standard rollout was performed for Google
+Cloud SQL which introduced a memory leak in the serving component. Before the
+rollout, an unrelated periodic maintenance activity necessitated disabling
+some automated alerts, and these were not enabled again once maintenance was
+complete. As a result, Google engineers were not alerted to high resource
+usage until Cloud SQL serving tasks began exceeding resource limits and
+rejecting more incoming connections.
+
+REMEDIATION AND PREVENTION:
+
+At 07:47, Google engineers were alerted to high reported error rates and began
+allocating more resources for Cloud SQL serving tasks, which provided an
+initial reduction in error rates. Finally, a restart of running Cloud SQL
+serving tasks eliminated remaining connectivity issues by 10:16.
+
+To prevent the issue from recurring, we are implementing mitigation and
+monitoring changes as a result of this incident, which include rolling back
+the problematic update, making the Cloud SQL serving component more resilient
+to high resource usage, and improving monitoring procedures to reduce the time
+taken to detect and isolate similar problems.  
+  
+| Aug 14, 2015 | 09:12 |
+
+We experienced intermittent connectivity issues with Google Cloud SQL
+beginning at Friday, 2015-08-14 03:28 US/Pacific. The issue should be resolved
+for all affected projects as of 08:35 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+|
+
+We experienced intermittent connectivity issues with Google Cloud SQL
+beginning at Friday, 2015-08-14 03:28 US/Pacific. The issue should be resolved
+for all affected projects as of 08:35 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

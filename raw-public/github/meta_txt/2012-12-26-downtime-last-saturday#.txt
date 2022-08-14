@@ -1,0 +1,329 @@
+On Saturday, December 22nd we had a significant outage and we want to take
+
+ the time to explain what happened. This was one of the worst outages in
+
+ the history of GitHub, and it’s not at all acceptable to us. I’m very
+
+ sorry that it happened and our entire team is working hard to prevent
+
+ similar problems in the future.
+
+We had a scheduled maintenance window Saturday morning to perform
+
+ software updates on our aggregation switches. This software update was
+
+ recommended by our network vendor and was expected to address the
+
+ problems that we encountered in an
+
+ earlier outage. We
+
+ had tested this upgrade on a number of similar devices without
+
+ incident, so we had a good deal of confidence. Still, performing an
+
+ update like this is always a risky proposition so we scheduled a
+
+ maintenance window and had support personnel from our vendor
+
+ on the phone during the upgrade in case of unforseen problems.
+
+In our network, each of our access switches, which our servers are
+
+ connected to, are also connected to a pair of aggregation switches.
+
+ These aggregation switches are installed in pairs and use a feature
+
+ called MLAG to appear as a
+
+ single switch to the access switches for the purposes of
+
+ link aggregation,
+
+ spanning tree,
+
+ and other layer 2 protocols that expect to have a single master device.
+
+ This allows us to perform maintenance tasks on one aggregation switch
+
+ without impacting the partner switch or the connectivity for the access
+
+ switches. We have used this feature successfully many times.
+
+Our plan involved upgrading the aggregation switches one at a time, a
+
+ process called in-service software upgrade. You upload new software to
+
+ one switch, configure the switch to reboot on the new version, and issue
+
+ a reload command. The remaining switch detects that its peer is no longer
+
+ connected and begins a failover process to take control over the resources
+
+ that the MLAG pair jointly managed.
+
+We ran into some unexpected snags after the upgrade that caused 20-30
+
+ minutes of instability while we attempted to work around them within
+
+ the maintenance window. Disabling the links between half of the
+
+ aggregation switches and the access switches allowed us to mitigate
+
+ the problems while we continued to work with our network vendor to
+
+ understand the cause of the instability. This wasn’t ideal since
+
+ it compromised our redundancy and only allowed us to operate at half
+
+ of our uplink capacity, but our traffic was low enough at the time
+
+ that it didn’t pose any real problems. At 1100 PST we made the decision
+
+ to revert the software update and return to a redundant state at 1300 PST if
+
+ we did not have a plan for resolving the issues we were experiencing
+
+ with the new version.
+
+Beginning at 1215 PST, our network vendor began gathering some final
+
+ forensic information from our switches so that they could
+
+ attempt to discover the root cause for the issues we’d been seeing.
+
+ Most of this information gathering was isolated to collecting
+
+ log files and retrieving the current hardware status of various parts
+
+ of the switches. As a final step, they wanted to gather the state of
+
+ one of the agents running on a switch. This involves terminating the
+
+ process and causing it to write its state in a way that can be analyzed
+
+ later. Since we were performing this on the switch that had its
+
+ connections to the access switches disabled they didn’t expect there
+
+ to be any impact. We have performed this type of action, which is
+
+ very similar to rebooting one switch in the MLAG pair, many times in
+
+ the past without incident.
+
+This is where things began going poorly. When the agent on one of the
+
+ switches is terminated, the peer has a 5 second timeout period where it
+
+ waits to hear from it again. If it does not hear from the peer, but
+
+ still sees active links between them, it assumes that the other switch
+
+ is still running but in an inconsistent state. In this situation it
+
+ is not able to safely takeover the shared resources so it defaults back
+
+ to behaving as a standalone switch for purposes of link aggregation,
+
+ spanning-tree, and other layer two protocols.
+
+Normally, this isn’t a problem because the switches also watch for the
+
+ links between peers to go down. When this happens they wait 2 seconds
+
+ for the link to come back up. If the links do not recover, the
+
+ switch assumes that its peer has died entirely and performs a stateful
+
+ takeover of the MLAG resources. This type of takeover does not trigger
+
+ any layer two changes.
+
+When the agent was terminated on the first switch, the links between
+
+ peers did not go down since the agent is unable to instruct the hardware
+
+ to reset the links. They do not reset until the agent restarts and is
+
+ again able to issue commands to the underlying switching hardware.
+
+ With unlucky timing and the extra time that is required for the agent
+
+ to record its running state for analysis, the link remained active
+
+ long enough for the peer switch to detect a lack of heartbeat messages
+
+ while still seeing an active link and failover using the more disruptive
+
+ method.
+
+When this happened it caused a great deal of churn within the network as
+
+ all of our aggregated links had to be re-established, leader election for
+
+ spanning-tree had to take place, and all of the links in the network had
+
+ to go through a spanning-tree reconvergence. This effectively caused
+
+ all traffic between access switches to be blocked for roughly a minute
+
+ and a half.
+
+Our fileserver architecture consists of a number of active/passive
+
+ fileserver pairs which use
+
+ Pacemaker,
+
+ Heartbeat and
+
+ DRBD to manage high-availability. We use DRBD from the
+
+ active node in each pair to transfer a copy of any data that changes on
+
+ disk to the standby node in the pair. Heartbeat and Pacemaker work
+
+ together to help manage this process and to failover in the event of
+
+ problems on the active node.
+
+With DRBD, it’s important to make sure that the data volumes are only
+
+ actively mounted on one node in the cluster. DRBD helps protect against
+
+ having the data mounted on both nodes by making the receiving side of
+
+ the connection read-only. In addition to this, we use a
+
+ STONITH (Shoot The Other Node
+
+ In The Head) process to shut power down to the active node before failing
+
+ over to the standby. We want to be certain that we don’t wind up in a
+
+ “split-brain” situation where data is written to both nodes
+
+ simultaneously since this could result in potentially unrecoverable
+
+ data corruption.
+
+When the network froze, many of our fileservers which are intentionally
+
+ located in different racks for redundancy, exceeded their heartbeat
+
+ timeouts and decided that they needed to take control of the fileserver
+
+ resources. They issued STONITH commands to their partner nodes and
+
+ attempted to take control of resources, however some of those
+
+ commands were not delivered due to the compromised network. When the
+
+ network recovered and the cluster messaging between nodes came back, a
+
+ number of pairs were in a state where both nodes expected to be active for
+
+ the same resource. This resulted in a race where the nodes terminated
+
+ one another and we wound up with both nodes stopped for a number of
+
+ our fileserver pairs.
+
+Once we discovered this had happened, we took a number of steps
+
+ immediately:
+• We paged the entire operations team to assist with the recovery.
+• We downgraded both aggregation switches to the previous software
+
+ version.
+• We monitored the network for roughly thirty minutes to ensure that it
+
+ was stable before beginning recovery.
+
+When both nodes are stopped in this way it’s important that the node
+
+ that was active before the failure is active again when brought back
+
+ online, since it has the most up to date view of what the current state
+
+ of the filesystem should be. In most cases it was straightforward for
+
+ us to determine which node was the active node when the fileserver pair
+
+ went down by reviewing our centralized log data. In some cases, though,
+
+ the log information was inconclusive and we had to boot up one node in
+
+ the pair without starting the fileserver resources, examine its local
+
+ log files, and make a determination about which node should be active.
+
+This recovery was a very time consuming process and we made
+
+ the decision to leave the site in maintenance mode until we had
+
+ recovered every fileserver pair. That process took over five hours to
+
+ complete because of how widespread the problem was; we had to
+
+ restart a large percentage of the the entire GitHub file storage
+
+ infrastructure, validate that things were working as expected, and
+
+ make sure that all of the pairs were properly replicating between
+
+ themselves again. This process, proceeded without incident and
+
+ we returned the site to service at 20:23 PST.
+
+Where do we go from here?
+• We worked closely with our network vendor to identify and understand
+
+ the problems that led to the failure of MLAG to failover in the way that
+
+ we expected. While it behaved as designed, our vendor plans to revisit
+
+ the respective timeouts so that more time is given for link failure to
+
+ be detected to guard against this type of event.
+• We are postponing any software upgrades to the aggregation network
+
+ until we have a functional duplicate of our production environment in
+
+ staging to test against. This work was already underway. In the mean
+
+ time, we will continue to monitor for the MAC address learning problems
+
+ that we discussed in our
+
+ previous report
+
+ and apply a workaround as necessary.
+• From now on, we will place our fileservers high availability
+
+ software into maintenance mode before we perform any network changes,
+
+ no matter how minor, at the switching level. This allows the servers to
+
+ continue functioning but will not take any automated failover actions.
+• The fact that the cluster communication between fileserver nodes relies
+
+ on any network infrastructure has been a known problem for some time. We’re
+
+ actively working with our hosting provider to address this.
+• We are reviewing all of our high availability configurations with fresh
+
+ eyes to make sure that the failover behavior is appropriate.
+
+I couldn’t be more sorry about the downtime and the impact
+
+ that downtime had on our customers. We always use problems like this as
+
+ an opportunity for us to improve, and this will be no exception. Thank
+
+ you for your continued support of GitHub, we are working hard and
+
+ making significant investments to make sure we live up to the trust
+
+ you’ve placed in us.

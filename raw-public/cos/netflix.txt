@@ -1,0 +1,113 @@
+
+[02/03/2015][No, it wasn’t just you: Netflix went down Tuesday afternoon]
+r-unk
+t-1h
+i-down
+p-no
+
+[02/19/2010][Netflix DOWN: Website Experiencing Outage, 'Service Unavailable']
+http://www.huffingtonpost.com/2010/02/19/netflix-down-website-expe_n_469833.html
+http://mashable.com/2010/02/19/netflix-down-february-19/
+r-unk
+i-down
+t-2h
+p-no
+
+[04/15/2014][Netflix Is Down (Update: And We’re Back!)]
+http://techcrunch.com/2014/04/15/netflix-is-down/
+r-unk
+i-down
+t-30m
+p-no
+
+[04/21/2011][Lessons Netflix Learned from the AWS Outage]
+http://techblog.netflix.com/2011/04/lessons-netflix-learned-from-aws-outage.html
+r-cross
+i-down
+t-24h
+p-no
+f-cross
+
+[06/19/2011][Netflix.com Website And Streaming Services Go Down]
+http://techcrunch.com/2011/06/19/netflix-website-and-streaming-services-go-down/
+r-unk
+i-down
+t-3h37m
+p-no
+
+[06/29/2012][Lessons Netflix Learned From The AWS Storm]
+http://techblog.netflix.com/2012/07/lessons-netflix-learned-from-aws-storm.html
+http://venturebeat.com/2012/06/29/amazon-outage-netflix-instagram-pinterest/
+r-cross
+i-down
+t-30m
+p-no
+
+[07/17/2011][Netflix Down: Streaming Services Offline For Many (UPDATE) ]
+http://www.huffingtonpost.com/2011/07/17/netflix-down-streaming-services-offline_n_901187.html
+r-unk
+t-3h
+p-no
+i-down
+
+[08/07/2011][Down Goes The Internet… Again. Amazon EC2 Outage Takes Down Foursquare, Instagram, Quora, Reddit, Etc]
+http://techcrunch.com/2011/08/08/amazon-ec2-outage/
+r-cross
+i-down
+t-40m
+p-no
+
+[08/25/2013][AWS Server Issues Take Down Instagram, Vine, Airbnb And IFTTT]
+http://techcrunch.com/2013/08/25/instagram-vine-and-ifttt-went-dark-thanks-to-amazon-web-services-issues/
+r-cross
+i-down
+t-1h
+p-no
+f-cross
+
+[10/06/2009][Netflix Down; Users Search for Alternative Entertainment]
+http://mashable.com/2009/10/06/netflix-down-users-search-for-alternative-entertainment/
+r-unk
+t-unk
+p-no
+i-down
+
+[10/21/2010][Netflix Website "Temporarily Unavailable" - Back Online after Multi-Hour Outage]
+http://www.hackingnetflix.com/2010/10/netflix-website-temporarily-unavailable-.html
+http://www.cnet.com/news/netflix-com-instant-streaming-suffer-outage/
+r-unk
+t-1h15m
+p-no
+i-down
+
+[11/03/2014][Netflix Goes Down, The Internet Proceeds To Freak The Heck Out]
+http://consumerist.com/2014/11/03/netflix-goes-down-the-internet-proceeds-to-freak-the-heck-out/
+r-unk
+i-down
+t-30m
+p-no
+
+[12/21/2010][Netflix DOWN: Netflix.com Suffers Major Outage]
+http://www.huffingtonpost.com/2010/10/21/netflix-down-netflixcom-s_n_772212.html
+r-unk
+t-3h
+p-no
+i-down
+
+[12/24/2012][Amazon AWS Takes Down Netflix On Christmas Eve]
+http://www.forbes.com/sites/kellyclay/2012/12/24/amazon-aws-takes-down-netflix-on-christmas-eve/
+http://techcrunch.com/2012/12/24/netflix-crippled-on-christmas-eve-by-aws-outages/
+r-cross
+i-down
+t-19h
+p-no
+
+[12/31/2012][Netflix Goes Down: Company Says Only DVD Website Affected]
+http://techcrunch.com/2012/12/24/netflix-crippled-on-christmas-eve-by-aws-outages/
+http://techcrunch.com/2012/12/31/netflix-is-down-again-argh/
+r-cross
+i-op
+t-10h45m
+p-no
+f-cross
+

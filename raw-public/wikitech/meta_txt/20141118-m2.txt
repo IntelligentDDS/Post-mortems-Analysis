@@ -1,0 +1,7 @@
+At 2014-11-18 14:42 m2-master (db1020) mysqld process aborted (sig 6) after an InnoDB assertion failure during a long semaphore wait. Same as https://mariadb.atlassian.net/browse/MDEV-6440 but fairly unhelpful as we didn't get a stack trace either.
+
+The m2-slave (db1046) showed replication was in sync -- we use semi-synchronous replication plugin -- so the simplest, safest, and fastest response was to fail over to the slave and leave the master alone for investigation. My worry is that SIGABRT from InnoDB often indicates some sort of corruption somewhere in the stack, either directly or indirectly. I would want to reload the data regardless.
+
+Amusingly, dbproxy1002 correctly went though fail over motions by itself, though it was not yet handling m2 traffic. So there's that.
+• Status: Done Get dbproxy1002 rolled out.
+• Status: Unresolved Identify the upstream bug, and/or arrange to collect a stack trace or core file. Complicated in that MariaDB 10.0.15 has been released and may mean we never see this again.

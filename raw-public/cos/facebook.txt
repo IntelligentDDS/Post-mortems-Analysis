@@ -1,0 +1,305 @@
+
+[01/27/2015][Facebook says it caused fault that sent services offline]
+http://www.bbc.com/news/technology-30996928
+http://www.techgeekandmore.com/2015/01/27/alert-facebook-instagram-currently-12715/
+http://www.wsj.com/articles/facebook-denies-lizard-squad-hacking-claim-1422342613
+http://www.datacenterknowledge.com/archives/2015/01/27/facebook-outage-affects-sites-used-social-networks-log-system/
+r-admin
+r-upgrade
+r-config
+t-1h
+i-down
+p-no
+
+[01/28/2013][UPDATED: Facebook Hit By Extended Outage In Several Countries]
+http://techcrunch.com/2013/01/28/facebook-hit-by-extended-outage-in-several-countries/
+http://cloutage.org/incidents/987-facebook-website
+http://ibnlive.in.com/news/facebook-outage-hits-us-users-website-down-for-several-hours/369509-11.html
+http://www.infoworld.com/article/2606768/cloud-computing/107783-The-worst-cloud-outages-of-2013-so-far.html#slide6
+http://venturebeat.com/2012/01/23/anonymous-facebook/
+r-bug
+t-12h
+i-down
+p-no
+
+[02/03/2014][Facebook says it's back up to 100 percent after maintenance 'issue']
+http://www.nbcnews.com/tech/internet/facebook-says-its-back-100-percent-after-maintenance-issue-f8C11430245
+http://cloutage.org/incidents/2376-facebook-social-networking
+t-3h55m
+r-upgrade
+r-fail
+i-down
+p-no
+
+[02/07/2013][In One Fell Swoop, Facebook Glitch Deep-Sixes the Web]
+http://allthingsd.com/20130207/in-one-fell-swoop-apparent-facebook-glitch-deep-sixes-the-web/
+http://cloutage.org/incidents/989-facebook-connect
+http://www.washingtonpost.com/business/technology/facebook-outage-took-several-other-sites-with-it/2013/02/08/329d83e0-71ee-11e2-ac36-3d8d9dcaa2e2_story.html
+http://www.hollyit.net/blog/facebook-outage-highlights-possible-privacy-concerns
+r-bug
+t-unk
+i-op
+p-no
+f-fix
+
+[02/07/2014][Is Facebook Down? Facebook Users Get Surprising Error Message]
+http://americanlivewire.com/2014-02-07-facebook-down/
+http://cloutage.org/incidents/2372-facebook-social-networking
+http://www.valuewalk.com/2014/02/facebook-down-users-gripe-on-twitter/
+http://www.legacyofathousandsuns.com/forum/showthread.php?18408-Game-issues
+http://www.huffingtonpost.com/2014/02/07/facebook-down_n_4747815.html
+r-unk
+t-54m
+i-down
+p-no
+
+[03/27/2015][Facebook down: Social network offline as outage affects Europe and US]
+http://www.ibtimes.co.uk/facebook-down-social-network-offline-outage-affects-europe-us-1493877
+r-unk
+t-3h10m
+i-down
+p-yes
+
+[04/03/2013][Facebook Down? Outage Confirmed As Social Media Users Panic On Twitter]
+http://www.idigitaltimes.com/facebook-down-outage-confirmed-social-media-users-panic-twitter-351188
+r-unk
+t-unk
+i-down
+p-no
+
+[04/08/2015][Facebook down: Users complain Android app version of social media website not working]
+http://www.independent.co.uk/life-style/gadgets-and-tech/news/facebook-down-users-complain-mobile-app-and-desktop-versions-of-social-media-website-are-not-working-10163199.html
+http://www.product-reviews.net/2015/04/08/facebook-app-down-and-not-connecting-on-april-8/
+r-upgrade
+t-unk
+i-down
+p-no
+
+[05/07/2013][A ‘site issue’ is preventing some users from logging into Facebook (Update: Now fixed)]
+http://thenextweb.com/facebook/2013/05/07/a-site-issue-is-preventing-some-users-from-logging-into-facebook/
+http://cloutage.org/incidents/992-facebook-social-networking
+r-unk
+t-90m
+i-down
+p-no
+
+[05/09/2014][Facebook Is Down For Many]
+http://techcrunch.com/2014/05/09/facebook-is-down-for-many/
+r-unk
+t-unk
+i-down
+p-no
+
+[06/03/2013][Facebook Messages Just Went Down For 90 Minutes For Some Web And Mobile Users, Back Now]
+http://techcrunch.com/2013/06/03/facebook-chat-down/
+http://cloutage.org/incidents/967-facebook-instant-messaging
+r-unk
+t-90m
+i-op
+p-no
+
+[06/14/2014][Facebook unavailable during longest outage in four years]
+http://www.theguardian.com/technology/2014/jun/19/facebook-unavailable-longest-outage-four-years
+http://techcrunch.com/2014/06/19/facebook-goes-down-in-global-outage/
+r-unk
+t-30m
+i-down
+p-no
+
+[06/18/2013][The worst cloud outages of 2013 (part 2)]
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide4
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide5
+http://cloutage.org/incidents/984-facebook-website
+http://www.nbcbayarea.com/news/tech/Facebook-Outage-Sparks-Online-Frenzy-212086721.html
+http://www.businessinsider.com/facebook-outage-on-tuesday-causes-frenzy-on-twitter-2013-6?IR=T&
+r-unk
+t-30m
+p-no
+i-down
+
+[07/12/2010][Facebook "Like" Buttons Break Down]
+http://mashable.com/2010/07/11/facebook-like-broken/
+r-unk
+t-1h
+i-op
+p-no
+
+[08/01/2014][FACEBOOK OUTAGE LED TO 3% DECLINE IN TRAFFIC TO NEWS SITES [REPORT]]
+http://www.webpronews.com/facebook-outage-led-to-3-decline-in-traffic-to-news-sites-report-2014-08?utm_source=Social+Media_sidebar
+http://venturebeat.com/2014/08/01/facebooks-blackout-cost-about-20000-a-minute-or-the-price-of-a-few-engineers/
+http://cloutage.org/incidents/2376-facebook-social-networkinga-few-engineers/
+http://techcrunch.com/2014/08/01/facebook-is-down-for-many-2/
+http://blog.chartbeat.com/2014/08/04/facebook-traffic/
+r-unk
+t-1h30m
+i-down
+p-no
+
+[08/06/2009][Facebook Problems Also the Result of DDoS Attack]
+http://mashable.com/2009/08/06/facebook-problems/
+http://mashable.com/2009/08/06/facebook-down-3/
+http://www.socialnomics.net/2009/08/06/twitter-facebook-outages-showcase-millions-being-addicted-to-social-media-crack/
+http://readwrite.com/2009/08/06/twitter_facebook_and_livejournal_down_at_the_same
+r-sec
+t-2h
+p-no
+
+[08/11/2011][Facebook Rolls Out Changes to Chat, Other Experiments, Leads to Problems]
+http://techcrunch.com/2011/08/11/facebook-rolls-out-changes-to-chat-other-experiments-leads-to-problems/
+http://www.huffingtonpost.com/2011/08/10/facebook-goes-down_n_924016.html
+r-upgrade
+t-16h
+p-no
+i-op
+
+[08/13/2013][Facebook Malware Crackdown Caused App Outage]
+http://www.networkcomputing.com/networking/facebook-malware-crackdown-caused-app-outage/d/d-id/1111198?
+http://cloutage.org/incidents/1182-facebook-developer-apps
+http://techcrunch.com/2013/08/15/facebook-apps-suspended/
+http://www.tmcnet.com/topics/articles/2013/08/16/349809-facebook-sorry-massive-app-outage.htm
+t-unk
+r-sec
+i-op
+i-down
+p-no
+f-fix
+f-restore
+
+[09/03/2014][Facebook Is Down On Web And Mobile [Update: It’s Coming Back After 20 Minutes]]
+http://techcrunch.com/2014/09/03/why-is-facebook-down/
+http://thedailyedge.thejournal.ie/facebook-went-down-september-1653235-Sep2014/
+r-config
+t-20m
+i-down
+p-no
+
+[09/23/2010][More Details on Today's Outage]
+http://www.datacenterknowledge.com/archives/2010/09/23/technical-details-of-facebook-outage/
+http://blogs.wsj.com/digits/2010/09/24/what-caused-facebooks-worst-outage-in-four-years/
+http://mashable.com/2010/09/23/facebook-downtime-explained/
+r-config
+i-down
+t-3h30m
+p-no
+f-fix
+f-restore
+
+[09/28/2015][Facebook has now gone down three times this month]
+http://venturebeat.com/2015/09/28/facebook-has-now-gone-down-three-times-this-month/
+http://www.siliconbeat.com/2015/09/28/facebook-experiences-outage-for-more-than-an-hour/
+http://www.bbc.com/news/world-us-canada-34383655
+http://techcrunch.com/2015/09/28/yes-facebook-is-down/
+r-config
+t-1h
+i-down
+f-fix
+p-no
+
+[10/11/2012][Facebook blames DNS test for European outage lasting more than an hour, denies hacking allegations]
+http://thenextweb.com/facebook/2012/10/11/facebook-apparently-down-in-several-countries-worldwide-including-italy-germany-france-and-more/
+http://thenextweb.com/facebook/2012/10/26/as-tumblr-dropbox-and-google-app-engine-come-back-to-life-facebook-goes-down/
+http://www.outages.org/reports/view/107
+http://cloutage.org/incidents/985-facebook-social-networking
+r-fail
+t-1h
+i-down
+p-no
+
+[10/13/2009][Facebook Outage Silences 150,000 Users]
+http://www.pcworld.com/article/173550/facebook_outage.html
+http://www.cnet.com/news/facebook-database-outage-cut-off-about-150000/
+http://cloutage.org/incidents/7-facebook-facebook
+r-bug
+t-10d
+i-down
+i-loss
+p-no
+f-restore
+
+[10/21/2013][Facebook Suffers Sitewide Errors for Many Users]
+http://mashable.com/2013/10/21/facebook-currently-doesnt-allow-status-updates/
+http://cloutage.org/incidents/1489-facebook-social-networking
+http://techcrunch.com/2013/10/21/facebook-experiences-partial-outage-on-desktop-and-mobile/
+http://www.cnet.com/news/facebook-outages-fixed-now-back-to-100/
+http://thenextweb.com/facebook/2013/10/21/facebook-bug-means-many-people-cant-post-status-updates/
+http://www.huffingtonpost.com/2013/10/21/facebook-down_n_4135669.
+http://www.computerworld.com/s/article/9243388/Relax._Monday_morning_Facebook_outage_is_over?source=rss_keyword_sharon+gaudin
+http://gizmodo.com/facebook-has-a-case-of-the-mondays-1449024936
+http://blogs.wsj.com/digits/2013/10/21/the-facebook-status-update-problem-isnt-just-you/
+http://ibnlive.in.com/news/facebook-outage-users-unable-to-update-status-like-comment-or-share/429690-11.html
+http://articles.chicagotribune.com/2013-10-21/business/chi-facebook-down-20131021_1_facebook-global-outage-error-message
+http://venturebeat.com/2013/10/21/welcome-to-the-great-monday-morning-facebook-outage/
+r-upgrade
+r-fail
+t-1h35m
+i-op
+p-no
+
+[10/22/2010][Facebook Goes Down; Second Major Outage in a Month]
+http://mashable.com/2010/10/22/facebook-down-again-2/
+r-unk
+t-25m
+i-down
+p-no
+
+[11/08/2013][Facebook is investigating user reports of Timelines on profiles and Pages failing to load (Update: Fixed)]
+http://thenextweb.com/facebook/2013/11/08/facebook-timelines-profiles-pages-failing-load-many-users/
+http://www.theregister.co.uk/2013/11/08/facebook_flounders_as_mystery_malady_plagues_profiles/
+http://www.zdnet.com/frazzled-facebook-is-only-partly-functional-7000022205/
+http://www.electronista.com/articles/13/11/08/profile.outage.follows.similar.incident.on.october.21st/
+http://m.foxbusiness.com/quickPage.html?page=32811&external=2412401.proteus.fma
+http://cloutage.org/incidents/1658-facebook-social-networking
+r-unk
+t-5h15m
+i-op
+p-no
+
+[11/13/2015][Facebook down: Site breaks for many people, though not for everyone]
+http://www.independent.co.uk/life-style/gadgets-and-tech/news/facebook-down-site-breaks-for-many-people-though-not-for-everyone-a6732906.html
+r-unk
+t-unk
+i-down
+p-no
+
+[11/30/2012][Update: Facebook Website Experienced 20 Minutes Of Downtime, Mobile App And Website Were Still Working]
+http://techcrunch.com/2012/11/30/facebook-website-down-mobile-app-and-website-still-working/
+http://cloutage.org/incidents/988-facebook-website
+t-20m
+r-fail
+i-down
+p-no
+
+[12/10/2012][Facebook suffers major outage, knocked offline]
+http://www.cnet.com/news/facebook-suffers-major-outage-knocked-offline/
+http://cloutage.org/incidents/986-facebook-website-api
+http://www.itproportal.com/2012/12/12/facebook-outage-blamed-dns-issue/
+http://www.itproportal.com/2012/12/12/facebook-outage-blamed-dns-issue/#ixzz3uMBFahqp
+r-fail
+i-down
+t-25m
+p-no
+
+[12/11/2012][Facebook returns to full service, blames DNS update for downtime]
+http://thenextweb.com/facebook/2012/12/11/facebook-encountering-dns-issues-making-it-unavailable-for-some-users/
+http://mashable.com/2012/12/10/facebook-gone-down/
+r-upgrade
+r-fail
+t-30m
+i-down
+p-no
+
+[12/15/2015][Problems at Facebook Messenger]
+http://downdetector.com/status/facebook-messenger/news/15295-problems-at-facebook-messenger
+r-unk
+t-unk
+i-op
+p-no
+
+[12/16/2010][Facebook Goes Down Amid Rollout of New Brand Pages [UPDATED]]
+http://mashable.com/2010/12/16/facebook-down-rollout/
+r-upgrade
+t-30m
+p-no
+i-down
+f-roll
+

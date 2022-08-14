@@ -1,0 +1,9 @@
+ORES wasn't able to score a growing proportion of edits in Wikidata for several weeks.
+• The quantity change API in Wikibase got deployed in mid-November (probably on November 18). (phab:T133042). Pywikibase didn't catch up and failed on items that have statement without boundaries. It wasn't much but started to grow.
+• 00:53 The fix in ores-experiment.wmflabs.org is pushed and confirmed to fix this issue.
+• 05:00 The fix in beta cluster is pushed and confirmed to fix it.
+• <SAL> [2016-12-27T05:14:37Z] <Amir1> starting deploy of ores:228b9b4 in all nodes (T154168)
+• <SAL> [2016-12-27T05:25:27Z] <Amir1> finished deploy of ores:228b9b4 in all nodes (T154168)
+
+Unexpected breaking changes can happen all the time. We need to have better monitoring of failure ratio.
+• Clean up failure ratio monitoring and set up an alarm when it goes more than a certain threshold (Task T154175)

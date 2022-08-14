@@ -1,0 +1,37 @@
+During a puppetmaster upgrade, puppetmaster200[12] went down.
+
+all codfw server fleet that synchronizes with puppet catalog.
+• [11:00:11] <icinga-wm> PROBLEM - puppetmaster https on puppetmaster2001 is CRITICAL: HTTP CRITICAL - Invalid HTTP response received from host on port 8140: HTTP/1.1 404 Not Found https://wikitech.wikimedia.org/wiki/Puppet%23Debugging
+• [11:00:15] <icinga-wm> RECOVERY - debmonitor.wikimedia.org on debmonitor1001 is OK: HTTP OK: Status line output matched HTTP/1.1 301 - 274 bytes in 0.002 second response time https://wikitech.wikimedia.org/wiki/Debmonitor
+• [11:00:23] <icinga-wm> PROBLEM - puppetmaster backend https on puppetmaster2001 is CRITICAL: HTTP CRITICAL - Invalid HTTP response received from host on port 8141: HTTP/1.1 404 Not Found https://wikitech.wikimedia.org/wiki/Puppet%23Debugging
+• [11:00:39] <icinga-wm> PROBLEM - puppet last run on elastic2039 is CRITICAL: CRITICAL: Failed to apply catalog, zero resources tracked by Puppet. It might be a dependency cycle.
+• [11:00:39] <icinga-wm> PROBLEM - puppetmaster backend https on puppetmaster2002 is CRITICAL: HTTP CRITICAL - Invalid HTTP response received from host on port 8141: HTTP/1.1 404 Not Found https://wikitech.wikimedia.org/wiki/Puppet%23Debugging
+• [11:03:53] <jynus> was it supposed to be a temporary interruption or a long one?
+• 11:06 we noticed that due to a dependency on puppet 4 the puppet masters and puppetdb servers removed the puppet-master, puppet-master-passanger and puppetdb packages
+• 11:10 < jbond42> [test successfull] on puppetmaster2001 and puppet is running ok there now
+• 11:17 moritzm notices that our puppetdb package has Depends: puppet (<< 5.0.0-1puppetlabs), and need to be rebuild
+• 11:29 create change to so puppet masters do not recive new components https://gerrit.wikimedia.org/r/509040 (later abbandonded)
+• 11:41 create change using regex to ensure puppetmaster and db's dont get the new components https://gerrit.wikimedia.org/r/509042
+• 11:57 < jbond42> !log all puppetmasters and puppetdbs should be restored'
+• ~12:10: puppet enabled every where [not sure on the exact time]
+
+What weaknesses did we learn about and how can we address them?
+
+The following sub-sections should have a couple brief bullet points each.
+
+What went well?
+• This error and the underlioning issue where both identified quickly
+• team remaind calm and comminucation in the ops channle was reduced to incident response
+• The initial update of puppet and facter was not !logged, meaning other SRE engineers where initially unaware of the cause of the issue
+• there was some confusion regarding which daemons need to be started i.e. puppet-master service should not be started as apache is the service we care about
+
+Where did we get lucky?
+• for example: user's error report was exceptionally detailed, incident occurred when the most people were online to assist, etc
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.
+• update and test puppetdb package so it is compatible with puppet agent 5 and facter3 (package allready created by moritz) #1 (https://phabricator.wikimedia.org/T222879)
+• update and test puppetmaster package so it is compatible with puppet agent 5 and facter3 #2 (https://phabricator.wikimedia.org/T222879)

@@ -1,0 +1,29 @@
+At 23:56 UTC on Friday 20th, the top of rack switch asw2-d2-eqiad went down causing all servers in rack D2 to go offline. As this switch was also row D virtual-chassis master and spine to the upstream routers all row D servers suffered a brief connectivity loss. Some services were still degraded after the situation stabilized but were eventually recovered.
+• Row D hosts had their connectivity impacted (eg. packet loss) for a few seconds the time the virtual-chassis fails mastership to fpc7.
+• Some services (e.g. AQS, mobileapps) continued to be impacted long after the initial blip, and even after recovery of the failed switch. The general theme here for at least some of the nodejs services seems to be related to application-layer caching of transient DNS failures (from the very brief blip of their network reachability towards recursive DNS (and everything)), and they were fixed with service restarts. Other related APIs and services (e.g. restbase and such, and MW APIs that interact with these things) also had alerts due to this indirectly.
+• Logstash was overwhelmed by all the carnage and fell behind and threw a lot of alerts itself. Since some services' alerting relies on logstash, this also confusingly caused logstash-derived alerts to persist long after the underlying issues were resolved.
+• dbproxy1016 and dbproxy1017 (which live in D1 and D3, thus were indirectly affected by the spine failure) failed healthchecks on their primaries and failed over to their secondary choices (both of which were different ports on db1117). We (eventually) reloaded haproxy on these hosts to recover towards the primaries.
+• Cloud NFS clients lost access to dumps and scratch until those services were manually failed over. Toolforge Kubernetes clients saw steadily increasing load until they could mount the volumes again (switch recovery) even after failover because they do that until rebooted with a changed fstab.
+• The maps Cloud VPS project lost NFS access to home directories and project dirs until manual failover.
+
+The first alert came from Icinga showing commons was down, but the switch failure wasn't clear until the alert storm had settled and correlation could be drawn from down hosts in Icinga cross-referenced with Netbox.
+
+This is a step by step outline of what happened to cause the incident and how it was remedied. Include the lead-up to the incident, as well as any epilogue, and clearly indicate when the user-visible outage began and ended.
+• 23:57 OUTAGE BEGINS <+icinga-wm> PROBLEM - Host commons.wikimedia.org is DOWN: /bin/ping -n -U -w 15 -c 5 commons.wikimedia.org
+• 23:59 <+icinga-wm> RECOVERY - Host asw2-d-eqiad is UP: PING OK - Packet loss = 0%, RTA = 0.80 ms
+
+What weaknesses did we learn about and how can we address them?
+
+What went well?
+• Multiple SREs were available to investigate the issue
+• Root cause for the switch failure could not be determined
+• Mediawiki logging rate went through the roof during outage, ~130k messages/s at peak
+
+Where did we get lucky?
+• John was available to drive to the datacenter
+
+How many people were involved in the remediation?
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+• Make it easier to distinguish per-host icinga spam vs real whole-service-level icinga spam (cf. alerting infrastructure roadmap)
+• Investigate solutions to non-UTF8 logging crashing logstash mutate plugin (and ultimately the pipeline) https://phabricator.wikimedia.org/T233662

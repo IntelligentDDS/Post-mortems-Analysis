@@ -1,0 +1,8 @@
+RCA - Service Availability Issue in West Central US (Tracking ID SMR4-D90)
+Summary of Impact: Between approximately 20:30 UTC on 15 Mar 2020 and 00:30 UTC on 16 Mar 2020, a subset of customers in West Central US may have experienced issues
+connecting to resources hosted in this region.
+Root Cause: At approximately 20:30 UTC on 15 Mar 2020, an ice storm in the region resulted in a loss of power to both primary and secondary utility power feeds in West Central US. This caused the datacenter to transition to generator power. Although largely successful, a subset of generators failed and UPS units supporting the downstream racks carried the load until their batteries drained. At that point, the affected racks lost power entirely. Any customer resources hosted on the affected racks became unavailable at the time.
+Mitigation: Site engineers manually intervened to restore power to the affected infrastructure. Concurrently, impacted Azure services implemented their disaster recovery plans to work around the power failure. Subsequently, engineering worked to recover customer resources as affected infrastructure started to become available again.
+Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this included (but was not limited to):
+Reviewing the sequence of operations and associated control systems to remediate identified single point failures Validating electrical hardware components to ensure proper functionality
+Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/SMR4-D90.

@@ -1,0 +1,215 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/16012)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #16012
+
+Newly created instances may be experiencing packet loss.
+
+Incident began at **2016-06-29 12:18** and ended at **2016-06-29 13:57** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jun 30, 2016 | 21:12 |
+
+SUMMARY:
+
+On Wednesday 29 June 2016, newly created Google Compute Engine instances and
+newly created network load balancers in all zones were partially unreachable
+for a duration of 106 minutes. We know that many customers depend on the
+ability to rapidly deploy and change configurations, and apologise for our
+failure to provide this to you during this time.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Wednesday 29 June 2016, from 11:58 PST until 13:44 US/Pacific, new Google
+Compute Engine instances and new network load balancers were partially
+unreachable via the network. In addition, changes to existing network load
+balancers were only partially applied. The level of unreachability depended on
+traffic path rather than instance or load balancer location. Overall, the
+average impact on new instances was 50% of traffic in the US and around 90% in
+Asia and Europe.
+
+Existing and unchanged instances and load balancers were unaffected.
+
+ROOT CAUSE:
+
+On 11:58 PST, a scheduled upgrade to Google’s network control system started,
+introducing an additional access control check for network configuration
+changes. This inadvertently removed the access of GCE’s management system to
+network load balancers in this environment. Only a fraction of Google's
+network locations require this access as an older design has an intermediate
+component doing access updates. As a result these locations did not receive
+updates for new and changed instances or load balancers.
+
+The change was only tested at network locations that did not require the
+direct access, which resulted in the issue not being detected during testing
+and canarying and being deployed globally.
+
+REMEDIATION AND PREVENTION:
+
+After identifying the root cause, the access control check was modified to
+allow access by GCE’s management system. The issue was resolved when this
+modification was fully deployed.
+
+To prevent future incidents, the network team is making several changes to
+their deployment processes. This will improve the level of testing and
+canarying to catch issues earlier, especially where an issue only affects a
+subset of the environments at Google. The deployment process will have the
+rollback procedure enhanced to allow the quickest possible resolution for
+future incidents.
+
+The access control system that was at the root of this issue will also be
+modified to improve operations that interacts with it. For example it will be
+integrated with a Google-wide change logging system to allow faster detection
+of issues caused by access control changes. It will also be outfitted with a
+dry run mode to allow consequences of changes to be tested during development
+time.
+
+Once again we would like to apologise for falling below the level of service
+you rely on.  
+  
+|
+
+SUMMARY:
+
+On Wednesday 29 June 2016, newly created Google Compute Engine instances and
+newly created network load balancers in all zones were partially unreachable
+for a duration of 106 minutes. We know that many customers depend on the
+ability to rapidly deploy and change configurations, and apologise for our
+failure to provide this to you during this time.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Wednesday 29 June 2016, from 11:58 PST until 13:44 US/Pacific, new Google
+Compute Engine instances and new network load balancers were partially
+unreachable via the network. In addition, changes to existing network load
+balancers were only partially applied. The level of unreachability depended on
+traffic path rather than instance or load balancer location. Overall, the
+average impact on new instances was 50% of traffic in the US and around 90% in
+Asia and Europe.
+
+Existing and unchanged instances and load balancers were unaffected.
+
+ROOT CAUSE:
+
+On 11:58 PST, a scheduled upgrade to Google’s network control system started,
+introducing an additional access control check for network configuration
+changes. This inadvertently removed the access of GCE’s management system to
+network load balancers in this environment. Only a fraction of Google's
+network locations require this access as an older design has an intermediate
+component doing access updates. As a result these locations did not receive
+updates for new and changed instances or load balancers.
+
+The change was only tested at network locations that did not require the
+direct access, which resulted in the issue not being detected during testing
+and canarying and being deployed globally.
+
+REMEDIATION AND PREVENTION:
+
+After identifying the root cause, the access control check was modified to
+allow access by GCE’s management system. The issue was resolved when this
+modification was fully deployed.
+
+To prevent future incidents, the network team is making several changes to
+their deployment processes. This will improve the level of testing and
+canarying to catch issues earlier, especially where an issue only affects a
+subset of the environments at Google. The deployment process will have the
+rollback procedure enhanced to allow the quickest possible resolution for
+future incidents.
+
+The access control system that was at the root of this issue will also be
+modified to improve operations that interacts with it. For example it will be
+integrated with a Google-wide change logging system to allow faster detection
+of issues caused by access control changes. It will also be outfitted with a
+dry run mode to allow consequences of changes to be tested during development
+time.
+
+Once again we would like to apologise for falling below the level of service
+you rely on.  
+  
+| Jun 29, 2016 | 14:00 |
+
+The issue with new Google Compute Engine instance experiencing packet loss on
+startup should have been resolved for all affected instances as of 13:57
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to prevent or minimize future
+recurrence.  
+  
+|
+
+The issue with new Google Compute Engine instance experiencing packet loss on
+startup should have been resolved for all affected instances as of 13:57
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to prevent or minimize future
+recurrence.  
+  
+| Jun 29, 2016 | 13:30 |
+
+The issue with new Google Compute Engine instance experiencing packet loss on
+startup should have been resolved for some instances and we expect a full
+resolution in the near future. We will provide another status update by 14:00
+US/Pacific with current details.  
+  
+|
+
+The issue with new Google Compute Engine instance experiencing packet loss on
+startup should have been resolved for some instances and we expect a full
+resolution in the near future. We will provide another status update by 14:00
+US/Pacific with current details.  
+  
+| Jun 29, 2016 | 13:00 |
+
+We are experiencing an issue with new Google Compute Engine instance
+experiencing packet loss on startup beginning at Wednesday, 2016-06-29 12:18
+US/Pacific.
+
+Current data indicates that 100% of instances are affected by this issue.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 1:30 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an issue with new Google Compute Engine instance
+experiencing packet loss on startup beginning at Wednesday, 2016-06-29 12:18
+US/Pacific.
+
+Current data indicates that 100% of instances are affected by this issue.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 1:30 US/Pacific with current
+details.  
+  
+| Jun 29, 2016 | 12:46 |
+
+We are investigating reports of an issue with Compute Engine. We will provide
+more information by 01:00 US/Pacific.  
+  
+|
+
+We are investigating reports of an issue with Compute Engine. We will provide
+more information by 01:00 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

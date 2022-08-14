@@ -1,0 +1,141 @@
+
+[01/24/2014][Today's outage for several Google services]
+http://googleblog.blogspot.com/2014/01/todays-outage-for-several-google.html
+http://www.theverge.com/2014/1/24/5342252/gmail-hangouts-and-other-google-services-are-down-right-now
+http://thenextweb.com/google/2014/01/24/gmail-google-services-affected-outage/
+r-bug
+r-config
+t-28m
+i-down
+f-fix
+p-no
+
+[02/20/2014][Google Drive, Docs and More Suffering Outages]
+http://www.technobuffalo.com/2014/02/20/google-drive-outage/
+r-unk
+i-down
+t-unk
+p-no
+
+[03/17/2014][Google Drive Down: Gmail Chat, GChat ,Hangouts, Google Docs Get 502 Error, Outage Suffered by Many]
+http://www.theepochtimes.com/n3/567037-google-drive-down-google-docs-outage-suffered-by-many/
+http://static.googleusercontent.com/media/www.google.com/en/us/appsstatus/ir/foyrkcdqoojjapj.pdf
+http://www.infoworld.com/article/2606209/cloud-computing/162288-The-worst-cloud-outages-of-2014-so-far.html#slide5
+r-config
+t-3h30m
+i-down
+f-add
+f-fix
+p-no
+
+[03/18/2013][Google Drive hit by three outages this week - 1st Outage]
+http://storageservers.wordpress.com/2013/03/25/google-drive-hit-by-three-outages-in-third-week-of-march-2013/
+http://static.googleusercontent.com/external_content/untrusted_dlcp/www.google.com/en/us/appsstatus/ir/7hpi9cxutklywep.pdf
+http://iwgcr.org/google-drive-3-outages-in-a-week/
+http://continuitycentral.com/news07066.html
+t-3h
+r-bug
+r-fail
+i-down
+f-fix
+p-no
+
+[03/19/2013][Google Drive hit by three outages this week - 2nd Outage]
+http://www.infoworld.com/article/2606768/cloud-computing/107783-The-worst-cloud-outages-of-2013-so-far.html#slide12
+http://storageservers.wordpress.com/2013/03/25/google-drive-hit-by-three-outages-in-third-week-of-march-2013/
+http://iwgcr.org/google-drive-3-outages-in-a-week/
+http://continuitycentral.com/news07066.html
+t-2h9m
+r-unk
+i-down
+p-no
+
+[03/20/2013][Google Drive hit by three outages in third week of March 2013!]
+http://storageservers.wordpress.com/2013/03/25/google-drive-hit-by-three-outages-in-third-week-of-march-2013/
+http://iwgcr.org/google-drive-3-outages-in-a-week/
+http://continuitycentral.com/news07066.html
+t-12h24m
+r-unk
+i-down
+p-no
+
+[04/17/2013][Gmail And Google Drive Are Experiencing Issues]
+http://static.googleusercontent.com/media/www.google.com/en//appsstatus/ir/qpo2mdegn8usyq0.pdf
+http://www.huffingtonpost.com/2013/04/17/gmail-issue_n_3099988.html
+http://www.washingtonpost.com/business/technology/gmail-google-docs-hit-with-limited-outage/2013/04/17/fa89afce-a762-11e2-8302-3c7e0ea97057_story.html
+http://thenextweb.com/google/2013/04/17/google-apps-hit-with-partial-service-outage-gmail-google-drive-docs-and-admin-control-panel-are-affected/
+http://venturebeat.com/2013/04/17/latest-google-service-outage-hits-gmail-google-docs-and-google-drive/
+t-3h
+r-config
+i-down
+f-fix
+p-no
+
+[05/10/2013][Google Drive Is Down]
+http://www.buzzfeed.com/charliewarzel/google-drive-is-down#45p6xeu
+http://bostinno.streetwise.co/2013/05/10/google-docs-outage-google-documents-have-disappeared-for-users/
+http://stech2.firstpost.com/wp-content/uploads/gallery/2013/may/googleappsstatus_640x360.jpg
+http://www.thefullsignal.com/android/14498/google-drive-down-some
+http://www.cnet.com/news/google-drive-documents-list-goes-empty-for-users/
+t-25m
+r-unk
+i-op
+p-no
+
+[07/10/2013][Google says outage is over]
+http://www.cnn.com/2013/07/10/tech/web/google-down/
+http://www.datamation.com/news/google-search-cloud-services-experience-outage.html
+http://www.wspa.com/story/22804103/google-outages-reported-wednesday-morning
+http://www.dailymail.co.uk/news/article-2359748/Google-outage-causes-panic-users-online-humor.html
+t-40m
+r-unk
+i-down
+p-no
+
+[08/16/2013][A BRIEF GOOGLE OUTAGE MADE TOTAL INTERNET TRAFFIC DROP BY 40%]
+http://www.fastcompany.com/3015942/most-innovative-companies-2013/a-brief-google-outage-made-total-internet-traffic-drop-by-40
+http://venturebeat.com/2013/08/16/3-minute-outage-costs-google-545000-in-revenue/
+http://www.zdnet.com/google-services-go-down-internet-panics-7000019516/
+http://www.theregister.co.uk/2013/08/17/google_outage/
+http://www.forbes.com/sites/timworstall/2013/08/17/fascinating-number-google-is-now-40-of-the-internet/
+t-5m
+r-fail
+i-down
+p-no
+f-fix
+
+[10/09/2015][The Dog Ate Our Homework, Google Drive Is Down]
+http://techcrunch.com/2015/10/09/the-dog-ate-our-homework-google-drive-is-down/
+http://mashable.com/2015/10/09/google-docs-sheets-down/#Q_DXVyVntaqW
+http://venturebeat.com/2015/10/09/google-docs-is-having-issues-what-are-we-going-to-do-you-guys/
+r-upgrade
+t-1h9m
+i-down
+p-no
+
+[10/14/2014][Google Drive Goes Down]
+http://www.ibtimes.com/google-drive-goes-down-search-giant-investigating-cause-outage-affected-cloud-appf-storage-1704689
+r-unk
+i-down
+t-3h44m
+p-no
+
+[11/01/2012][Google Outage: Six Minutes of Terror]
+http://www.wired.com/2012/11/google-outage-six-minutes/
+t-6m
+r-unk
+i-down
+p-no
+
+[12/10/2012][Google Apps Incident Report Gmail Partial Outage ­ December 10, 2012]
+http://static.googleusercontent.com/external_content/untrusted_dlcp/www.google.com/en/us/appsstatus/ir/plibxfjh8whr44h.pdf
+http://www.forbes.com/sites/eliseackerman/2012/12/11/gmail-outage-embarrasses-internet-giant/
+http://techcrunch.com/2012/12/10/gmail-experiences-a-widespread-outage-most-users-affected/
+http://www.cbsnews.com/news/gmail-google-drive-chrome-experience-outages/
+r-bug
+r-upgrade
+t-18m
+i-down
+f-roll
+p-no
+

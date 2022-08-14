@@ -1,0 +1,200 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/15065)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #15065
+
+400 errors when trying to create an external (L3) Load Balancer for GCE/GKE
+services
+
+Incident began at **2015-12-08 09:29** and ended at **2015-12-08 12:22** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Dec 09, 2015 | 06:00 |
+
+SUMMARY:
+
+On Monday 7 December 2015, Google Container Engine customers could not create
+external load balancers for their services for a duration of 21 hours and 38
+minutes. If your service or application was affected, we apologize — this is
+not the level of quality and reliability we strive to offer you, and we have
+taken and are taking immediate steps to improve the platform’s performance and
+availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+From Monday 7 December 2015 15:00 PST to Tuesday 8 December 2015 12:38 PST,
+Google Container Engine customers could not create external load balancers for
+their services. Affected customers saw HTTP 400 “invalid argument” errors when
+creating load balancers in their Container Engine clusters. 6.7% of clusters
+experienced API errors due to this issue.
+
+The issue also affected customers who deployed Kubernetes clusters in the
+Google Compute Engine environment.
+
+The issue was confined to Google Container Engine and Kubernetes, with no
+effect on users of any other resource based on Google Compute Engine.
+
+ROOT CAUSE:
+
+Google Container Engine uses the Google Compute Engine API to manage
+computational resources. At about 15:00 PST on Monday 7 December, a minor
+update to the Compute Engine API inadvertently changed the case-sensitivity of
+the “sessionAffinity” enum variable in the target pool definition, and this
+variation was not covered by testing. Google Container Engine was not aware of
+this change and sent requests with incompatible case, causing the Compute
+Engine API to return an error status.
+
+REMEDIATION AND PREVENTION:
+
+Google engineers re-enabled load balancer creation by rolling back the Google
+Compute Engine API to its previous version. This was complete by 8 December
+2015 12:38 PST.
+
+At 8 December 2015 10:00 PST, Google engineers committed a fix to the
+Kubernetes public open source repository.
+
+Google engineers will increase the coverage of the Container Engine continuous
+integration system to detect compatibility issues of this kind. In addition,
+Google engineers will change the release process of the Compute Engine API to
+detect issues earlier to minimize potential negative impact.  
+  
+|
+
+SUMMARY:
+
+On Monday 7 December 2015, Google Container Engine customers could not create
+external load balancers for their services for a duration of 21 hours and 38
+minutes. If your service or application was affected, we apologize — this is
+not the level of quality and reliability we strive to offer you, and we have
+taken and are taking immediate steps to improve the platform’s performance and
+availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+From Monday 7 December 2015 15:00 PST to Tuesday 8 December 2015 12:38 PST,
+Google Container Engine customers could not create external load balancers for
+their services. Affected customers saw HTTP 400 “invalid argument” errors when
+creating load balancers in their Container Engine clusters. 6.7% of clusters
+experienced API errors due to this issue.
+
+The issue also affected customers who deployed Kubernetes clusters in the
+Google Compute Engine environment.
+
+The issue was confined to Google Container Engine and Kubernetes, with no
+effect on users of any other resource based on Google Compute Engine.
+
+ROOT CAUSE:
+
+Google Container Engine uses the Google Compute Engine API to manage
+computational resources. At about 15:00 PST on Monday 7 December, a minor
+update to the Compute Engine API inadvertently changed the case-sensitivity of
+the “sessionAffinity” enum variable in the target pool definition, and this
+variation was not covered by testing. Google Container Engine was not aware of
+this change and sent requests with incompatible case, causing the Compute
+Engine API to return an error status.
+
+REMEDIATION AND PREVENTION:
+
+Google engineers re-enabled load balancer creation by rolling back the Google
+Compute Engine API to its previous version. This was complete by 8 December
+2015 12:38 PST.
+
+At 8 December 2015 10:00 PST, Google engineers committed a fix to the
+Kubernetes public open source repository.
+
+Google engineers will increase the coverage of the Container Engine continuous
+integration system to detect compatibility issues of this kind. In addition,
+Google engineers will change the release process of the Compute Engine API to
+detect issues earlier to minimize potential negative impact.  
+  
+| Dec 08, 2015 | 12:22 |
+
+The problem has been fully addressed as of 2015-12-08 12:22pm US/Pacific. We
+will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrence.  
+  
+|
+
+The problem has been fully addressed as of 2015-12-08 12:22pm US/Pacific. We
+will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrence.  
+  
+| Dec 08, 2015 | 12:03 |
+
+We are currently testing a fix that hopefully will address the underlying
+issue. In the meanwhile please use the workaround provided previously of
+creating load balancers with client IP session affinity. We'll provide another
+status update by 2015-12-08 13:00 US/Pacific with current details.  
+  
+|
+
+We are currently testing a fix that hopefully will address the underlying
+issue. In the meanwhile please use the workaround provided previously of
+creating load balancers with client IP session affinity. We'll provide another
+status update by 2015-12-08 13:00 US/Pacific with current details.  
+  
+| Dec 08, 2015 | 11:05 |
+
+We've identified an issue in GCE/GKE when attempting to create external (L3)
+load balancers for their Kubernetes clusters. A proper fix for this issue is
+being worked on. Meanwhile, a potential workaround is to create load balancers
+with client IP session affinity. See an example here:
+<https://gist.github.com/cjcullen/2aad7d51b76b190e2193> . We will provide
+another status update by 2015-12-08 12:00 US/Pacific with current details.  
+  
+|
+
+We've identified an issue in GCE/GKE when attempting to create external (L3)
+load balancers for their Kubernetes clusters. A proper fix for this issue is
+being worked on. Meanwhile, a potential workaround is to create load balancers
+with client IP session affinity. See an example here:
+<https://gist.github.com/cjcullen/2aad7d51b76b190e2193> . We will provide
+another status update by 2015-12-08 12:00 US/Pacific with current details.  
+  
+| Dec 08, 2015 | 10:29 |
+
+We are still investigating reports of an issue with GCE/GKE when attempting to
+create an external (L2) load balancer for their services on GCE / GKE. We will
+provide another status update by 2015-12-08 11:30 US/Pacific with current
+details.  
+  
+|
+
+We are still investigating reports of an issue with GCE/GKE when attempting to
+create an external (L2) load balancer for their services on GCE / GKE. We will
+provide another status update by 2015-12-08 11:30 US/Pacific with current
+details.  
+  
+| Dec 08, 2015 | 09:55 |
+
+We are investigating reports of an issue with GCE/GKE when attempting to
+create an external (L3) load balancer for their services on GCE / GKE.  
+  
+|
+
+We are investigating reports of an issue with GCE/GKE when attempting to
+create an external (L3) load balancer for their services on GCE / GKE.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

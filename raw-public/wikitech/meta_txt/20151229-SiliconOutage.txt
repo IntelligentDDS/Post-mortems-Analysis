@@ -1,0 +1,4 @@
+On December 29 2015 at about 21:57 UTC Silicon (the fundraising ActiveMQ server) stopped accepting connections. FR tech received a flood of email alerts from Barium, the queue consumer. Elliott investigated immediately, and paged Jeff.
+• 22:40 Jeff finds CPUs pinned at 100% on Silicon, ActiveMQ unresponsive and restarts ActiveMQ
+
+During the time the queue was locked up no donations could be processed, donors may have seen error messages or timeouts. Any data irregularities should sort themselves out via the audit file download and process jobs.

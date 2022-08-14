@@ -1,0 +1,17 @@
+Due (presumably) to a problem with a puppet change and incompatibilities between puppet versions, the server hosting lists.wikimedia.org crashed. This resulted in a corruption of the mailman files, which required restoring from the backup. This, again, caused the root partition of the server to exhaust all inodes and to become unable to write to disk. As a result, mailing lists were unavailable for about 16 hours.
+• 14:26 The change is merged into the puppet repository
+• 14:29 Amongst a lot of puppet failures, nescio goes down. Later inspection shows it died while applying the puppet catalog
+• 14:30 Sodium goes down as well; later inspection will show it died while applying the puppet catalog. Sodium and nescio both still run puppet 2.7 as they're on an elder distribution. This resulted in the generation of a file called and possibly in an attempted execution of the script via upstart. We are still not 100% sure this is the reason of the crash, though.
+• 14:33 Sodium is rebooted, all checks on icinga are green.
+• 16:57 Someone notices lists.wikimedia.org is not working and reports that to us
+• 17:05 Mailman is started on sodium manually (see Server_admin_log). Upon restart, it is found that the crash corrupted the config files for a few lists. The configs are recovered from the backups.
+• 19:03 Files have been restored from backup, mailman is started again and starts to serve mailing lists again.
+• 19:39 Due to the large amount of files recovered from backup and some mail lying in the input queue, the root filesystem of sodium exhausted its inodes, thus practically preventing any correct functionality for sodium
+• 06:55 One member of the ops team is notified in IRC that mailman is still not sending emails.
+• 07:11 After a first inspection and some cleanup, email start being sent again out. Contrary to what I originally reported, no email accepted by the system should have been lost, but the queue of messages to send is large, and as soon as the mailserver starts accepting mail again, most of the messages sent in the last few hours get submitted again, thus creating a large queue.
+• 07:22 After removing the stale backup files, we decide to perform one more restart of mailman
+• 08:50 Before realizing the queue of outgoing messages includes more than 10K messages, we try to understand why messages apparently continue not to flow through.
+• 13:30 As of now, 2600 outgoing emails are still in the queue, which is slowly getting to zero.
+
+This episode showed a few things we should improve our monitoring of both lists and disk, and that we're better off with all servers on an uniform platform (distribution/puppet/etc). The impact of this was that internally managed mailing lists were down for about 16 hours.
+• Status: Declined - Alarm on disk inode excessive usage, and not only on space use

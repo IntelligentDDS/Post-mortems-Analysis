@@ -1,0 +1,8 @@
+A single database host down caused an exceptional influx of log entries from MediaWiki, which in turn caused overload in logstash ingestion.
+• 12:18 db1114 DOWN alert fires, see also
+
+MediaWiki alone was able to cause a logstash overload, resulting in UDP packet loss. Applications using UDP as log transport have experienced loss of logs, while applications using the new logging pipeline (i.e. writing to Kafka, MediaWiki included) experienced a slowdown in log processing while logstash instances were catching up on the backlog.
+
+Note that the length of this incident was a contributing factor in the UDP loss, a shorter reoccurrence (20min) happened on Feb 11th due to repool of db1118 but resulted in no UDP loss on the logstash side as instances were able to catch up. A deeper understanding of logstash performance characteristics is needed as well.
+• A MediaWiki dependency being down (single database host in this case) should not cause log spam/overload
+• The logging pipeline will need some additional spam / ratelimit protection

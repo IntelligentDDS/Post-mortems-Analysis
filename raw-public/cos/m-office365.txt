@@ -1,0 +1,141 @@
+
+[02/01/2013][Feb 1 Office 365 Outage Incident Review released]
+http://gigaom.com/2013/02/01/microsoft-office-365-hits-pothole/
+http://community.office365.com/en-us/f/148/t/84337.aspx
+r-fail
+r-upgrade
+t-2h32m
+i-down
+f-roll
+p-no
+
+[03/16/2012][Cloudy Skies in the Forecast for Microsoft as Office 365 Experiences Another Outage]
+http://www.cloudsherpas.com/email-and-data-migration/cloudy-skies-in-the-forecast-for-microsoft-as-office-365-experiences-another-outage/
+r-unk
+i-down
+t-3h
+p-no
+
+[05/10/2011][Microsoft's handling of BPOS outage an ill omen for Office 365]
+http://www.infoworld.com/t/saas/microsofts-handling-bpos-outage-ill-omen-office-365-167
+http://www.crn.com/news/cloud/229500636/microsoft-sorry-for-e-mail-killing-bpos-cloud-outages.htm
+http://www.theregister.co.uk/2011/05/09/microsoft_office_live_intermittent_access_issues/
+r-sec
+i-down
+t-14h15m
+p-no
+f-fix
+
+[06/23/2014][Microsoft Offers Explanations for Lync and Exchange Service Outages]
+http://redmondmag.com/articles/2014/06/27/explanations-for-service-outages.aspx
+http://www.informationweek.com/cloud/software-as-a-service/microsoft-explains-exchange-outage/d/d-id/1278950
+http://community.office365.com/en-us/f/158/t/248119.aspx
+r-fail
+t-6h
+i-op
+p-no
+f-fix
+
+[06/24/2014][Recent Office 365 service issues]
+http://community.office365.com/en-us/f/158/t/248119.aspx
+http://redmondmag.com/articles/2014/06/27/explanations-for-service-outages.aspx
+http://www.informationweek.com/cloud/software-as-a-service/microsoft-explains-exchange-outage/d/d-id/1278950
+r-fail
+r-bug
+t-9h
+i-op
+p-no
+f-fix
+
+[07/15/2015][Major Office 365 Mail Outage On Wednesday]
+http://www.brucebnews.com/2015/07/major-office-365-mail-outage-on-wednesday/
+http://blog.enowsoftware.com/solutions-engine/annual-summer-office-365-outage-2015
+t-4h
+i-down
+p-no
+f-roll
+
+[08/18/2011][Office 365 and Dynamics CRM Online users suffer outages]
+http://www.channelregister.co.uk/2011/08/18/microsoft_cloud_outages/
+r-fail
+t-5h
+p-no
+i-down
+
+[08/29/2013][Office 365 outage Thursday night]
+http://www.zdnet.com/office-365-outage-thursday-night-7000020069/
+r-upgrade
+i-down
+t-3h
+p-no
+f-fix
+
+[09/08/2011][Office 365, Google Docs go down again, could give pause to the cloud-wary]
+http://arstechnica.com/business/2011/09/office-365-google-docs-go-down-again-could-give-pause-to-the-cloud-wary/
+http://www.channelregister.co.uk/2011/09/09/microsoft_cloud_outage/
+http://www.crn.com/news/cloud/231400092/microsoft-crediting-customers-in-recent-bpos-cloud-outage.htm
+http://windowsteamblog.com/windows_live/b/windowslive/archive/2011/09/20/follow-up-on-the-sept-8-service-outage.aspx
+http://www.itnews.com.au/News/271521,microsoft-office365-hotmail-blacks-out.aspx
+http://www.itnews.com.au/News/271835,is-microsofts-office365-vulnerable.aspx
+http://www.channelregister.co.uk/2011/09/21/microsoft_reveals_cloud_outage_causes/
+r-upgrade
+r-config
+r-fail
+i-down
+t-3h30m
+f-fix
+p-no
+
+[11/08/2012][Update on recent customer issues]
+http://blogs.office.com/2012/11/13/update-on-recent-customer-issues/
+http://www.geekwire.com/2012/microsoft-touts-office-365s-enterprise-class-service-email-outage/
+r-bug
+t-7h59m
+f-fix
+p-no
+
+[11/13/2012][Update on recent customer issues]
+http://blogs.office.com/2012/11/13/update-on-recent-customer-issues/
+r-upgrade
+r-fail
+t-5h2m
+i-down
+f-fix
+f-add
+f-fix
+p-no
+
+[11/19/2014][Microsoft Azure suffers huge outage affecting websites and Office 365]
+http://www.computing.co.uk/ctg/news/2382347/microsoft-azure-suffers-huge-outage-affecting-websites-and-office-365
+http://www.techweez.com/2014/11/19/microsoft-azure-outage/
+http://azure.microsoft.com/blog/2014/11/19/update-on-azure-storage-service-interruption/
+r-cross
+i-down
+t-10h54m
+f-cross
+p-no
+
+[11/21/2013][UPDATE: Outages Reported for Windows Azure, Office 365 and Outlook.com]
+http://redmondmag.com/articles/2013/11/21/windows-azure-outages.aspx
+r-unk
+i-down
+t-unk
+p-no
+
+[12/03/2015][Microsoft fixes Office 365 access after EU-wide outage]
+http://www.telegraph.co.uk/technology/microsoft/12030984/Microsoft-Office-365-goes-down-for-users-in-many-countries.html
+http://www.v3.co.uk/v3-uk/news/2437651/microsoft-office-365-hit-with-major-outage-across-europe
+http://www.zdnet.com/article/microsofts-december-3-office-365-outage-what-went-wrong/
+r-cross
+t-unk
+i-down
+p-no
+f-cross
+
+[12/18/2015][Another Microsoft Office 365 and Azure outage hits UK and Europe]
+http://www.computing.co.uk/ctg/news/2439832/another-microsoft-office-365-and-azure-outage-hits-uk-and-europe
+r-unk
+t-2h5m
+i-down
+p-no
+

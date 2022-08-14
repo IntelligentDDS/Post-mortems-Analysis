@@ -1,0 +1,216 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+November 09, 2019  Google Kubernetes Engine reporting issues
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/18012)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #18012
+
+GCE instance creation errors in us-central1-a.
+
+Incident began at **2018-11-05 04:58** and ended at **2018-11-05 09:46** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Nov 09, 2018 | 10:33 |
+
+ISSUE SUMMARY
+
+On Wednesday 5 November 2018, Google Compute Engine (GCE) experienced new
+instance creation failures or elevated instance creation latency in us-
+central1-a for a duration of 5 hours. We apologize to our customers whose
+services or businesses were impacted during this incident, and we are taking
+immediate steps to avoid a recurrence.
+
+DETAILED DESCRIPTION OF IMPACT
+
+50% of new Google Compute Engine (GCE) instances failed to or were slow to
+create in us-central1-a on Wednesday 5 November 2018 from 04:58 - 09:46 PST.
+This also affected Google Kubernetes Engine (GKE) cluster creation, and
+instances used by Google Cloud SQL, Google Cloud Dataproc, and Google Cloud
+Shell in the same region. Additionally, instances that were live migrated or
+had operations [1] that were mutated by gcloud or from the Cloud Console
+during this period may have gotten into a bad state. This would have
+manifested as an instance being stuck and not being restartable.
+
+[1] <https://cloud.google.com/sdk/gcloud/reference/compute/operations/list>
+
+ROOT CAUSE
+
+Google’s datacenters rely on sharded Access Control Lists (ACL) stored in a
+highly available lock service called Chubby [1] to perform operations in the
+data plane. The root cause was a standard ACL update, when a job crashed mid-
+write, leaving the ACL stored in Chubby in a corrupted state. After an
+automatic restart, faulty recovery logic was triggered which prevented the
+corrupted ACL from being correctly re-written.This caused any operations that
+attempted to read the ACL to fail. As a result, the permissions of affected
+instances were not verifiable and the requested control plane operation
+eventually timed out, causing the instance creation failure, or crash-looping
+of instances that were being live migrated to other hosts.
+
+[1] <https://ai.google/research/pubs/pub27897>
+
+REMEDIATION AND PREVENTION
+
+Automated alerts notified Google’s engineering team to the event approximately
+12 minutes after impact started, and they immediately began investigating.
+Multiple Google engineering teams were engaged, and the root cause was
+eventually discovered at 08:11. For mitigation, engineering took steps to
+ensure a thorough fix and to prevent a recurrence. By 09:46 the missing ACL
+had been re-written and operations immediately recovered.
+
+In addition to addressing the root cause, we will be implementing changes to
+prevent, more quickly detect, mitigate, and reduce the impact of this type of
+failure in the future. Specifically, we are adding additional monitoring and
+logging to surface failures in ACL checks. Furthermore, the libraries which
+read ACLs will be made resilient to failure during write, eliminating this
+failure mode entirely.
+
+We would again like to apologize for the impact that this incident had on our
+customers and their businesses in the us-central1-a zone. We are conducting a
+detailed post-mortem to ensure that all the root and contributing causes of
+this event are understood and addressed promptly.  
+  
+|
+
+ISSUE SUMMARY
+
+On Wednesday 5 November 2018, Google Compute Engine (GCE) experienced new
+instance creation failures or elevated instance creation latency in us-
+central1-a for a duration of 5 hours. We apologize to our customers whose
+services or businesses were impacted during this incident, and we are taking
+immediate steps to avoid a recurrence.
+
+DETAILED DESCRIPTION OF IMPACT
+
+50% of new Google Compute Engine (GCE) instances failed to or were slow to
+create in us-central1-a on Wednesday 5 November 2018 from 04:58 - 09:46 PST.
+This also affected Google Kubernetes Engine (GKE) cluster creation, and
+instances used by Google Cloud SQL, Google Cloud Dataproc, and Google Cloud
+Shell in the same region. Additionally, instances that were live migrated or
+had operations [1] that were mutated by gcloud or from the Cloud Console
+during this period may have gotten into a bad state. This would have
+manifested as an instance being stuck and not being restartable.
+
+[1] <https://cloud.google.com/sdk/gcloud/reference/compute/operations/list>
+
+ROOT CAUSE
+
+Google’s datacenters rely on sharded Access Control Lists (ACL) stored in a
+highly available lock service called Chubby [1] to perform operations in the
+data plane. The root cause was a standard ACL update, when a job crashed mid-
+write, leaving the ACL stored in Chubby in a corrupted state. After an
+automatic restart, faulty recovery logic was triggered which prevented the
+corrupted ACL from being correctly re-written.This caused any operations that
+attempted to read the ACL to fail. As a result, the permissions of affected
+instances were not verifiable and the requested control plane operation
+eventually timed out, causing the instance creation failure, or crash-looping
+of instances that were being live migrated to other hosts.
+
+[1] <https://ai.google/research/pubs/pub27897>
+
+REMEDIATION AND PREVENTION
+
+Automated alerts notified Google’s engineering team to the event approximately
+12 minutes after impact started, and they immediately began investigating.
+Multiple Google engineering teams were engaged, and the root cause was
+eventually discovered at 08:11. For mitigation, engineering took steps to
+ensure a thorough fix and to prevent a recurrence. By 09:46 the missing ACL
+had been re-written and operations immediately recovered.
+
+In addition to addressing the root cause, we will be implementing changes to
+prevent, more quickly detect, mitigate, and reduce the impact of this type of
+failure in the future. Specifically, we are adding additional monitoring and
+logging to surface failures in ACL checks. Furthermore, the libraries which
+read ACLs will be made resilient to failure during write, eliminating this
+failure mode entirely.
+
+We would again like to apologize for the impact that this incident had on our
+customers and their businesses in the us-central1-a zone. We are conducting a
+detailed post-mortem to ensure that all the root and contributing causes of
+this event are understood and addressed promptly.  
+  
+| Nov 05, 2018 | 11:24 |
+
+The issue with GCE instance creation, GKE cluster creation, Cloud SQL instance
+termination in us-central1 has been resolved for all affected users. We will
+conduct an internal investigation of this issue and make appropriate
+improvements to our systems to help prevent or minimize future recurrence. We
+will provide a more detailed analysis of this incident once we have completed
+our internal investigation.  
+  
+|
+
+The issue with GCE instance creation, GKE cluster creation, Cloud SQL instance
+termination in us-central1 has been resolved for all affected users. We will
+conduct an internal investigation of this issue and make appropriate
+improvements to our systems to help prevent or minimize future recurrence. We
+will provide a more detailed analysis of this incident once we have completed
+our internal investigation.  
+  
+| Nov 05, 2018 | 10:07 |
+
+Our Engineering team has identified the root cause and mitigation is in place.
+The rate of errors is decreasing. We will provide another status update by
+Monday, 2018-11-05 11:30 US/Pacific with current details.  
+  
+|
+
+Our Engineering team has identified the root cause and mitigation is in place.
+The rate of errors is decreasing. We will provide another status update by
+Monday, 2018-11-05 11:30 US/Pacific with current details.  
+  
+| Nov 05, 2018 | 09:54 |
+
+Our Engineering Team is investigating an issue with GCE instance creation in
+us-central1-a.
+
+Affected users may see errors in creating instances in us-central1-a. GKE
+cluster creation, VM creation/deletion is also affected. Affected customers
+may also see their Cloud SQL instances go down in us-central1 with inability
+to recreate these instances. This issue also affects Cloud shell availability
+in us-central1.
+
+We will provide more information by Monday, 2018-11-05 11:30 US/Pacific.  
+  
+|
+
+Our Engineering Team is investigating an issue with GCE instance creation in
+us-central1-a.
+
+Affected users may see errors in creating instances in us-central1-a. GKE
+cluster creation, VM creation/deletion is also affected. Affected customers
+may also see their Cloud SQL instances go down in us-central1 with inability
+to recreate these instances. This issue also affects Cloud shell availability
+in us-central1.
+
+We will provide more information by Monday, 2018-11-05 11:30 US/Pacific.  
+  
+| Nov 05, 2018 | 09:54 |
+
+GCE instance creation errors in us-central1-a.  
+  
+|
+
+GCE instance creation errors in us-central1-a.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

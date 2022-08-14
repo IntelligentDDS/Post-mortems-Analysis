@@ -1,0 +1,9 @@
+RCA - Azure Kubernetes Service (AKS) - Provisioning Failures (Tracking ID GK3M-5D8)
+Summary of Impact: Between 20:50 UTC on 25 Sep 2019 and 04:25 UTC on 26 Sep 2019, a subset of customers using Azure Kubernetes Service (AKS) may have received failure notifications when performing create and/or update operations for their resources.
+Root Cause: An update to a backend service responsible for processing different service management requests for AKS was enabled by a recent configuration change that had been rolled out. This update exposed a code defect for the service and a fix for the defect had yet to complete in the impacted regions. This resulted in failures for the service, preventing it from processing requests. Internal monitoring systems for this issue also did not initially correlate to complete scope of impact, which delayed the investigation.
+Mitigation: Engineers reverted the configuration change which mitigated the issue.
+Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure
+such incidents do not occur in the future. In this case, this included (but was not limited to):
+Monitoring the completion of the fix for the defect in all regions.
+Updating the monitoring systems to improve alerting accuracy for these types of scenarios.
+Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/GK3M-5D8

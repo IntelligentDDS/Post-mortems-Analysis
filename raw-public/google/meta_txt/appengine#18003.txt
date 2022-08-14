@@ -1,0 +1,153 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 22, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google App Engine](/incident/appengine/18003)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google App Engine Incident #18003
+
+App Engine seeing elevated error rates
+
+Incident began at **2018-02-15 11:42** and ended at **2018-02-15 12:44** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Feb 22, 2018 | 07:13 |
+
+On Thursday 15 February 2018, specific Google Cloud Platform services
+experienced elevated errors and latency for a period of 62 minutes from 11:42
+to 12:44 PST. The following services were impacted:
+
+Cloud Datastore experienced a 4% error rate for get calls and an 88% error
+rate for put calls.
+
+App Engine's serving infrastructure, which is responsible for routing requests
+to instances, experienced a 45% error rate, most of which were timeouts.
+
+App Engine Task Queues would not accept new transactional tasks, and also
+would not accept new tasks in regions outside us-central1 and europe-west1.
+Tasks continued to be dispatched during the event but saw start delays of 0-30
+minutes; additionally, a fraction of tasks executed with errors due to the
+aforementioned Cloud Datastore and App Engine performance issues.
+
+App Engine Memcache calls experienced a 5% error rate.
+
+App Engine Admin API write calls failed during the incident, causing
+unsuccessful application deployments. App Engine Admin API read calls
+experienced a 13% error rate.
+
+App Engine Search API index writes failed during the incident though search
+queries did not experience elevated errors.
+
+Stackdriver Logging experienced delays exporting logs to systems including
+Cloud Console Logs Viewer, BigQuery and Cloud Pub/Sub. Stackdriver Logging
+retries on failure so no logs were lost during the incident. Logs-based
+Metrics failed to post some points during the incident.
+
+We apologize for the impact of this outage on your application or service. For
+Google Cloud Platform customers who rely on the products which were part of
+this event, the impact was substantial and we recognize that it caused
+significant disruption for those customers. We are conducting a detailed post-
+mortem to ensure that all the root and contributing causes of this event are
+understood and addressed promptly.  
+  
+|
+
+On Thursday 15 February 2018, specific Google Cloud Platform services
+experienced elevated errors and latency for a period of 62 minutes from 11:42
+to 12:44 PST. The following services were impacted:
+
+Cloud Datastore experienced a 4% error rate for get calls and an 88% error
+rate for put calls.
+
+App Engine's serving infrastructure, which is responsible for routing requests
+to instances, experienced a 45% error rate, most of which were timeouts.
+
+App Engine Task Queues would not accept new transactional tasks, and also
+would not accept new tasks in regions outside us-central1 and europe-west1.
+Tasks continued to be dispatched during the event but saw start delays of 0-30
+minutes; additionally, a fraction of tasks executed with errors due to the
+aforementioned Cloud Datastore and App Engine performance issues.
+
+App Engine Memcache calls experienced a 5% error rate.
+
+App Engine Admin API write calls failed during the incident, causing
+unsuccessful application deployments. App Engine Admin API read calls
+experienced a 13% error rate.
+
+App Engine Search API index writes failed during the incident though search
+queries did not experience elevated errors.
+
+Stackdriver Logging experienced delays exporting logs to systems including
+Cloud Console Logs Viewer, BigQuery and Cloud Pub/Sub. Stackdriver Logging
+retries on failure so no logs were lost during the incident. Logs-based
+Metrics failed to post some points during the incident.
+
+We apologize for the impact of this outage on your application or service. For
+Google Cloud Platform customers who rely on the products which were part of
+this event, the impact was substantial and we recognize that it caused
+significant disruption for those customers. We are conducting a detailed post-
+mortem to ensure that all the root and contributing causes of this event are
+understood and addressed promptly.  
+  
+| Feb 15, 2018 | 14:03 |
+
+The issue with App Engine has been resolved for all affected projects as of
+12:44 US/Pacific. We will conduct an internal investigation of this issue and
+make appropriate improvements to our systems to help prevent or minimize
+future recurrence.
+
+We will provide a more detailed analysis of this incident once we have
+completed our internal investigation.  
+  
+|
+
+The issue with App Engine has been resolved for all affected projects as of
+12:44 US/Pacific. We will conduct an internal investigation of this issue and
+make appropriate improvements to our systems to help prevent or minimize
+future recurrence.
+
+We will provide a more detailed analysis of this incident once we have
+completed our internal investigation.  
+  
+| Feb 15, 2018 | 13:04 |
+
+We're seeing widespread improvement in error rates in many / most regions
+since ~12:40 PST. We're continuing to investigate and will provide another
+update by 13:30 PST.  
+  
+|
+
+We're seeing widespread improvement in error rates in many / most regions
+since ~12:40 PST. We're continuing to investigate and will provide another
+update by 13:30 PST.  
+  
+| Feb 15, 2018 | 12:41 |
+
+We are investigating an issue with App Engine. We will provide more
+information by 13:00 US/Pacific.  
+  
+|
+
+We are investigating an issue with App Engine. We will provide more
+information by 13:00 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

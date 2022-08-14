@@ -1,0 +1,189 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+March 28, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/16002)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #16002
+
+Connectivity issue in asia-east1
+
+Incident began at **2016-02-03 00:40** and ended at **2016-02-03 02:09** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Feb 04, 2016 | 10:33 |
+
+SUMMARY:
+
+On Wednesday 3 February 2016, one third of network connections from external
+sources to Google Compute Engine instances and network load balancers in the
+asia-east1 region experienced high rates of network packet loss for 89
+minutes. We sincerely apologize to customers who were affected. We have taken
+and are taking immediate steps to improve the platform’s performance and
+availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Wednesday 3 February 2016, from 00:40 PST to 02:09 PST, one third of
+network connections from external sources to Google Compute Engine instances
+and network load balancers in the asia-east1 region experienced high rates of
+network packet loss. Traffic between instances within the region was not
+affected.
+
+ROOT CAUSE:
+
+Google Compute Engine maintains a pool of systems that encapsulate incoming
+packets and forward them to the appropriate instance. During a regular system
+update, a master failover triggered a latent configuration error in two
+internal packet processing servers. This configuration rendered the affected
+packet forwarders unable to properly encapsulate external packets destined to
+instances.
+
+REMEDIATION AND PREVENTION:
+
+Google's monitoring system detected the problem within two minutes of the
+configuration change. Additional alerts issued by the monitoring system for
+the asia-east1 region negatively affected total time required to root cause
+and resolve the issue. At 02:09 PST, Google engineers applied a temporary
+configuration change to divert incoming network traffic away from the affected
+packet encapsulation systems and fully restore network connectivity. In
+parallel, the incorrect configuration has been rectified and pushed to the
+affected systems.
+
+To prevent this issue from recurring, we will change the way packet processor
+configurations are propagated and audited, to ensure that incorrect
+configurations are detected while their servers are still on standby.In
+addition, we will make improvements to our monitoring to make it easier for
+engineers to quickly diagnose and pinpoint the impact of such problems.  
+  
+|
+
+SUMMARY:
+
+On Wednesday 3 February 2016, one third of network connections from external
+sources to Google Compute Engine instances and network load balancers in the
+asia-east1 region experienced high rates of network packet loss for 89
+minutes. We sincerely apologize to customers who were affected. We have taken
+and are taking immediate steps to improve the platform’s performance and
+availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Wednesday 3 February 2016, from 00:40 PST to 02:09 PST, one third of
+network connections from external sources to Google Compute Engine instances
+and network load balancers in the asia-east1 region experienced high rates of
+network packet loss. Traffic between instances within the region was not
+affected.
+
+ROOT CAUSE:
+
+Google Compute Engine maintains a pool of systems that encapsulate incoming
+packets and forward them to the appropriate instance. During a regular system
+update, a master failover triggered a latent configuration error in two
+internal packet processing servers. This configuration rendered the affected
+packet forwarders unable to properly encapsulate external packets destined to
+instances.
+
+REMEDIATION AND PREVENTION:
+
+Google's monitoring system detected the problem within two minutes of the
+configuration change. Additional alerts issued by the monitoring system for
+the asia-east1 region negatively affected total time required to root cause
+and resolve the issue. At 02:09 PST, Google engineers applied a temporary
+configuration change to divert incoming network traffic away from the affected
+packet encapsulation systems and fully restore network connectivity. In
+parallel, the incorrect configuration has been rectified and pushed to the
+affected systems.
+
+To prevent this issue from recurring, we will change the way packet processor
+configurations are propagated and audited, to ensure that incorrect
+configurations are detected while their servers are still on standby.In
+addition, we will make improvements to our monitoring to make it easier for
+engineers to quickly diagnose and pinpoint the impact of such problems.  
+  
+| Feb 03, 2016 | 02:37 |
+
+The issue with Google Compute Engine instances experiencing packet loss in the
+asia-east1 region should have been resolved for all affected instances as of
+02:11 US/Pacific. We will conduct an internal investigation of this issue and
+make appropriate improvements to our systems to prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+|
+
+The issue with Google Compute Engine instances experiencing packet loss in the
+asia-east1 region should have been resolved for all affected instances as of
+02:11 US/Pacific. We will conduct an internal investigation of this issue and
+make appropriate improvements to our systems to prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+| Feb 03, 2016 | 02:28 |
+
+We are still investigating the issue with Google Compute Engine instances
+experiencing packet loss in the asia-east1 region. Current data indicates that
+up to 33% of instances in the region are experiencing up to 10% packet loss
+when communicating with external resources. We will provide another status
+update by 03:00 US/Pacific with current details.  
+  
+|
+
+We are still investigating the issue with Google Compute Engine instances
+experiencing packet loss in the asia-east1 region. Current data indicates that
+up to 33% of instances in the region are experiencing up to 10% packet loss
+when communicating with external resources. We will provide another status
+update by 03:00 US/Pacific with current details.  
+  
+| Feb 03, 2016 | 01:59 |
+
+We are experiencing an issue with Google Compute Engine seeing packet loss in
+asia-east1 beginning at Wednesday, 2016-02-03 00:40 US/Pacific.
+
+Instances of affected customers may experience packet loss.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 02:30 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an issue with Google Compute Engine seeing packet loss in
+asia-east1 beginning at Wednesday, 2016-02-03 00:40 US/Pacific.
+
+Instances of affected customers may experience packet loss.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 02:30 US/Pacific with current
+details.  
+  
+| Feb 03, 2016 | 01:46 |
+
+We are investigating reports of an issue with Google Compute Engine. We will
+provide more information by 02:00 US/Pacific.  
+  
+|
+
+We are investigating reports of an issue with Google Compute Engine. We will
+provide more information by 02:00 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

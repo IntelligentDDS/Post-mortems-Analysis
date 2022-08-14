@@ -1,0 +1,29 @@
+Today, ORES went down for a one hour period during a deployment. This was due to some issues with how the redis password was read from the configuration and some regressions introduced in the V1 response format.
+• 21:37 -- Old code is reverted back to
+• 20:38 < Amir1> and we have problem with redis
+• 20:38 < Amir1> the puppet change is not there
+• 21:09 < Amir1> okay, something urgent. Can you update this manually
+• 21:09 < Amir1> and it's not updated
+• 21:11 < Amir1> the person who can update that
+• 21:12 (in another channel) < greg-g> we need a root in -operations to help amir1
+• 21:12 (in another channel) < greg-g> now
+• 21:14 < chasemp> I'm confused on what needs to be changed Amir1
+• 21:14 < chasemp> are you saying you pull from diffusion and it's lagging behind has caused an issue?
+• 21:14 < chasemp> diffusion is on a staggered update schedule based on change rate in a repo iirc
+• 21:15 < chasemp> let me see here if I can force it
+• 21:27 < greg-g> still seeing the "no model available for {blah}" fatal
+• ... unclear what is broken/if it is broken (halfak and amir discussing this)
+• 21:33 < Amir1> mutante: hey, can you revert that?
+• 21:33 < greg-g> halfak: the ORES extension is fataling in prod, it needs to be reverted now
+• 21:34 < grrrit-wm> (PS2) Dzahn: Revert "ores: changes for configs for the refactor" [puppet] - https://gerrit.wikimedia.org/r/302352
+• 22:41 < halfak> Oh... It shouldn't be.
+• 22:41 < halfak> MaxSem, looks up to me
+• 22:41 < MaxSem> RuntimeException from line 136 of /srv/mediawiki/php-1.28.0-wmf.12/extensions/ORES/includes/Cache.php: No model available for [361156268]
+• 22:43 < MaxSem> not one error, flood of them
+• 22:55 < halfak> MaxSem, it looks to me like error you cited stop by 22:41
+• 22:55 < halfak> The errors that occur after that are expected.
+
+The deployment to beta did not show issues for two reasons.
+• the redis server used in beta requires no password
+• the ORES Extension on Beta uses the prod installation of the ORES service
+• Config beta ORES extension to use the beta ORES service Phab:T141825

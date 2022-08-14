@@ -1,0 +1,5 @@
+At 10:52 pm Sunday UTC, multiple services on GitHub.com were affected by a network partition and subsequent database failure resulting in inconsistent information being presented on our website. Out of an abundance of caution we have taken steps to ensure the integrity of your data, including pausing webhook events and other internal processing systems.
+
+We are aware of how important our services are to your development workflows and are actively working to establish an estimated timeframe for full recovery. We will share this information with you as soon as it is available. During this time, information displayed on GitHub.com is likely to appear out of date; however no data was lost. Once service is fully restored, everything should appear as expected. Further, this incident only impacted website metadata stored in our MySQL databases, such as issues and pull requests. Git repository data remains unaffected and has been available throughout the incident.
+
+We will continue to provide updates and an estimated time to resolution via our status page.

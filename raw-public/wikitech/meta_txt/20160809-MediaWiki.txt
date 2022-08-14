@@ -1,0 +1,17 @@
+TLDR: migration of 2 extensions to wfLoadExtension() resulted in problems, Logstash wasn't displaying them.
+• In a massive effort by many people, lots of extensions were converted to extension.json, including
+• The Timeline extension had not tests whereas a single parser test would have caught this problem.
+• These changes were not compatible with our current production configuration and thus had to be accompanied with mediawiki-config changes and probably be deployed separately to minimize the chance of errors.
+• At 16:00 Max prepares for SWAT but sees errors in fatalmonitor and investigates:
+• PHP Warning: Creating default object from empty value in /srv/mediawiki/wmf-config/CommonSettings.php on line 686
+• Max sees no such errors in Logstash.
+• After identifying the cause, Max starts reverting the affected extensions, however there were a lot of intermediate commits and Reedy was committing fixes so Max proceeds with deploying the fixes instead.
+• Fixes produced more problems. Max contemplates a revert of group0 back to wmf.13 but decides not to because he has never done that before and fixes kept on coming. In the hindsight, this was a mistake.
+• Config fixes to accommodate for wmf.14 started causing notices in wmf.13 so Max resets wmf.13 Timeline to wmf.14.
+• Errors indicating more breakages in Timeline prompt another batch of fixes.
+• At 17:42, everything is back to normal.
+• For about 10 minutes, new timeline generation on production wikis was broken.
+• Our code review practices are lax, including merging hairy patches without testing and self-merges.
+• Create basic tests for Timeline extension (a single parser test would have allowed to detect the problem in this case)
+• Show HHVM warnings/errors in the Logstash fatalmonitor dashboard Done The dashboard was setup to filter out all NOTICE, INFO, and WARNING messages. It has been updated to only exclude those event levels when the event type is "mediawiki". This has restored display of HHVM warnings. BryanDavis (talk) 20:07, 10 August 2016 (UTC)
+• Improve accessibility to HHVM error log for deployers The hhvm error log should be available in /var/log/hhvm/error.log on all MW servers. This file is readable by the group which all deployers can sudo to: . The logs are also aggregated via rsyslog+udp2log on fluorine as . Maybe we need better documentation and/or a helper script on the deploy servers to make tailing these logs on some random MW server easier? BryanDavis (talk) 20:13, 10 August 2016 (UTC) Also made a patch for the script that means that deployment tooling will be checking the same information as the fatalmonitor (which now includes all HHVM messages as noted) Thcipriani (talk) 21:33, 11 August 2016 (UTC)

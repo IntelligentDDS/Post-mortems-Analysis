@@ -1,0 +1,12 @@
+Switching WDQS to Scap3 deployment caused some issue and a downtime of the service.
+
+Tuesday June 28 around 19:30 UTC we migrated WDQS deployment to Scap3. Scap3 deployment replaces the application directory by a symlink, leading to files outside of scap in that directory to disappear. This lead to WDQS failing for about 20 minutes between 19:53 UTC and 20:11 UTC.
+• 19:59: running puppet to restore the missing symlink -> did not work (failed dependency between due to application folder now being managed by Scap3)
+• Migrating WDQS to scap looked like a simple operation. Plenty of services have already done this migration without issue.
+• is a great tool especially in non standard situation (Gehel did not use it, but should have).
+• Restoring service did take longer than expected. Gehel was not familiar enough with the details of how WDQS work and took some time double checking it before making changes.
+• Scap3 supports canaries, they should *always* be used.
+• Use canaries for WDQS deployment Done https://gerrit.wikimedia.org/r/#/c/296459/.
+• Modify puppet now that WDQS application directory is managed by Scap3 Done https://gerrit.wikimedia.org/r/#/c/296446/.
+• Migration to Scap3 documentation should emphasize the use of canaries more. Documentation already exists, but we probably need more emphasis, or a checklist for migrated services Done See new Scap3 Migration Guide.
+• Cleanup to puppet code to not duplicate what is managed by scap3, or refactor it to move all mutable files out of the application directory. Task T139434

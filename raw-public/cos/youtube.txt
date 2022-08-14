@@ -1,0 +1,63 @@
+
+[02/12/2014][YOUTUBE OUTAGE TODAY, FOLLOWS YESTERDAY'S TWITTER OUTAGE]
+http://www.vrworld.com/2014/03/12/youtube-outage-today2c-follows-yesterdays-twitter-outage/
+t-1h
+r-unk
+i-down
+p-no
+
+[03/25/2010][YouTube Back After Outage]
+http://www.datacenterknowledge.com/archives/2010/03/25/youtube-back-after-outage/
+http://techcrunch.com/2010/03/25/yes-youtube-is-down-but-you-can-still-watch-videos/
+http://phys.org/news188729978.html#nRlv
+t-2h
+r-unk
+i-down
+p-no
+
+[08/16/2013][A Brief Google Outage Made Total Internet Traffic Drop By 40%]
+http://www.fastcompany.com/3015942/most-innovative-companies-2013/a-brief-google-outage-made-total-internet-traffic-drop-by-40
+r-fail
+t-5m
+i-down
+p-no
+
+[08/20/2014][YouTube is down [update: it is back up]]
+http://www.bgr.in/news/youtube-is-down/#more-322086
+t-unk
+i-down
+r-unk
+p-no
+
+[10/18/2012][YouTube is down!’ The great 10-minute or so YouTube outage of 2012]
+http://dailycaller.com/2012/10/18/youtube-is-down-the-great-10-minute-or-so-youtube-outage-of-2012/
+t-10m
+r-unk
+i-down
+p-no
+
+[10/28/2015][YouTube Down For Some]
+http://www.valuewalk.com/2015/10/youtube-down-for-some/
+http://www.independent.co.uk/life-style/gadgets-and-tech/news/youtube-down-users-shown-500-internal-server-error-while-trying-to-access-googles-video-sharing-site-a6712351.html
+http://mashable.com/2015/10/28/youtube-down-red-launch/#90Pp37XYRSqk
+r-unk
+t-unk
+i-down
+p-no
+
+[11/01/2009][YouTube Down For Maintenance. Right.]
+http://techcrunch.com/2009/11/01/youtube-down-for-maintenance-right/
+http://www.youtube.com/oops/error.html
+t-1h
+r-unk
+i-down
+p-no
+
+[11/18/2013][YouTube Outage (500 Internal Server Error)]
+http://www.evdoinfo.com/content/view/4644/64/
+http://google.com/press-release
+r-unk
+i-down
+t-10m
+p-no
+

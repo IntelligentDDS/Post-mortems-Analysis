@@ -1,0 +1,323 @@
+{
+  "google-gcps-16003": {
+    "title": "Google Cloud Pub/Sub Incident #16003",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/qqmeta_pdf/CSQL/Google%20Cloud%20SQL%20Incident%20%2316003.pdf"
+    ],
+    "time": "10/31/2016",
+    "summary": "On Monday, 31 October 2016, 73% of requests to create new subscriptions for Google Cloud Pub/Sub failed for a duration of 124 minutes. Creation of new Cloud SQL Second Generation instances also failed during this incident.",
+    "details": "On Monday, 31 October 2016 from 13:11 to 15:15 PDT, 73% of requests to create new subscriptions for Google Cloud Pub/Sub failed. 0.1% of pull requests experienced latencies of up to 4 minutes for end-to-end message delivery. Creation of all new Cloud SQL Second Generation instances also failed during this incident. Existing instances were not affected.",
+    "service_name": [
+      " Google Cloud Pub/Sub"
+    ],
+    "impact symptom": [
+      "performance",
+      "availability"
+    ],
+    "duration": 124,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "monitoring systems"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "error rate",
+          "high request latency"
+        ]
+      },
+      {
+        "system kpi": [
+          "connectivity"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "unknown"
+        }
+      ],
+      "details": "At 13:08, a system in the Cloud Pub/Sub control plane experienced a connectivity issue to its persistent storage layer for a duration of 83 seconds. This caused a queue of storage requests to build up. When the storage layer re-connected, the queued requests were executed, which exceeded the available processing quota for the storage system. The system entered a feedback loop in which storage requests continued to queue up leading to further latency increases and more queued requests. The system was unable to exit from this state until additional capacity was added. Creation of a new Cloud SQL Second Generation instance requires a new Cloud Pub/Sub subscription."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "acquire storage capacity"
+      ],
+      "details": "Our monitoring systems detected the outage and paged oncall engineers at 13:19. We determined root cause at 14:05 and acquired additional storage capacity for the Pub/Sub control plane at 14:42. The outage ended at 15:15 when this capacity became available. To prevent this issue from recurring, we have already increased the storage capacity for the Cloud Pub/Sub control plane. We will change the retry behavior of the control plane to prevent a feedback loop if storage quota is temporarily exceeded. We will also improve our monitoring to ensure we can determine root cause for this type of failure more quickly in future.",
+      "troubleshooting": {
+        "1": "detected the outage and paged oncall engineers",
+        "2": "We determined root cause at 14:05 and acquired additional storage capacity for the Pub/Sub control plane at 14:42. ",
+        "3": "The outage ended at 15:15 when this capacity became available. "
+      }
+    },
+    "propagation pass": {
+      "1": "Cloud Pub/Sub control plane",
+      "2": "storage system",
+      "3": "Google Cloud Pub/Sub",
+      "4": "Cloud SQL"
+    },
+    "refined path": {
+      "1": "middleware",
+      "2": "database",
+      "3": "middleware",
+      "4": "database"
+    },
+    "identification time": 46,
+    "detection time": 8,
+    "fix time": 116,
+    "verification": "lixy"
+  },
+  "google-gcps-17001": {
+    "title": "Google Cloud Pub/Sub Incident #17001",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCPS/Google%20Cloud%20Pub:Sub%20Incident%20%2317001.pdf"
+    ],
+    "time": "03/21/2017",
+    "summary": "On Tuesday 21 March 2017, new connections to Cloud Pub/Sub experienced high latency leading to timeouts and elevated error rates for a duration of 95 minutes. Connections established before the start of this issue were not affected. If your service or application was affected, we apologize – this is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability.",
+    "details": "DETAILED DESCRIPTION OF IMPACT On Tuesday 21 March 2017 from 21:08 to 22:43 US/Pacific, Cloud Pub/Sub publish, pull and ack methods experienced elevated latency, leading to timeouts. The average error rate for the issue duration was 0.66%. The highest error rate occurred at 21:43, when the Pub/Sub publish error rate peaked at 4.1%, the ack error rate reached 5.7% and the pull error rate was 0.02%. ROOT CAUSE: The issue was caused by the rollout of a storage system used by the Pub/Sub service. As part of this rollout, some servers were taken out of service, and as planned, their load was redirected to remaining servers. However, an unexpected imbalance in key distribution led some of the remaining servers to become overloaded. The Pub/Sub service was then unable to retrieve the status required to route new connections for the affected methods. Additionally, some Pub/Sub servers didn’t recover promptly after the storage system had been stabilized and required individual restarts to fully recover. REMEDIATION AND PREVENTION: Google engineers were alerted by automated monitoring seven minutes after initial impact. At 21:24, they had correlated the issue with the storage system rollout and stopped it from proceeding further. At 21:41, engineers restarted some of the storage servers, which improved systemic availability. Observed latencies for Pub/Sub were still elevated, so at 21:54, engineers commenced restarting other Pub/Sub servers, restoring service to 90% of users. At 22:29 a final batch was restarted, restoring the Pub/Sub service to all. To prevent a recurrence of the issue, Google engineers are creating safeguards to limit the number of keys managed by each server. They are also improving the availability of Pub/Sub servers to respond to requests even when in an unhealthy state. Finally they are deploying enhancements to the Pub/Sub service to operate when the storage system is unavailable.",
+    "service_name": [
+      "Google Cloud Pub/Sub"
+    ],
+    "impact symptom": [
+      "availability",
+      "performance"
+    ],
+    "duration": 95,
+    "detection": {
+      "method": "automated",
+      "tool": [
+        "monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "high latency",
+          "elevated error rate"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "external causes",
+          "layer-2": "component removal"
+        },
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs"
+        }
+      ],
+      "details": "The issue was caused by the rollout of a storage system used by the Pub/Sub service. As part of this rollout, some servers were taken out of service, and as planned, their load was redirected to remaining servers. However, an unexpected imbalance in key distribution led some of the remaining servers to become overloaded. The Pub/Sub service was then unable to retrieve the status required to route new connections for the affected methods. Additionally, some Pub/Sub servers didn’t recover promptly after the storage system had been stabilized and required individual restarts to fully recover."
+    },
+    "operation": [
+      "rollout"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "stop rollout",
+        "restart servers"
+      ],
+      "details": "Google engineers were alerted by automated monitoring seven minutes after initial impact. At 21:24, they had correlated the issue with the storage system rollout and stopped it from proceeding further. At 21:41, engineers restarted some of the storage servers, which improved systemic availability. Observed latencies for Pub/Sub were still elevated, so at 21:54, engineers commenced restarting other Pub/Sub servers, restoring service to 90% of users. At 22:29 a final batch was restarted, restoring the Pub/Sub service to all",
+      "troubleshooting": {
+        "1": "alerted by automated monitoring",
+        "2": "correlated the issue with the storage system rollout and stopped it from proceeding further ",
+        "3": "engineers restarted some of the storage servers, which improved systemic availability. ",
+        "4": "Observed latencies for Pub/Sub were still elevated, so at 21:54, engineers commenced restarting other Pub/Sub servers, restoring service to 90% of users. ",
+        "5": "a final batch was restarted, restoring the Pub/Sub service to all. "
+      }
+    },
+    "propagation pass": {
+      "1": "Cloud Pub/Sub service",
+      "2": "storage server",
+      "3": "storage system",
+      "4": "Cloud Pub/Sub service"
+    },
+    "refined path": {
+      "1": "app",
+      "2": "storage server",
+      "3": "database",
+      "4": "app"
+    },
+    "identification time": 9,
+    "detection time": 7,
+    "fix time": 76,
+    "verification": "lixy"
+  },
+  "google-gcps-19001": {
+    "title": "Google Cloud Pub/Sub Incident #19001",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCPS/Google%20Cloud%20Pub:Sub%20Incident%20%2319001.pdf"
+    ],
+    "time": "05/20/2019",
+    "summary": "On Monday 20 May, 2019, Google Cloud Pub/Sub experienced publish error rates of 1.2%, increased publish latency by 1.7ms at the 50th percentile, and 8.3s increase at the 99th percentile for a duration of 3 hours, 30 minutes. Publish and Subscribe admin operations saw average error rates of 8.3% and 3.2% respectively for the same period. We apologize to our customers who were impacted by this service degradation.",
+    "details": "DETAILED DESCRIPTION OF IMPACT: On Monday 20 May, 2019 from 20:54 to Tuesday 21 May, 2019 00:24 US/Paci!c Google Cloud Pub/Sub experienced publish error rates of 1.2%, increased publish latency by 1.7ms at the 50th percentile, and 8.3s increase at the 99th percentile for a duration of 3 hours, 30 minutes. Publish (CreateTopic, GetTopic, UpdateTopic, DeleteTopic) and Subscribe (CreateSnapshot, CreateSubscription, UpdateSubscription) admin operations saw average error rates of 8.3% and 3.2% respectively for the same period. Customers affected by the incident may have seen errors containing messages like “DEADLINE_EXCEEDED”. Cloud Pub/Sub’s elevated error rates and increased latency indirectly impacted Cloud SQL, Cloud Filestore, and App Engine Task Queues globally. The incident caused elevated error rates in admin operations (including instance creation) for both Cloud SQL and Cloud Filestore, as well as increased latencies and timeout errors for App Engine Task Queues during the incident. Root cause: The incident was triggered by an internal user creating an unexpected surge of publish requests to Cloud Pub/Sub topics. These requests did not cache as expected and led to hotspotting on the underlying metadata storage system responsible for managing Cloud Pub/Sub’s publish and subscribe operations. The hotspotting triggered overload protection mechanisms within the storage system which began to reject some incoming requests and delay the processing of others, both of which contributed to the elevated error rates and increased latencies experienced by Cloud Pub/Sub. REMEDIATION AND PREVENTION: On Monday 20 May, 2019 at 21:16 US/Pacific Google engineers were automatically alerted to elevated error rates and immediately began their investigation. At 22:18, we determined the underlying storage system was responsible for the elevated error rates afficting Cloud Pub/Sub and escalated the issue to the storage system’s engineering team. At 22:48, Google engineers attempted to mitigate the issue by providing additional resources to the impacted storage system servers, however, this did not address the hotspots and error rates remained elevated. At 23:00, Google engineers disabled non-essential internal traffic to reduce load being sent to the storage system, this improved system behavior, but did not lead to a full recovery. On Tuesday 21 May, 2019 at 00:19 US/Pacific, Google engineers identified the source for the surge of requests and implemented a rate limit on the requests, which effectively mitigated the issue. Once the traffc had subsided, the storage system’s automated mechanisms were able to successfully heal the service, leading to full resolution of the incident by 00:24.",
+    "service_name": [
+      "Google Cloud Pub/Sub"
+    ],
+    "impact symptom": [
+      "availability",
+      "performance"
+    ],
+    "duration": 210,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        ""
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "elevated error rate",
+          "increased latency"
+        ]
+      },
+      {
+        "system kpi": []
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "external causes",
+          "layer-2": "excessive flow"
+        }
+      ],
+      "details": "The incident was triggered by an internal user creating an unexpected surge of publish requests to Cloud Pub/Sub topics. These requests did not cache as expected and led to hotspotting on the underlying metadata storage system responsible for managing Cloud Pub/Sub’s publish and subscribe operations. The hotspotting triggered overload protection mechanisms within the storage system which began to reject some incoming requests and delay the processing of others, both of which contributed to the elevated error rates and increased latencies experienced by Cloud Pub/Sub."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "provide additional resources",
+        "disable non-essential internal traffic",
+        "implemente a rate limit"
+      ],
+      "details": "On Monday 20 May, 2019 at 21:16 US/Pacific Google engineers were automatically alerted to elevated error rates and immediately began their investigation. At 22:18, we determined the underlying storage system was responsible for the elevated error rates afficting Cloud Pub/Sub and escalated the issue to the storage system’s engineering team. At 22:48, Google engineers attempted to mitigate the issue by providing additional resources to the impacted storage system servers, however, this did not address the hotspots and error rates remained elevated. At 23:00, Google engineers disabled non-essential internal traffic to reduce load being sent to the storage system, this improved system behavior, but did not lead to a full recovery. On Tuesday 21 May, 2019 at 00:19 US/Pacific, Google engineers identified the source for the surge of requests and implemented a rate limit on the requests, which effectively mitigated the issue. Once the traffc had subsided, the storage system’s automated mechanisms were able to successfully heal the service, leading to full resolution of the incident by 00:24.",
+      "troubleshooting": {
+        "1": "Google engineers were automatically alerted to elevated error rates and immediately began their investigation.",
+        "2": "At 22:18, we determined the underlying storage system was responsible for the elevated error rates afficting Cloud Pub/Sub and escalated the issue to the storage system’s engineering team.",
+        "3": "At 23:00, Google engineers disabled non-essential internal traffic to reduce load being sent to the storage system, this improved system behavior, but did not lead to a full recovery. ",
+        "4": "at 00:19 US/Pacific, Google engineers identified the source for the surge of requests and implemented a rate limit on the requests ",
+        "5": "Once the traffic had subsided, the storage system’s automated mechanisms were able to successfully heal the service, leading to full resolution of the incident by 00:24. "
+      }
+    },
+    "propagation pass": {
+      "1": "Cloud Pub/Sub publish requests",
+      "2": "underlying metadata storage system",
+      "3": "Cloud Pub/Sub"
+    },
+    "refined path": {
+      "1": "app",
+      "2": "database",
+      "3": "app"
+    },
+    "identification time": 62,
+    "detection time": 22,
+    "fix time": 188,
+    "verification": "lixy"
+  },
+  "google-gcps-211019": {
+    "title": "Google Cloud Pub/Sub Incident #211019",
+    "link": [
+      "https://status.cloud.google.com/incidents/9X2yAZMaYvM7egWTBioq"
+    ],
+    "time": "10/19/2021",
+    "summary": "On 19 October 2021 11:00 US/Pacific, Cloud Monitoring experienced errors querying all monitoring data for approximately 1 hour and 45 minutes in the us-central1 region. We apologize for the inconvenience and are taking steps toward preventing recurrence in the future.",
+    "details": "Root Cause Cloud Monitoring is a global service but is subdivided into internal locales, each of which collect monitoring data which is generated locally. When users query Cloud Monitoring, each query fans out through a series of nodes (called mixers) within the corresponding locales. The mixers reach out to source nodes to gather the appropriate data, temporarily retaining it within a limited set of memory. During a recent infrastructure change in the U.S. locale, the amount of memory allocated to mixers in the us-central1 region was inadvertently reduced. This caused mixer tasks to run low on memory. The number of tasks in a low memory state grew over a period of several days as the change was gradually rolled out to production, following Google's standard progressive rollout policies. The mixer task has safeguards which are designed to detect and reduce the impact of low memory conditions by pausing queries that use significant memory. However, in this case, an existing misconfiguration of this safeguard prevented it from activating correctly. Eventually, tasks which were low on memory failed; enough tasks failed in total to cause widespread failures and service impact. Remediation and Prevention Google engineers were alerted to the problem on 19 October 2021 at 11:11 and immediately started an investigation. Root cause - the reduction in memory allocation for mixer nodes - was identified at 11:32. Google engineers quickly identified a mitigation, which we began to roll out at 11:50. Restoring the proper memory capacity for mixer nodes fully mitigated the issue at 12:54. Google is committed to quickly and continually improving our technology and operations to prevent service disruptions. We are taking the following immediate steps to prevent this or similar issues from happening again: Fixing the misconfiguration so that mixers which are low on memory will correctly detect that condition. Introduce load-shedding, such that mixers which run out of memory will simply reject new queries until memory usage subsides, rather than failing. Optimize the mixers to reduce the likelihood of out-of-memory scenarios. Modifying Cloud Monitoring's rollout automation so that it automatically spots problems of this type, allowing engineers to be alerted sooner.",
+    "service_name": [
+      "Cloud Monitoring",
+      "Google Cloud Dataflow",
+      "Google Cloud Pub/Sub",
+      "Cloud NAT",
+      "Google Cloud Bigtable"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 105,
+    "detection": {
+      "method": "automated",
+      "tool": null
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "error rate"
+        ]
+      },
+      {
+        "system kpi": [
+          "high memory usage"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        },
+        {
+          "layer-1": "external causes",
+          "layer-2": "insufficient resource",
+          "layer-3": "memory"
+        }
+      ],
+      "details": "Cloud Monitoring is a global service but is subdivided into internal locales, each of which collect monitoring data which is generated locally. When users query Cloud Monitoring, each query fans out through a series of nodes (called mixers) within the corresponding locales. The mixers reach out to source nodes to gather the appropriate data, temporarily retaining it within a limited set of memory. During a recent infrastructure change in the U.S. locale, the amount of memory allocated to mixers in the us-central1 region was inadvertently reduced. This caused mixer tasks to run low on memory. The number of tasks in a low memory state grew over a period of several days as the change was gradually rolled out to production, following Google's standard progressive rollout policies. The mixer task has safeguards which are designed to detect and reduce the impact of low memory conditions by pausing queries that use significant memory. However, in this case, an existing misconfiguration of this safeguard prevented it from activating correctly. Eventually, tasks which were low on memory failed; enough tasks failed in total to cause widespread failures and service impact."
+    },
+    "operation": [
+      "change"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "restoring the proper memory capacity for mixer nodes"
+      ],
+      "details": "Google engineers were alerted to the problem on 19 October 2021 at 11:11 and immediately started an investigation. Root cause - the reduction in memory allocation for mixer nodes - was identified at 11:32. Google engineers quickly identified a mitigation, which we began to roll out at 11:50. Restoring the proper memory capacity for mixer nodes fully mitigated the issue at 12:54. Google is committed to quickly and continually improving our technology and operations to prevent service disruptions. We are taking the following immediate steps to prevent this or similar issues from happening again: Fixing the misconfiguration so that mixers which are low on memory will correctly detect that condition. Introduce load-shedding, such that mixers which run out of memory will simply reject new queries until memory usage subsides, rather than failing. Optimize the mixers to reduce the likelihood of out-of-memory scenarios. Modifying Cloud Monitoring's rollout automation so that it automatically spots problems of this type, allowing engineers to be alerted sooner.",
+      "troubleshooting": {
+        "1": "Google engineers restored the proper memory capacity for mixer nodes"
+      }
+    },
+    "propagation pass": {
+      "1": "mixer nodes",
+      "2": "Cloud Monitoring"
+    },
+    "refined path": {
+      "1": "VM",
+      "2": "app"
+    },
+    "identification time": 21,
+    "detection time": 11,
+    "fix time": 64,
+    "verification": "lixy, yugb"
+  }
+}

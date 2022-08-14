@@ -1,0 +1,13 @@
+Verbose logging combined with broken log rotation led to disks on about 3/4 of the Parsoid nodes filling up, which caused the Parsoid daemons to stop accepting requests. This led to some user-visible errors for VisualEditor users in a 17-minute window. An estimate is that less than 10% of VE page loads / saves were affected during this period.
+
+All times UTC on Tuesday the 11th (03:00 UTC = 7pm PST on Monday evening):
+• Log rotation in puppet was not properly tested, and did not run often enough to prevent failures
+• Current Parsoid logging via stdout/stderr redirection can block. Work on async logging is ongoing, but was not ready before this outage.
+• Disk space monitoring on Parsoid boxes should trigger much earlier
+• Need to better check the logging volume in the Parsoid tests (recursion bug in error logging code produced megabytes of log data per error)
+• salt restarts were using old init script instead of upstart, see bug
+• Status: Done - Fix log rotation, run it hourly instead of daily
+• Status: Done - Remove old init scripts and update documentation on the log file path
+• Status: Done - Lower the warning threshold on parsoid node disk space to provide time to react
+• Status: Done - Finish migration to async logging backend in Parsoid so that a full disk does not affect the service availability
+• Status: Declined - Check the logging volume in Parsoid unit tests, less critical once logging is async

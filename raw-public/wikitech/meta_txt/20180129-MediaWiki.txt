@@ -1,0 +1,23 @@
+All Mediawiki servers were serving HTTP 5XX for about eight minutes from 19:39 UTC to 19:47 UTC (based on link).
+• 19:37 UTC - Niharika makes an attempt was made to deploy - https://gerrit.wikimedia.org/r/#/c/405421/. InitialiseSettings.php is attempted to be synced first, which causes a scap error - scap failed: average error rate on 9/11 canaries increased by 10x (rerun with --force to override this check, see https://logstash.wikimedia.org/goto/2cc7028226a539553178454fc2f14459 for details)
+• 19:39 UTC - Icinga started alerting on the canary hosts for . Although it was not clear that those were canary servers, given that just the hostname is printed in the alert.
+• 19:39 UTC - A retry is made to sync InitialiseSettings.php and this time it goes through, given that scap compared it with the already failing baseline (see bug T183999).
+• 19:39 UTC - All projects go down. Wikipedias and commons, from what we know. Possibly Wikidata too.
+• 19:39 UTC - Icinga starts complaining about additional production servers, with the same message as for the canaries.
+• 19:40 UTC - CommonsSettings.php is synced. The sync goes through, again because of the bad baseline for scap.
+• 19:42 UTC - dblists/uploadsdisabled.dblist is synced, and this fixes the wikis.
+• 19:42 UTC - Icinga starts to show recovery from the failed servers and other alerts. <icinga-wm> RECOVERY - Nginx local proxy to apache on mw1238 is OK: HTTP OK: HTTP/1.1 301 Moved Permanently - 619 bytes in 1.105 second response time .
+• 19:45 UTC - APC aggregated memory usage started spiking. It's not uncommon that upon deployments we have new APC keys or keys with different values, but in this case it seems a clear effect of the recovery although the underlying reasons are not fully clear at this time. See the Grafana dashboard.
+• 19:47 UTC - Some DB slaves in S1 started lagging, and were followed by more S1 slaves, see the Grafana dashboard
+• 20:06 UTC - S1 DB Master showed an expected surge of writes just after the recovery at 19:47 UTC, but a second spike started at this time for unclear reasons, see the Grafana dashboard.
+
+In the current state of Mediawiki config it's hard to define the proper order for deploying the configuration/other files for each patch that needs a SWAT deploy.
+
+In this case the dblist file should have been synced before the other wmf-config files to avoid any issue, but it was not clear from the patch itself that this order was required. MediaWiki also does not have any safeguards against these cases.
+
+A more robust Scap might help to avoid errors like this, forcing the user to understand the canary failures before allowing them to continue the deployment. The Icinga checks that started to alert on IRC were not clearly recognisable as related to the canary hosts and in addition no page for Ops was generated for this failure scenario.
+• Scap: once a deploy that causes error is made on the canary hosts, the following deploys are comparing the errors with the wrong baseline phab:T183999.
+• Scap: better IRC reporting on failure when using sync-file, it currently doesn't report what file was synced phab:T186064: !log niharika29@tin scap failed: average error rate on /11 canaries increased by 10x rerun with --force to override this check, see https://logstash.wikimedia.org/goto/2cc7028226a539553178454fc2f14459 details
+• Monitoring: this incident didn't generate a page even though all the wikis were failing. phab:T186069
+• Scap reporting: when multiple/all canaries are failing, send a second IRC message (without SAL) that list the hostnames of the failed canaries. This will help the operator to quickly know if any Icinga alert is related to those. phab:T186065
+• Scap: allow to sync-file multiple files that belongs to different directories. In this case the dblist should have been synced before or together with the InitialiseSettings.php file.phab:T186067

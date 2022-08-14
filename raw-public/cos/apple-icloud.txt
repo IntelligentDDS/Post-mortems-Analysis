@@ -1,0 +1,231 @@
+
+[01/27/2016][...]
+http://www.dailymail.co.uk/sciencetech/article-3419088/Safari-outage-affects-iPhone-iPad-users-worldwide.html
+http://www.techtimes.com/articles/128496/20160128/apple-crushes-safari-bug-that-caused-crashes-on-mac-and-ios-worldwide.htm
+
+[02/22/2013][Apple's App Store, iTunes back online after outages]
+http://www.cnet.com/news/apples-app-store-itunes-back-online-after-outages/
+http://9to5mac.com/2013/02/21/apple-confirms-app-store-itunes-and-calendar-outages-services-still-down-for-many/
+r-unk
+t-6h55m
+i-down
+p-no
+
+[02/28/2013][iCloud had a big hiccup this morning, several services still experiencing problems]
+http://gigaom.com/2013/02/28/icloud-had-a-big-hiccup-this-morning-several-services-still-experiencing-problems/
+http://iwgcr.org/apples-icloud-suffers-an-outage/
+http://www.gottabemobile.com/2013/02/28/pandora-places-a-cap-on-streaming/
+http://www.intomobile.com/2013/02/28/widespread-service-outage-affects-half-all-icloud-users/
+http://cloutage.org/incidents/1016-apple-inc-icloud
+http://9to5mac.com/2013/02/28/icloud-hasnt-had-its-coffee-yet-today-folks-multiple-services-remain-down/
+r-unk
+t-10h45m
+i-down
+p-no
+
+[03/11/2015][Apple ITunes, App Stores Reopen After Unusually Long Outage]
+http://www.crn.com/slide-shows/cloud/300077635/the-10-biggest-cloud-outages-of-2015-so-far.htm/pgno/0/5
+http://www.bloomberg.com/news/articles/2015-03-11/apple-s-itunes-and-app-stores-experience-outages-worldwide?hootPostID=56aa160ad6b27fd647080f4534ebbb13
+r-fail
+t-12h
+i-down
+p-no
+
+[04/17/2012][iCloud Mail Down]
+http://z6mag.com/featured/apple-icloud-is-down-for-less-than-1-percent-of-users-167943.html
+r-unk
+t-unk
+i-down
+i-loss
+p-no
+
+[04/18/2013][Apple's iCloud problems persist with two new service outages]
+http://appleinsider.com/articles/13/04/19/apples-icloud-problems-persist-with-two-new-service-outages
+r-unk
+t-27h
+i-down
+p-no
+
+[04/23/2013][Apple's iCloud services again hit by global outage]
+http://appleinsider.com/articles/13/04/23/apples-icloud-services-again-hit-by-global-outage
+http://cloutage.org/incidents/619-apple-game-center-itunes-icloud-apple-id
+r-unk
+t-5h
+i-down
+p-no
+
+[05/07/2015][TestFlight Experiencing Extended Downtime for Many Developers]
+http://www.macrumors.com/2015/05/07/testflight-itunes-connect-down-may-2015/
+r-unk
+t-unk
+i-op
+p-no
+
+[05/21/2015][iCloud back up and running after 7-hour outage]
+http://www.cloudpro.co.uk/saas/5104/icloud-back-up-and-running-after-7-hour-outage
+http://www.crn.com/slide-shows/cloud/300077635/the-10-biggest-cloud-outages-of-2015-so-far.htm/pgno/0/9
+http://talkincloud.com/cloud-computing/06172015/7-worst-cloud-outages-2015-so-far#slide-5-field_images-46431
+r-unk
+t-7h
+i-down
+p-no
+
+[06/02/2015][It’s not just you: iCloud is down again, other Apple web services affected]
+http://9to5mac.com/2015/06/02/icloud-down-again/
+http://www.macrumors.com/2015/06/02/icloud-and-itunes-experiencing-widespread-outage/
+http://appleinsider.com/articles/15/06/02/icloud-itunes-again-hit-with-global-outages-impacting-important-services
+r-unk
+t-1h
+i-down
+p-no
+
+[06/12/2014][App Store, iTunes Store, Apple TV features currently facing server problems, inaccessible for some users]
+http://9to5mac.com/2014/06/12/app-store-itunes-store-apple-tv-features-currently-facing-server-problems-inaccessible-for-some-users/
+http://www.infoworld.com/article/2606209/cloud-computing/162288-The-worst-cloud-outages-of-2014-so-far.html#slide11
+r-unk
+t-unk
+i-down
+p-no
+
+[06/20/2012][iCloud outage prevents some iMessages from being delivered]
+http://appleinsider.com/articles/12/06/20/icloud_outage_prevents_some_imessages_from_being_delivered
+r-unk
+t-1h
+p-no
+i-down
+
+[06/25/2013][Apple's iCloud and iTunes see service outages, 20% of users affected]
+http://appleinsider.com/articles/13/06/27/apples-icloud-and-itunes-see-service-outages-20-of-users-affected
+r-unk
+t-45m
+i-down
+p-no
+
+[06/26/2013][Apple's iCloud and iTunes see service outages, 20% of users affected]
+http://appleinsider.com/articles/13/06/27/apples-icloud-and-itunes-see-service-outages-20-of-users-affected
+t-80m
+r-unk
+i-down
+p-no
+
+[07/21/2013][Apple's Developer Center Coming Back Online After 8 Day Outage]
+http://www.macrumors.com/2013/07/26/apples-developer-center-coming-back-online-after-8-day-outage/
+http://venturebeat.com/2013/07/21/apples-developer-website-hacked/
+http://www.macrumors.com/2013/07/19/apples-developer-center-experiences-daylong-outage/
+r-sec
+t-8d
+f-fix
+p-no
+
+[07/31/2012][Apple confirms iCloud email outage for some, App Store and iMessage hiccups reported]
+http://www.idownloadblog.com/2012/07/31/app-store-icloud-imessage-issues/
+r-unk
+t-unk
+i-loss
+i-op
+p-no
+f-restore
+
+[08/22/2013][Users Experiencing Extended iMessage, iCloud Service Outages]
+http://www.macrumors.com/2013/08/22/users-experiencing-extended-imessage-icloud-service-outages/
+http://venturebeat.com/2013/08/22/icloud-outage-cuts-users-off-from-imessage-photo-stream-and-other-apple-services/
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide12
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide13
+r-unk
+t-11h
+i-down
+p-no
+
+[09/03/2014][APPLE STATEMENT ON CELEBRITY HACKING: OUR SYSTEMS WEREN’T BREACHED]
+http://www.businessinsider.co.id/apple-statement-on-celebrity-hacking-2014-9/#.VPfECMiUfDE
+http://www.businessinsider.co.id/apple-six-hour-itunes-store-outage-2014-9/#.VPe-AsiUfDE
+http://appleinsider.com/articles/14/09/03/apples-itunes-store-hit-with-hours-long-outage-affecting-music-app-and-e-book-downloads
+r-unk
+t-6h
+i-down
+p-no
+
+[09/11/2012][iCloud Mail Outage Enters Second Day for Some Users]
+http://www.macrumors.com/2012/09/12/icloud-mail-outage-enters-second-day-for-some-users/
+http://iwgcr.org/icloud-mail-30-hours-of-difficulties/
+http://www.cnet.com/news/icloud-outage-affecting-users-for-two-days-running/
+http://www.macworld.com/article/1168577/icloud_outage_strikes_discordant_tone_with_professional_musician.html
+r-unk
+i-down
+t-30h
+p-no
+
+[09/30/2014][Apple woes continue: Some reporting iCloud down across iOS, Mac, and web]
+http://9to5mac.com/2014/09/29/apple-woes-continue-some-reporting-icloud-down-across-ios-mac-and-web/
+http://9to5mac.com/2014/09/29/icloud-bug-reset-delete-iwork-documents/
+http://www.geekwire.com/2014/hold-onto-iphones-icloud/
+r-bug
+t-2h
+i-down
+p-no
+
+[10/02/2013][It’s Not You – How To Know When Apple Services Are Down]
+http://www.cultofmac.com/248131/its-not-you-how-to-know-when-apple-services-are-down/
+r-unk
+t-1h29m
+i-down
+p-no
+
+[10/08/2013][Overnight outage of Apple's iCloud, online store lingers for hours]
+http://appleinsider.com/articles/13/10/09/apples-icloud-down-for-some-users-online-store-down-until-until-4am
+r-unk
+t-3h30m
+i-down
+p-yes
+
+[10/13/2011][Apple Just Can't Keep iCloud In the Air]
+http://gizmodo.com/5961893/apple-just-cant-keep-icloud-in-the-air
+r-unk
+t-unk
+i-down
+p-no
+
+[10/25/2012][Apple's iMessage down for many iOS and OS X users]
+http://appleinsider.com/articles/12/10/25/apples-imessage-down-for-many-ios-and-os-x-users
+r-unk
+t-3h
+i-down
+p-no
+
+[10/30/2012][Briefly: iMessage and FaceTime facing second outage in less than a week]
+http://appleinsider.com/articles/12/10/30/briefly-imessage-and-facetime-facing-second-widespread-outage-in-less-than-a-week
+r-unk
+t-unk
+i-down
+p-no
+
+[11/11/2011][Apple’s iCloud services suffer afternoon outage]
+http://www.washingtonpost.com/business/technology/apples-icloud-services-suffer-afternoon-outage/2011/11/11/gIQAqVE0CN_story.html
+http://www.cultofmac.com/129461/apple-and-users-reporting-icloud-outages-are-you-affected/
+r-unk
+t-2h
+i-down
+p-no
+
+[11/12/2012][iCloud experienced minor service outage affecting Documents, Photo Stream and Backup & Restore]
+http://thenextweb.com/apple/2012/11/13/icloud-experiencing-minor-service-outage-affecting-documents-photo-stream-and-backup-restore/
+r-unk
+t-1h56m
+i-down
+p-no
+
+[12/16/2011][iCloud authentication issues from last night resolved]
+http://www.phonearena.com/news/iCloud-authentication-issues-from-last-night-resolved_id24843
+r-unk
+t-1h
+i-down
+p-no
+
+[12/17/2012][Most of Apple’s iCloud services undergoing service disruptions]
+http://thenextweb.com/apple/2012/12/18/most-of-apples-icloud-services-undergoing-service-disruptions/
+http://appleinsider.com/articles/12/12/17/apples-icloud-sees-more-outages-following-icloud-status-webpage-update
+r-unk
+t-unk
+i-down
+p-no
+

@@ -1,0 +1,22 @@
+Commit https://gerrit.wikimedia.org/r/344564 in the Wikibase extension was meant to make a change to Special:RecentChanges. This change was tested and verified to not be broken.
+
+The commit also moved around unrelated code for magic word . This part of the change contained a bad class reference (missing namespace declaration), which, when executed would result in a PHP Fatal Error.
+• This magic word did not have unit tests, hence Jenkins did not catch it.
+• The magic word is only rarely used on a page, which meant that cursory testing did not reveal the breakage immediately. It also meant that the canary traffic Scap waits for during the deployment did not trigger the error (or not often enough).
+• One such page using this magic word is en.wikipedia.org's Main Page. However, since it is only rarely edited, it is mostly served from parser cache. However, unlike most pages which have a parser cache age of 30 days, Main Page uses time-based functions and hence has a parser cache age of 1 hour. That hour was up about 20 minutes after the deployment, at which point it got re-parsed and revealed the Fatal Error.
+
+(Times on this timeline refer to UTC though the date in the page title refers to US Time. According to UTC this event happened on 24th of March, not 23th.).
+• 2017-03-24T01:02 Roan merges an update for Wikidata (Wikibase) (patch for RCFilters with a broken class autoloader) https://gerrit.wikimedia.org/r/#/c/344564/
+• 2017-03-24T01:46 Icinga says: <icinga-wm> PROBLEM - MediaWiki exceptions and fatals per minute on graphite1001 is CRITICAL: CRITICAL: 80.00% of data above the critical threshold [50.0] (but does not page anyone)
+• 2017-03-24T02:01 Eddiegp reports on IRC: <eddiegp> Uhmm, dewiki seems down for me <eddiegp> Request from 94.134.245.179 via cp3033 cp3033, Varnish XID 735457820 <eddiegp> Error: 503, Service Unavailable at Fri, 24 Mar 2017 02:00:09 GMT
+• 2017-03-24T02:05 icinga-wm starts flooding first alerts from app servers (but still does not page)
+• 2017-03-24T02:09 Daniel sees the above and starts looking at mw1185, calls Brandon while doing so
+• 2017-03-24T02:10 Brandon starts investigating (<bblack> the first and most-persistent of the spam is on rendering), <mutante> on a random one, mw1185, status of HHVM is "active (running)"..
+• 2017-03-24T02:10 <mutante> Fatal error: Class undefined: Wikibase\Client\Hooks\NoLangLinkHandler in /srv/mediawiki/php-1.29.0-wmf....n line 99. Meanwhile Icinga service alerts are flapping from RECOVERY back to CRIT and vice versa.
+• 2017-03-24T02:24 l10nupdate slows down recovery: <MaxSem> !log Killed l10nupdate on tin, was blocking emergency pushes
+• 2017-03-24T02:25 <Krinkle> !log All apaches are back up
+• 2017-03-24T02:25 <eddiegp> works for me again
+• Magic words and hook handlers should be covered by unit tests, even if just for the sake of code coverage with no useful assertions.
+• The autonomous nature of LocalisationUpdate interfered with a critical deployment when least expected. If l10nupdate were done via SWAT or Train deployment by a human, it would not have started on its own while in the the middle of an outage.
+• Scap's monitoring of logstash with canary traffic is insufficient. High profile requests may not hit the canaries most of the time due to caching. Testing a small set of fixed urls on Tin's local Apache (or canaries, or even every server) would give a much stronger confidence in at least basic functionality without question.
+• https://phabricator.wikimedia.org/T161528 (ensure SMS notifications from monitoring for this type of outage)

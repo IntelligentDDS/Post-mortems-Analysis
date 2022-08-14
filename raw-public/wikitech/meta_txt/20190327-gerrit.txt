@@ -1,0 +1,31 @@
+Gerrit's CPU consumption has been elevated for some time, possibly due to having been disabled for some time. Slow pageloads have been noticeable. Today gerrit stopped responding to queries and had to be restarted, after which it worked again.
+• 800 requests returned some 5xx code from apache during the outage
+• Over the past several days there have been CI failures due to git pull timeouts
+• Over the past several days users have reported slow clones and slow patch-uploads
+
+This is a step by step outline of what happened to cause the incident and how it was remedied. Include the lead-up to the incident, as well as any epilogue, and clearly indicate when the user-visible outage began and ended.
+• 2019-03-05: regularly-scheduled disabled to prevent corruption of packfile list due to concurrent access during GC jGit issue 544199
+• approx 2019-03-20: gerrit CPU usage begins to be higher than usual
+• 2019-03-27 18:39: two users report that gerrit seems down OUTAGE BEGINS
+• 18:47: thcipriani attempts to use jstack to gather stack traces; gets error: "Unable to open socket file: target process not responding or HotSpot VM not loaded"; re-runs with Attaching to process ID 13929, please wait... Debugger attached successfully. Server compiler detected. JVM version is 25.181-b13 Deadlock Detection: Can't print deadlocks:Unable to deduce type of thread from address 0x00007f3a5445e800 (expected type JavaThread, CompilerThread, ServiceThread, JvmtiAgentThread, or SurrogateLockerThread)
+
+What weaknesses did we learn about and how can we address them?
+
+The following sub-sections should have a couple brief bullet points each.
+
+What went well?
+• Staggered puppet runs mean that impact for servers was minimal
+• Unclear if our theory of the root cause of the issue is actually true; time will tell
+
+Where did we get lucky?
+• Incident occurred when thcipriani was around
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.
+• phab:T184086 Install gerrit's prometheus_exporter plugin so we have clearer visibility into gerrit internals
+• Now that it should be safe to do so, re-enable regular git gc
+• TODO update gerrit documentation for things to check in case of high-load
+• TODO update gerrit documentation how to grab a stack trace (thcipriani frantically ctrl-r/looking for irc scrollback)

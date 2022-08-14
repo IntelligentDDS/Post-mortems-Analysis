@@ -1,0 +1,335 @@
+# [](//cloud.google.com)
+
+March 11, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Networking](/incident/cloud-networking/19005)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Networking Incident #19005
+
+Google Cloud Networking issue with Cloud Routers in us-east4
+
+Incident began at **2019-03-06 23:37** and ended at **2019-03-07 08:14** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Mar 12, 2019 | 13:43 |
+
+# ISSUE SUMMARY
+
+On Wednesday 6 March 2019, Google Cloud Router and Cloud Interconnect
+experienced a service disruption in the us-east4 region for a duration of 8
+hours and 34 minutes. Cloud VPN configurations with dynamic routes via Cloud
+Router were impacted during this time. We apologize to our customers who were
+impacted by this outage.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 6 March 2019 from 20:17 to Thursday 7 March 04:51 US/Pacific,
+Cloud Router and Cloud Interconnect experienced a service disruption in us-
+east4. Customers utilizing us-east4 were unable to advertise routes to their
+Google Compute Engine (GCE) instances or learn routes from GCE.
+
+Cloud VPN traffic with dynamic routes over Cloud Router and Cloud Interconnect
+in us-east4 was impacted by this service disruption. Cloud VPN traffic over
+pre-configured static routes was unaffected and continued to function without
+disruption during this time.
+
+# ROOT CAUSE
+
+The Cloud Router control plane service assigns Cloud Router tasks to
+individual customers and creates routes between those tasks and customer VPCs.
+Individual Cloud Router tasks establish external BGP sessions and propagate
+routes to and from the control plane service.
+
+A disruption occurred during the rollout of a new version of the control plane
+service in us-east4. This required the control plane to restart from a “cold”
+state requiring it to validate all assignments of the Cloud Router tasks. The
+control plane service did not successfully initialize and it was unable to
+assign individual Cloud Router tasks in order to propagate routes between
+those tasks and customer VPCs. Cloud Router tasks became temporarily
+disassociated with customers and BGP sessions were terminated. As a result,
+Cloud VPN and Cloud Interconnect configurations that were dependent on Cloud
+Router in us-east4 were unavailable during this time.
+
+# REMEDIATION AND PREVENTION
+
+Google engineers were automatically alerted at 20:30 PST on 6 March 2019 and
+immediately began an investigation. A fix for the control plane service was
+tested, integrated, and rolled out on 7 March 2019 at 04:33 US/Pacific. The
+control plane service fully recovered by 05:16 US/Pacific.
+
+We are taking immediate steps to prevent recurrence. The issue that prevented
+the control plane from restarting has been resolved. In order to ensure faster
+incident detection, we are improving control plane service testing, the
+instrumentation of Cloud Router tasks, and the control plane service
+instrumentation.  
+  
+|
+
+# ISSUE SUMMARY
+
+On Wednesday 6 March 2019, Google Cloud Router and Cloud Interconnect
+experienced a service disruption in the us-east4 region for a duration of 8
+hours and 34 minutes. Cloud VPN configurations with dynamic routes via Cloud
+Router were impacted during this time. We apologize to our customers who were
+impacted by this outage.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 6 March 2019 from 20:17 to Thursday 7 March 04:51 US/Pacific,
+Cloud Router and Cloud Interconnect experienced a service disruption in us-
+east4. Customers utilizing us-east4 were unable to advertise routes to their
+Google Compute Engine (GCE) instances or learn routes from GCE.
+
+Cloud VPN traffic with dynamic routes over Cloud Router and Cloud Interconnect
+in us-east4 was impacted by this service disruption. Cloud VPN traffic over
+pre-configured static routes was unaffected and continued to function without
+disruption during this time.
+
+# ROOT CAUSE
+
+The Cloud Router control plane service assigns Cloud Router tasks to
+individual customers and creates routes between those tasks and customer VPCs.
+Individual Cloud Router tasks establish external BGP sessions and propagate
+routes to and from the control plane service.
+
+A disruption occurred during the rollout of a new version of the control plane
+service in us-east4. This required the control plane to restart from a “cold”
+state requiring it to validate all assignments of the Cloud Router tasks. The
+control plane service did not successfully initialize and it was unable to
+assign individual Cloud Router tasks in order to propagate routes between
+those tasks and customer VPCs. Cloud Router tasks became temporarily
+disassociated with customers and BGP sessions were terminated. As a result,
+Cloud VPN and Cloud Interconnect configurations that were dependent on Cloud
+Router in us-east4 were unavailable during this time.
+
+# REMEDIATION AND PREVENTION
+
+Google engineers were automatically alerted at 20:30 PST on 6 March 2019 and
+immediately began an investigation. A fix for the control plane service was
+tested, integrated, and rolled out on 7 March 2019 at 04:33 US/Pacific. The
+control plane service fully recovered by 05:16 US/Pacific.
+
+We are taking immediate steps to prevent recurrence. The issue that prevented
+the control plane from restarting has been resolved. In order to ensure faster
+incident detection, we are improving control plane service testing, the
+instrumentation of Cloud Router tasks, and the control plane service
+instrumentation.  
+  
+| Mar 07, 2019 | 08:14 |
+
+The issue with Google Cloud Routers in us-east4 has been resolved for all
+affected projects as of Thursday, 2019-03-07 7:55 US/Pacific. We will conduct
+an internal investigation of this issue and make appropriate improvements to
+our systems to help prevent or minimize future recurrence. We will provide a
+more detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+|
+
+The issue with Google Cloud Routers in us-east4 has been resolved for all
+affected projects as of Thursday, 2019-03-07 7:55 US/Pacific. We will conduct
+an internal investigation of this issue and make appropriate improvements to
+our systems to help prevent or minimize future recurrence. We will provide a
+more detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+| Mar 07, 2019 | 06:27 |
+
+Our Engineering Team believes they have identified the root cause of the
+errors and provided mitigation. The issue with Cloud Routers in us-east4
+should be resolved for majority of our customers as of Thursday, 2019-03-07
+06:08 US/Pacific. And we expect a full resolution in the near future. We will
+provide another status update by Thursday, 2019-03-07 09:00 US/Pacific with
+current details.  
+  
+|
+
+Our Engineering Team believes they have identified the root cause of the
+errors and provided mitigation. The issue with Cloud Routers in us-east4
+should be resolved for majority of our customers as of Thursday, 2019-03-07
+06:08 US/Pacific. And we expect a full resolution in the near future. We will
+provide another status update by Thursday, 2019-03-07 09:00 US/Pacific with
+current details.  
+  
+| Mar 07, 2019 | 05:08 |
+
+Our Engineering Team believes they have identified the root cause of the
+errors and provided mitigation. The issue with Cloud Routers in us-east4
+should be resolved for majority of our customers as of Thursday, 2019-03-07
+05:00 US/Pacific. And we expect a full resolution in the near future. We will
+provide another status update by Thursday, 2019-03-07 06:30 US/Pacific with
+current details.  
+  
+|
+
+Our Engineering Team believes they have identified the root cause of the
+errors and provided mitigation. The issue with Cloud Routers in us-east4
+should be resolved for majority of our customers as of Thursday, 2019-03-07
+05:00 US/Pacific. And we expect a full resolution in the near future. We will
+provide another status update by Thursday, 2019-03-07 06:30 US/Pacific with
+current details.  
+  
+| Mar 07, 2019 | 04:31 |
+
+We are experiencing an issue with Google Cloud Networking beginning at
+Wednesday, 2019-03-06 21:15 US/Pacific. Current investigation indicates that
+approximately 100% of Cloud Router in us-east4 region are affected by this
+issue. Users will experience BGP sessions down on all of their Cloud Router
+enabled VPN tunnels and Cloud Interconnect VLAN Attachments in us-east4
+region. Further us-east4 subnets might be not redistributed to other regions
+as part of VPC Global routing mode, thus making this region unreachable over
+Interconnect. As a workaround customers can setup a Cloud VPN without Cloud
+Router betwen us-east4 and their on-premise network. Cloud Console might be
+timing out for getting Cloud Router related status information, please use
+gcloud instead. Other regions are not affected. The engineering team is
+investigating the issue and we will provide another status update by Thursday,
+2019-03-07 05:30 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with Google Cloud Networking beginning at
+Wednesday, 2019-03-06 21:15 US/Pacific. Current investigation indicates that
+approximately 100% of Cloud Router in us-east4 region are affected by this
+issue. Users will experience BGP sessions down on all of their Cloud Router
+enabled VPN tunnels and Cloud Interconnect VLAN Attachments in us-east4
+region. Further us-east4 subnets might be not redistributed to other regions
+as part of VPC Global routing mode, thus making this region unreachable over
+Interconnect. As a workaround customers can setup a Cloud VPN without Cloud
+Router betwen us-east4 and their on-premise network. Cloud Console might be
+timing out for getting Cloud Router related status information, please use
+gcloud instead. Other regions are not affected. The engineering team is
+investigating the issue and we will provide another status update by Thursday,
+2019-03-07 05:30 US/Pacific with current details.  
+  
+| Mar 07, 2019 | 03:31 |
+
+We are experiencing an issue with Google Cloud Networking beginning at
+Wednesday, 2019-03-06 21:15 US/Pacific. Current investigation indicates that
+approximately 100% of Cloud Router in us-east4 region are affected by this
+issue. Users will experience BGP sessions down on all of their Cloud Router
+enabled VPN tunnels and Cloud Interconnect links in us-east4 region. Further
+us-east4 subnets might be not redistributed to other regions as part of VPC
+Global routing mode, thus making this region unreachable over Interconnect. As
+a workaround customers can setup a Cloud VPN without Cloud Router betwen us-
+east4 and their on-premise network. Other regions are not affected. The
+engineering team is investigating the issue and we will provide another status
+update by Thursday, 2019-03-07 04:30 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with Google Cloud Networking beginning at
+Wednesday, 2019-03-06 21:15 US/Pacific. Current investigation indicates that
+approximately 100% of Cloud Router in us-east4 region are affected by this
+issue. Users will experience BGP sessions down on all of their Cloud Router
+enabled VPN tunnels and Cloud Interconnect links in us-east4 region. Further
+us-east4 subnets might be not redistributed to other regions as part of VPC
+Global routing mode, thus making this region unreachable over Interconnect. As
+a workaround customers can setup a Cloud VPN without Cloud Router betwen us-
+east4 and their on-premise network. Other regions are not affected. The
+engineering team is investigating the issue and we will provide another status
+update by Thursday, 2019-03-07 04:30 US/Pacific with current details.  
+  
+| Mar 07, 2019 | 02:31 |
+
+We are experiencing an issue with Google Cloud Networking beginning at
+Wednesday, 2019-03-06 21:15 US/Pacific. Current investigation indicates that
+approximately 100% of Cloud Router in us-east4 region are affected by this
+issue. Users will experience BGP sessions down on all of their Cloud Router
+enabled VPN tunnels and Cloud Interconnect links in us-east4 region. Other
+regions are not affected. The engineering team is investigating the issue and
+we will provide another status update by Thursday, 2019-03-07 03:30 US/Pacific
+with current details.  
+  
+|
+
+We are experiencing an issue with Google Cloud Networking beginning at
+Wednesday, 2019-03-06 21:15 US/Pacific. Current investigation indicates that
+approximately 100% of Cloud Router in us-east4 region are affected by this
+issue. Users will experience BGP sessions down on all of their Cloud Router
+enabled VPN tunnels and Cloud Interconnect links in us-east4 region. Other
+regions are not affected. The engineering team is investigating the issue and
+we will provide another status update by Thursday, 2019-03-07 03:30 US/Pacific
+with current details.  
+  
+| Mar 07, 2019 | 00:40 |
+
+We are experiencing an issue with Google Cloud Networking beginning at
+Wednesday, 2019-03-06 21:15 US/Pacific. Current investigation indicates that
+approximately 100% of Cloud Router users in us-east4 region are affected by
+this issue. Users will experience BGP sessions down on all of their Cloud
+Router enabled VPN tunnels and Cloud Interconnect links in us-east4 region.
+Other regions are not affected. We will provide another status update by
+Thursday, 2019-03-07 02:30 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with Google Cloud Networking beginning at
+Wednesday, 2019-03-06 21:15 US/Pacific. Current investigation indicates that
+approximately 100% of Cloud Router users in us-east4 region are affected by
+this issue. Users will experience BGP sessions down on all of their Cloud
+Router enabled VPN tunnels and Cloud Interconnect links in us-east4 region.
+Other regions are not affected. We will provide another status update by
+Thursday, 2019-03-07 02:30 US/Pacific with current details.  
+  
+| Mar 06, 2019 | 23:42 |
+
+We are experiencing an issue with Google Cloud Networking beginning at
+Wednesday, 2019-03-06 21:15 US/Pacific. Current investigation indicates that
+approximately 100% of Cloud Router users in us-east4 region are affected by
+this issue. Users will experience BGP sessions down on all of their Cloud
+Router enabled VPN tunnels and Cloud Interconnect links in us-east4 region.
+Other regions are not affected. We will provide another status update by
+Thursday, 2019-03-07 00:40 US/Pacific with current details  
+  
+|
+
+We are experiencing an issue with Google Cloud Networking beginning at
+Wednesday, 2019-03-06 21:15 US/Pacific. Current investigation indicates that
+approximately 100% of Cloud Router users in us-east4 region are affected by
+this issue. Users will experience BGP sessions down on all of their Cloud
+Router enabled VPN tunnels and Cloud Interconnect links in us-east4 region.
+Other regions are not affected. We will provide another status update by
+Thursday, 2019-03-07 00:40 US/Pacific with current details  
+  
+| Mar 06, 2019 | 23:37 |
+
+We are still seeing errors on the services responsible for the Cloud Router
+BGP issue in us-east4 region. Our Engineering team is still working on the
+mitigation at the moment. We will provide another status update by Thursday,
+2019-03-07 00:40 US/Pacific with current details.  
+  
+|
+
+We are still seeing errors on the services responsible for the Cloud Router
+BGP issue in us-east4 region. Our Engineering team is still working on the
+mitigation at the moment. We will provide another status update by Thursday,
+2019-03-07 00:40 US/Pacific with current details.  
+  
+| Mar 06, 2019 | 23:37 |
+
+We've received a report of an issue with Google Cloud Networking  
+  
+|
+
+We've received a report of an issue with Google Cloud Networking  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

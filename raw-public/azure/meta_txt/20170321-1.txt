@@ -1,0 +1,5 @@
+Microsoft Accounts Experiencing Login Failures 
+Summary of impact: Between 17:30 and 18:55 UTC on 21 Mar 2017, a subset of Azure customers may have experienced intermittent login failures while authenticating with their Microsoft Accounts. This would have impacted the ability for customers to authenticate to their Azure management portal (https://portal.azure.com), PowerShell, or other workflows requiring Microsoft Account authentication. Customers authenticating with Azure Active Directory or organizational accounts were unaffected. Customers who had an active session already authenticated with a Microsoft Account before the impact started would also have been unaffected.   
+Preliminary root cause: Engineers are investigating the full root cause. 
+Mitigation: Engineers deployed a fix to mitigate the issue. Users may need to exit or refresh their browsers in order to successfully sign in. 
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

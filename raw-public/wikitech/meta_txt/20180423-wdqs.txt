@@ -1,0 +1,9 @@
+Wikidata Query Service experienced slow down and timeouts for ~30 minutes
+• 7:39 UTC: icinga alert: LVS HTTP IPv4 on wdqs.svc.eqiad.wmnet is CRITICAL: CRITICAL - Socket timeout after 10 seconds
+• 7:41 UTC: icinga recovery: LVS HTTP IPv4 on wdqs.svc.eqiad.wmnet is OK: HTTP OK: HTTP/1.1 200 OK - 434 bytes in 0.029 second response time
+
+During the slowdown, we see multiple clients being aggressively throttled. This seems to be a consequence of the slowdown, not a cause. While we do have clients who don't backoff when receiving HTTP 429, they seem to be blocked correctly.
+
+GC logs show mostly no GC activity after 7:28 UTC, which indicates that for once, the issue is somewhere else.
+• investigate the cause of the slowdown of wdqs1003 phab:T192759
+• create a dedicated WDQS cluster for internal traffic phab:T178492 (mostly done, still need to move clients to use this new cluster)

@@ -1,0 +1,36 @@
+On July 19th, 2017 at 20:06 (approximately), some LDAP queries to the "Labs" set of LDAP servers started failing. Affected access included various production services behind password authentication (including monitoring tools such as Icinga, Logstash and Tendril), as well as Cloud VPS (SSH logins and sudo commands) and logins to the ToolForge bastions. The ultimate cause was the expiry of the "WMF CA 2014-2017" that was the issuer of a handful of certificates, the most impactful ones being the LDAP server certificates.
+• 20:29 Filippo points out the certificate has expired
+• 20:31 Faidon points out that it's the CA that has expired
+• 20:34 Faidon finds all affected CAs to determine impact; ldap-labs, ldap-corp and labvirt-star
+• 20:36 Chase points out that labvirt-star affect admin-things only
+• 20:51 Faidon creates a new WMF 2017-2020 CA, pushes it to puppet-private and operations/puppet
+• 20:53 Faidon pushes new certificates for ldap-labs.{eqiad,codfw}.wikimedia.org, force-runs puppet on seaborgium
+• 20:56 Daniel runs puppet on einsteinium (Icinga server), which is still broken
+• 21:34 Jaime points out the m5 database shard has issues and went down, probably due to connection overload; asks WMCS team whether it's OK to pool back db1009
+• 21:44 Daniel fixes netmon1001/librenms (re-enable puppet once to get new CA, restart Apache, disable puppet again)
+• 07:48 Filippo restarts diamond on serpens/seaborgium to restore LDAP server data on dashboards
+
+Nodepool maintain a pool of instances on Cloud service. If OpenStack is in trouble, there is quickly no instances left and Jenkins jobs can no more execute. The Nodepool service went down around 00:10, partially recovered at 06:00 and was back operational at 14:00.
+• 00:10 Nodepool can no more delete instances from OpenStack.
+• 00:30 No more instances available CI is on halt
+• 06:00 Nodepool finally manage to have some instances spawned. Probably due to openstack being fixed meanwhile
+• 10:30 The Nodepool pool shows suspicious rate of instances in delete/building mode (Graph)
+• 11:00 T171158 filled. Some instances refuse to spawn: //Failed to allocate the network(s) with error Maximum number of fixed ips exceeded, not rescheduling.//
+• 14:00 Andrew forces refresh the fixed-ip quota for contintcloud tenant. Nodepool pool is fully back
+
+Castor is a central cache, for changes being merged, some jenkins job attempt to rsync to a single instance. If it is not available, the job blocks and instance are kept idling until killed with the job failing due to a timeout.
+
+Antoine has not investigated what happened before 07:09 when the instance got rebooted. After (and maybe before) Jenkins was no more able to SSH into it and thus the castor job could not run.
+
+The instance was not reachable via salt or ssh. Since it is fully puppetized a new one got created and service got restored at 09:03 (with an empty cache).
+• 07:55 Antoine disables Castor for CI, therefore restoring CI services albeit in a degraded mode (no caches) - T171148
+• 09:03 Antoine replaced castor instance with castor02 with an empty cache. Instance was deadlocked (no salt no ssh)
+
+Lot of instances had ssh access broken and puppet broken on most.
+• 14:31 Antoine has finished cleaning out the beta cluster puppet master. Instances recover
+
+T171174 is still ongoing. Any instance that had puppet failing can not be reached by ssh, they need puppet to be fixed the nscld to restart.
+• T171148 - CI jobs are blocked because castor is unreachable
+• T171158 - contintcloud instance refuses to launch due to "Maximum number of fixed ips exceeded
+• T171174 - a lot of beta cluster instances are not reachable over SSH
+• Add an icinga check for that CA so we notice before it expires next time

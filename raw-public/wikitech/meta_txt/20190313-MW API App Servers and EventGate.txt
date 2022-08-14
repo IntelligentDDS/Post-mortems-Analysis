@@ -1,0 +1,16 @@
+STILL A DRAFT waiting for phab to be back...
+
+On March 13, Petr and Otto enabled api-request logging to the new eventgate-analytics service for group1 wikis, bumping up volume to around 4000 messages / second. The HTTP requests from the EventBus extension were set to timeout after 60 seconds, and 1 (some?) out of 20 of the eventgate-analytics pods had errors producing to Kafka. This caused about 1/20th of POST requests to eventgate-analytics to wait 60 seconds before timing out. This caused MW API worker PHP threads to run low, resulting in 500 errors for MW API requests.
+
+The produce errors seemed to be spaced about an hour apart, which leads us to believe that there is a produce volume threshold here that was being reached every hour. We are still investigating the cause of the produce problems.
+
+Additionally, the volume of errors caused a significant increase in logstash messages. Logstash lagged. EventGate was logging the POSTed event data along with the error message, which caused logstash ElasticSearch indexing errors.
+• 20:15 - Icinga Recovery (there are still EventGate and logstash errors, but MW API requests recover)
+• ~20:20 - otto is notified in #mediawiki-security and realizes that the MW API 500s are caused by eventgate-analytics timeouts
+• 20:24 - otto@deploy1001: Synchronized wmf-config/InitialiseSettings.php: Disabling api-request logging to eventgate-analytics for group1 wikis to investigate possible outage
+
+We are still investigating the cause of the EventGate Kafka produce errors, but the MW API and Logstash problems should have been avoidable.
+
+There is no reason that analytics POST requests to eventgate-analytics need to have a 60 timeout. EventGate is configured to have a 'hasty' mode, where POST produce requests will be served without confirmation; i.e. the HTTP client will get a response immediately, and the Kafka produce will happen asynchronously. This should be enabled for analytics events.
+
+Logstash ElasticSearch was erroring because EventGate was including event data as log fields in error messages. Event data should be serialized to a string rather than included as log fields.

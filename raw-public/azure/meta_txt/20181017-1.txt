@@ -1,0 +1,4 @@
+Latency between North Europe and North America
+Summary of impact: Between 14:30 and 16:35 UTC on 17 Oct 2018, a subset of customers with traffic going between the North Europe datacenter and North America regions may have intermittently experienced degraded performance, and in some rare instances network drops or timeouts, when accessing Azure resources.
+Preliminary root cause and mitigation: A fiber cut was determined as the underlying root cause, and engineers balanced traffic to minimize any customer impact. The affected fiber was primarily responsible for replication traffic, so customer impact would have been minimal.
+Next steps: Engineers are engaged as the fiber repair is underway. Once the site is stable and thorough testing has been completed, engineers will route traffic back through the existing paths.

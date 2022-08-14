@@ -1,0 +1,235 @@
+# [](//cloud.google.com)
+
+April 09, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Networking](/incident/cloud-networking/19007)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Networking Incident #19007
+
+Cloud Router issue in us-central1
+
+Incident began at **2019-04-04 15:40** and ended at **2019-04-04 16:50** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Apr 10, 2019 | 18:10 |
+
+# ISSUE SUMMARY
+
+On Thursday 4 April 2019, Cloud VPN configurations with dynamic routes via
+Cloud Router, Cloud Dedicated Interconnect attachments, and Cloud Partner
+Interconnect attachments in us-central1 experienced a service disruption for a
+duration of 70 minutes. We apologize to all our customers who were impacted by
+the incident.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 4 April 2019, from 15:40 to 16:50 US/Pacific, Google Cloud Routers
+and Cloud Interconnect experienced a service disruption in us-central1. Cloud
+Routers for Cloud Interconnect and Cloud VPN were unable to route traffic in
+us-central1 for the duration of the incident. This impacted Cloud Private
+Interconnect attachments and Cloud VPN tunnels using dynamic routing. Global
+routing and Cloud VPN tunnels utilizing static routes were not affected during
+the incident.
+
+# ROOT CAUSE
+
+The Cloud Router control plane service assigns Cloud Router tasks to
+individual customers and creates routes between those tasks and customer VPCs.
+Individual Cloud Router tasks connected to the control plane service are
+responsible for establishing external BGP sessions and propagating routes to
+and from the service.
+
+The disruption was caused by a rollout to the Cloud Router control plane
+service. One part of the control plane rollout process changed the version of
+the service which cloud router tasks connect to, performed through a leader
+election process. When the new version was elected leader, cloud router tasks
+encountered an issue while disassociating with the previous leader. This issue
+caused tasks to stay connected to the previous leader for an extended
+duration. The delay resulted in individual cloud router tasks losing state,
+requiring the system to be initialized from a “cold” state.
+
+Changes in the new version allowed the system to complete initialization
+without any intervention. During initialization, cloud router tasks were
+reassigned to customers and started to re-establish sessions. Until all
+customers’ tasks were reassigned, routes learned from these Cloud Routers were
+not propagated and services dependent on Cloud Routers remained impacted in
+us-central1.
+
+# REMEDIATION AND PREVENTION
+
+Google engineers were alerted to the disruption at 15:41 US/Pacific on 4 April
+2019 and began to investigate immediately. Once the root cause was determined,
+the rollout was paused and control plane tasks running the previous version
+were canceled to ensure that the previous version would not be elected leader.
+The leader task was then restarted to ensure that all cloud router tasks
+connected to the service running the new version. The service then recovered.
+
+The actions we took, based on previous learnings, greatly reduced the duration
+of this disruption; however, to further reduce and prevent recurrence, we are
+changing the logic in both the control plane service and cloud router tasks to
+ensure that when there is a leadership change, cloud router tasks connect to
+the new leader quickly and keep their state.
+
+Should a “cold” state initialization reoccur, we are optimizing the
+initialization logic to finish more quickly, reducing recovery time for this
+type of incident. Furthermore, we will review control planes across Google
+Cloud Platform and analyze how the systems perform under a “cold” start
+scenario to ensure they meet customer requirements.  
+  
+|
+
+# ISSUE SUMMARY
+
+On Thursday 4 April 2019, Cloud VPN configurations with dynamic routes via
+Cloud Router, Cloud Dedicated Interconnect attachments, and Cloud Partner
+Interconnect attachments in us-central1 experienced a service disruption for a
+duration of 70 minutes. We apologize to all our customers who were impacted by
+the incident.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 4 April 2019, from 15:40 to 16:50 US/Pacific, Google Cloud Routers
+and Cloud Interconnect experienced a service disruption in us-central1. Cloud
+Routers for Cloud Interconnect and Cloud VPN were unable to route traffic in
+us-central1 for the duration of the incident. This impacted Cloud Private
+Interconnect attachments and Cloud VPN tunnels using dynamic routing. Global
+routing and Cloud VPN tunnels utilizing static routes were not affected during
+the incident.
+
+# ROOT CAUSE
+
+The Cloud Router control plane service assigns Cloud Router tasks to
+individual customers and creates routes between those tasks and customer VPCs.
+Individual Cloud Router tasks connected to the control plane service are
+responsible for establishing external BGP sessions and propagating routes to
+and from the service.
+
+The disruption was caused by a rollout to the Cloud Router control plane
+service. One part of the control plane rollout process changed the version of
+the service which cloud router tasks connect to, performed through a leader
+election process. When the new version was elected leader, cloud router tasks
+encountered an issue while disassociating with the previous leader. This issue
+caused tasks to stay connected to the previous leader for an extended
+duration. The delay resulted in individual cloud router tasks losing state,
+requiring the system to be initialized from a “cold” state.
+
+Changes in the new version allowed the system to complete initialization
+without any intervention. During initialization, cloud router tasks were
+reassigned to customers and started to re-establish sessions. Until all
+customers’ tasks were reassigned, routes learned from these Cloud Routers were
+not propagated and services dependent on Cloud Routers remained impacted in
+us-central1.
+
+# REMEDIATION AND PREVENTION
+
+Google engineers were alerted to the disruption at 15:41 US/Pacific on 4 April
+2019 and began to investigate immediately. Once the root cause was determined,
+the rollout was paused and control plane tasks running the previous version
+were canceled to ensure that the previous version would not be elected leader.
+The leader task was then restarted to ensure that all cloud router tasks
+connected to the service running the new version. The service then recovered.
+
+The actions we took, based on previous learnings, greatly reduced the duration
+of this disruption; however, to further reduce and prevent recurrence, we are
+changing the logic in both the control plane service and cloud router tasks to
+ensure that when there is a leadership change, cloud router tasks connect to
+the new leader quickly and keep their state.
+
+Should a “cold” state initialization reoccur, we are optimizing the
+initialization logic to finish more quickly, reducing recovery time for this
+type of incident. Furthermore, we will review control planes across Google
+Cloud Platform and analyze how the systems perform under a “cold” start
+scenario to ensure they meet customer requirements.  
+  
+| Apr 04, 2019 | 18:10 |
+
+The issue with Cloud Router in us-central1 should be resolved for all affected
+projects. The engineering team is the process of making the appropriate
+improvements to our systems to help prevent or minimize future recurrence.  
+  
+|
+
+The issue with Cloud Router in us-central1 should be resolved for all affected
+projects. The engineering team is the process of making the appropriate
+improvements to our systems to help prevent or minimize future recurrence.  
+  
+| Apr 04, 2019 | 17:18 |
+
+The issue with Cloud Router in us-central1 has been resolved for all affected
+projects as of Thursday, 2019-04-04 17:00 US/Pacific. Our engineering team is
+continuing to work on this issue to prevent the risk of a recurrence.
+
+We will provide another update by Thursday, 2019-04-04 18:00 US/Pacific  
+  
+|
+
+The issue with Cloud Router in us-central1 has been resolved for all affected
+projects as of Thursday, 2019-04-04 17:00 US/Pacific. Our engineering team is
+continuing to work on this issue to prevent the risk of a recurrence.
+
+We will provide another update by Thursday, 2019-04-04 18:00 US/Pacific  
+  
+| Apr 04, 2019 | 16:59 |
+
+Cloud Router service is now working normally for most projects. Our
+engineering team continues work to mitigate for the remaining projects
+impacted. We will provide another status update by Thursday, 2019-04-04 17:30
+US/Pacific with current details.  
+  
+|
+
+Cloud Router service is now working normally for most projects. Our
+engineering team continues work to mitigate for the remaining projects
+impacted. We will provide another status update by Thursday, 2019-04-04 17:30
+US/Pacific with current details.  
+  
+| Apr 04, 2019 | 16:30 |
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Thursday, 2019-04-04 17:00 US/Pacific with current
+details.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Thursday, 2019-04-04 17:00 US/Pacific with current
+details.  
+  
+| Apr 04, 2019 | 16:07 |
+
+We are investigating an issue with Cloud Router in us-central1. We will
+provide more information by Thursday, 2019-04-04 16:30 US/Pacific.  
+  
+|
+
+We are investigating an issue with Cloud Router in us-central1. We will
+provide more information by Thursday, 2019-04-04 16:30 US/Pacific.  
+  
+| Apr 04, 2019 | 16:07 |
+
+Cloud Router issue in us-central1  
+  
+|
+
+Cloud Router issue in us-central1  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

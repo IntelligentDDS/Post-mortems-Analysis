@@ -1,0 +1,9 @@
+RCA - Azure CDN - Connectivity Issues
+Summary of impact: Between 14:05 and 19:00 UTC on 08 Aug 2019, you were identified as a customer using Akamai CDN who may have experienced HTTP 504 (Gateway Timeout) errors when attempting to connect to resources.
+Root cause: Engineers determined that a network update to add new peer servers to the US East region caused connections to fail between Akamai CDN and Azure resources. A network filtering policy on a redundant Microsoft peering device was improperly configured, which caused traffic sourced from Akamai CDN and destined for origins hosted on Azure storage in East US and East US 2 to be intermittently dropped.
+Mitigation: Engineers rolled back the updates to mitigate the issue. After the root cause was identified and the network filtering policy was updated and consistent across the pair of devices, traffic was successfully routed over this path without drops.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Inventory device fleet to ensure no further inconsistencies exist for network filtering policies
+Update device configuration drift platform to account network filtering policy inconsistencies across device pairs
+Add additional automation and checks to update network filtering policies across device fleet to remove the risk of inconsistencies
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/KK63-J98

@@ -1,0 +1,167 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/15057)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #15057
+
+Google Compute Engine issue with newly created instances
+
+Incident began at **2015-10-27 22:05** and ended at **2015-10-27 23:15** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Oct 30, 2015 | 13:26 |
+
+SUMMARY:
+
+On Tuesday 27 October 2015, Google Compute Engine instances created within a
+90 minute period in us-central1 and asia-east1 regions took longer than usual
+to obtain external network connectivity. Existing instances in the specified
+regions were not affected and continued to be available. We know how important
+it is to be able to create instances both for new deployments and scaling
+existing deployments, and we apologize for the impairment of these actions.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday 27 October 2015 GCE instances created between 21:44 and 23:13 PDT
+in the us-central1 and asia-east1 regions took over 5 minutes before they
+started to receive traffic via their external IP address or network load
+balancer. Existing instances continued to operate without any issue, and there
+was no effect on internal networking for any instance.
+
+ROOT CAUSE:
+
+This issue was triggered by rapid changes in external traffic patterns. The
+networking infrastructure automatically reconfigured itself to adapt to the
+changes, but the reconfiguration involved processing a substantial queue of
+modifications. The network registration of new GCE instances was required to
+wait on events in this queue, leading to delays in registration.
+
+REMEDIATION AND PREVENTION:
+
+This issue was resolved as the backlog of network configuration changes was
+automatically processed.
+
+Google engineers will decouple the GCE networking operations and management
+systems that were involved in the issue such that a backlog in one system does
+not affect the other.
+
+Although the issue was detected promptly, Google engineers have identified
+opportunities to further improve internal monitoring and alerting for related
+issues.  
+  
+|
+
+SUMMARY:
+
+On Tuesday 27 October 2015, Google Compute Engine instances created within a
+90 minute period in us-central1 and asia-east1 regions took longer than usual
+to obtain external network connectivity. Existing instances in the specified
+regions were not affected and continued to be available. We know how important
+it is to be able to create instances both for new deployments and scaling
+existing deployments, and we apologize for the impairment of these actions.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday 27 October 2015 GCE instances created between 21:44 and 23:13 PDT
+in the us-central1 and asia-east1 regions took over 5 minutes before they
+started to receive traffic via their external IP address or network load
+balancer. Existing instances continued to operate without any issue, and there
+was no effect on internal networking for any instance.
+
+ROOT CAUSE:
+
+This issue was triggered by rapid changes in external traffic patterns. The
+networking infrastructure automatically reconfigured itself to adapt to the
+changes, but the reconfiguration involved processing a substantial queue of
+modifications. The network registration of new GCE instances was required to
+wait on events in this queue, leading to delays in registration.
+
+REMEDIATION AND PREVENTION:
+
+This issue was resolved as the backlog of network configuration changes was
+automatically processed.
+
+Google engineers will decouple the GCE networking operations and management
+systems that were involved in the issue such that a backlog in one system does
+not affect the other.
+
+Although the issue was detected promptly, Google engineers have identified
+opportunities to further improve internal monitoring and alerting for related
+issues.  
+  
+| Oct 27, 2015 | 23:50 |
+
+The issue with Google Compute Engine for newly created instances should have
+been resolved for all affected regions (us-central1 and asia-east1) as of
+23:15 US/Pacific. We will conduct an internal investigation of this issue and
+make appropriate improvements to our systems to prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+|
+
+The issue with Google Compute Engine for newly created instances should have
+been resolved for all affected regions (us-central1 and asia-east1) as of
+23:15 US/Pacific. We will conduct an internal investigation of this issue and
+make appropriate improvements to our systems to prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+| Oct 27, 2015 | 23:20 |
+
+We are experiencing an issue with Google Compute Engine for newly created
+instances, being delayed to become accessible, beginning at Tuesday,
+2015-10-27 22:05 US/Pacific.
+
+Current data indicates that zones us-central1 and asia-east1 are affected by
+this issue.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 23:50 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an issue with Google Compute Engine for newly created
+instances, being delayed to become accessible, beginning at Tuesday,
+2015-10-27 22:05 US/Pacific.
+
+Current data indicates that zones us-central1 and asia-east1 are affected by
+this issue.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 23:50 US/Pacific with current
+details.  
+  
+| Oct 27, 2015 | 23:16 |
+
+We are investigating reports of an issue with Google Compute Engine. We will
+provide more information by 23:20 US/Pacific.  
+  
+|
+
+We are investigating reports of an issue with Google Compute Engine. We will
+provide more information by 23:20 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

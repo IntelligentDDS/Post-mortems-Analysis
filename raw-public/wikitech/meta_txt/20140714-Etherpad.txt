@@ -1,0 +1,12 @@
+Someone ran some sort of scanner script against this service, causing the backend daemon to crash twice. Service recovered on its own, total downtime ~10 mins.
+• 19:48 Apparent vulnerability scan from 83.206.173.212 (212-173.206-83.static-ip.oleane.fr.) begins, about 2000 404s seen in zirconium:/var/log/apache/error.log:
+• 19:54: Greg-g reports on IRC that etherpad.wikimedia.org is down, giving a "Service Temporarily Unavailable" message.
+• 20:01: Service is available again
+• Icinga didn't detect this outage because it only checks for a running process rather than an HTTP 200 response from port 9001. Plus since Etherpad auto-restarted, Icinga wouldn't have caught it anyway unless itchecked for a PID change.
+• Etherpad is backed by db1001, no significant impact observed in Ganglia
+• Unclear what HTTP response code was sent during the outage
+• We are already running the newest release of Etherpad-lite, 1.4.0. No mention of security concerns from upstream https://github.com/ether/etherpad-lite/ (though they do have 255 issues open!), no relevant entries in CVE DB.
+
+The above has been done. The new package 1.4.0-2 now has logrotate support and now etherpad-lite finally no longer uses console logging but logs directly to /var/log. Relevant changes are: https://gerrit.wikimedia.org/r/#/c/151115/ and https://gerrit.wikimedia.org/r/#/c/151106/ . Due to the migration to upstart that was adder in the latter, downtime due to the software malfunctioning will be shorter (faster restarts by upstart)
+
+The above has been reported in https://github.com/ether/etherpad-lite/issues/2215 . No reaction after 2 days

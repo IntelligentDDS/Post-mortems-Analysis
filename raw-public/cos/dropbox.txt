@@ -1,0 +1,109 @@
+
+[01/10/2013][Client Syncing, and Uploading via the website, will be affected for approximately the next hour. Thank you for your patience.]
+http://techcrunch.com/2013/01/10/dropbox-experiencing-syncing-issues-on-the-web-and-desktop-but-your-files-are-safe/
+http://talkincloud.com/cloud-storage/dropbox-outage-represents-first-major-cloud-outage-2013
+http://www.zdnet.com/dropbox-users-experiencing-upload-problems-aws-questioned-again-7000009680/
+http://blog.vembu.com/dropbox-started-with-a-snap/#more-4607
+r-unk
+t-15h43m
+i-op
+p-no
+
+[01/10/2014][Outage post-mortem]
+http://www.infoworld.com/article/2606209/cloud-computing/162288-The-worst-cloud-outages-of-2014-so-far.html#slide2
+http://www.infoworld.com/article/2609620/encryption/dropbox-glitch-makes-a-strong-case-for-encryption-by-default.html
+http://techcrunch.com/2014/01/12/dropbox-outage-internal-maintenance/
+http://appleinsider.com/articles/14/01/11/dropbox-denies-hacker-breach-responsible-for-hours-long-outage
+http://thenextweb.com/insider/2014/01/11/dropbox-is-down-due-to-routine-maintenance-issue-not-security-breach/
+r-upgrade
+r-bug
+t-1d23h10m
+i-down
+f-restore
+p-no
+
+[03/14/2014][The worst cloud outages of 2014 (so far)]
+http://www.infoworld.com/article/2606209/cloud-computing/162288-The-worst-cloud-outages-of-2014-so-far.html#slide4
+http://www.zdnet.com/article/dropbox-hit-by-outage-file-sync-busted/
+http://www.thewhir.com/web-hosting-news/dropbox-suffers-temporary-outage-impacting-file-sharing-synchronizing
+r-unk
+t-40m
+i-down
+p-no
+
+[04/21/2011][Amazon’s ec2 cloud computing service down the fourth day]
+http://cloud-computing-economics.com/business-benefits-applications/amazons-ec2-cloud-computing-service-fourth-day/
+http://www.infoq.com/news/2011/04/Amazon-EC2-Outage-Explained
+http://aws.amazon.com/message/65648/
+r-cross
+t-2d5h28m
+i-down
+f-cross
+p-no
+
+[05/30/2013][Dropbox Currently Experiencing Widespread Service Outage]
+http://techcrunch.com/2013/05/30/dropbox-currently-experiencing-widespread-service-outage/
+http://www.zdnet.com/dropbox-suffers-global-outage-files-safe-sync-broken-7000016126/
+http://www.cio.com.au/article/463308/dropbox_goes_down_more_than_an_hour/
+http://blog.vembu.com/2013/05/
+http://mashable.com/2013/05/30/dropbox-outage/
+r-unk
+t-90m
+i-down
+p-no
+
+[06/14/2012][Amazon Web Services suffers partial outage]
+http://www.zdnet.com/blog/btl/amazon-web-services-suffers-partial-outage/79981
+http://gigaom.com/2012/06/14/did-amazons-web-services-go-down/
+http://www.quora.com/What-caused-the-AWS-us-east-1-outage-on-June-14-2012
+http://vmblog.com/archive/2012/06/19/aws-outage-thoughts-on-disaster-recovery-policies.aspx#.VA7ObmCSzeQ
+http://www.cloudcow.com/content/aws-outage-%E2%80%93-thoughts-disaster-recovery-policies
+t-4h
+r-cross
+i-down
+f-cross
+p-no
+
+[06/19/2011][Yesterday's Authentication Bug]
+http://www.zdnet.com/article/why-i-switched-from-dropbox-to-windows-live-mesh/
+http://www.zdnet.com/article/did-the-dropbox-security-lapse-poison-the-well-for-icloud/
+http://techcrunch.com/2011/06/20/dropbox-security-bug-made-passwords-optional-for-four-hours/
+r-upgrade
+t-3h52m
+i-op
+f-fix
+p-no
+
+[07/31/2012][Dropbox gets hacked ... again]
+http://www.zdnet.com/article/dropbox-gets-hacked-again/
+http://techcrunch.com/2012/07/17/dropbox-users-targeted-by-spam-possible-address-leak-to-blame/
+r-sec
+t-unk
+p-no
+f-fix
+
+[08/21/2013][Dropbox Users Experiencing Slowness & Inaccessible Files]
+http://techcrunch.com/2012/08/21/dropbox-users-experiencing-slowness-inaccessible-files/
+t-9h
+i-op
+p-no
+f-fix
+
+[08/30/2015][Dropbox DROPS BOX as service GOES TITSUP worldwide]
+http://www.theregister.co.uk/2015/08/30/dropbox_outage/
+http://www.fiercecio.com/story/dropbox-suffers-outage-over-weekend/2015-08-31
+http://webscripts.softpedia.com/blog/botched-maintenance-leaves-dropbox-offline-for-a-few-hours-490462.shtml
+r-upgrade
+t-unk
+i-down
+p-no
+
+[10/26/2012][Google App Engine Back Up After Major Service Disruption – Dropbox and Tumblr Also Suffer]
+http://techcrunch.com/2012/10/26/google-app-engine-down-with-major-service-disruption-as-dropbox-and-tumblr-also-suffer/
+http://thenextweb.com/insider/2012/10/26/major-sites-and-platforms-experienpcing-outages-today-including-dropbox-and-google-app-engine/
+http://techfruit.com/2012/10/26/its-a-bad-day-for-the-cloud-as-dropbox-google-app-engine-and-tumblr-go-down/
+r-unk
+t-unk
+i-down
+p-no
+

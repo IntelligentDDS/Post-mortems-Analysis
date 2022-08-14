@@ -1,0 +1,246 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+July 14, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Storage](/incident/storage/17002)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Storage Incident #17002
+
+We are investigating an issue with Google Cloud Storage. We will provide more
+information by 18:30 US/Pacific.
+
+Incident began at **2017-07-06 15:15** and ended at **2017-07-06 18:29** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jul 14, 2017 | 14:27 |
+
+ISSUE SUMMARY
+
+On Thursday, 6 July 2017, requests to Google Cloud Storage (GCS) JSON API
+experienced elevated error rates for a period of 3 hours and 15 minutes. The
+GCS XML API was not affected.
+
+Requests to www.googleapis.com that used OAuth2 credentials experienced
+elevated error rates for 29 minutes, which directly caused higher failure
+rates for other products, including Firebase and Google Cloud Functions.
+
+If your service or application’s was affected by this issue, we sincerely
+apologize. We understand the importance of reliable APIs and are currently
+taking steps to prevent future recurrences of this issue.
+
+DETAILED DESCRIPTION OF IMPACT
+
+Starting on Thursday, 6 July 2017 at 15:15 PDT and continuing for 60 minutes,
+requests to the GCS JSON API experienced elevated error rates that peaked at
+40%. At 16:15 error rates returned to normal. Then from 16:51 to 18:30, the
+JSON API request error rate peaked at a 97%.
+
+Requests to www.googleapis.com that used OAuth2 credentials experienced an 82%
+error rate from 15:35 to 16:04, which many services rely on for tokens,
+userinfo and token information.
+
+Firebase Hosting and Functions was impacted from 15:15 to 18:30, during which
+deployment error rates reached a 99% failure rate due to a joint dependence on
+GCS uploads and OAuth2.
+
+Google Cloud Functions (GCF) deployments experienced a 1.2% failure rate when
+attempting a deployment. Other services that rely on Google APIs experienced
+<1% error rates.
+
+Most HTTP responses returned to customers were of type “503 Service
+Unavailable.”
+
+The issue was resolved at 18:31 when normal service was restored.
+
+ROOT CAUSE
+
+A low-level software defect in an internal API service that handles GCS JSON
+requests caused infrequent memory-related process terminations. These process
+terminations increased as a result of a large volume in requests to the GCS
+Transfer Service, which uses the same internal API service as the GCS JSON
+API. This caused an increased rate of 503 responses for GCS JSON API requests
+for 3.25 hours.
+
+While attempting to fix the latency, the traffic for GCS JSON requests was
+isolated from other API traffic. After the traffic was isolated, attempts to
+mitigate the problem caused the error rate to increase to 97%. The problem was
+finally fixed when a further configuration change fixed the process
+terminations.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were paged by automated monitoring, and began troubleshooting
+before the issue symptoms were visible to customers at 15:15. Initially a
+configuration issue caused traffic to be moved away from dedicated clusters
+that were available to isolate the root cause. However, engineers immediately
+detected the high error rate and moved traffic to the dedicated clusters. This
+decreased the error rates experienced by customers. A follow-on configuration
+change pushed by Google engineers stopped new process terminations, which
+allowed the backends to heal, and normal service was restored.
+
+To prevent further issues of this type, we are re-examining the best way to
+mitigate the impact of memory-related process terminations, so that they do
+not impact serving traffic. We are also investigating methods of isolating
+problematic traffic patterns to subsets of backends, to avoid widespread
+failures.
+
+We apologize for the impact that this incident had on your services,
+deployments, and API calls. We will fix the underlying issue that started the
+initial issue, and take this opportunity to make other changes to prevent this
+issue from occurring again.  
+  
+|
+
+ISSUE SUMMARY
+
+On Thursday, 6 July 2017, requests to Google Cloud Storage (GCS) JSON API
+experienced elevated error rates for a period of 3 hours and 15 minutes. The
+GCS XML API was not affected.
+
+Requests to www.googleapis.com that used OAuth2 credentials experienced
+elevated error rates for 29 minutes, which directly caused higher failure
+rates for other products, including Firebase and Google Cloud Functions.
+
+If your service or application’s was affected by this issue, we sincerely
+apologize. We understand the importance of reliable APIs and are currently
+taking steps to prevent future recurrences of this issue.
+
+DETAILED DESCRIPTION OF IMPACT
+
+Starting on Thursday, 6 July 2017 at 15:15 PDT and continuing for 60 minutes,
+requests to the GCS JSON API experienced elevated error rates that peaked at
+40%. At 16:15 error rates returned to normal. Then from 16:51 to 18:30, the
+JSON API request error rate peaked at a 97%.
+
+Requests to www.googleapis.com that used OAuth2 credentials experienced an 82%
+error rate from 15:35 to 16:04, which many services rely on for tokens,
+userinfo and token information.
+
+Firebase Hosting and Functions was impacted from 15:15 to 18:30, during which
+deployment error rates reached a 99% failure rate due to a joint dependence on
+GCS uploads and OAuth2.
+
+Google Cloud Functions (GCF) deployments experienced a 1.2% failure rate when
+attempting a deployment. Other services that rely on Google APIs experienced
+<1% error rates.
+
+Most HTTP responses returned to customers were of type “503 Service
+Unavailable.”
+
+The issue was resolved at 18:31 when normal service was restored.
+
+ROOT CAUSE
+
+A low-level software defect in an internal API service that handles GCS JSON
+requests caused infrequent memory-related process terminations. These process
+terminations increased as a result of a large volume in requests to the GCS
+Transfer Service, which uses the same internal API service as the GCS JSON
+API. This caused an increased rate of 503 responses for GCS JSON API requests
+for 3.25 hours.
+
+While attempting to fix the latency, the traffic for GCS JSON requests was
+isolated from other API traffic. After the traffic was isolated, attempts to
+mitigate the problem caused the error rate to increase to 97%. The problem was
+finally fixed when a further configuration change fixed the process
+terminations.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were paged by automated monitoring, and began troubleshooting
+before the issue symptoms were visible to customers at 15:15. Initially a
+configuration issue caused traffic to be moved away from dedicated clusters
+that were available to isolate the root cause. However, engineers immediately
+detected the high error rate and moved traffic to the dedicated clusters. This
+decreased the error rates experienced by customers. A follow-on configuration
+change pushed by Google engineers stopped new process terminations, which
+allowed the backends to heal, and normal service was restored.
+
+To prevent further issues of this type, we are re-examining the best way to
+mitigate the impact of memory-related process terminations, so that they do
+not impact serving traffic. We are also investigating methods of isolating
+problematic traffic patterns to subsets of backends, to avoid widespread
+failures.
+
+We apologize for the impact that this incident had on your services,
+deployments, and API calls. We will fix the underlying issue that started the
+initial issue, and take this opportunity to make other changes to prevent this
+issue from occurring again.  
+  
+| Jul 06, 2017 | 19:00 |
+
+The issue with Google Cloud Storage - JSON API 5xx errors has been resolved
+for all affected projects as of 18:29 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to help prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+|
+
+The issue with Google Cloud Storage - JSON API 5xx errors has been resolved
+for all affected projects as of 18:29 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to help prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+| Jul 06, 2017 | 18:27 |
+
+The issue with Google Cloud Storage - JSON API should be resolved for the
+majority of projects and we expect a full resolution in the near future. We
+will provide another status update by 19:00 US/Pacific with current details.  
+  
+|
+
+The issue with Google Cloud Storage - JSON API should be resolved for the
+majority of projects and we expect a full resolution in the near future. We
+will provide another status update by 19:00 US/Pacific with current details.  
+  
+| Jul 06, 2017 | 17:50 |
+
+We are experiencing an intermittent issue with Google Cloud Storage - JSON API
+requests are failing with 5XX errors (XML API is unaffected) beginning at
+Thursday, 2017-07-06 16:50:40 US/Pacific. Current data indicates that
+approximately 70% of requests globally are affected by this issue. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 18:30 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an intermittent issue with Google Cloud Storage - JSON API
+requests are failing with 5XX errors (XML API is unaffected) beginning at
+Thursday, 2017-07-06 16:50:40 US/Pacific. Current data indicates that
+approximately 70% of requests globally are affected by this issue. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 18:30 US/Pacific with current
+details.  
+  
+| Jul 06, 2017 | 17:34 |
+
+We are investigating an issue with Google Cloud Storage. We will provide more
+information by 18:30 US/Pacific.  
+  
+|
+
+We are investigating an issue with Google Cloud Storage. We will provide more
+information by 18:30 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

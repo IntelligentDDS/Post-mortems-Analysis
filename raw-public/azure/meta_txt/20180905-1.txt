@@ -1,0 +1,7 @@
+RCA - Azure Active Directory - Multiple Regions
+Summary of impact: Between as early as 09:00 UTC on 05 Sept 2018 and as late as 05:50 UTC on 10 Sept 2018, a small subset of Azure Active Directory (AAD) customers may have experienced intermittent authentication failures when connecting to resources in the following regions: Japan, India, Australia, South Brazil, and East US 2.
+Root cause and mitigation: A recent change to the Azure VM platform resulted in interference with the HTTP settings used by the Azure Active Directory (AAD) proxy service. This led to the failure of a subset of HTTP requests arriving at the affected AAD regions. The issue was initially mitigated by rebooting the proxy servers in the affected regions and reverting to the required AAD settings. The issue was finally resolved by deploying an AAD proxy configuration change that prevented the interference from the platform change.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future:
+1. Continuous improvement to the communication and change management processes as related to the Azure platform updates.
+2. Continuous improvement to AAD proxy monitoring and alerting mechanisms in order to reduce incidents’ impact and duration.
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/56R4-9BG

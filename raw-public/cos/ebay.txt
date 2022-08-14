@@ -1,0 +1,94 @@
+
+[02/22/2013][eBay Experiences Search Outage Friday Morning]
+http://www.ecommercebytes.com/C/blog/blog.pl?/pl/2013/2/1361543038.html
+r-unk
+i-op
+t-1h34m
+p-no
+
+[07/30/2014][eBay is down, it’s not just you]
+http://www.slashgear.com/ebay-is-down-its-not-just-you-30339330/
+r-unk
+i-down
+t-1h
+p-no
+
+[07/31/2014][eBay Denies Outage Days after Widespread Accessibility Issues]
+http://www.ecommercebytes.com/C/blog/blog.pl?/pl/2014/8/1406995571.html
+http://www2.ebay.com/aw/core/201407301608171.html
+http://www2.ebay.com/aw/core/201408012110171.html
+r-unk
+i-down
+t-15m
+p-no
+
+[08/12/2014][More embarrassment for eBay as it experiences 10th outage this year]
+http://www.itproportal.com/2014/08/12/is-ebay-down-auction-site-suffers-10th-outage-in-a-year/
+http://www.independent.co.uk/life-style/gadgets-and-tech/ebay-down-in-europe-auction-site-back-online-after-suffering-tenth-major-outage-this-year-9665315.html
+http://www.itproportal.com/2014/08/13/ebay-amazon-and-linkedin-taken-down-by-huge-worldwide-internet-outage-ipv4-ipv6-bgp-routers-address-exhaustion/
+http://www.itproportal.com/2014/08/12/is-ebay-down-auction-site-suffers-10th-outage-in-a-year/#ixzz3x5qNaaAI
+r-fail
+i-down
+t-225m
+p-no
+
+[08/22/2013][A message regarding last night’s site outage]
+http://announcements.ebay.com/2013/08/a-message-regarding-last-nights-site-outage/
+http://www.ecommercebytes.com/cab/abn/y13/m08/i23/s04
+r-upgrade
+i-down
+t-375m
+p-no
+
+[09/03/2014][eBay Spends Anniversary Fighting Severe Technical Issues]
+http://www.ecommercebytes.com/cab/abn/y14/m09/i04/s01
+http://www2.ebay.com/aw/uk/201409031035252.html
+r-upgrade
+i-op
+t-48m
+p-yes
+
+[09/14/2014][A Message From Sri Shivananda, VP of eBay’s Global Platform & Infrastructure Group]
+http://announcements.ebay.com/2014/09/a-message-from-sri-shivananda-vp-of-ebays-global-platform-infrastructure-group/
+http://www.theregister.co.uk/2014/09/14/ebay_outage/
+http://www.ecommercebytes.com/C/blog/blog.pl?/pl/2014/9/1410692548.html
+http://www.ecommercebytes.com/cab/abn/y14/m09/i15/s01
+r-fail
+i-down
+t-3h40m
+f-fix
+p-no
+
+[10/10/2014][Breaking News: Another eBay Outage Hits the Site]
+http://www.ecommercebytes.com/C/blog/blog.pl?/pl/2014/10/1412979130.html
+r-unk
+i-op
+t-2h
+p-no
+
+[10/29/2015][Thursday's eBay and PayPal Outages Prove Costly to Sellers]
+http://www.ecommercebytes.com/cab/abn/y15/m11/i02/s01
+http://www.ecommercebytes.com/cab/abn/y15/m11/i16/s01
+http://fortune.com/2015/10/30/paypal-outage-sales/
+r-cross
+t-3h1m
+i-down
+p-no
+
+[11/10/2014][eBay Experiences Yet Another Outage]
+http://www.ecommercebytes.com/C/abblog/blog.pl?/pl/2014/11/1415656224.html
+http://www2.ebay.com/aw/core/201411100749341.html
+r-fail
+i-down
+t-100m
+p-no
+f-add
+
+[11/21/2009][Major Search Outage Leaves eBay Shoppers Empty-Handed]
+http://www.ecommercebytes.com/C/abblog/blog.pl?/pl/2009/11/1258839253.html
+r-unk
+i-op
+t-1d20h36m
+f-fix
+p-no
+

@@ -1,0 +1,11 @@
+Users saw either our standard error page from the caching layer or "Failed to `proc_open()`: proc_open() expects parameter 2 to be array, unknown given"
+
+The issue was fixed about 6 minutes later after restarting httpd.
+• 16:51 <+icinga-wm> PROBLEM - https://phabricator.wikimedia.org on phab1001 is CRITICAL: HTTP CRITICAL: HTTP/1.1 503 Backend fetch failed - 2426 bytes in 2.329 second response time
+• 16:57 <+icinga-wm> RECOVERY - https://phabricator.wikimedia.org on phab1001 is OK: HTTP OK: HTTP/1.1 200 OK - 31921 bytes in 0.225 second response time
+• There is a deadlock bug in PHP 5.6 which is triggered by Phabricator, leading to a deadlock in malloc as shown by this stack trace.
+• The deadlock causes apache to slowly leak worker processes until the pool is filled some other system is exhausted.
+• Until we can work around the bug or upgrade to a newer version of php, we will have to periodically restart apache on phabricator servers.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+• Upgrade phabricator to PHP 7.1 as soon as it is practical to do so. phab:T160714

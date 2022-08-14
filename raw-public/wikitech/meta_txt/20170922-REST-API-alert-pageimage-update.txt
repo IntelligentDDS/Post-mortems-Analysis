@@ -1,0 +1,13 @@
+The pageimage property of the Barack Obama page disappeared after a quick vandalism revert. This caused it to go missing in the action API response, which in turn triggered a monitoring check on the REST API, which is using the Obama page, and expects a thumbnail (based on pageimage) to be present.
+
+Impact: None beyond the scary alert, and temporary loss of the thumbnail for the Barack Obama article.
+• 18:32:46 UTC: REST API alerts go off, indicating /api/rest_v1/page/summary/{title} (Get summary from storage) is CRITICAL: Test Get summary from storage responds with malformed body (AttributeError: NoneType object has no attribute get)
+• 19:10:00 UTC Daniel calls Eric (PTO) and Gabriel (who was out on lunch). Gabriel starts investigating.
+• 19:15 UTC: Gabriel determined that no deploy had happened, and that the main users of the summary end point are working correctly. Stephen Niedzelinsky double checked correct operation of the page preview web feature and app. The missing properties are optional in the response schema, so all clients are expected to handle missing thumbnails.
+• 19:38 UTC: Gabriel notices that "thumbnail" and "originalimage" properties are missing from the tested response, but are expected by the related spec-driven check.
+• 19:57 UTC: Gabriel acks the alerts. Agreement that the issue is not critical.
+• 20:12 UTC: Bernd notices that the pageimage property in the action API response for Barack Obama is empty. This is the page used for monitoring. There had been vandalism & a quick revert on that page just before alerts started.
+• 20:30:26 UTC: Gabriel makes a minor edit on the Obama page, and REST API alerts recover immediately.
+• PageImage updates are not as reliable as they could be:
+• We might want to switch our monitoring to a page that is less likely to break from vandalism.
+• See if we can make REST API monitoring more reliable, and make error messages more specific about which property is missing.

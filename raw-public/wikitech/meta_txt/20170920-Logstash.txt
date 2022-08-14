@@ -1,0 +1,8 @@
+Logstash stopped processing logs while cirrus elasticsearch cluster (eqiad) was down for maintenance.
+• Sept 20, 15:48 to 16:44: logs collected drop to almost zero (see graph)
+• Sept 20, 16:42: rolling restart of the logstash collectors (this happened at roughly the same time as elasticsearch recovery, so it might have been useless)
+
+The only identified link between logstash and elasticsearch cluster is the logging of API features. Logs are collected by logstash and forwarded not to the logstash elasticsearch cluster, but to the cirrus elasticsearch cluster, presumably for consumption by https://en.wikipedia.org/wiki/Special:ApiFeatureUsage. While the cirrus cluster was down, we saw timeouts in the logstash logs. The hypothesis is that this blocked enough threads that the logstash ingester threadpool was saturated and basically stopped processing anything.
+
+It is not clear that lgostash provides way to implement a circuit breaker in case elasticsearch is down. The option might be useful.
+• More investigation should be done Task T176335

@@ -1,0 +1,12 @@
+Between Aug 18th and Aug 20th, a patch was deployed to some wikis (group0 and group1 deployment groups) on the WMF cluster that caused MediaWiki to report IP addresses of editors who cause a category to be added to a page under certain conditions. When the category was added as part of a parser function triggered from a subsequent call to the purge API, the recent changes log reported the IP address from which the purge originated, even when called by a logged in editor. The proximity in the recent changes log of these changes to other edits could have allowed an observer to associate the IP address and username of an editor. The publication of this combination of data is considered a violation of our privacy policy.
+
+Once the issue was confirmed and problem patch identified, the Security team immediately began the process of reverting the feature, and deleting all recent changes entries created by the patch to prevent leaking this private data further.
+
+During the time that the patch was deployed, the API call that could have triggered this leak of private information was called 340 times (326 times on commons.wikimedia.org, 10 times on pl.wiktionary.org, and 4 times on en.wiktionary.org) by 69 different IP addresses.
+• 2015-08-18 18:30 UTC: 1.26wmf19 (which contained Gerrit ) was deployed to group0 wikis (testwiki, test2wiki, mediawikiwiki, zerowiki, testwikidatawiki)
+
+The patch that caused the issue was created, reviewed, and merged by experienced staff and volunteer developers, yet each of these developers failed to identify the potential security impact of the design. This indicates that the security ramifications of the functions involved are likely not structured or documented in a way that makes the issues clear, and this particular code pattern has not been highlighted as dangerous in documentation or training. Additionally, there are currently no automated or manual testing procedures specifically to identify privacy issues in new version of MediaWiki.
+
+In the near term, we will add notice about User::newFromId(0) to secure code training (bug T110620), and investigate updating the function definition or documentation to make the security impact more clear to developers.
+
+Longer term, we will investigate using static analysis tools to automatically flag this code pattern (depends on bug T110617, and look at developing security training specifically for QA testers, which would include looking for privacy issues.

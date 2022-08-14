@@ -1,0 +1,203 @@
+# [](//cloud.google.com)
+
+May 09, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Console](/incident/developers-console/19003)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Console Incident #19003
+
+Errors showing up in various areas in the Cloud Console
+
+Incident began at **2019-05-02 07:10** and ended at **2019-05-02 09:03** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| May 10, 2019 | 09:51 |
+
+# ISSUE SUMMARY
+
+On Thursday 2 May 2019, Google Cloud Console experienced a 40% error rate for
+all pageviews over a duration of 1 hour and 53 minutes. To all customers
+affected by this Cloud Console service degradation, we apologize. We are
+taking immediate steps to improve the platform’s performance and availability.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 2 May 2019 from 07:10 to 09:03 US/Pacific the Google Cloud Console
+served 40% of all pageviews with a timeout error. Affected console sections
+include Compute Engine, Stackdriver, Kubernetes Engine, Cloud Storage,
+Firebase, App Engine, APIs, IAM, Cloud SQL, Dataflow, BigQuery and Billing.
+
+# ROOT CAUSE
+
+The Google Cloud Console relies on many internal services to properly render
+individual user interface pages. The internal billing service is one of them,
+and is required to retrieve accurate state data for projects and accounts.
+
+At 07:09 US/Pacific, a service unrelated to the Cloud Console began to send a
+large amount of traffic to the internal billing service. The additional load
+caused time-out and failure of individual requests including those from Google
+Cloud Console. This led to the Cloud Console serving timeout errors to
+customers when the underlying requests to the billing service failed.
+
+# REMEDIATION AND PREVENTION
+
+Cloud Billing engineers were automatically alerted to the issue at 07:15
+US/Pacific and Cloud Console engineers were alerted at 07:21. Both teams
+worked together to investigate the issue and once the root cause was
+identified, pursued two mitigation strategies. First, we increased the
+resources for the internal billing service in an attempt to handle the
+additional load. In parallel, we worked to identify the source of the
+extraneous traffic and then stop it from reaching the service. Once the
+traffic source was identified, mitigation was put in place and traffic to the
+internal billing service began to decrease at 08:40. The service fully
+recovered at 09:03.
+
+In order to reduce the chance of recurrence we are taking the following
+actions. We will implement improved caching strategies in the Cloud Console to
+reduce unnecessary load and reliance on the internal billing service. The load
+shedding response of the billing service will be improved to better handle
+sudden spikes in load and to allow for quicker recovery should it be needed.
+Additionally, we will improve monitoring for the internal billing service to
+more precisely identify which part of the system is running into limits.
+Finally, we are reviewing dependencies in the serving path for all pages in
+the Cloud Console to ensure that necessary internal requests are handled
+gracefully in the event of failure.  
+  
+|
+
+# ISSUE SUMMARY
+
+On Thursday 2 May 2019, Google Cloud Console experienced a 40% error rate for
+all pageviews over a duration of 1 hour and 53 minutes. To all customers
+affected by this Cloud Console service degradation, we apologize. We are
+taking immediate steps to improve the platform’s performance and availability.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 2 May 2019 from 07:10 to 09:03 US/Pacific the Google Cloud Console
+served 40% of all pageviews with a timeout error. Affected console sections
+include Compute Engine, Stackdriver, Kubernetes Engine, Cloud Storage,
+Firebase, App Engine, APIs, IAM, Cloud SQL, Dataflow, BigQuery and Billing.
+
+# ROOT CAUSE
+
+The Google Cloud Console relies on many internal services to properly render
+individual user interface pages. The internal billing service is one of them,
+and is required to retrieve accurate state data for projects and accounts.
+
+At 07:09 US/Pacific, a service unrelated to the Cloud Console began to send a
+large amount of traffic to the internal billing service. The additional load
+caused time-out and failure of individual requests including those from Google
+Cloud Console. This led to the Cloud Console serving timeout errors to
+customers when the underlying requests to the billing service failed.
+
+# REMEDIATION AND PREVENTION
+
+Cloud Billing engineers were automatically alerted to the issue at 07:15
+US/Pacific and Cloud Console engineers were alerted at 07:21. Both teams
+worked together to investigate the issue and once the root cause was
+identified, pursued two mitigation strategies. First, we increased the
+resources for the internal billing service in an attempt to handle the
+additional load. In parallel, we worked to identify the source of the
+extraneous traffic and then stop it from reaching the service. Once the
+traffic source was identified, mitigation was put in place and traffic to the
+internal billing service began to decrease at 08:40. The service fully
+recovered at 09:03.
+
+In order to reduce the chance of recurrence we are taking the following
+actions. We will implement improved caching strategies in the Cloud Console to
+reduce unnecessary load and reliance on the internal billing service. The load
+shedding response of the billing service will be improved to better handle
+sudden spikes in load and to allow for quicker recovery should it be needed.
+Additionally, we will improve monitoring for the internal billing service to
+more precisely identify which part of the system is running into limits.
+Finally, we are reviewing dependencies in the serving path for all pages in
+the Cloud Console to ensure that necessary internal requests are handled
+gracefully in the event of failure.  
+  
+| May 02, 2019 | 09:41 |
+
+The issue with Google Cloud Console has been resolved for all affected
+projects as of Thursday, 2019-05-02 8:58 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+|
+
+The issue with Google Cloud Console has been resolved for all affected
+projects as of Thursday, 2019-05-02 8:58 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+| May 02, 2019 | 08:57 |
+
+We are experiencing an issue with Google Cloud Console where users are
+experiencing billing errors when trying to access products' dashboards
+beginning at 07:12 US/Pacific. An updated list of product dashboards that are
+affected is as follows; Google Compute Engine, Stackdriver, Google Kubernetes
+Engine, Google Cloud Storage, Firebase, Billing, App Engine, APIs, IAM, Cloud
+SQL, Dataflow, and Big Query. For everyone who is affected, we apologize for
+the disruption. We will provide an update by Thursday, 2019-05-02 10:30
+US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with Google Cloud Console where users are
+experiencing billing errors when trying to access products' dashboards
+beginning at 07:12 US/Pacific. An updated list of product dashboards that are
+affected is as follows; Google Compute Engine, Stackdriver, Google Kubernetes
+Engine, Google Cloud Storage, Firebase, Billing, App Engine, APIs, IAM, Cloud
+SQL, Dataflow, and Big Query. For everyone who is affected, we apologize for
+the disruption. We will provide an update by Thursday, 2019-05-02 10:30
+US/Pacific with current details.  
+  
+| May 02, 2019 | 08:17 |
+
+The Google Cloud Console is experiencing errors when trying to access some
+dashboards within. Known dashboards include; Google Compute Engine,
+Stackdriver, Google Kubernetes Engine, Google Cloud Storage, and Firebase.
+Users will be experiencing billing errors when trying to access these pages.
+Gcloud can be used as a work around to interact with product APIs. We will
+provide another status update by Thursday, 2019-05-02 09:00 US/Pacific  
+  
+|
+
+The Google Cloud Console is experiencing errors when trying to access some
+dashboards within. Known dashboards include; Google Compute Engine,
+Stackdriver, Google Kubernetes Engine, Google Cloud Storage, and Firebase.
+Users will be experiencing billing errors when trying to access these pages.
+Gcloud can be used as a work around to interact with product APIs. We will
+provide another status update by Thursday, 2019-05-02 09:00 US/Pacific  
+  
+| May 02, 2019 | 08:17 |
+
+Errors showing up in various areas in the Cloud Console  
+  
+|
+
+Errors showing up in various areas in the Cloud Console  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

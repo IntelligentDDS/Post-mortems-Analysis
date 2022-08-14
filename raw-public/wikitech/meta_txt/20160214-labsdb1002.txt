@@ -1,0 +1,14 @@
+At about 22:30 UTC on 2016-02-14, labsdb1002 suffered a disk failure and unmounted the volume that hosted several tools databases. We were unable to remount the system, so the db server was depooled pending a disk replacement.
+
+Giuseppe, Andrew, Chase, Jaime, Ariel and Alex Monk responded to the alerts. Logs include the following:
+
+22:50: Giuseppe attempts to unmount and remount the failed volume
+
+22:59: After discussion it's agreed that the other db servers can handle the load from 1002, so Jaime submits https://gerrit.wikimedia.org/r/#/c/270650/ which directs access for affected DBs to other servers. Andrew merges the patch and applies on labservices1001.
+
+23:05: Andrew restarts the 'replag' tool by hand, at which point it resumes normal operation. Many tools recover spontaneously, and a few others are restarted by hand by operations staff.
+
+23:22: Andrew sends an email to labs-announce encouraging tool maintainers to restart their services.
+
+Tools with sensible reconnect logic recovered immediately after labsdb1002 was depooled. Those without will require a manual restart, which is largely left up to tool maintainers.
+• Consider implementing an automatic failover system for labsdb shards

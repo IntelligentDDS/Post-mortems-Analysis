@@ -1,0 +1,6 @@
+Azure Portal Sign In Failure - West Europe - Mitigated (Tracking ID 5S38-5P0)
+Summary of Impact: Between 06:40 UTC and 09:54 UTC on 22 Oct 2019 a subset of customers were identified as having experienced issues signing in to the Azure Portal in West
+Europe. Customers would have seen failure notifications when trying to sign in. Accessing the preview Portal here would have been successful.
+Preliminary Root Cause: Engineers determined that a recent deployment task increased traffic to a backend service, in this case AAD, which in turn reached operational threshold, preventing requests from completing.
+Mitigation: Engineers performed a change to the service configuration to mitigate the issue. Engineers also rolled back the recent deployment task to further mitigate the issue. Next Steps: Engineers will review deployment procedures to prevent future occurrences. Stay informed about Azure service issues by creating custom service health alerts:
+https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.

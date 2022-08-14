@@ -1,0 +1,161 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/15058)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #15058
+
+Intermittent Connectivity Issues In us-central1b
+
+Incident began at **2015-10-31 05:52** and ended at **2015-10-31 07:05** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Nov 04, 2015 | 22:00 |
+
+SUMMARY:
+
+Between Saturday 31 October 2015 and Sunday 1 November 2015, Google Compute
+Engine networking in the us-central1-b zone was impaired on 3 occasions for an
+aggregate total of 4 hours 10 minutes. We apologize if your service was
+affected in one of these incidents, and we are working to improve the
+platform’s performance and availability to meet our customer’s expectations.
+
+DETAILED DESCRIPTION OF IMPACT (All times in Pacific/US):
+
+Outage timeframes for Saturday 31 October 2015: 05:52 to 07:05 for 73 minutes
+
+Outage timeframes for Sunday 1 November 2015: 14:10 to 15:30 for 80 minutes,
+19:03 to 22:40 for 97 minutes
+
+During the affected timeframes, up to 14% of the VMs in us-central1-b
+experienced up to 100% packet loss communicating with other VMs in the same
+project. The issue impacted both in-zone and intra-zone communications.
+
+ROOT CAUSE:
+
+Google network control fabrics are designed to permit simultaneous failure of
+one or more components. When such failures occur, redundant components on the
+network may assume new roles within the control fabric. A race condition in
+one of these role transitions resulted in the loss of flow information for a
+subset of the VMs controlled by the fabric.
+
+REMEDIATION AND PREVENTION:
+
+Google engineers began rolling out a change to eliminate this race condition
+at 18:03 PST on Monday November 2 2015. The rollout completed on at 11:13 PST
+on Wednesday November 4 2015. Additionally, monitoring is being improved to
+reduce the time required to detect, identify and resolve problematic changes
+to the network control fabric.  
+  
+|
+
+SUMMARY:
+
+Between Saturday 31 October 2015 and Sunday 1 November 2015, Google Compute
+Engine networking in the us-central1-b zone was impaired on 3 occasions for an
+aggregate total of 4 hours 10 minutes. We apologize if your service was
+affected in one of these incidents, and we are working to improve the
+platform’s performance and availability to meet our customer’s expectations.
+
+DETAILED DESCRIPTION OF IMPACT (All times in Pacific/US):
+
+Outage timeframes for Saturday 31 October 2015: 05:52 to 07:05 for 73 minutes
+
+Outage timeframes for Sunday 1 November 2015: 14:10 to 15:30 for 80 minutes,
+19:03 to 22:40 for 97 minutes
+
+During the affected timeframes, up to 14% of the VMs in us-central1-b
+experienced up to 100% packet loss communicating with other VMs in the same
+project. The issue impacted both in-zone and intra-zone communications.
+
+ROOT CAUSE:
+
+Google network control fabrics are designed to permit simultaneous failure of
+one or more components. When such failures occur, redundant components on the
+network may assume new roles within the control fabric. A race condition in
+one of these role transitions resulted in the loss of flow information for a
+subset of the VMs controlled by the fabric.
+
+REMEDIATION AND PREVENTION:
+
+Google engineers began rolling out a change to eliminate this race condition
+at 18:03 PST on Monday November 2 2015. The rollout completed on at 11:13 PST
+on Wednesday November 4 2015. Additionally, monitoring is being improved to
+reduce the time required to detect, identify and resolve problematic changes
+to the network control fabric.  
+  
+| Oct 31, 2015 | 11:52 |
+
+The issue with sending and receiving traffic between VMs in us-central1b
+should have been resolved for all affected instannces as of 07:08 US/Pacific.
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrence. We
+sincerely apologize for any affect this disruption had on your applications
+and/or services.  
+  
+|
+
+The issue with sending and receiving traffic between VMs in us-central1b
+should have been resolved for all affected instannces as of 07:08 US/Pacific.
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrence. We
+sincerely apologize for any affect this disruption had on your applications
+and/or services.  
+  
+| Oct 31, 2015 | 09:32 |
+
+The issue with sending and receiving internal traffic in us-central1b should
+have been resolved for the majority of instances and we expect a full
+resolution in the near future. We will provide an update with the affected
+timeframe after our investigation is complete.  
+  
+|
+
+The issue with sending and receiving internal traffic in us-central1b should
+have been resolved for the majority of instances and we expect a full
+resolution in the near future. We will provide an update with the affected
+timeframe after our investigation is complete.  
+  
+| Oct 31, 2015 | 08:29 |
+
+We are continuing to investigate an intermittent issue with sending and
+receiving internal traffic in us-central1b and will provide another update by
+09:30 US/Pacific.  
+  
+|
+
+We are continuing to investigate an intermittent issue with sending and
+receiving internal traffic in us-central1b and will provide another update by
+09:30 US/Pacific.  
+  
+| Oct 31, 2015 | 07:43 |
+
+We are currently investigating a transient issue with sending internal traffic
+to and from us-central1b.  
+  
+|
+
+We are currently investigating a transient issue with sending internal traffic
+to and from us-central1b.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

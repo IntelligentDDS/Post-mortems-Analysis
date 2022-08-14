@@ -1,0 +1,44 @@
+In-progress Cite extension code unleashed a flood of "PHP notice" logspam. These were all non-fatal errors, but at approximately 3,000 per hour put a burden on human log-watchers. Hotfixes helped reducing the logspam, before the actual issue was found, fixed, and backported.
+• The 1.35.0-wmf.8 train was delayed for several hours. Deployers had to spend extra time attempting hotfixes.
+• References disappeared from sections on an unknown number of content pages across the cluster. This effect was limited to pages that displayed an error message before, or made clever use of failing parser functions to achieve certain effects.
+
+@Brennen Bearnes: noticed an increase in errors while monitoring during train deployment.
+• 00:12 Some errors are still present. Try a second hotfix on debug server. Give up for now.
+• 14:29 After investing hours, the QWERTY team fully understood the issue, fixed , cherry-picked, and backported it.
+• 17:47 Third hotfix to harden the problematic code path even more.
+
+What weaknesses did we learn about and how can we address them?
+
+The issue was a combination of several factors we never saw in any test or dev environment:
+• Working with the Message class can cause it to request its own Parser, which is done with PHP's built-in command.
+• This only happens if MessageCache hasn't been used yet in the requet. Hence the majority of the failures came from the API, as this is much more likely there.
+• Cloning an object in PHP will "magically" clone all of its properties, no matter if declared or dynamically created.
+• The Cite extension uses a dynamic property to store its instance, holding all state.
+• A hook takes care that the Cite object is cloned as well when the Parser is cloned.
+• Since , the state was stored two levels deep, but cloning only performed a shallow copy.
+• Cloning now resulted in two different Parsers with two different Cite instances that share the same state array.
+• The fresh Message parser needs to clean its state, which cleans the state in all Cite instances. Hence all previously seen got lost.
+• The loop currently rendering a non-empty section starts to access keys in an empty array.
+• This only happens when there is a reason to render a Message in the middle of this loop, e.g. because of a bad , or a template that renders an error.
+
+What went well?
+• Very fruitful teamwork within the small QWERTY team.
+• Even if the hotfixes just silenced effects of the issue without fixing it, they helped a lot narrowing the issue down.
+• Very few reports from users, as far as we are aware of. Which means the impact was probably relatively small for most wikis.
+• The issue peaked in the middle of the night when the European QWERTY team is typically not available. It was more luck than anything that one of the devs was available.
+• References were affected on a huge number of Czech Wikipedia pages, due to a template unique to that wiki triggering the Message-render edge case.
+
+Where did we get lucky?
+• One of the devs currently working on (but not owning) the codebase noticed the incident early.
+• Hotfixes silenced the loud errors enough to be able to unblock the train, only leaving incompletely rendered pages behind.
+• On most wikis, incomplete renderings were limited to pages that contained errors anyway, hence weren't widely noticed.
+• Even then, incomplete rendering only happened "randomly" under very specific circumstances. Most notably when VisualEditor called the parser API.
+
+How many people were involved in the remediation?
+• 2 WMF and 1 WMDE staff at first, 4 WMDE staff later.
+
+This is a one-off bug, no specific documentation exists in case it happens again.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.
+• and – Two very different integration tests are now able to prevent this from happening again.
+• – Extra time was spent on reworking the Cite codebase to not rely on cloning any more.

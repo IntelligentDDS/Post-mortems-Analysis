@@ -1,0 +1,15 @@
+WDQS public endpoint in eqiad was overloaded between 11:50 UTC until 13:15 UTC, leading to HTTP 5xx being served to users. Updates were disabled to mitigate the issue.
+
+The outage (or at least reduced service availability) went for ~1.5h, leading to ~7K HTTP 5xx being served.
+• 12:04: first Icinga alert for "PROBLEM - LVS HTTP IPv4 on wdqs.svc.eqiad.wmnet is CRITICAL: CRITICAL - Socket timeout after 10 seconds"
+• 12:36: ban of GuzzleHttp user agent (this seems to be the UA generating the most read traffic at the moment)
+• 12:49: restarting blazegraph on wdqs1004 (JVM thread out of control)
+• 13:02: last Icinga recovery for "RECOVERY - LVS HTTP IPv4 on wdqs.svc.eqiad.wmnet is OK: HTTP OK: HTTP/1.1 200 OK - 448 bytes in 0.341 second response time"
+
+What went well?
+• internal WDQS clusters were not affected, segregating use cases works
+• while we do have throttling in place to keep read load under control, this was not sufficient to prevent the issue
+
+Where did we get lucky?
+• Not sure there was much luck here.
+• Better throttle generic user agents (should be deployed later today)

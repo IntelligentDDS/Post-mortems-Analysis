@@ -1,0 +1,9 @@
+Some US users of WP site experienced slow page rendering time for about 10 - 15 minutes (from 23:18 UTC to 23.33 UTC) on 20th Jan, 2012, because the Ashburn (EQIAD) bits.wikimedia.org servers were overloaded. Most however had incorrectly formatted wiki pages due to missing javascript and css.
+
+One of the Operations Engineers was investigating an earlier report that the bits servers at ESAM were experiencing occasional network saturation. It turned out that even though there were two bounded network cards, outbound traffic was sent through only one of them due to all the traffic having the same next-hop (the gateway). The fix was to change the kernel's xmit_hash_policy to hash the address destination using layer2+3 in all of our bonding algorithms instead layer2 (default). Correctly balancing the traffic across both links effectively doubled the network throughput of those servers. More detail on xmit_hash_policy can be found on the kernel.org bonding page.
+
+After putting in the fix into Puppet and pushing out the interface bonding interface, we had to a "ifdown/ifup" on all the bonded interfaces. When the loss of connectivity happened, the varnish processes on both of these servers spiralled upwards out of control. (Note: Varnish has this behavior of spawning threads when it experiences network package lost.)
+
+We redirected the bits.wikimedia.org traffic from our Ashburn (EQIAD) site to our Tampa (SDTPA) site and that resolved the issue instantly. At the same time, we restarted the affected EQIAD Varnish instances. (We switched back to EQIAD shortly after that.)
+
+Operations will look into a way to implement an automatic failover solution (from EQIAD to SDTPA and vice-versa). Ops is also investigating limits within varnish to prevent this type of query overload from bringing down the servers (similar to the use of Apache max clients).

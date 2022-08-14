@@ -1,0 +1,24 @@
+Wikimedia sites experienced 3 episodes of intermittent performance lags and brief unavailability on 16th & 17th August 2012. The first two incidents occurred on 16th at 13:22 UTC and at 15:30 UTC. The third incident was on 17th September at 10:40 UTC.
+• Duration: The durations of those incidents were about 1.5 hours, 1.5 hours and 3.5 hours respectively
+• Impact: During those episodes, editors on our Wikimedia sites lost their sessions intermittently and briefly. Some readers did experience response lag that caused pages to time out thus not rendered.
+• Cause: There were load spikes on the Apache servers, each time it caused intensive page swapping in the memory and that overload caused the Apache servers to reboot themselves during prolonged spikes. Further analysis revealed the main cause of this high memory usage to be geographical data ("données") templates on the French Wikipedia, and to a lesser extent, the same data templates copied to other wikis for use on articles about places in Europe and in zhwiki
+• The zhwiki job queue has been growing quicker than the job runners can run them.
+• During investigation there are 380303 (zhwiki) jobs in the queue, with 808 distinct job_titles (There were jobs duplication 1K times). Duplicate removal has been broken for a long time (ever since we had jobs with start/end parameters).
+• Template DOM cache issue resulted in expanding memory needs, thus the frequent memory swaps and Apache failures.
+• Resolution: Longer term fixes are being investigated and would take some time to implement. Some temporary measures were taken, such as:
+• contact the few Wikipedians involved to stop doing what they are doing, and to remove the template invocations which have already been introduced. Antoine Musso has raised the issue on the French Wikipedia's "Bistro" and some of the
+
+worst cases have already been fixed.
+• None
+• taking out the site notice gadget on zhwiki that was creating many non-cache objects
+• Reducing the MaxRequestsPerChild from 300 to 4 in apache.conf
+• limiting the number of large template DOM caches from sending servers into swap, by throwing an exception when more than some number of DOM elements are parsed.
+• Tim introduced a new preprocessor complexity limit called the "preprocessor generated node count", which is incremented by about 6 for each #switch case. When the limit is exceeded, an exception is thrown, preventing the page from being saved or viewed.
+
+Below are the reports from Mark, Tim and Asher, following the incidents.
+
+From Mark (following the 1st incident):
+
+
+
+ From Asher after further investigation:

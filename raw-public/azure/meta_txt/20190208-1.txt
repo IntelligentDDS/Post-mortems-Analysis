@@ -1,0 +1,10 @@
+RCA - Azure IoT Hub
+Summary of impact: Between 08:16 and 14:12 UTC on 08 Feb 2019, a subset of customers using Azure IoT Hub may have received failure notifications or high latency when performing service management operations via the Azure Portal or other programmatic methods.
+Workaround: Retrying the operation might have succeeded.
+Root cause and mitigation: Engineers found that one of the SQL queries automatically started using a bad query plan causing the SQL DB to start consuming a significantly large percentage of database transaction units (DTUs). This resulted in the client-side connection pools to max out on the concurrent connections to the SQL DB. As a result, any new connections that were being attempted were failing. The operations which were in progress were also taking a long time to finish causing higher end to end latency. The first mitigation step performed was to increase the connection pool size on the clients. This was followed by scaling up the SQL Azure DB and almost doubling the DTUs. The scale up resulted in the bad query plan to get evicted and the good plan to get cached. All incoming calls started passing after this.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Investigate and drop the offending query plan [in progress].
+Investigate feasibility of auto scale up of SQL DB in use [in progress].
+Implement administrative command to evict a bad query plan [in progress].
+Add troubleshooting guides so the on-call personnel are better equipped to deal with this in future and can mitigate this much more quickly [in progress].
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/XC4G-D_Z

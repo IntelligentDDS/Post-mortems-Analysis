@@ -1,0 +1,10 @@
+Due to an automatic switch in WikibaseClient adding configuration for the InterwikiSorting extension caused Wikibase to start using it in production.
+
+This wouldn't have been an issue, except WikibaseClient only checks for one setting but uses 4.
+
+One of these settings no longer exists in the extension and was thus not included in the config change.
+
+Fatals on all wikis using WikibaseClient for about 3 minutes where the parser cache was missed and getParserOutput was thus called.
+
+Although mwdebug1002 was checked, the issue was not spotted, probably due to the issue only arising on getParserOutput calls, cached output would not expose the error.
+• Do not use wgInterwikiSortingAlwaysSort in WikibaseClient ( )

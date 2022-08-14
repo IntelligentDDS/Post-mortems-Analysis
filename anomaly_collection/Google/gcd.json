@@ -1,0 +1,174 @@
+{
+    "gcd-17002": { 
+      "title": "Google Cloud Datastore Incident #17002",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCD/Google%20Cloud%20Datastore%20Incident%20%2317002.pdf"],
+      "time": "02/14/2017",
+      "summary": " On Tuesday 14 February 2017, some applications using Google Cloud Datastore in Western Europe or the App Engine Search API in Western Europe experienced 2%-4% error rates and elevated latency for three periods with an aggregate duration of three hours and 36 minutes. We apologize for the disruption this caused to your service. We have already taken several measures to prevent incidents of this type from recurring and to improve the reliability of these services.",
+      "service_name": ["Google Cloud Datastore"],
+      "impact symptom": ["availability"],
+      "duration": 865,
+      "detection": {
+        "method": "automate", 
+        "tool": ["automated monitoring"]
+      },
+      "manifestation": [
+            {
+            "business kpi": ["elevated error rate", "elevated latency"]
+          },{
+            "system kpi": ["high load"]
+          }
+        ],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "external causes",
+            "layer-2": "excessive flow"
+          },
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs"
+          }
+        ],
+        "details": "The incident was caused by a latent bug in a service used by both Cloud Datastore and the App Engine Search API that was triggered by high load on the service. Starting at 00:15 PST, several applications changed their usage patterns in one zone in Western Europe and began running more complex queries, which caused higher load on the service."
+      },
+      "operation": ["normal operation"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["increase capacity", "redirect traffic", "fix bugs"],
+        "details": "Our engineers followed normal practice, by redirecting traffic to other zones to reduce the impact on customers while debugging the underlying issue. At 01:15, we redirected traffic to other zones in Western Europe, which resolved the incident three minutes later.At 08:35 we redirected traffic back to the zone that previously had errors. We found that the error rate in that zone was still high and so redirected traffic back to other zones at 08:48.At 12:45, our monitoring systems detected elevated errors in other zones in Western Europe. At 14:06 Google engineers added capacity to the service with elevated errors in the affected zones. This removed the trigger for the incident.",
+        "troubleshooting": {
+           "1": "Google's monitoring systems paged our engineers at 00:35 PST to alert us to elevated errors in a single zone. ",
+           "2": "Our engineers followed normal practice, by redirecting traffic to other zones to reduce the impact on customers while debugging the underlying issue. ",
+           "3": "At 01:15, we redirected traffic to other zones in Western Europe, which resolved the incident three minutes later. ",
+           "4": "At 08:35 we redirected traffic back to the zone that previously had error",
+           "5": "We found that the error rate in that zone was still high and so redirected traffic back to other zones at 08:48. ",
+           "6": "At 12:45, our monitoring systems detected elevated errors in other zones in Western Europe. ",
+           "7": "At 14:06 Google engineers added capacity to the service with elevated errors in the affected zones. This removed the trigger for the incident. "
+        } 
+      },
+      "propagation pass": {
+        "1": "Google Cloud Datastore",
+        "2": "App Engine Search API",
+        "3": "applications"
+        },
+      "refined path": {
+        "1": "database",
+        "2": "app",
+        "3": "app"
+      },
+      "detection time": 20,
+      "fix time": 811,
+      "identification time": null,
+      "verification": "lixy"
+    },
+    "gcd-19001": { 
+      "title": "Google Cloud Datastore Incident #19001",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCD/Google%20Cloud%20Datastore%20Incident%20%2319001.pdf"],
+      "time": "12/19/2018",
+      "summary": " Cloud Datastore experienced a low rate of errors associated with a small subset of high write-rate databases. We have separately notified the customers who may have been potentially impacted by these errors.",
+      "service_name": ["Google Cloud Datastore"],
+      "impact symptom": ["availability"],
+      "duration": 30240,
+      "detection": {
+        "method": null, 
+        "tool": null
+      },
+      "manifestation": [
+            {
+            "business kpi": ["low rate of errors", "high write-rate"]
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "unknown"
+          }
+        ],
+        "details": null
+      },
+      "operation": ["normal operation"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["revert to an earlier rollout"],
+        "details": "We have identified and remediated the issue. As part of the remediation, we reverted to an earlier rollout ending the event. After verifying the issue was resolved, Google is taking steps to improve our existing testing scenarios to help prevent future recurrence.",
+        "troubleshooting": null
+      },
+      "propagation pass": {
+        "1": "Google Cloud Datastore"
+      },
+      "refined path": {
+        "1": "database"
+      },
+      "detection time": null,
+      "fix time": null,
+      "identification time": null,
+      "verification": "lixy"
+    },
+    "gcd-19006": { 
+      "title": "Google Cloud Datastore Incident #19006",
+      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCD/Google%20Cloud%20Datastore%20Incident%20%2319006.pdf"],
+      "time": "11/11/2019",
+      "summary": " On Monday 11 November, 2019, Google's internal key management system (KMS), suffered a failure which began to cause user facing impact in the us-east1, us-east4, and southamerica-east1 regions at 02:39 US/Pacific and recovered by 03:27. Some services took longer to fully recover and continued to experience issues outside of this period. Google's commitment to user privacy and data security means that KMS is a common dependency across many infrastructure components. Specific service impact is outlined below.",
+      "service_name": ["Google's internal key management system (KMS)"],
+      "impact symptom": ["availability", "performance", "inconsistency", "security"],
+      "duration": 141,
+      "detection": {
+        "method": "automate", 
+        "tool": ["automated monitoring alert"]
+      },
+      "manifestation": [
+            {
+            "business kpi": ["high error rate", "request time out", "health check fail"]
+          }],
+      "root cause": {
+        "label": [ 
+          {
+            "layer-1": "internal causes",
+            "layer-2": "software bugs",
+            "layer-3": "incompatibility"
+          }
+        ],
+        "details": "At Google, data security is a critical part of service design. To accomplish this, services depend on the KMS for performing cryptographic functions such as encrypting and decrypting the keys used for protecting user data. On Monday 11 November, 2019 at 00:11 US/Pacific a new version of the KMS began to roll out, starting with a single zone in the us-east1 region. This binary added a new feature which was incompatible with older versions of related components. Six minutes later, an alert notified Google engineers of an increased error rate in the KMS. Additional alerts went off at 00:34 while investigation was ongoing. At this time there was no impact to Google Cloud users. "
+      },
+      "operation": ["upgrade"],
+      "human error": false,
+      "reproduction": {
+          "label": false,
+          "details": ""
+      },
+      "mitigation": {
+        "label": ["roll forward a change"],
+        "details": "In order to begin recovery, Google engineers started to roll forward a change in the affected region, bringing all tasks up to the same version. A roll forward was necessary due to the backwards-incompatible nature of the newest version of the KMS, as persisted keys could not be processed by other components. The roll forward began at 02:32, and resulted in a temporary increase of internal errors from the KMS as the ratio of tasks with the new incompatible version and the previous version changed. By 02:39 the error rate reached a point where external users began to see service degradation. KMS is a low level service and is a critical dependency for core services such as IAM and Storage. The dependency on these core services created distinct start and end times for impact across higher-level services.The roll forward completed by 02:59 and brought the KMS back to a healthy state. From 02:59 onward, services which depend on the KMS began to recover. Most services returned to a healthy state by 03:27, however, some services which integrate with the KMS in multiple locations, such as GCS, saw a longer tail of errors until other locations were brought back to a healthy state.",
+        "troubleshooting": {
+          "1": "an alert notified Google engineers of an increased error rate in the KMS. ",
+          "2": " Additional alerts went off at 00:34 while investigation was ongoing. ",
+          "3": "Google engineers started to roll forward a change in the affected region, bringing all tasks up to the same version. ",
+          "4": "The roll forward began at 02:32, and resulted in a temporary increase of internal errors from the KMS as the ratio of tasks with the new incompatible version and the previous version changed. ",
+          "5": "By 02:39 the error rate reached a point where external users began to see service degradation. ",
+          "6": "The roll forward completed by 02:59 and brought the KMS back to a healthy state. ",
+          "7": "From 02:59 onward, services which depend on the KMS began to recover.",
+          "8": "Most services returned to a healthy state by 03:27, however, some services which integrate with the KMS in multiple locations, such as GCS, saw a longer tail of errors until other locations were brought back to a healthy state. "
+        } 
+      },
+      "propagation pass": {
+        "1": "key management system",
+        "2": "services depend on the KMS"
+      },
+      "refined path": {
+        "1": "middleware",
+        "2": "app"
+      },
+      "detection time": 6,
+      "fix time": 190,
+      "identification time": null,
+      "verification": "lixy"
+    }
+
+}

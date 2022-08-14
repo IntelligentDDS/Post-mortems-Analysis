@@ -1,0 +1,3 @@
+Between Mon, 22 Jun 2015 16:10:29 UTC and Mon, 22 Jun 2015 16:43:17 UTC server side events were dropped.
+
+We did a deploy for which forwarder (and other) config files needed to be changed. In doing so we forgot to add the --count flag to the server side forwarder config. During this period, server side events were not processed.

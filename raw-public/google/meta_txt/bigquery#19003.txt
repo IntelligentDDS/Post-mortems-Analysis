@@ -1,0 +1,248 @@
+# [](//cloud.google.com)
+
+May 23, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/19003)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #19003
+
+Google BigQuery users experiencing elevated latency and error rates in US
+multi-region.
+
+Incident began at **2019-05-17 09:02** and ended at **2019-05-17 13:38** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| May 23, 2019 | 21:00 |
+
+ISSUE SUMMARY
+
+On Friday, May 17 2019, 83% of Google BigQuery insert jobs in the US multi-
+region failed for a duration of 27 minutes. Query jobs experienced an average
+error rate of 16.7% for a duration of 2 hours. BigQuery users in the US multi-
+region also observed elevated latency for a duration of 4 hours and 40
+minutes. To our BigQuery customers whose business analytics were impacted
+during this outage, we sincerely apologize – this is not the level of quality
+and reliability we strive to offer you, and we are taking immediate steps to
+improve the platform’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Friday May 17 2019, from 08:30 to 08:57 US/Pacific, 83% of Google BigQuery
+insert jobs failed for 27 minutes in the US multi-region. From 07:30 to 09:30
+US/Pacific, query jobs in US multi-region returned an average error rate of
+16.7%. Other jobs such as list, cancel, get, and getQueryResults in the US
+multi-region were also affected for 2 hours along with query jobs. Google
+BigQuery users observed elevated latencies for job completion from 07:30 to
+12:10 US/Pacific. BigQuery jobs in regions outside of the US remained
+unaffected.
+
+ROOT CAUSE
+
+The incident was triggered by a sudden increase in queries in US multi-region
+leading to quota exhaustion in the storage system serving incoming requests.
+Detecting the sudden increase, BigQuery initiated its auto-defense mechanism
+and redirected user requests to a different location. The high load of
+requests triggered an issue in the scheduling system, causing delays in
+scheduling incoming queries. These delays resulted in errors for query,
+insert, list, cancel, get and getQueryResults BigQuery jobs and overall
+latency experienced by users. As a result of these high number of requests at
+08:30 US/Pacific, the scheduling system’s overload protection mechanism began
+rejecting further incoming requests, causing insert job failures for 27
+minutes.
+
+REMEDIATION AND PREVENTION
+
+BigQuery’s defense mechanism began redirection at 07:50 US/Pacific. Google
+Engineers were automatically alerted at 07:54 US/Pacific and began
+investigation. The issue with the scheduler system began at 08:00 and our
+engineers were alerted again at 08:10. At 08:43, they restarted the scheduling
+system which mitigated the insert job failures by 08:57. Errors seen for
+insert, query, cancel, list, get and getQueryResults jobs were mitigated by
+09:30 when queries were redirected to different locations. Google engineers
+then successfully blocked the source of sudden incoming queries that helped
+reduce overall latency. The issue was fully resolved at 12:10 US/Pacific when
+all active and pending queries completed running.
+
+We will resolve the issue that caused the scheduling system to delay
+scheduling of incoming queries. Although the overload protection mechanism
+prevented the incident from spreading globally, it did cause the failures for
+insert jobs. We will be improving this mechanism by lowering deadline for
+synchronous queries which will help prevent queries from piling up and
+overloading the scheduling system. To prevent future recurrence of the issue
+we will also implement changes to improve BigQuery’s quota exhaustion
+behaviour that would prevent the storage system to take on more load than it
+can handle. To reduce the duration of similar incidents, we will implement
+tools to quickly remediate backlogged queries.  
+  
+|
+
+ISSUE SUMMARY
+
+On Friday, May 17 2019, 83% of Google BigQuery insert jobs in the US multi-
+region failed for a duration of 27 minutes. Query jobs experienced an average
+error rate of 16.7% for a duration of 2 hours. BigQuery users in the US multi-
+region also observed elevated latency for a duration of 4 hours and 40
+minutes. To our BigQuery customers whose business analytics were impacted
+during this outage, we sincerely apologize – this is not the level of quality
+and reliability we strive to offer you, and we are taking immediate steps to
+improve the platform’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Friday May 17 2019, from 08:30 to 08:57 US/Pacific, 83% of Google BigQuery
+insert jobs failed for 27 minutes in the US multi-region. From 07:30 to 09:30
+US/Pacific, query jobs in US multi-region returned an average error rate of
+16.7%. Other jobs such as list, cancel, get, and getQueryResults in the US
+multi-region were also affected for 2 hours along with query jobs. Google
+BigQuery users observed elevated latencies for job completion from 07:30 to
+12:10 US/Pacific. BigQuery jobs in regions outside of the US remained
+unaffected.
+
+ROOT CAUSE
+
+The incident was triggered by a sudden increase in queries in US multi-region
+leading to quota exhaustion in the storage system serving incoming requests.
+Detecting the sudden increase, BigQuery initiated its auto-defense mechanism
+and redirected user requests to a different location. The high load of
+requests triggered an issue in the scheduling system, causing delays in
+scheduling incoming queries. These delays resulted in errors for query,
+insert, list, cancel, get and getQueryResults BigQuery jobs and overall
+latency experienced by users. As a result of these high number of requests at
+08:30 US/Pacific, the scheduling system’s overload protection mechanism began
+rejecting further incoming requests, causing insert job failures for 27
+minutes.
+
+REMEDIATION AND PREVENTION
+
+BigQuery’s defense mechanism began redirection at 07:50 US/Pacific. Google
+Engineers were automatically alerted at 07:54 US/Pacific and began
+investigation. The issue with the scheduler system began at 08:00 and our
+engineers were alerted again at 08:10. At 08:43, they restarted the scheduling
+system which mitigated the insert job failures by 08:57. Errors seen for
+insert, query, cancel, list, get and getQueryResults jobs were mitigated by
+09:30 when queries were redirected to different locations. Google engineers
+then successfully blocked the source of sudden incoming queries that helped
+reduce overall latency. The issue was fully resolved at 12:10 US/Pacific when
+all active and pending queries completed running.
+
+We will resolve the issue that caused the scheduling system to delay
+scheduling of incoming queries. Although the overload protection mechanism
+prevented the incident from spreading globally, it did cause the failures for
+insert jobs. We will be improving this mechanism by lowering deadline for
+synchronous queries which will help prevent queries from piling up and
+overloading the scheduling system. To prevent future recurrence of the issue
+we will also implement changes to improve BigQuery’s quota exhaustion
+behaviour that would prevent the storage system to take on more load than it
+can handle. To reduce the duration of similar incidents, we will implement
+tools to quickly remediate backlogged queries.  
+  
+| May 17, 2019 | 13:38 |
+
+The issue with Google BigQuery users experiencing latency and high error rates
+in US multi region has been resolved for all affected users as of Friday,
+2019-05-17 13:18 US/Pacific. We will conduct an internal investigation of this
+issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+|
+
+The issue with Google BigQuery users experiencing latency and high error rates
+in US multi region has been resolved for all affected users as of Friday,
+2019-05-17 13:18 US/Pacific. We will conduct an internal investigation of this
+issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+| May 17, 2019 | 12:14 |
+
+Mitigation is underway and the rate of errors is decreasing. We will provide
+another status update by Friday, 2019-05-17 13:30 US/Pacific with current
+details.  
+  
+|
+
+Mitigation is underway and the rate of errors is decreasing. We will provide
+another status update by Friday, 2019-05-17 13:30 US/Pacific with current
+details.  
+  
+| May 17, 2019 | 11:20 |
+
+We believe the issue with Google BigQuery users experiencing latency and high
+error rates in US multi region is recurring. Our Engineering team is actively
+working towards mitigating the source of these errors. We sincerely apologize
+for the disruption caused. We will provide another status update by Friday,
+2019-05-17 12:15 US/Pacific with current details  
+  
+|
+
+We believe the issue with Google BigQuery users experiencing latency and high
+error rates in US multi region is recurring. Our Engineering team is actively
+working towards mitigating the source of these errors. We sincerely apologize
+for the disruption caused. We will provide another status update by Friday,
+2019-05-17 12:15 US/Pacific with current details  
+  
+| May 17, 2019 | 10:35 |
+
+The issue with Google BigQuery should be mitigated for the majority of users
+and we expect a full resolution in the near future. We will provide another
+status update by Friday, 2019-05-17 11:30 US/Pacific with current details.  
+  
+|
+
+The issue with Google BigQuery should be mitigated for the majority of users
+and we expect a full resolution in the near future. We will provide another
+status update by Friday, 2019-05-17 11:30 US/Pacific with current details.  
+  
+| May 17, 2019 | 09:36 |
+
+The rate of errors is decreasing. We will provide another status update by
+Friday, 2019-05-17 10:35 US/Pacific with current details.  
+  
+|
+
+The rate of errors is decreasing. We will provide another status update by
+Friday, 2019-05-17 10:35 US/Pacific with current details.  
+  
+| May 17, 2019 | 09:02 |
+
+We've received a report of increased latency and errors for Google BigQuery
+users in the US. Mitigation work is currently underway by our Engineering
+Team. We will provide another status update by Friday, 2019-05-17 10:00
+US/Pacific with current details.  
+  
+|
+
+We've received a report of increased latency and errors for Google BigQuery
+users in the US. Mitigation work is currently underway by our Engineering
+Team. We will provide another status update by Friday, 2019-05-17 10:00
+US/Pacific with current details.  
+  
+| May 17, 2019 | 09:02 |
+
+We've received a report of an issue with Google BigQuery.  
+  
+|
+
+We've received a report of an issue with Google BigQuery.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

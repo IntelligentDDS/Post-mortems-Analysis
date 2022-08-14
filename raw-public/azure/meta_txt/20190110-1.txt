@@ -1,0 +1,7 @@
+Storage and Dependent Services - UK South
+Summary of impact: Between 13:23 UTC on 10 Jan 2019 and approximately 05:30 UTC on 11 Jan 2019, a subset of customers leveraging Storage in UK South may have experienced intermittent service availability issues. Other resources with dependencies on the affected Storage scale unit may have also experienced impact related to this event.
+Preliminary root cause: Engineers determined that a number of factors, initially related to a software error, caused several nodes on a single storage scale unit to become temporarily unreachable. This, along with the increase in load on the scale unit caused by the initial issue, resulted in impact to customers with Storage resources located on this scale unit. Due to the unique nature of the problem, combined with the number of subsystems affected and the interactions between them, led to a longer than usual time to root cause and mitigate.
+Mitigation: To recover the nodes, the Azure team undertook a sequence of structured mitigation steps, including: performing a code update to mitigate a software error
+reducing background processes in the scale unit
+throttling and offloading traffic to allow the scale unit to gradually recover
+Next steps: Engineers are continuing their investigations to establish the full root cause.

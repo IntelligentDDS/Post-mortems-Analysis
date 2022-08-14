@@ -1,0 +1,14 @@
+Database master (S5) switchover caused outage at 22:41 UTC for about 10 minutes.
+
+Our master switch scripts start off with the following:
+• set the old (still current) master to read-only
+• in the case of MasterSwitch.php, kill queries on the old master running for more than 10 seconds
+• in the case of both sets of switch scripts, run "flush tables" against it, to ensure that pending transactions are committed. Unless sql_bin_log is disabled for a session, running "flush tables" on a master is replicated to the slaves.
+
+When Asher was performing the S5 master db switchover, there were three particularly long running queries on db44, one of the two dewiki slaves. Each was a ~11 hour long query and those queries come with the same values in the 'where' clause. It should be returning the same 684 rows each time after apparently examining ~100 billion (!).
+
+When flush tables ran on this host, it locked all tables and essentially hung there, waiting for the multi-hour temp table writes to complete. MySQL will still happily accepting connections and queries, which are queued up "waiting for table" status.
+
+A large number of apache workers were tied up by sending blocked queries to this db, resulting in the actual site outage. A bug in MySQL prevented 'flush tables' cannot truly be killed directly (http://bugs.mysql.com/bug.php?id=44884). The site was restored only after sending to that host a sigterm, which prevented it from accepting additional incoming connections and killing everything off. MySql on db43 was then restarted, and the rest of the replication changes went smoothly.
+
+Need to modify the switch scripts to prevent the "flush tables" statement on the master from replicating, as well as automated killing of long running queries on the slaves (instead of just the old master) should prevent a recurrence of this scenario.

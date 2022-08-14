@@ -1,0 +1,271 @@
+# [](//cloud.google.com)
+
+March 13, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Console](/incident/developers-console/19001)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Console Incident #19001
+
+We've received a report of an issue with Google Cloud Console.
+
+Incident began at **2019-03-11 09:58** and ended at **2019-03-11 16:31** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Mar 14, 2019 | 16:55 |
+
+ISSUE SUMMARY
+
+On Monday, 11 March 2019, Google Cloud Console was unavailable for a duration
+of 3 hours and 54 minutes. Although, Google Cloud Platform resources remained
+unaffected, we understand that a majority of our customers rely on Cloud
+Console to manage their cloud resources and we sincerely apologize to everyone
+who was affected by the incident. The issue also affected Firebase console and
+IAM service account activations.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Monday, 11 March 2019, from 09:26 to 13:20 US/Pacific, Cloud Console was
+unavailable. Users were unable to access and manage their GCP resources using
+Cloud Console. All Google Cloud Platform resources continued to function and
+were accessible using the gcloud CLI, and the Cloud Console iOS and Android
+apps. From 14:10 to 15:37 US/Pacific, for a duration of 1 hour 27 minutes,
+Firebase Console and IAM service account activation were also unavailable to
+users.
+
+ROOT CAUSE
+
+Most Google services use a quota system for rate limiting user requests. The
+quota system implements a variant of the classic token bucket algorithm [1].
+
+The issue was triggered when a code change in the most recent release of the
+quota system introduced a bug, causing a fallback to significantly smaller,
+default quota limits, resulting in user requests being denied.
+
+While the Cloud Console team mitigated the issue at 13:20 US/Pacifc, the
+underlying issue with the quota system started affecting Firebase Console and
+IAM service account activation beginning 14:10 US/Pacific until it was
+mitigated at 15:37 US/Pacific.
+
+REMEDIATION AND PREVENTION
+
+Cloud Console engineers were alerted at 09:31 US/Pacific and began
+investigation shortly after. The issue was mitigated at 13:20 US/Pacific when
+quota server engineers granted additional quota to Cloud Console while they
+continued to investigate the root cause. The issue was permanently mitigated
+when the offending change was rolled back.
+
+In addition to fixing the underlying bug, we will be fixing the error in our
+default quota configuration. We will also be improving our automated alerts
+system to cover obviously erroneous quota denials.
+
+We apologize again for the inconvenience caused by this issue to our
+customers.
+
+[1] <https://en.wikipedia.org/wiki/Token_bucket>  
+  
+|
+
+ISSUE SUMMARY
+
+On Monday, 11 March 2019, Google Cloud Console was unavailable for a duration
+of 3 hours and 54 minutes. Although, Google Cloud Platform resources remained
+unaffected, we understand that a majority of our customers rely on Cloud
+Console to manage their cloud resources and we sincerely apologize to everyone
+who was affected by the incident. The issue also affected Firebase console and
+IAM service account activations.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Monday, 11 March 2019, from 09:26 to 13:20 US/Pacific, Cloud Console was
+unavailable. Users were unable to access and manage their GCP resources using
+Cloud Console. All Google Cloud Platform resources continued to function and
+were accessible using the gcloud CLI, and the Cloud Console iOS and Android
+apps. From 14:10 to 15:37 US/Pacific, for a duration of 1 hour 27 minutes,
+Firebase Console and IAM service account activation were also unavailable to
+users.
+
+ROOT CAUSE
+
+Most Google services use a quota system for rate limiting user requests. The
+quota system implements a variant of the classic token bucket algorithm [1].
+
+The issue was triggered when a code change in the most recent release of the
+quota system introduced a bug, causing a fallback to significantly smaller,
+default quota limits, resulting in user requests being denied.
+
+While the Cloud Console team mitigated the issue at 13:20 US/Pacifc, the
+underlying issue with the quota system started affecting Firebase Console and
+IAM service account activation beginning 14:10 US/Pacific until it was
+mitigated at 15:37 US/Pacific.
+
+REMEDIATION AND PREVENTION
+
+Cloud Console engineers were alerted at 09:31 US/Pacific and began
+investigation shortly after. The issue was mitigated at 13:20 US/Pacific when
+quota server engineers granted additional quota to Cloud Console while they
+continued to investigate the root cause. The issue was permanently mitigated
+when the offending change was rolled back.
+
+In addition to fixing the underlying bug, we will be fixing the error in our
+default quota configuration. We will also be improving our automated alerts
+system to cover obviously erroneous quota denials.
+
+We apologize again for the inconvenience caused by this issue to our
+customers.
+
+[1] <https://en.wikipedia.org/wiki/Token_bucket>  
+  
+| Mar 11, 2019 | 16:31 |
+
+The issue with Google Cloud Console has been resolved for all affected
+projects as of Monday, 2019-03-11 16:27 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+|
+
+The issue with Google Cloud Console has been resolved for all affected
+projects as of Monday, 2019-03-11 16:27 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+| Mar 11, 2019 | 15:49 |
+
+The issue with Google Cloud Console should be resolved for the majority of
+projects as of 15:41 US/Pacific and we expect a full resolution in the near
+future. We will provide another status update by Monday, 2019-03-11 17:00
+US/Pacific with current details.  
+  
+|
+
+The issue with Google Cloud Console should be resolved for the majority of
+projects as of 15:41 US/Pacific and we expect a full resolution in the near
+future. We will provide another status update by Monday, 2019-03-11 17:00
+US/Pacific with current details.  
+  
+| Mar 11, 2019 | 15:37 |
+
+The rate of errors is decreasing. We will provide another status update by
+Monday, 2019-03-11 16:45 US/Pacific with current details.  
+  
+|
+
+The rate of errors is decreasing. We will provide another status update by
+Monday, 2019-03-11 16:45 US/Pacific with current details.  
+  
+| Mar 11, 2019 | 14:51 |
+
+Our Engineering Team continues to pursue a complete resolution. We will
+provide another status update by Monday, 2019-03-11 17:00 US/Pacific with
+current details.  
+  
+|
+
+Our Engineering Team continues to pursue a complete resolution. We will
+provide another status update by Monday, 2019-03-11 17:00 US/Pacific with
+current details.  
+  
+| Mar 11, 2019 | 13:52 |
+
+The issue with Google Cloud Console should be partially resolved for the
+majority of users and we expect a full resolution in the near future. However,
+users may still have trouble listing project permissions from the Google Cloud
+Console. We will provide another status update by Monday, 2019-03-11 14:50
+US/Pacific with current details.  
+  
+|
+
+The issue with Google Cloud Console should be partially resolved for the
+majority of users and we expect a full resolution in the near future. However,
+users may still have trouble listing project permissions from the Google Cloud
+Console. We will provide another status update by Monday, 2019-03-11 14:50
+US/Pacific with current details.  
+  
+| Mar 11, 2019 | 13:16 |
+
+Our Engineering Team continues to mitigate the issue. We will provide another
+status update by Monday, 2019-03-11 14:15 US/Pacific with current details.  
+  
+|
+
+Our Engineering Team continues to mitigate the issue. We will provide another
+status update by Monday, 2019-03-11 14:15 US/Pacific with current details.  
+  
+| Mar 11, 2019 | 12:11 |
+
+Our Engineering Team continues to mitigate the issue. We will provide another
+status update by Monday, 2019-03-11 13:15 US/Pacific with the current details.  
+  
+|
+
+Our Engineering Team continues to mitigate the issue. We will provide another
+status update by Monday, 2019-03-11 13:15 US/Pacific with the current details.  
+  
+| Mar 11, 2019 | 10:58 |
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Monday, 2019-03-11 12:15 US/Pacific with current
+details.
+
+Affected users may receive a "failed to load" error message when attempting to
+list resources like Compute Engine instances, billing accounts, GKE clusters,
+and Google Cloud Functions quotas.
+
+As a workaround, the gcloud SDK can be used instead of the Cloud Console.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Monday, 2019-03-11 12:15 US/Pacific with current
+details.
+
+Affected users may receive a "failed to load" error message when attempting to
+list resources like Compute Engine instances, billing accounts, GKE clusters,
+and Google Cloud Functions quotas.
+
+As a workaround, the gcloud SDK can be used instead of the Cloud Console.  
+  
+| Mar 11, 2019 | 09:58 |
+
+We've received a report of an issue with Google Cloud Console as of Monday,
+2019-03-11 09:38 US/Pacific. We will provide more information by Monday,
+2019-03-11 11:00 US/Pacific.  
+  
+|
+
+We've received a report of an issue with Google Cloud Console as of Monday,
+2019-03-11 09:38 US/Pacific. We will provide more information by Monday,
+2019-03-11 11:00 US/Pacific.  
+  
+| Mar 11, 2019 | 09:58 |
+
+We've received a report of an issue with Google Cloud Console.  
+  
+|
+
+We've received a report of an issue with Google Cloud Console.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

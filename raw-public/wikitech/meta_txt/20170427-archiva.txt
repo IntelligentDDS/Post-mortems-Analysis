@@ -1,0 +1,14 @@
+The archiva.wikimedia.org suffered an intermittent unavailability due it's public IP being stolen by another host between 20:26 and 21:56.
+• 20:26 The partially decommissioned host gadolinium boot up and used it's old configuration that had the same public IP used by archiva.wikimedia.org (208.80.154.73), making the IP flapping between it's legit owner meitnerium and gadolinium, causing the intermittent unavailability of the archiva.wikimedia.org service.
+• 21:56 Riccardo shut down the old decommissioned host gadolinium to stop the outage.
+• 22:02 Rob opened a task for the full decommissioning of gadolinium: T164036
+• Despite the large number of alarms on IRC due to the flapping nature of the event, no one was around to have a look at it for a long time. On the other hand, none of the alarms that went off triggered a page to the operations team.
+• The decommissioned host gadolinium boot up for reasons not yet clear.
+• The decommissioned host gadolinium was not fully decommissioned in the past, so when booting up, it still had it's full configuration, that in this case was having the same public IP already announced by another host.
+• Investigate to know why gadolinium boot up in the first place.
+• It was booted up to troubleshoot T158131. It seems whenever this host was returned to spares, it didn't have its switch port disabled, or disks wiped.. Since it was not disabled, when the system booted up, it had full access to the network. The Server_Lifecycle steps are clear on the checklist being used for all reclaim and decommissions, so this shouldn't happen in the future, this host was likely offline and sitting from prior to the checklist implementation.
+• Improve our alarming to ensure a shorter response time, potentially adding alarms via email and/or improving the ones that page.
+• Improve our procedures around decommissioned hosts to ensure that:
+• they are fully decommissioned as soon as possible
+• they are isolated network wise, in particular if they need to stay racked with their data untouched for backup/recovery reasons
+• they are clearly marked as decommissioned in racktables: T164042

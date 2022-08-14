@@ -1,0 +1,419 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/15056)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #15056
+
+Google Compute Engine Persistent Disk issue in europe-west1-b
+
+Incident began at **2015-08-13 09:25** and ended at **2015-08-16 09:35** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 18, 2015 | 02:18 |
+
+SUMMARY:
+
+From Thursday 13 August 2015 to Monday 17 August 2015, errors occurred on a
+small proportion of Google Compute Engine persistent disks in the europe-
+west1-b zone. The affected disks sporadically returned I/O errors to their
+attached GCE instances, and also typically returned errors for management
+operations such as snapshot creation. In a very small fraction of cases (less
+than 0.000001% of PD space in europe-west1-b), there was permanent data loss.
+
+Google takes availability very seriously, and the durability of storage is our
+highest priority. We apologise to all our customers who were affected by this
+exceptional incident. We have conducted a thorough analysis of the issue, in
+which we identified several contributory factors across the full range of our
+hardware and software technology stack, and we are working to improve these to
+maximise the reliability of GCE's whole storage layer.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+From 09:19 PDT on Thursday 13 August 2015, to Monday 17 August 2015, some
+Standard Persistent Disks in the europe-west1-b zone began to return sporadic
+I/O errors to their connected GCE instances. In total, approximately 5% of the
+Standard Persistent Disks in the zone experienced at least one I/O read or
+write failure during the course of the incident. Some management operations on
+the affected disks also failed, such as disk snapshot creation.
+
+From the start of the incident, the number of affected disks progressively
+declined as Google engineers carried out data recovery operations. By Monday
+17 August, only a very small number of disks remained affected, totalling less
+than 0.000001% of the space of allocated persistent disks in europe-west1-b.
+In these cases, full recovery is not possible.
+
+The issue only affected Standard Persistent Disks that existed when the
+incident began at 09:19 PDT. There was no effect on Standard Persistent Disks
+created after 09:19. SSD Persistent Disks, disk snapshots, and Local SSDs were
+not affected by the incident. In particular, it was possible at all times to
+recreate new Persistent Disks from existing snapshots.
+
+ROOT CAUSE:
+
+At 09:19 PDT on Thursday 13 August 2015, four successive lightning strikes on
+the local utilities grid that powers our European datacenter caused a brief
+loss of power to storage systems which host disk capacity for GCE instances in
+the europe-west1-b zone. Although automatic auxiliary systems restored power
+quickly, and the storage systems are designed with battery backup, some
+recently written data was located on storage systems which were more
+susceptible to power failure from extended or repeated battery drain. In
+almost all cases the data was successfully committed to stable storage,
+although manual intervention was required in order to restore the systems to
+their normal serving state. However, in a very few cases, recent writes were
+unrecoverable, leading to permanent data loss on the Persistent Disk.
+
+This outage is wholly Google's responsibility. However, we would like to take
+this opportunity to highlight an important reminder for our customers: GCE
+instances and Persistent Disks within a zone exist in a single Google
+datacenter and are therefore unavoidably vulnerable to datacenter-scale
+disasters. Customers who need maximum availability should be prepared to
+switch their operations to another GCE zone. For maximum durability we
+recommend GCE snapshots and Google Cloud Storage as resilient, geographically
+replicated repositories for your data.
+
+REMEDIATION AND PREVENTION:
+
+Google has an ongoing program of upgrading to storage hardware that is less
+susceptible to the power failure mode that triggered this incident. Most
+Persistent Disk storage is already running on this hardware. Since the
+incident began, Google engineers have conducted a wide-ranging review across
+all layers of the datacenter technology stack, from electrical distribution
+systems through computing hardware to the software controlling the GCE
+persistent disk layer. Several opportunities have been identified to increase
+physical and procedural resilience, including:
+
+Continue to upgrade our hardware to improve cache data retention during
+transient power loss. Implement multiple orthogonal schemes to increase
+Persistent Disk data durability for greater resilience. Improve response
+procedures for system engineers during possible future incidents.  
+  
+|
+
+SUMMARY:
+
+From Thursday 13 August 2015 to Monday 17 August 2015, errors occurred on a
+small proportion of Google Compute Engine persistent disks in the europe-
+west1-b zone. The affected disks sporadically returned I/O errors to their
+attached GCE instances, and also typically returned errors for management
+operations such as snapshot creation. In a very small fraction of cases (less
+than 0.000001% of PD space in europe-west1-b), there was permanent data loss.
+
+Google takes availability very seriously, and the durability of storage is our
+highest priority. We apologise to all our customers who were affected by this
+exceptional incident. We have conducted a thorough analysis of the issue, in
+which we identified several contributory factors across the full range of our
+hardware and software technology stack, and we are working to improve these to
+maximise the reliability of GCE's whole storage layer.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+From 09:19 PDT on Thursday 13 August 2015, to Monday 17 August 2015, some
+Standard Persistent Disks in the europe-west1-b zone began to return sporadic
+I/O errors to their connected GCE instances. In total, approximately 5% of the
+Standard Persistent Disks in the zone experienced at least one I/O read or
+write failure during the course of the incident. Some management operations on
+the affected disks also failed, such as disk snapshot creation.
+
+From the start of the incident, the number of affected disks progressively
+declined as Google engineers carried out data recovery operations. By Monday
+17 August, only a very small number of disks remained affected, totalling less
+than 0.000001% of the space of allocated persistent disks in europe-west1-b.
+In these cases, full recovery is not possible.
+
+The issue only affected Standard Persistent Disks that existed when the
+incident began at 09:19 PDT. There was no effect on Standard Persistent Disks
+created after 09:19. SSD Persistent Disks, disk snapshots, and Local SSDs were
+not affected by the incident. In particular, it was possible at all times to
+recreate new Persistent Disks from existing snapshots.
+
+ROOT CAUSE:
+
+At 09:19 PDT on Thursday 13 August 2015, four successive lightning strikes on
+the local utilities grid that powers our European datacenter caused a brief
+loss of power to storage systems which host disk capacity for GCE instances in
+the europe-west1-b zone. Although automatic auxiliary systems restored power
+quickly, and the storage systems are designed with battery backup, some
+recently written data was located on storage systems which were more
+susceptible to power failure from extended or repeated battery drain. In
+almost all cases the data was successfully committed to stable storage,
+although manual intervention was required in order to restore the systems to
+their normal serving state. However, in a very few cases, recent writes were
+unrecoverable, leading to permanent data loss on the Persistent Disk.
+
+This outage is wholly Google's responsibility. However, we would like to take
+this opportunity to highlight an important reminder for our customers: GCE
+instances and Persistent Disks within a zone exist in a single Google
+datacenter and are therefore unavoidably vulnerable to datacenter-scale
+disasters. Customers who need maximum availability should be prepared to
+switch their operations to another GCE zone. For maximum durability we
+recommend GCE snapshots and Google Cloud Storage as resilient, geographically
+replicated repositories for your data.
+
+REMEDIATION AND PREVENTION:
+
+Google has an ongoing program of upgrading to storage hardware that is less
+susceptible to the power failure mode that triggered this incident. Most
+Persistent Disk storage is already running on this hardware. Since the
+incident began, Google engineers have conducted a wide-ranging review across
+all layers of the datacenter technology stack, from electrical distribution
+systems through computing hardware to the software controlling the GCE
+persistent disk layer. Several opportunities have been identified to increase
+physical and procedural resilience, including:
+
+Continue to upgrade our hardware to improve cache data retention during
+transient power loss. Implement multiple orthogonal schemes to increase
+Persistent Disk data durability for greater resilience. Improve response
+procedures for system engineers during possible future incidents.  
+  
+| Aug 16, 2015 | 09:35 |
+
+At present, less than 0.05% of PD's are experiencing read failures in europe-
+west1-b. Neither restoring Persistent Disks from snapshots nor creating new
+Persistent Disks have been affected. If your PD is one of those 0.05%
+currently affected, you may restore it from a snapshot and continue using it
+at full availability.
+
+Given the low rate of read failures, this will be the final update for this
+incident. Instead, the Cloud Support team will be reaching out to affected
+customers within 3 business days. Please also feel free to proactively contact
+support for more information.
+
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrence. We will
+provide a more detailed analysis of this incident once we have completed our
+internal investigation.  
+  
+|
+
+At present, less than 0.05% of PD's are experiencing read failures in europe-
+west1-b. Neither restoring Persistent Disks from snapshots nor creating new
+Persistent Disks have been affected. If your PD is one of those 0.05%
+currently affected, you may restore it from a snapshot and continue using it
+at full availability.
+
+Given the low rate of read failures, this will be the final update for this
+incident. Instead, the Cloud Support team will be reaching out to affected
+customers within 3 business days. Please also feel free to proactively contact
+support for more information.
+
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrence. We will
+provide a more detailed analysis of this incident once we have completed our
+internal investigation.  
+  
+| Aug 14, 2015 | 16:53 |
+
+At present, less than 0.05% of PD's are experiencing read failures in europe-
+west1-b. Neither restoring Persistent Disks from snapshots nor creating new
+Persistent Disks have been affected. If your PD is one of those 0.05%
+currently affected, you may restore it from a snapshot and continue using it
+at full availability.
+
+Given the low rate of read failures, we will be decreasing the velocity of
+updates. We will provide another status update on 17 August by 16:00
+US/Pacific with current details. In addition, the Cloud Support team will be
+reaching out to affected customers within 3 business days. Please also feel
+free to proactively reach to Cloud Support for more information.  
+  
+|
+
+At present, less than 0.05% of PD's are experiencing read failures in europe-
+west1-b. Neither restoring Persistent Disks from snapshots nor creating new
+Persistent Disks have been affected. If your PD is one of those 0.05%
+currently affected, you may restore it from a snapshot and continue using it
+at full availability.
+
+Given the low rate of read failures, we will be decreasing the velocity of
+updates. We will provide another status update on 17 August by 16:00
+US/Pacific with current details. In addition, the Cloud Support team will be
+reaching out to affected customers within 3 business days. Please also feel
+free to proactively reach to Cloud Support for more information.  
+  
+| Aug 14, 2015 | 13:52 |
+
+We are still working on restoring the full service for every Google Compute
+Engine Persistent Disk in europe-west1-b. In terms of impact, less than 0.1%
+of Google Compute Engine Persistent Disks in that zone have been experiencing
+read failures on some of the blocks. Current data indicates than no more than
+1% of PDs could be affected going forward.
+
+Neither restoring Persistent Disks from snapshots nor creating new Persistent
+Disks have been affected. If your PD is one of those 0.1% currently affected,
+you may restore it from a snapshot and continue using it at full availability.
+
+We will provide another status update by 16:00 US/Pacific with current
+details.  
+  
+|
+
+We are still working on restoring the full service for every Google Compute
+Engine Persistent Disk in europe-west1-b. In terms of impact, less than 0.1%
+of Google Compute Engine Persistent Disks in that zone have been experiencing
+read failures on some of the blocks. Current data indicates than no more than
+1% of PDs could be affected going forward.
+
+Neither restoring Persistent Disks from snapshots nor creating new Persistent
+Disks have been affected. If your PD is one of those 0.1% currently affected,
+you may restore it from a snapshot and continue using it at full availability.
+
+We will provide another status update by 16:00 US/Pacific with current
+details.  
+  
+| Aug 14, 2015 | 11:04 |
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+16:00 US/Pacific with current details.  
+  
+|
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+16:00 US/Pacific with current details.  
+  
+| Aug 14, 2015 | 08:19 |
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+11:00 US/Pacific with current details.  
+  
+|
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+11:00 US/Pacific with current details.  
+  
+| Aug 14, 2015 | 02:59 |
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+08:00 US/Pacific with current details.  
+  
+|
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+08:00 US/Pacific with current details.  
+  
+| Aug 13, 2015 | 22:56 |
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+Aug 14 03:00 US/Pacific with current details.  
+  
+|
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+Aug 14 03:00 US/Pacific with current details.  
+  
+| Aug 13, 2015 | 18:57 |
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+23:00 US/Pacific with current details.  
+  
+|
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+23:00 US/Pacific with current details.  
+  
+| Aug 13, 2015 | 15:06 |
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+19:00 US/Pacific with current details.  
+  
+|
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. We will provide another status update by
+19:00 US/Pacific with current details.  
+  
+| Aug 13, 2015 | 13:00 |
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. Current data indicates that less than 1%
+of PDs in europe-west1-b are susceptible to degraded performance because of
+this issue. The service has been partially recovered.
+
+Meanwhile, affected customers can restore from snapshots as a workaround
+solution.
+
+We will provide another status update by 15:00 US/Pacific with current
+details.  
+  
+|
+
+We are still working on restoring the service of Google Compute Engine
+Persistent Disks in europe-west1-b. Current data indicates that less than 1%
+of PDs in europe-west1-b are susceptible to degraded performance because of
+this issue. The service has been partially recovered.
+
+Meanwhile, affected customers can restore from snapshots as a workaround
+solution.
+
+We will provide another status update by 15:00 US/Pacific with current
+details.  
+  
+| Aug 13, 2015 | 12:00 |
+
+We are still actively working on mitigating the issue with Google Compute
+Engine Persistent Disks in europe-west1-b beginning at Thursday, 2015-08-13
+09:25 US/Pacific.
+
+For everyone who is affected, we apologize for the impact to your systems. We
+will provide another status update by 13:00 US/Pacific with current details.  
+  
+|
+
+We are still actively working on mitigating the issue with Google Compute
+Engine Persistent Disks in europe-west1-b beginning at Thursday, 2015-08-13
+09:25 US/Pacific.
+
+For everyone who is affected, we apologize for the impact to your systems. We
+will provide another status update by 13:00 US/Pacific with current details.  
+  
+| Aug 13, 2015 | 11:14 |
+
+We are experiencing an issue with Google Compute Engine Persistent Disks in
+europe-west1-b beginning at Thursday, 2015-08-13 09:25 US/Pacific. Customers
+who have machines running in this zone may see read errors.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 12:00 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an issue with Google Compute Engine Persistent Disks in
+europe-west1-b beginning at Thursday, 2015-08-13 09:25 US/Pacific. Customers
+who have machines running in this zone may see read errors.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 12:00 US/Pacific with current
+details.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

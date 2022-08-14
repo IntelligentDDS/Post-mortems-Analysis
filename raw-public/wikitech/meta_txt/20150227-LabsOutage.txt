@@ -1,0 +1,21 @@
+At 02:30UTC on 2015-02-27 all of the labs instances hosted on virt1012 lost network connectivity. A reboot and restart of instances restored them within 40 minutes, but the same problem recurred at 05:20UTC. During the second outage, critical tools instances were migrated to other hosts and virt1012 was upgraded from Ubuntu Precise to Ubuntu Trusty. By 08:45 virt1012 was back up and running and all services were restored.
+
+This problem was almost certainly a duplicate of the one that caused the outage earlier in the week. The cause is still unknown.
+• [02:30] Instances drop off network -- shinken reports failure of many Tools instances. Based on our findings during the previous similar failure, Marc attempts to suspend all instances (which fails, as before) and then reboots virt1012.
+• [03:05] Marc resets and reboots all affected instances and services are restored.
+• [03:20] Andrew and Yuvi begin preparations against a repeat of this failure, creating duplicate tools-webproxy hosts on other virt hosts. Not fast enough!
+• [05:20] Shinken reports tools instance failure, and all virt1012 VMs drop off the network again. Andrew opts to upgrade the server to Trusty rather than just reboot. (There was no strong reason to believe that an upgrade would address the issue, other than it having a chance to move us away from a potentially buggy kernel or library.)
+• [05:30-08:30] Unfortunately, the upgrade to Trusty takes an extremely long time, due to Ubuntu having recently released a security-patched kernel; the Ubuntu package repositories are extremely busy and slow. In the meantime, Andrew cold-migrates several hosts off of virt1012 to other virt hosts: tools-webproxy, dynamicproxy-gateway and tools-submit.
+• [07:10] Tools-webproxy resumes operation on virt1010. May web-based tools are restored. Note that the cold-migrate of tools-webproxy required multiple attempts, as the required base image wasn't present on the first target host.
+• [08:30] virt1012 is finally full upgraded and rebooted; Andrew restarts all remaining instances on virt1012
+• [08:45] All VMs are restored to active state.
+
+It's still unclear what is causing this problem. The upgrade to Trusty seems an unlikely solution since this issue is specific to a single server; virt1010 and virt1011 are running the same software that virt1012 was.
+
+Yuvi has already created replacement instances for tools-webproxy. Currently two of them are on the same host though (virt1010) and switching over between them requires manual intervention.
+
+The tools-webproxy backups need to be redistributed among three different hosts. Similar swappable tools instances should be constructed and distributed. The same should probably also be done for project deployment-prep.
+
+We should acquire new hardware soon, in order to have available space should we need to abandon virt1012 entirely.
+
+Should the virt1012 issue recur, the following instances are vulnerable:

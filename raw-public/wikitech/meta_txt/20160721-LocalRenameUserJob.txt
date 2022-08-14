@@ -1,0 +1,12 @@
+MediaWiki 1.28.0-wmf.11 included changes to the jobs for CentralAuth's global renaming process which left local accounts of renamed user unattached on some wikis while the Wikimedia production cluster was running mixed versions of MediaWiki. At 2016-07-20T20:06Z the group1 wikis were updated to 1.28.0-wmf.11. Group1 includes meta which is the wiki where stewards and global renamers approve rename requests. The 1.28.0-wmf.11 version of this process starts by detaching the local wiki accounts for the user being renamed as part of the mitigation for task T119736. The accounts are reattached at the end of each associated LocalRenameUserJob. Between 2016-07-20T20:06Z and 2016-07-21T19:09Z (when all wikis changed to 1.28.0-wmf.11), the local jobs run on group2 wikis (functionally the Wikipedia family) did not include the new code needed to reattach the local accounts to the renamed central account.
+• 2016-07-15T19:21Z bd808 asks about consequences of new job introduced in related patch and mixed cluster state. This turns out to be ok, but the changes to the existing job in were not discussed.
+• 2016-07-21T17:47Z task T141020 opened by Steinsplitter to examine and correct six renamed users with unattached accounts.
+• 2016-07-21T19:23Z legoktm pings bd808 on irc to look at task T141020.
+• 2016-07-21T19:35Z bd808 determines likely root cause of mismatched MW versions and starts trying to find all affected users in logs.
+• 2016-07-21T19:44Z Priority of task T141020 raised to UBN! by MarcoAurelio due to potentially severe end user impact.
+• 2016-07-21T20:27Z bd808 finds 54 renames that may have been affected.
+• 2016-07-21T23:19Z bd808 runs custom maintenance script to reattach any unattached local accounts for the 54 renames. The script finds and fixes 18 accounts.
+• 2016-07-22T20:53Z bd808 follows up by grepping all renames done in July from logs on fluorine and running them through the cleanup script. Of the 748 accounts checked, 3 more were found with unattached local accounts. Only one of the three was due to the same root cause and happened during the previously identified time period.
+• 2016-07-22T22:34Z bd808 writes up incident and closes task T141020 as resolved!
+• Letting changes to existing jobs ride the train is potentially dangerous if the job runs on the local wiki rather than the submitting wiki. More care should be taken when writing and merging such changes to ensure that they are rolled out to all wikis in a very short time window.
+• Do we still track "scap traps" somewhere?

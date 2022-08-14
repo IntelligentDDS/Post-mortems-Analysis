@@ -1,0 +1,35 @@
+
+[03/04/2014][BlackBerry Users Report Email And Messaging Service Outage]
+http://www.huffingtonpost.ca/2014/03/04/blackberry-outage-canada_n_4896583.html
+http://www.thestar.com/business/2014/03/04/blackberry_users_reporting_email_and_messaging_disruptions.html
+http://mobilesyrup.com/2014/03/04/blackberry-users-reporting-major-outage-in-many-regions/
+http://www.ctvnews.ca/business/blackberry-outage-in-canada-asia-pacific-resolved-1.1713687
+http://www.reuters.com/article/2014/03/04/us-blackberry-outage-idUSBREA231RQ20140304
+r-unk
+i-op
+t-5h55m
+p-no
+
+[09/16/2011][BlackBerry outage hits e-mail, messenger access]
+http://www.cnet.com/news/blackberry-outage-hits-e-mail-messenger-access/
+http://www.citynews.ca/2011/09/16/rims-bbm-service-experiences-outage/
+http://www.huffingtonpost.ca/2011/09/16/blackberry-outage-users-emails-bbm_n_966077.html
+http://www.loopinsight.com/2011/09/16/blackberry-messenger-outage-hits-canada-latin-america/
+r-fail
+i-down
+t-2h
+p-no
+
+[10/10/2011][BlackBerry outage blamed on 'extremely critical' network failure]
+http://www.cnn.com/2011/10/12/tech/mobile/blackberry-outage/
+http://www.theguardian.com/technology/2011/oct/10/blackberry-outage-affects-bbm-services
+http://www.geek.com/mobile/blackberry-messenger-outage-spreads-to-north-america-as-rival-imessage-launches-1429381/
+http://www.itproportal.com/2011/10/12/rim-uk-md-sorry-blackberry-messenger-web-services-outage/
+http://www.reuters.com/article/2011/10/12/us-blackberry-idUSTRE79B24Y20111012
+http://www.wired.com/2011/10/blackberry-outage-continues-as-icloud-launches/
+http://www.dailymail.co.uk/sciencetech/article-2047518/BlackBerry-outage-leaves-users-cut-hours-dozens-countries.html
+r-fail
+i-down
+t-3d
+p-no
+

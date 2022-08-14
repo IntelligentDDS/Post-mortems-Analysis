@@ -1,0 +1,352 @@
+{
+  "gcdc-16005": {
+    "title": "Google Cloud Console Incident #16005",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCDC/Google%20Cloud%20Console%20Incident%20%2316005.pdf"
+    ],
+    "time": "06/09/2016",
+    "summary": "On Thursday 9 June 2016, the Google Cloud Console was unavailable for a duration of 91 minutes, with significant performance degradation in the preceding half hour. Although this did not affect user resources running on the Google Cloud Platform, we appreciate that many of our customers rely on the Cloud Console to manage those resources, and we apologize to everyone who was affected by the incident. This report is to explain to our customers what went wrong, and what we are doing to make sure that it does not happen again.",
+    "service_name": [
+      "Google Cloud Console"
+    ],
+    "impact symptom": [
+      "availability",
+      "performance"
+    ],
+    "duration": 91,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "internal monitoring"
+      ]
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "high latency",
+          "elevated error rates"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs"
+        }
+      ],
+      "details": "The Google Cloud Console runs on Google App Engine, where it uses internal functionality that is not used by customer applications. Google App Engine version 1.9.39 introduced a bug in one internal function which affected Google Cloud Console instances, but not customer-owned applications, and thus escaped detection during testing and during initial rollout. Once enough instances of Google Cloud Console had been switched to 1.9.39, the console was unavailable and internal monitoring alerted the engineering team, who restored service by starting additional Google Cloud Console instances on 1.9.38."
+    },
+    "operation": [
+      "upgrade"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "running the previous version",
+        "fix low-level bugs"
+      ],
+      "details": "When the issue was provisionally identified as a specific interaction between Google App Engine version 1.9.39 and the Cloud Console, App Engine engineers brought up capacity running the previous App Engine version and transferred the Cloud Console to it, restoring service at 22:23 PDT. The low-level bug that triggered the error has been identified and fixed.",
+      "troubleshooting": {
+        "1": "Once enough instances of Google Cloud Console had been switched to 1.9.39, the console was unavailable and internal monitoring alerted the engineering team, who restored service by starting additional Google Cloud Console instances on 1.9.38. ",
+        "2": "App Engine engineers brought up capacity running the previous App Engine version and transferred the Cloud Console to it, restoring service at 22:23 PDT. ",
+        "3": "The low-level bug that triggered the error has been identified and fixed."
+      }
+    },
+    "propagation pass": {
+      "1": "Google cloud console instances",
+      "2": "google cloud console"
+    },
+    "refined path": {
+      "1": "app instances",
+      "2": "app"
+    },
+    "detection time": null,
+    "fix time": 91,
+    "identification time": null,
+    "verification": "lixy"
+  },
+  "gcdc-19001": {
+    "title": "Google Cloud Console Incident #19001",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCDC/Google%20Cloud%20Console%20Incident%20%2319001.pdf"
+    ],
+    "time": "03/11/2019",
+    "summary": "On Monday, 11 March 2019, Google Cloud Console was unavailable for a duration of 3 hours and 54 minutes. Although, Google Cloud Platform resources remained unaffected, we understand that a majority of our customers rely on Cloud Console to manage their cloud resources and we sincerely apologize to everyone who was affected by the incident. The issue also affected Firebase console and IAM service account activations.",
+    "service_name": [
+      "Google Cloud Console"
+    ],
+    "impact symptom": [
+      "performance",
+      "availability"
+    ],
+    "duration": 321,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      "service unavailable"
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "code change"
+        }
+      ],
+      "details": "The issue was triggered when a code change in the most recent release of the quota system introduced a bug, causing a fallback to significantly smaller, default quota limits, resulting in user requests being denied."
+    },
+    "operation": [
+      "rollout"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "grant additional quota",
+        "roll back the change",
+        "fix the error in quota configuration",
+        "fix bug"
+      ],
+      "details": "Cloud Console engineers were alerted at 09:31 US/Pacific and began investigation shortly after. The issue was mitigated at 13:20 US/Pacific when quota server engineers granted additional quota to Cloud Console while they continued to investigate the root cause. The issue was permanently mitigated when the offending change was rolled back. In addition to fixing the underlying bug, we will be fixing the error in our default quota configuration. We will also be improving our automated alerts system to cover obviously erroneous quota denials.",
+      "troubleshooting": {
+        "1": "alerted at 09:31 US/Pacific and began investigation shortly after. ",
+        "2": "quota server engineers granted additional quota to Cloud Console while they continued to investigate the root cause. ",
+        "3": "The issue was permanently mitigated when the offending change was rolled back. "
+      }
+    },
+    "propagation pass": {
+      "1": "quota system",
+      "2": "google cloud console"
+    },
+    "refined path": {
+      "1": "middleware",
+      "2": "app"
+    },
+    "detection time": 5,
+    "fix time": 316,
+    "identification time": null,
+    "verification": "lixy"
+  },
+  "gcdc-19003": {
+    "title": "Google Cloud Console Incident #19003",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCDC/Google%20Cloud%20Console%20Incident%20%2319003.pdf"
+    ],
+    "time": "05/02/2019",
+    "summary": "On Thursday 2 May 2019, Google Cloud Console experienced a 40% error rate for all pageviews over a duration of 1 hour and 53 minutes. To all customers a!ected by this Cloud Console service degradation, we apologize. We are taking immediate steps to improve the platform’s performance and availability.",
+    "service_name": [
+      "Google Cloud Console"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 113,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "timeout error",
+          "high error rates"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "external causes",
+          "layer-2": "excessive flow"
+        }
+      ],
+      "details": "The Google Cloud Console relies on many internal services to properly render individual user interface pages. The internal billing service is one of them, and is required to retrieve accurate state data for projects and accounts. At 07:09 US/Pacific, a service unrelated to the Cloud Console began to send a large amount of traffic to the internal billing service. The additional load caused time-out and failure of individual requests including those from Google Cloud Console. This led to the Cloud Console serving timeout errors to customers when the underlying requests to the billing service failed."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "increase resources",
+        "identify the source of the extraneous traffic"
+      ],
+      "details": "Cloud Billing engineers were automatically alerted to the issue at 07:15 US/Pacific and Cloud Console engineers were alerted at 07:21. Both teams worked together to investigate the issue and once the root cause was identified, pursued two mitigation strategies. First, we increased the resources for the internal billing service in an attempt to handle the additional load. In parallel, we worked to identify the source of the extraneous traffic and then stop it from reaching the service. Once the traffic source was identified, mitigation was put in place and trafic to the internal billing service began to decrease at 08:40. The service fully recovered at 09:03.",
+      "troubleshooting": {
+        "1": "Cloud Billing engineers were automatically alerted to the issue at 07:15 US/Pacific and Cloud Console engineers were alerted at 07:21.",
+        "2": "we increased the resources for the internal billing service in an attempt to handle the additional load. ",
+        "3": "In parallel, we worked to identify the source of the extraneous traffic and then stop it from reaching the service.",
+        "4": "Once the traffic source was identified, mitigation was put in place and traffic to the internal billing service began to decrease at 08:40. "
+      }
+    },
+    "propagation pass": {
+      "1": "internal billing service",
+      "2": "google cloud console"
+    },
+    "refined path": {
+      "1": "middleware",
+      "2": "app"
+    },
+    "detection time": 8,
+    "fix time": 105,
+    "identification time": null,
+    "verification": "lixy"
+  },
+  "gcdc-15005": {
+    "title": "Google Developers Console Incident #15005",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCDC/Google%20Developers%20Console%20Incident%20%2315005.pdf"
+    ],
+    "time": "07/27/2015",
+    "summary": "On Monday, 27 July 2015, the Google Developers Console was unavailable to all users for a duration of 41 minutes. We apologize for the inconvenience and any impact on your operations that this may have caused. We are urgently working to implement preventative measures to ensure similar incidents do not occur in the future.",
+    "service_name": [
+      "Google Developer Cloud Console"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 41,
+    "detection": {
+      "method": "manual",
+      "tool": null
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "HTTP 404 response"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        },
+        {
+          "layer-1": "external causes",
+          "layer-2": "component removal"
+        }
+      ],
+      "details": "At 13:21, while reviewing the production status of the Developer Console, a Google engineer inadvertently disabled the production instance of the console. The engineer immediately recognised the error and began remediating the problem, but the configuration change had also engaged a security mechanism which restricted the application to the Google corporate network. This mechanism was identified and disengaged at 14:01, which restored public access to the Console."
+    },
+    "operation": [
+      "review the production status"
+    ],
+    "human error": true,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "disengage mechanism"
+      ],
+      "details": "To prevent similar incidents, Google Engineers are currently adding safeguards to make it harder to change application settings by mistake, implementing external monitoring to detect errors outside of the Google network, and creating alerts based on serving errors from the Developers Console.",
+      "troubleshooting": {
+        "1": "The engineer immediately recognised the error and began remediating the problem ",
+        "2": "The security mechanism was identified and disengaged at 14:01, which restored public access to the Console. "
+      }
+    },
+    "propagation pass": {
+      "1": "production instance of the console",
+      "2": "the application to the Google corporate network"
+    },
+    "refined path": {
+      "1": "app instances",
+      "2": "app"
+    },
+    "detection time": 0,
+    "fix time": 41,
+    "identification time": null,
+    "verification": "lixy"
+  },
+  "gcdc-21009": {
+    "title": "Google Developers Console Incident #21009",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/google/meta_pdf/new/gcc-21009.pdf"
+    ],
+    "time": "09/22/2021",
+    "summary": "On 22 September 2021 14:10 US/Pacific, Google Cloud, Workspace, and Geo (Maps) customers in the United States (U.S.) incorrectly received alert notifications on the Google Cloud Console user interface and an email regarding an issue with processing automatic payments. The issue persisted for 11 hours, 20 minutes. All customers in the United States who use credit card billing were inadvertently notified via email “Your payment information could not be processed. Visit the payment overview page to make sure your payment information is up to date and to pay any outstanding charges.” Customers also received a notification alert in the Google Cloud Console to update their primary payment method. After customers attempted to update their payment information in the admin console, they received a message that the payment could not be processed. We sincerely apologize for the inconvenience caused by the incorrect notification to our customers. Our engineering team has deployed a fix for this and has ensured that account settings are restored. We are taking additional steps to prevent similar problems in the future, as outlined below.",
+    "details": "ROOT CAUSE Google’s underlying networking control plane consists of multiple distributed components that make up the Software Defined Networking (SDN) stack. These components run on multiple machines so that failure of a machine or even multiple machines does not impact network capacity. To achieve this, the control plane elects a leader from a pool of machines to provide configuration to the various infrastructure components. The leader election process depends on a local instance of Google’s internal lock service to read various configurations and files for determining the leader. The control plane is responsible for Border Gateway Protocol (BGP) peering sessions between physical routers connecting a cloud zone to the Google backbone. Google’s internal lock service provides Access Control List (ACLs) mechanisms to control reading and writing of various files stored in the service. A change to the ACLs used by the network control plane caused the tasks responsible for leader election to no longer have access to the files required for the process. The production environment contained ACLs not present in the staging or canary environments due to those environments being rebuilt using updated processes during previous maintenance events. This meant that some of the ACLs removed in the change were in use in europe-west2-a, and the validation of the configuration change in testing and canary environments did not surface the issue. Google's resilience strategy relies on the principle of defense in depth. Specifically, despite the network control infrastructure being designed to be highly resilient, the network is designed to 'fail static' and run for a period of time without the control plane being present as an additional line of defense against failure. The network ran normally for a short period - several minutes - after the control plane had been unable to elect a leader task. After this period, BGP routing between europe-west2-a and the rest of the Google backbone network was withdrawn, resulting in isolation of the zone and inaccessibility of resources in the zone. REMEDIATION AND PREVENTION Google engineers were automatically alerted to elevated error rates in europe-west2-a at 2020-12-09 18:29 US/Pacific and immediately started an investigation. The configuration change rollout was automatically halted as soon as the issue was detected, preventing it from reaching any other zones. At 19:30, mitigation was applied to rollback the configuration change in europe-west2-a. This completed at 19:55, mitigating the immediate issue. Some services such as Cloud MemoryStore and Cloud VPN took additional time to recover due to complications arising from the initial disruption. Services with extended recovery timelines are described in the “detailed description of impact” section below. We are committed to preventing this situation from happening again and are implementing the following actions: In addition to rolling back the configuration change responsible for this disruption, we are auditing all network ACLs to ensure they are consistent across environments. While the network continued to operate for a short time after the change was rolled out, we are improving the operating mode of the data plane when the control plane is unavailable for extended periods. Improvements in visibility to recent changes will be made to reduce the time to mitigation. Additional observability will be added to lock service ACLs allowing for additional validation when making changes to ACLs. We are also improving the canary and release process for future changes of this type to ensure these changes are made safely.",
+    "service_name": [
+      "Google services"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 490,
+    "detection": {
+      "method": "automated",
+      "tool": null
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "error rate"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "Google’s underlying networking control plane consists of multiple distributed components that make up the Software Defined Networking (SDN) stack. These components run on multiple machines so that failure of a machine or even multiple machines does not impact network capacity. To achieve this, the control plane elects a leader from a pool of machines to provide configuration to the various infrastructure components. The leader election process depends on a local instance of Google’s internal lock service to read various configurations and files for determining the leader. The control plane is responsible for Border Gateway Protocol (BGP) peering sessions between physical routers connecting a cloud zone to the Google backbone. Google’s internal lock service provides Access Control List (ACLs) mechanisms to control reading and writing of various files stored in the service. A change to the ACLs used by the network control plane caused the tasks responsible for leader election to no longer have access to the files required for the process. The production environment contained ACLs not present in the staging or canary environments due to those environments being rebuilt using updated processes during previous maintenance events. This meant that some of the ACLs removed in the change were in use in europe-west2-a, and the validation of the configuration change in testing and canary environments did not surface the issue. Google's resilience strategy relies on the principle of defense in depth. Specifically, despite the network control infrastructure being designed to be highly resilient, the network is designed to 'fail static' and run for a period of time without the control plane being present as an additional line of defense against failure. The network ran normally for a short period - several minutes - after the control plane had been unable to elect a leader task. After this period, BGP routing between europe-west2-a and the rest of the Google backbone network was withdrawn, resulting in isolation of the zone and inaccessibility of resources in the zone. "
+    },
+    "operation": [
+      "change"
+    ],
+    "human error": true,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "rollback the configuration change in europe-west2-a"
+      ],
+      "details": "Google engineers were automatically alerted to elevated error rates in europe-west2-a at 2020-12-09 18:29 US/Pacific and immediately started an investigation. The configuration change rollout was automatically halted as soon as the issue was detected, preventing it from reaching any other zones. At 19:30, mitigation was applied to rollback the configuration change in europe-west2-a. This completed at 19:55, mitigating the immediate issue. Some services such as Cloud MemoryStore and Cloud VPN took additional time to recover due to complications arising from the initial disruption. Services with extended recovery timelines are described in the “detailed description of impact” section below.",
+      "troubleshooting": {
+        "1": "Google engineer rollback the configuration change in europe-west2-a"
+      }
+    },
+    "propagation pass": {
+      "1": "Google Cloud Console",
+      "2": "Google Cloud, Workspace, and Geo (Maps)"
+    },
+    "refined path": {
+      "1": "app",
+      "2": "app"
+    },
+    "detection time": null,
+    "fix time": 25,
+    "identification time": 61,
+    "verification": "lixy, yugb"
+  }
+}

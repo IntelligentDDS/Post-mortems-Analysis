@@ -1,0 +1,7 @@
+ORES went down and responded slowly for ~2 hours today.
+• 2025 UTC: A problem with old Jessie installs is discovered Phab:T130463 -- it turns out that it was really a pip issue with versioning https://github.com/pypa/pip/issues/214
+• 2130 UTC: A new cluster is built and requests are being served at the rate that they come in
+• Pip does not remove old versions when installing new wheels. This will need to be done manually
+• Our precaching utility will back-up during a short outage and unleash a load of requests on the service when it comes back online
+• Implement version purging on top of pip see change Done
+• Add a web node to the cluster Phab:T130394 Done

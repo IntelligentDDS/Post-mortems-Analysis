@@ -1,0 +1,6 @@
+Azure Email Alerts - Mitigated
+Summary of impact: Between 20:22 UTC on 28 Aug 2019 and 01:35 UTC on 29 Aug 2019, a subset of customers may not have received email alerts sent from a subset of Azure services during the impact window.
+Preliminary root cause: Engineers determined that instances of a backend email processing service became unhealthy during platform maintenance. This prevented requests from completing successfully, causing impact to downstream services.
+Mitigation: Engineers halted the maintenance and validated the service health to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating
+custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.

@@ -1,0 +1,13 @@
+A service impacting network maintenance was scheduled on 7/13/11 from 13:00 UTC to 14:00 UTC but was later extented to 15:00 UTC. The maintenance completed the replacement and migration to the new MX80 router and resolved several reported networking issues. There were complications with the NICs in those database servers when we had a switch reload, a bug we had seen before with the NIC drivers (Forcedeth). That caused about 25 minutes of rolling service interruption.
+
+On Friday 7/8/11, Mark installed the new Juniper Router (MX80) in our Tampa data center. As some of you might remember, earlier we had issues with network performance, full CAM cache table size and dropped multicasting. That router upgrade is to address these identified issues permanently. Mark executed the deployment successfully. However that upgrade is just part 1 of the plan. Part 2 requires more preparation and downtime - thus the 7/13/11 scheduled maintenance. After the deployment, Mark did notice multicasting was somewhat sent to servers even they were not supposed to receive them and IGMP snooping was not working correctly on the core switch - csw1-sdpta. (They are not service impacting issues however.)
+
+Mark scheduled a Network Maintenance on 13th July to complete the migration to MX80 and his plan included:
+• demote the then main Foundry router to be a switch
+• fix the IGMP snooping not working issue (not working on csw1-sdtpa)
+
+
+
+The maintenance started as planned and took longer than expected because of longer preparation time. The maintenance started at 13:00 UTC and was mostly non-service impacting till about 15:00 when Mark reloaded the switch. The database servers did not recover from the brief lost network connectivity and each of their network software had to be reset. This is a known problem with the NIC forcedeth driver. Services started coming back from 14:55 UTC to 15:18 UTC after the team intervened. Error logs are clean now and Mark is not seeing any problem with the multicasting traffic.
+
+Mark will be installing the 2nd MX80 router (it will provide the needed redundancy) next month, if not earlier. We are waiting for some parts to arrive before we schedule that deployment.

@@ -1,0 +1,14 @@
+The deployment of https://gerrit.wikimedia.org/r/#/c/198433/ brought down the RESTBase service for around 30 minutes, due to the parallel execution of Puppet agents across the RESTBase eqiad cluster. During this period, all of RESTBase's users were affected - VE, OCG, CXServer.
+• 2015-05-19 13:11: mobrovac notices RESTBase cannot start up on restbase1001 due to Cassandra time-outs in select queries
+• 2015-05-19 13:16: mobrovac retries with a modified config (with simplified consistency), but no change
+• 2015-05-19 13:36: mobrovac realises he didn't really disable Puppet, so all nodes were fighting to create the new keyspaces
+• 2015-05-19 13:42: _joe_ runs and then disables Puppet on the nodes, RESTBase is now up
+• 2015-05-19 14:11: mobrovac removes all of the offending keyspaces manually from Cassandra
+• 2015-05-19 14:15: mobrovac starts one RESTBase instance manually which creates the keyspaces correctly
+• 2015-05-19 14:36: _joe_ disables Puppet and runs it sequentially on each node, _joe_ and mobrovac monitor the progress
+• 2015-05-19 14:43: the new configuration is applied on all nodes and RESTBase and Cassandra are up and running this new version
+
+This particular patch required the creation of new keyspaces in Cassandra, which does not handle parallel keyspace and table creation well. As all of the RESTBase services were restarted automatically by Puppet almost at the same time, they were fighting for this creation process, effectively rendering the cluster unavailable. Thus, when there is such a code/config change, gradual application of changes, rolling restarts and periodic checks of the previous steps are imperative.
+• Short-term:
+• Do not allow Puppet to automatically restart RESTBase (https://gerrit.wikimedia.org/r/#/c/212016/)
+• On a config-change deploy, wait for Puppet to install the new version, and then run a second RESTBase instance which brings Cassandra to the desired state

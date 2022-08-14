@@ -1,0 +1,56 @@
+
+[03/05/2015][Widespread Google service disruptions reported including Gmail, Hangouts, & Play Store]
+http://9to5google.com/2015/03/05/google-service-disruptions/
+r-unk
+t-unk
+i-down
+p-no
+
+[03/17/2014][Google Apps Incident Report]
+http://static.googleusercontent.com/media/www.google.com/en/us/appsstatus/ir/foyrkcdqoojjapj.pdf
+http://www.infoworld.com/article/2606209/cloud-computing/162288-The-worst-cloud-outages-of-2014-so-far.html#slide5
+r-config
+t-3h30m
+i-down
+f-add
+f-fix
+p-no
+
+[03/30/2015][Google's Gmail service is down for some users]
+http://mashable.com/2015/03/30/gmail-is-down-5/#x4uykXk.tuqr
+r-unk
+t-unk
+i-down
+p-no
+
+[07/10/2013][Google Outage caused due to backlash at US NSA Prism]
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide3
+http://www.computerworld.com/article/2483733/web-apps/google-outage-takes-down-gmail--docs--calendar.html
+http://storageservers.wordpress.com/2013/07/11/google-outage-caused-due-to-backlash-at-us-nsa-prism/
+r-unk
+t-40m
+i-down
+p-no
+
+[08/16/2013][Google outage across search, Gmail and Talk]
+http://www.v3.co.uk/v3-uk/news/2289646/google-outage-acrosf-search-gmail-and-talk-causef-40-percent-drop-in-web-activity
+r-unk
+i-down
+t-5m
+p-no
+
+[09/26/2013][Google Talk Outage Sees Messages Sent To Random Users]
+http://www.huffingtonpost.co.uk/2013/09/26/google-talk-down_n_3993873.html
+http://techcrunch.com/2013/09/26/google-hangoutf-and-google-talk-bug-resulting-in-messagef-going-out-to-the-wrong-recipients
+http://www.cmswire.com/cms/customer-experience/google-talk-messagef-going-astray-af-it-explainf-earlier-gmail-outage-022634.php
+r-upgrade
+t-unk
+p-no
+
+[11/21/2015][Hangouts is currently down]
+http://lab.digitblog.org/tag/google-hangouts-down/
+r-unk
+t-2h51m
+i-down
+p-no
+

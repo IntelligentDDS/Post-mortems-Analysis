@@ -1,0 +1,183 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+June 21, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/18029)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #18029
+
+BigQuery Increased Error Rate
+
+Incident began at **2017-06-14 10:44** and ended at **2017-06-14 10:53** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jun 20, 2017 | 23:25 |
+
+ISSUE SUMMARY
+
+For 10 minutes on Wednesday 14 June 2017, Google BigQuery experienced
+increased error rates for both streaming inserts and most API methods due to
+their dependency on metadata read operations. To our BigQuery customers whose
+business were impacted by this event, we sincerely apologize. We are taking
+immediate steps to improve BigQuery’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT
+
+Starting at 10:43am US/Pacific, global error rates for BigQuery streaming
+inserts and API calls dependent upon metadata began to rapidly increase. The
+error rate for streaming inserts peaked at 100% by 10:49am. Within that same
+window, the error rate for metadata operations increased to a height of 80%.
+By 10:54am the error rates for both streaming inserts and metadata operations
+returned to normal operating levels.
+
+During the incident, affected BigQuery customers would have experienced a
+noticeable elevation in latency on all operations, as well as increased
+“Service Unavailable” and “Timeout” API call failures. While BigQuery
+streaming inserts and metadata operations were the most severely impacted,
+other APIs also exhibited elevated latencies and error rates, though to a much
+lesser degree. For API calls returning status code 2xx the operation completed
+with successful data ingestion and integrity.
+
+ROOT CAUSE
+
+On Wednesday 14 June 2017, BigQuery engineers completed the migration of
+BigQuery's metadata storage to an improved backend infrastructure. This effort
+was the culmination of work to incrementally migrate BigQuery read traffic
+over the course of two weeks. As the new backend infrastructure came online,
+there was one particular type of read traffic that hadn’t yet migrated to the
+new metadata storage. This caused a sudden spike of that read traffic to the
+new backend.
+
+The spike came when the new storage backend had to process a large volume of
+incoming requests as well as allocate resources to handle the increased load.
+Initially the backend was able to process requests with elevated latency, but
+all available resources were eventually exhausted, which lead to API failures.
+Once the backend was able to complete the load redistribution, it began to
+free up resources to process existing requests and work through its backlog.
+BigQuery operations continued to experience elevated latency and errors for
+another five minutes as the large backlog of requests from the first five
+minutes of the incident were processed.
+
+REMEDIATION AND PREVENTION
+
+Our monitoring systems worked as expected and alerted us to the outage within
+6 minutes of the error spike. By this time, the underlying root cause had
+already passed.
+
+Google engineers have created nine high priority action items, and three lower
+priority action items as a result of this event to better prevent, detect and
+mitigate the reoccurence of a similar event.
+
+The most significant of these priorities is to modify the BigQuery service to
+successfully handle a similar root cause event. This will include adjusting
+capacity parameters to better handle backend failures and improving caching
+and retry logic.
+
+Each of the 12 action items created from this event have already been assigned
+to an engineer and are underway.  
+  
+|
+
+ISSUE SUMMARY
+
+For 10 minutes on Wednesday 14 June 2017, Google BigQuery experienced
+increased error rates for both streaming inserts and most API methods due to
+their dependency on metadata read operations. To our BigQuery customers whose
+business were impacted by this event, we sincerely apologize. We are taking
+immediate steps to improve BigQuery’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT
+
+Starting at 10:43am US/Pacific, global error rates for BigQuery streaming
+inserts and API calls dependent upon metadata began to rapidly increase. The
+error rate for streaming inserts peaked at 100% by 10:49am. Within that same
+window, the error rate for metadata operations increased to a height of 80%.
+By 10:54am the error rates for both streaming inserts and metadata operations
+returned to normal operating levels.
+
+During the incident, affected BigQuery customers would have experienced a
+noticeable elevation in latency on all operations, as well as increased
+“Service Unavailable” and “Timeout” API call failures. While BigQuery
+streaming inserts and metadata operations were the most severely impacted,
+other APIs also exhibited elevated latencies and error rates, though to a much
+lesser degree. For API calls returning status code 2xx the operation completed
+with successful data ingestion and integrity.
+
+ROOT CAUSE
+
+On Wednesday 14 June 2017, BigQuery engineers completed the migration of
+BigQuery's metadata storage to an improved backend infrastructure. This effort
+was the culmination of work to incrementally migrate BigQuery read traffic
+over the course of two weeks. As the new backend infrastructure came online,
+there was one particular type of read traffic that hadn’t yet migrated to the
+new metadata storage. This caused a sudden spike of that read traffic to the
+new backend.
+
+The spike came when the new storage backend had to process a large volume of
+incoming requests as well as allocate resources to handle the increased load.
+Initially the backend was able to process requests with elevated latency, but
+all available resources were eventually exhausted, which lead to API failures.
+Once the backend was able to complete the load redistribution, it began to
+free up resources to process existing requests and work through its backlog.
+BigQuery operations continued to experience elevated latency and errors for
+another five minutes as the large backlog of requests from the first five
+minutes of the incident were processed.
+
+REMEDIATION AND PREVENTION
+
+Our monitoring systems worked as expected and alerted us to the outage within
+6 minutes of the error spike. By this time, the underlying root cause had
+already passed.
+
+Google engineers have created nine high priority action items, and three lower
+priority action items as a result of this event to better prevent, detect and
+mitigate the reoccurence of a similar event.
+
+The most significant of these priorities is to modify the BigQuery service to
+successfully handle a similar root cause event. This will include adjusting
+capacity parameters to better handle backend failures and improving caching
+and retry logic.
+
+Each of the 12 action items created from this event have already been assigned
+to an engineer and are underway.  
+  
+| Jun 14, 2017 | 12:09 |
+
+The BigQuery service was experiencing a 78% error rate on streaming operations
+and up to 27% error rates on other operations from 10:43 to 10:53 US/Pacific
+time. This issue has been resolved for all affected projects as of 10:53
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to help prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+|
+
+The BigQuery service was experiencing a 78% error rate on streaming operations
+and up to 27% error rates on other operations from 10:43 to 10:53 US/Pacific
+time. This issue has been resolved for all affected projects as of 10:53
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to help prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

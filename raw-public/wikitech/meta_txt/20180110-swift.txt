@@ -1,0 +1,10 @@
+Swift suffered a brief unavailability period in eqiad during roll restarts for kernel upgrades.
+• 20180109 - Filippo is upgrading kernel on swift fleet, swift eqiad frontends is roll-restarted without incident, though the kernel package wasn't upgraded on those machines, requiring another roll-restart. During this operation ms-fe1008 is inadvertently not repooled as it should be. 3/4 machines are serving traffic.
+• 20180110T16:11 - Roll restarts for ms-fe1* resumes, ms-fe1005 is depooled. 2/4 machines are serving traffic.
+• 20180110T16:22 - ms-fe1007 cannot cope with the load. It is marked as down by PyBal and depooled. 1/4 machines are serving traffic.
+• 20180110T16:34 - ms-fe1005 also goes down and is depooled by PyBal. 0/4 machines are serving traffic.
+
+Swift frontends safety margin is two machines out of four, though this margin was violated due to a combination of factors: namely one less machine in the pool than assumed and too fast traffic swings between the remaining machines in service. Further, PyBal does not take into account administratively depooled servers T184715 when checking whether a host can be depooled or not. The traffic swings ended up overloading ms-fe1007, the only machine fully in service at the time, and subsequently drop of traffic from all frontends in service at the time (ms-fe1005, ms-fe1007).
+
+Mostly operator error and failure to verify preconditions before starting procedures on high traffic/critical services.
+• Verify preconditions before start of operations (e.g. service pool is healthy)

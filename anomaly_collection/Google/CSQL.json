@@ -1,0 +1,315 @@
+{
+  "google-CSQL-#17009": {
+    "title": "google-CSQL-#17009",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/CSQL/Google%20Cloud%20SQL%20Incident%20%2317009.pdf"
+    ],
+    "time": "08/14/2015",
+    "summary": "On Friday, 14 August 2015, Google Cloud SQL instances in the US Central region experienced intermittent connectivity issues over an interval of 6 hours 50 minutes. If your service or application was a!ected, we apologize — this is not the level of quality and reliability we strive to o!er you, and we are taking immediate steps to improve the platform’s performance and availability.",
+    "details": "On Friday, 14 August 2015 from 03:24 to 10:16 PDT, some attempts to connect to Google Cloud SQL instances in the US Central region failed. Approximately 12% of all active Cloud SQL instances experienced a denied connection attempt.",
+    "service_name": [
+      "Google Cloud SQL"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 307,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "high error rates"
+        ]
+      },
+      {
+        "system kpi": [
+          "high resource usage",
+          "connectivity"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "space"
+        }
+      ],
+      "details": "On Wednesday, 12 August 2015, a standard rollout was performed for Google Cloud SQL which introduced a memory leak in the serving component. Before the rollout, an unrelated periodic maintenance activity necessitated disabling some automated alerts, and these were not enabled again once maintenance was complete. As a result, Google engineers were not alerted to high resource usage until Cloud SQL serving tasks began exceeding resource limits and rejecting more incoming connections."
+    },
+    "operation": [
+      "rollout",
+      "maintenance"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "allocate resources",
+        "restart service"
+      ],
+      "details": "At 07:47, Google engineers were alerted to high reported error rates and began allocating more resources for Cloud SQL serving tasks, which provided an initial reduction in error rates. Finally, a restart of running Cloud SQL serving tasks eliminated remaining connectivity issues by 10:16.",
+      "troubleshooting": {
+        "1": "Google engineers were alerted to high reported error rates",
+        "2": "allocate more resources for Cloud SQL serving tasks",
+        "3": "a restart of running Cloud SQL serving tasks eliminated remaining connectivity issues by 10:16. "
+      }
+    },
+    "propagation pass": {
+      "1": "Google Cloud SQL"
+    },
+    "refined path": {
+      "1": "database"
+    },
+    "detection time": 43,
+    "fix time": 40,
+    "identification time": 0,
+    "verification": "lixy"
+  },
+  "google-CSQL-#17010": {
+    "title": "google-CSQL-#17010",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/CSQL/Google%20Cloud%20SQL%20Incident%20%2317010.pdf"
+    ],
+    "time": "05/17/2016",
+    "summary": "On Tuesday 17 May 2016, connections to Cloud SQL instances in the Central United States region experienced an elevated error rate for 130 minutes.",
+    "details": "On Tuesday 17 May 2016 from 04:15 to 06:12 and from 08:24 to 08:37 PDT, connections to Cloud SQL instances in the us- central1 region experienced an elevated error rate. The average rate of connection errors to instances in this region was 10.5% during the first part of the incident and 1.9% during the second part of the incident. 51% of in-use Cloud SQL instances in the alerted region were impacted during the first part of the incident; 4.2% of in-use instances were impacted during the second part. Cloud SQL Second Generation instances were not impacted.",
+    "service_name": [
+      "Google Cloud SQL"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 262,
+    "detection": {
+      "method": "manual",
+      "tool": [
+        "user report"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "elevated error rate"
+        ]
+      },
+      {
+        "system kpi": [
+          "increased memory usage"]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "payload flood"
+        }
+      ],
+      "details": "Clients connect to a Cloud SQL frontend service that forwards the connection to the correct MySQL database server. The frontend calls a separate service to start up a new Cloud SQL instance if a connection arrives for an instance that is not running. This incident was triggered by a Cloud SQL instance that could not successfully start. The incoming connection requests for this instance resulted in a large number of calls to the start up service. This caused increased memory usage of the frontend service as start up requests backed up. The frontend service eventually failed under load and dropped some connection requests due to this memory pressure."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "redirecting new connections",
+        "block connections",
+        "restart service",
+        "shutdown the instance"
+      ],
+      "details": "Google received its first customer report at 04:39 PDT and we tried to remediate the problem by redirecting new connections to different datacenters. This effort proved unsuccessful as the start up capacity was used up there also. At 06:12 PDT, we fixed the issue by blocking all incoming connections to the misbehaving Cloud SQL instance. At 08:24 PDT, we moved this instance to a separate pool of servers and restarted it. However, the separate pool of servers did not provide sufficient isolation for the service that starts up instances, causing the incident to recur. We shutdown the instance at 08:37 PDT which resolved the incident.",
+      "troubleshooting": {
+        "1": "received its first customer report at 04:39 PDT",
+        "2": "redirecting new connections to different datacenters",
+        "3": "fixed the issue by blocking all incoming connections to the misbehaving Cloud SQL instance. ",
+        "4": "we moved this instance to a separate pool of servers and restarted it ",
+        "5": "We shutdown the instance."
+      }
+    },
+    "propagation pass": {
+      "1": "Google Cloud SQL instance",
+      "2": "frontend service"
+    },
+    "refined path": {
+      "1": "database",
+      "2": "app"
+    },
+    "detection time": 24,
+    "fix time": 40,
+    "identification time": 238,
+    "verification": "lixy"
+  },
+  "google-CSQL-#17012": {
+    "title": "google-CSQL-#17012",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/qqmeta_pdf/CSQL/Google%20Cloud%20SQL%20Incident%20%2317012.pdf"
+    ],
+    "time": "10/31/2016",
+    "summary": "On Monday, 31 October 2016, 73% of requests to create new subscriptions for Google Cloud Pub/Sub failed for a duration of 124 minutes. Creation of new Cloud SQL Second Generation instances also failed during this incident.",
+    "details": "On Monday, 31 October 2016 from 13:11 to 15:15 PDT, 73% of requests to create new subscriptions for Google Cloud Pub/Sub failed. 0.1% of pull requests experienced latencies of up to 4 minutes for end-to-end message delivery. Creation of all new Cloud SQL Second Generation instances also failed during this incident. Existing instances were not affected.",
+    "service_name": [
+      " Google Cloud Pub/Sub"
+    ],
+    "impact symptom": [
+      "performance",
+      "availability"
+    ],
+    "duration": 124,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "monitoring systems"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "error rate",
+          "high request latency"
+        ]
+      },
+      {
+        "system kpi": [
+          "connectivity"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "unknown"
+        }
+      ],
+      "details": "At 13:08, a system in the Cloud Pub/Sub control plane experienced a connectivity issue to its persistent storage layer for a duration of 83 seconds. This caused a queue of storage requests to build up. When the storage layer re-connected, the queued requests were executed, which exceeded the available processing quota for the storage system. The system entered a feedback loop in which storage requests continued to queue up leading to further latency increases and more queued requests. The system was unable to exit from this state until additional capacity was added. Creation of a new Cloud SQL Second Generation instance requires a new Cloud Pub/Sub subscription."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "acquire storage capacity"
+      ],
+      "details": "Our monitoring systems detected the outage and paged oncall engineers at 13:19. We determined root cause at 14:05 and acquired additional storage capacity for the Pub/Sub control plane at 14:42. The outage ended at 15:15 when this capacity became available. To prevent this issue from recurring, we have already increased the storage capacity for the Cloud Pub/Sub control plane. We will change the retry behavior of the control plane to prevent a feedback loop if storage quota is temporarily exceeded. We will also improve our monitoring to ensure we can determine root cause for this type of failure more quickly in future.",
+      "troubleshooting": {
+        "1": "Our monitoring systems detected the outage and paged oncall engineers at 13:19. ",
+        "2": "We determined root cause at 14:05",
+        "3": "we acquired additional storage capacity for the Pub/Sub control plane at 14:42. ",
+        "4": "The outage ended at 15:15 when this capacity became available. "
+      }
+    },
+    "propagation pass": {
+      "1": "Cloud Pub/Sub control plane",
+      "2": "Cloud Pub/Sub"
+    },
+    "refined path": {
+      "1": "network infrastructure",
+      "2": "app"
+    },
+    "detection time": 8,
+    "fix time": 116,
+    "identification time": 46,
+    "verification": "lixy"
+  },
+  "google-CSQL-#17017": {
+    "title": "google-CSQL-#17017",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/CSQL/Google%20Cloud%20SQL%20Incident%20%2317017.pdf"
+    ],
+    "time": "08/15/2017",
+    "summary": "On Tuesday 15 August 2017, Google Cloud SQL experienced issues in the europe-west1 zones for a duration of 3 hours and 35 minutes. During this time, new connections from Google App Engine (GAE) or Cloud SQL Proxy would timeout and return an error. In addition, Cloud SQL connections with ephemeral certs that had been open for more than one hour timed out and returned an error.",
+    "details": "On Tuesday 15 August 2017 from 17:20 to 20:55 PDT, 43.1% of Cloud SQL instances located in europe-west1 were unable to be managed with the Google Cloud SQL Admin API to create or make changes. Customers who connected from GAE or used the Cloud SQL Proxy (which includes most connections from Google Container Engine) were denied new connections to their database.",
+    "service_name": [
+      "Google Cloud SQL"
+    ],
+    "impact symptom": [
+      "performance",
+      "availability"
+    ],
+    "duration": 215,
+    "detection": {
+      "method": "automated monitor",
+      "tool": [
+        "Google engineers were paged at 17:20 when automated monitoring detected an increase in control plane errors."
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "timeout error",
+          "high error rates"
+        ]
+      },
+      {
+        "system kpi": [
+          "high resource usage"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "payload flood"
+        },
+        {
+          "layer-1": "external causes",
+          "layer-2": "insufficient resource"
+        }
+      ],
+      "details": "The issue surfaced through a combination of a spike in error rates internal to the Cloud SQL service and a lack of available resources in the Cloud SQL control plane for europe-west1. By way of background, the Cloud SQL system uses a database to store metadata for customer instances. This metadata is used for validating new connections. Validation will fail if the load on the database is heavy. In this case, Cloud SQL’s automatic retry logic overloaded the control plane and consumed all the available Cloud SQL control plane processing in europe-west1. This in turn made the Cloud SQL Proxy and front end client server pairing reject connections when ACLs and certificate information stored in the Cloud SQL control plane could not be accessed."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "disable services",
+        "rollback configuration"
+      ],
+      "details": "Google engineers were paged at 17:20 when automated monitoring detected an increase in control plane errors. Initial troubleshooting steps did not  sufficiently isolate the issue and reduce the database load. Engineers then disabled non-critical control plane services for Cloud SQL to shed load and allow the service to catch up. They then began a rollback to the previous configuration to bring back the system to a healthy state. This issue has raised technical issues which hinder our intended level of service and reliability for the Cloud SQL service. We have begun a thorough investigation of similar potential failure patterns in order to avoid this type of service disruption in the future. We are adding additional monitoring to quickly detect metadata database timeouts which caused the control plane outage. We are also working to make the Cloud SQL control plane services more resilient to metadata database latency by making the service not directly call the database for connection validation.",
+      "troubleshooting": {
+        "1": "Google engineers were paged at 17:20 when automated monitoring detected an increase in control plane errors. ",
+        "2": "disabled non-critical control plane services for Cloud SQL to shed load and allow the service to catch up. ",
+        "3": "They then began a rollback to the previous configuration to bring back the system to a healthy state. "
+      }
+    },
+    "propagation pass": {
+      "1": "Cloud SQL service and Cloud SQL control plane",
+      "2": "front end client server"
+    },
+    "refined path": {
+      "1": "database",
+      "2": "app"
+    },
+    "detection time": 0,
+    "fix time": 215,
+    "identification time": null,
+    "verification": "lixy"
+  }
+}

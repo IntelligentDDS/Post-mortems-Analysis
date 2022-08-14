@@ -1,0 +1,167 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 17, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Networking](/incident/cloud-networking/18003)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Networking Incident #18003
+
+We are investigating an issue with Google Cloud Networking affecting
+connectivity in us-central1 and europe-west3. We will provide more information
+by 12:15pm US/Pacific.
+
+Incident began at **2018-01-18 09:52** and ended at **2018-01-18 11:26** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Feb 16, 2018 | 16:42 |
+
+ISSUE SUMMARY
+
+On Sunday 18 January 2018, Google Compute Engine networking experienced a
+network programming failure. The two impacts of this incident included the
+autoscaler not scaling instance groups, as well as migrated and newly-created
+VMs not communicating with VMs in other zones for a duration of up to 93
+minutes. We apologize for the impact this event had on your applications and
+projects, and we will carefully investigate the causes and implement measures
+to prevent recurrences.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Sunday 18 January 2018, Google Compute Engine network provisioning updates
+failed in the following zones: europe-west3-a for 34 minutes (09:52 AM to
+10:21 AM PT) us-central1-b for 79 minutes (09:57 AM to 11:16 AM PT) asia-
+northeast1-a for 93 minutes (09:53 AM to 11:26 AM PT)
+
+Propagation of Google Compute Engine networking configuration for newly
+created and migrated VMs is handled by two components. The first is
+responsible for providing a complete list of VM’s, networks, firewall rules,
+and scaling decisions. The second component provides a stream of updates for
+the components in a specific zone.
+
+During the affected period, the first component failed to return data. VMs in
+the affected zones were unable to communicate with newly-created or migrated
+VMs in another zone in the same private GCE network. VMs in the same zone were
+unaffected because they are updated by the streaming component.
+
+The autoscaler service also relies upon data from the failed first component
+to scale instance groups; without updates from that component, it could not
+make scaling decisions for the affected zones.
+
+ROOT CAUSE
+
+A stuck process failed to provide updates to the Compute Engine control plane.
+Automatic failover was unable to force-stop the process, and required manual
+failover to restore normal operation.
+
+REMEDIATION AND PREVENTION
+
+The engineering team was alerted when the propagation of network configuration
+information stalled. They manually failed over to the replacement task to
+restore normal operation of the data persistence layer.
+
+To prevent another occurrence of this incident, we are taking the following
+actions: We still stop VM migrations if the configuration data is stale.
+Modify the data persistence layer to re-resolve their peers during long-
+running processes, to allow failover to replacement tasks.  
+  
+|
+
+ISSUE SUMMARY
+
+On Sunday 18 January 2018, Google Compute Engine networking experienced a
+network programming failure. The two impacts of this incident included the
+autoscaler not scaling instance groups, as well as migrated and newly-created
+VMs not communicating with VMs in other zones for a duration of up to 93
+minutes. We apologize for the impact this event had on your applications and
+projects, and we will carefully investigate the causes and implement measures
+to prevent recurrences.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Sunday 18 January 2018, Google Compute Engine network provisioning updates
+failed in the following zones: europe-west3-a for 34 minutes (09:52 AM to
+10:21 AM PT) us-central1-b for 79 minutes (09:57 AM to 11:16 AM PT) asia-
+northeast1-a for 93 minutes (09:53 AM to 11:26 AM PT)
+
+Propagation of Google Compute Engine networking configuration for newly
+created and migrated VMs is handled by two components. The first is
+responsible for providing a complete list of VM’s, networks, firewall rules,
+and scaling decisions. The second component provides a stream of updates for
+the components in a specific zone.
+
+During the affected period, the first component failed to return data. VMs in
+the affected zones were unable to communicate with newly-created or migrated
+VMs in another zone in the same private GCE network. VMs in the same zone were
+unaffected because they are updated by the streaming component.
+
+The autoscaler service also relies upon data from the failed first component
+to scale instance groups; without updates from that component, it could not
+make scaling decisions for the affected zones.
+
+ROOT CAUSE
+
+A stuck process failed to provide updates to the Compute Engine control plane.
+Automatic failover was unable to force-stop the process, and required manual
+failover to restore normal operation.
+
+REMEDIATION AND PREVENTION
+
+The engineering team was alerted when the propagation of network configuration
+information stalled. They manually failed over to the replacement task to
+restore normal operation of the data persistence layer.
+
+To prevent another occurrence of this incident, we are taking the following
+actions: We still stop VM migrations if the configuration data is stale.
+Modify the data persistence layer to re-resolve their peers during long-
+running processes, to allow failover to replacement tasks.  
+  
+| Jan 18, 2018 | 12:01 |
+
+The issue with Google Cloud Networking connectivity has been resolved for all
+affected zones in europe-west3, us-central1, and asia-northeast1 as of 11:26am
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to help prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+|
+
+The issue with Google Cloud Networking connectivity has been resolved for all
+affected zones in europe-west3, us-central1, and asia-northeast1 as of 11:26am
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to help prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+| Jan 18, 2018 | 11:23 |
+
+We are investigating an issue with Google Cloud Networking affecting
+connectivity in us-central1 and europe-west3. We will provide more information
+by 12:15pm US/Pacific.  
+  
+|
+
+We are investigating an issue with Google Cloud Networking affecting
+connectivity in us-central1 and europe-west3. We will provide more information
+by 12:15pm US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

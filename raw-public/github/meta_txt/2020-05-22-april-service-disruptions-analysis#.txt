@@ -1,0 +1,31 @@
+In April, we experienced multiple service interruptions impacting GitHub.com. Three distinct incidents resulted in unavailability for all of GitHub.com and resulted in degraded services for a total of 5 hours and 36 minutes.
+
+We know that any disruption to our service can impact your development workflow, and apologize for these interruptions. We investigated each of these incidents and want to share an update on the causes and remediations.
+
+We use a traditional primary-replicas configuration, where a primary cluster accepts writes and are then asynchronously fanned out to a number of replica cluster nodes that service read traffic for the majority of the website.
+
+We run the majority of our systems on our own bare metal infrastructure, with our networking infrastructure built around a Clos network topology with each network device sharing routes via Border Gateway Protocol (BGP). Our edge network devices have complete internet routing tables while our internal network devices have only internal routes which span the internal data centers. The GitHub Load Balancer (GLB) runs as the primary ingress point for customer traffic to our network, and also acts as an internal gateway between our applications and many of our internal services and databases they depend on.
+
+A misconfiguration of our software load balancers disrupted internal routing of traffic between applications that serve GitHub.com and the internal services they depend on. The misconfiguration introduced TCP socket binds that went over a predefined limit. The load balancer canary deployments don’t include all subsystems, so this problem only occurred when deploying the load balancer to each site.
+
+April 21 15:45 UTC (lasting for one hour and 21 minutes)
+
+A misconfiguration of database connections, related to our ongoing data partitioning efforts, made it unexpectedly to production. This caused 40 percent of traffic to the main mysql1 database cluster powering GitHub.com to stop using replicas for reads and sent all traffic to the mysql1 primary node.
+
+This pressure overloaded the primary node and caused a majority of write traffic to fail. Around 40 percent of requests to GitHub.com failed during a period of 50 minutes. Because of the central nature of the data on the main mysql1 database cluster, all services of GitHub.com and all users were affected.
+
+April 23 13:13 UTC (lasting for two hours and 31 minutes)
+
+A networking configuration was inadvertently applied to our production network, causing a failure of our networking switches for 31 minutes. The configuration intent was to pass a subset of routes to the downstream devices table. The router couldn’t interpret the policy mistake, and it reacted by propagating too many routes to every downstream switch in the region. This resulted in disruptions for all GitHub.com services for an additional two hours.
+
+What we learned and next steps
+
+Following these three incidents, we were able to identify gaps between our staging/canary environments and production. We’re devoting more energy to close these gaps across engineering and more quickly detect and address issues like this in the future.
+
+One significant investment we’ve made is building a hardware staging environment for network continuous integration. We now have a network staging environment in place, which mirrors our production networks to test changes via CI. This has been in flight for the past nine months and landed last week. We intend to have the first CI jobs for network configuration working in the coming weeks. We are prioritizing this work for our networking template engines in order to reach 100 percent software coverage in the next quarter.
+
+Another area we’ve identified that presents gaps is our staging labs environment. This staging environment does not set up the databases and database connections the same way as the production environment. This can lead to limited testability of connection changes specific to the production environment. We will be addressing this issue in the coming months.
+
+Developers use GitHub every day to create, collaborate, learn, and get their work done, but none of our work matters if we can’t promise our customers the reliability they need. We’re committed to addressing and learning from these issues to earn the trust you place in us and make GitHub better every day.
+
+You can follow our status page for updates about the availability of our systems.

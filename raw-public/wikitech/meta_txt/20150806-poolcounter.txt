@@ -1,0 +1,9 @@
+A firewall change was merged on server helium which serves as Bacula director and also as a poolcounter. There was a failure to start the ferm service. As soon as iptables rules were loaded the conntrack table filled up. Packets and connections to the poolcounter were dropped. This caused an API outage (cached things were unaffected).
+• ~ 20:29 UTC - gerrit:229054 gets merged to complete T104996 and apply ferm rules on helium, ferm rules for both bacula and poolcounter exist
+• ~ 20:31 UTC - Daniel runs puppet on helium and sees ferm fails to start with error [1]
+• ~ 20:32 UTC - Icinga starts to report Socket timeouts for Apache HTTP and HHVM rendering
+• ~ 20:33 UTC - Daniel runs manual script to flush all iptables rules that was there in case ferm fails [2], disables puppet agent
+• ~ 20:40 UTC - Brandon starts looking at helium, connects via mgmt and finds [3] shortly after
+• ~ 20:43 UTC - Daniel re-enables puppet-agent, attempts run, gets fails because helium fails DNS lookups, packets are still dropped
+
+- avoid the issue with the NOTRACK target in ferm - if ferm fails and conntrack table fills up, rmmod kernel modules, flushing all tables is not enough - poolcounter is a SPOF (T105378)

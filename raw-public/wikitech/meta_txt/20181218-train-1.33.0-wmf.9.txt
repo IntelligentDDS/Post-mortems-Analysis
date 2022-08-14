@@ -1,0 +1,12 @@
+There were several problems with the 2018-12-18 1.33.0-wmf.9 train (phab:T206663) resulting in 0 rollbacks.
+• Fatal error: Call to undefined function Kartographer\Wikimedia\suppressWarnings() in /srv/mediawiki/php-1.33.0-wmf.9/extensions/Kartographer/includes/ApiQueryMapData.php on line 49
+
+This is a step by step outline of what happened to cause the incident and how it was remedied.
+• 15:01 Fatal error: Call to undefined function Kartographer\Wikimedia\suppressWarnings() in /srv/mediawiki/php-1.33.0-wmf.9/extensions/Kartographer/includes/ApiQueryMapData.php on line 49
+• 12:33 * Fatal error: Call to undefined function Kartographer\Wikimedia\suppressWarnings() in /srv/mediawiki/php-1.33.0-wmf.9/extensions/Kartographer/includes/ApiQueryMapData.php on line 49
+
+What weakness did we learn about and how can we address them?
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.

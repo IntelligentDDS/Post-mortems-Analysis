@@ -1,0 +1,18 @@
+After upgrading maps servers to stretch phab:T198622, there was need to bump the replicator factor on cassandra to increase resiliency and availability but this turned to be an issue which caused an outage on kartotherian service which is the front facing service clients access. This happened at eqiad cluster which was depooled and traffic was switched to codfw temporarily.
+
+This is a step by step outline of what happened to cause the incident and how it was remedied.
+• 2019-01-22 19:22 UTC - first alert was seen on #wikimedia-operations IRC Channel. It reports response timeout on HTTP endpoint for maps100[2-4]
+• 2019-01-22 19:41 UTC - a paging alert was sent to ops about timeout on kartotherian.svc.eqiad.wmnet endpoint. Suggestions to switch to codfw cluster followed.
+• 2019-01-22 19:48 UTC - The issue continued as more alert was seen on #wikimedia-operations about socket timeout. Also further attempt to troubleshoot continued.
+• 2019-01-22 20:03 UTC - patch to depool maps eqiad endpoint is ready for merge.
+• 2019-01-22 20:07 UTC - puppet was ran on lvs to enable the change which switch traffic to codfw cluster.
+• 2019-01-22 20:08 UTC - we were Ok to continue working on eqiad to find the possible solution.
+• 2019-01-22 20:22 UTC - we discovered the analytics team have had similar issues - https://phabricator.wikimedia.org/T157354 which lead to an outage incident documented here: https://wikitech.wikimedia.org/wiki/Incident_documentation/20170223-AQS. We discovered that, after increasing the replicator factor for system_auth keyspace, Its is necessary to recreate the permissions on cassandra. permission was reset on the cluster and a task was created to track it - https://phabricator.wikimedia.org/T214434. also, codfw cluster remained the active cluster while we left eqiad to to further investigate what went wrong.
+• 2019-01-23 10:32 UTC - steps to fix this issue after confirming its the same as https://phabricator.wikimedia.org/T157354 is documented here: https://phabricator.wikimedia.org/T214434.
+• 2019-01-23 10:32 UTC - after confirming that endpoint work correctly, the previous day patch that disabled eqiad cluster was reverted. and puppet was ran manually.
+
+What weakness did we learn about and how can we address them?
+
+We still don't have an exact root cause. The Cassandra documentation seems consistent with the procedure followed but for some reason system_auth users/roles were wiped in the process. There are some remarks to highlight:
+• Follow the safe procedure when increasing replicator_factor which means recreating the user/permission should immediately follow. This
+• Document best practices for increasing system_auth replication factor on Wikitech and its pitfalls.

@@ -1,0 +1,7 @@
+Azure Monitoring (Diagnostic logs, Autoscale, Classic Alerts (v2))
+Summary of impact: Between 02:00 and 08:00 UTC on 03 Jul 2019, a subset of Azure monitor customers may have received failure errors while performing service management operations - such as create, update, delete - for Autoscale settings, Classic alerts and Diagnostics settings. Existing autoscale, classic alerts & diagnostics were not impacted.
+Root cause: As part of service engineering improvements, a configuration change was incorrectly applied to the underlying KeyVault resources which are used by Azure Monitor's management services (Autoscale, Classic Alerts, Diagnostic Settings) during start up. Subsequently when the management services recycled, the services were not able to correctly access the KeyVault resources due to the misconfiguration and hence could not startup correctly.
+Mitigation: Engineers performed a roll back of misconfiguration to mitigate the issue.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our
+processes to help ensure such incidents do not occur in the future. In this case, this includes:
+Review and improve configuration change, testing & rollout process to prevent a reoccurrence.

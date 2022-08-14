@@ -1,0 +1,32 @@
+One of the bits application servers (mw1151) ran into disk trouble causing memcached to be unable to store or retrieve any values. This was resulting in three main problems for requests that were Varnish cache misses for bits.wikimedia.org:
+• Much more computation (since nothing was cached)
+• ResourceLoader modules constantly got their timestamp renewed (each request saw current as "new", no memory of previous version)
+• Extensions relying on cache for registering extra modules were essentially disabled (e.g. Gadgets).
+
+ResourceLoader uses object caching for storing result of minification, and for detecting changes in module manifests (it caches the serialised manifest and if the cached value differs, timestamp is renewed).
+
+mw1151 was doing much more computational tasks from PHP as nothing was cached (database lookups, minification etc.).
+
+ResourceLoader was also constantly renewing the last-modified timestamp of the module manifests as it had no memory of the previous version.
+
+And extensions registering additional modules (e.g. Gadgets) that require cache, were unable to register these modules and as such these modules were missing for users hitting that server. The phrase "require cache" is carefully chosen here as it seems should've fallen back to computing the value on demand. Unlike message cache, Gadgets doesn't demand cache and doesn't prevent computation (not explicitly anyway). We should investigate why this wasn't computing the value on demand.
+• 2014-05-16 17:30: Logstash showed an increase in events for mw1151 from an average of 3,000 per 10 minutes to over 400,000.
+• Most common patterns:
+• (memcached-serious) Memcached error for key "nowiktionary:messages:nb" on server "127.0.0.1:11211": SERVER HAS FAILED AND IS DISABLED UNTIL TIMED RETRY
+• (memcached-serious) Memcached error for key "nowiktionary:messages:nb:lock" on server "127.0.0.1:11211": SERVER HAS FAILED AND IS DISABLED UNTIL TIMED RETRY
+• (memcached-serious) Memcached error for key "*wiki:resourceloader:moduledefinition:*:*" on server "127.0.0.1:11211": SERVER HAS FAILED AND IS DISABLED UNTIL TIMED RETRY
+• (memcached-serious) Memcached error for key "*wiki:resourceloader:filter:minify-css:7:*" on server "127.0.0.1:11211": SERVER HAS FAILED AND IS DISABLED UNTIL TIMED RETRY
+• (resourceloader) ResourceLoaderModule::getDefinitionMtime: New definition hash for module * in context *: *.
+• 2014-05-16 19:00: Users are reporting via local wiki discussion boards and bugzilla that certain modules (especially gadgets) seem to sometimes not load.
+• 2014-05-16 23:43: Krinkle drafts patch for ResourceLoader in production to help determine which modules are not loading and which host is serving these requests.
+• 2014-04-17 00:10 Krinkle identified weird RL responses as all originating from mw1151; shows ATA1 disk troubles:
+
+ "failed command: READ DMA EXT",
+
+"sd 0:0:0:0: [sda] Add. Sense: Unrecovered read error - auto reallocate failed"
+• 2014-04-17 00:15 On mw1151, Gadget::loadStructuredList() returns false. Memcached has no value for 'enwiki:gadgets-definition:7' and is unable to get or set any value for that key.
+• 2014-04-17 00:20 Ori stops Apache and disables puppet on mw1151 so that varnish stops forwarding requests to it.
+• 2014-04-17 00:20 Ori confirms mw1151 has been depooled (varnishadm on cp1056 recognizes mw1151 as "sick").
+• Status: Done - Tracking bug for the outage: bug 65424
+• Status: Done - dissolve the bits servers into the appserver pool
+• Status: Done - Monitor for anomalies/spikes in read failures of memcached task T69817

@@ -1,0 +1,268 @@
+# [](//cloud.google.com)
+
+May 27, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Pub/Sub](/incident/cloud-pubsub/19001)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Pub/Sub Incident #19001
+
+We are investigating elevated error rate on publish/pull and various admin
+operations (i.e. create/delete/get topics) with Google Cloud PubSub globally.
+
+Incident began at **2019-05-20 20:54** and ended at **2019-05-21 00:24** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| May 28, 2019 | 13:13 |
+
+# ISSUE SUMMARY
+
+On Monday 20 May, 2019, Google Cloud Pub/Sub experienced publish error rates
+of 1.2%, increased publish latency by 1.7ms at the 50th percentile, and 8.3s
+increase at the 99th percentile for a duration of 3 hours, 30 minutes. Publish
+and Subscribe admin operations saw average error rates of 8.3% and 3.2%
+respectively for the same period. We apologize to our customers who were
+impacted by this service degradation.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Monday 20 May, 2019 from 20:54 to Tuesday 21 May, 2019 00:24 US/Pacific
+Google Cloud Pub/Sub experienced publish error rates of 1.2%, increased
+publish latency by 1.7ms at the 50th percentile, and 8.3s increase at the 99th
+percentile for a duration of 3 hours, 30 minutes. Publish (CreateTopic,
+GetTopic, UpdateTopic, DeleteTopic) and Subscribe (CreateSnapshot,
+CreateSubscription, UpdateSubscription) admin operations saw average error
+rates of 8.3% and 3.2% respectively for the same period. Customers affected by
+the incident may have seen errors containing messages like
+“DEADLINE_EXCEEDED”.
+
+Cloud Pub/Sub’s elevated error rates and increased latency indirectly impacted
+Cloud SQL, Cloud Filestore, and App Engine Task Queues globally. The incident
+caused elevated error rates in admin operations (including instance creation)
+for both Cloud SQL and Cloud Filestore, as well as increased latencies and
+timeout errors for App Engine Task Queues during the incident.
+
+# ROOT CAUSE
+
+The incident was triggered by an internal user creating an unexpected surge of
+publish requests to Cloud Pub/Sub topics. These requests did not cache as
+expected and led to hotspotting on the underlying metadata storage system
+responsible for managing Cloud Pub/Sub’s publish and subscribe operations. The
+hotspotting triggered overload protection mechanisms within the storage system
+which began to reject some incoming requests and delay the processing of
+others, both of which contributed to the elevated error rates and increased
+latencies experienced by Cloud Pub/Sub.
+
+# REMEDIATION AND PREVENTION
+
+On Monday 20 May, 2019 at 21:16 US/Pacific Google engineers were automatically
+alerted to elevated error rates and immediately began their investigation. At
+22:18, we determined the underlying storage system was responsible for the
+elevated error rates afflicting Cloud Pub/Sub and escalated the issue to the
+storage system’s engineering team. At 22:48, Google engineers attempted to
+mitigate the issue by providing additional resources to the impacted storage
+system servers, however, this did not address the hotspots and error rates
+remained elevated. At 23:00, Google engineers disabled non-essential internal
+traffic to reduce load being sent to the storage system, this improved system
+behavior, but did not lead to a full recovery. On Tuesday 21 May, 2019 at
+00:19 US/Pacific, Google engineers identified the source for the surge of
+requests and implemented a rate limit on the requests, which effectively
+mitigated the issue. Once the traffic had subsided, the storage system’s
+automated mechanisms were able to successfully heal the service, leading to
+full resolution of the incident by 00:24.
+
+In order to prevent a recurrence of the incident we are adding an additional
+layer of caching to further reduce load on the metadata storage system. We are
+preemptively increasing the number of storage servers to improve isolation,
+improve load distribution, and reduce the effect hotspotting may have. We are
+reviewing the schema of the storage system to improve load distribution.
+Finally we will be improving our playbooks with learnings from this incident,
+specifically improving sections around rate limiting, load shedding and
+hotspot detection.  
+  
+|
+
+# ISSUE SUMMARY
+
+On Monday 20 May, 2019, Google Cloud Pub/Sub experienced publish error rates
+of 1.2%, increased publish latency by 1.7ms at the 50th percentile, and 8.3s
+increase at the 99th percentile for a duration of 3 hours, 30 minutes. Publish
+and Subscribe admin operations saw average error rates of 8.3% and 3.2%
+respectively for the same period. We apologize to our customers who were
+impacted by this service degradation.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Monday 20 May, 2019 from 20:54 to Tuesday 21 May, 2019 00:24 US/Pacific
+Google Cloud Pub/Sub experienced publish error rates of 1.2%, increased
+publish latency by 1.7ms at the 50th percentile, and 8.3s increase at the 99th
+percentile for a duration of 3 hours, 30 minutes. Publish (CreateTopic,
+GetTopic, UpdateTopic, DeleteTopic) and Subscribe (CreateSnapshot,
+CreateSubscription, UpdateSubscription) admin operations saw average error
+rates of 8.3% and 3.2% respectively for the same period. Customers affected by
+the incident may have seen errors containing messages like
+“DEADLINE_EXCEEDED”.
+
+Cloud Pub/Sub’s elevated error rates and increased latency indirectly impacted
+Cloud SQL, Cloud Filestore, and App Engine Task Queues globally. The incident
+caused elevated error rates in admin operations (including instance creation)
+for both Cloud SQL and Cloud Filestore, as well as increased latencies and
+timeout errors for App Engine Task Queues during the incident.
+
+# ROOT CAUSE
+
+The incident was triggered by an internal user creating an unexpected surge of
+publish requests to Cloud Pub/Sub topics. These requests did not cache as
+expected and led to hotspotting on the underlying metadata storage system
+responsible for managing Cloud Pub/Sub’s publish and subscribe operations. The
+hotspotting triggered overload protection mechanisms within the storage system
+which began to reject some incoming requests and delay the processing of
+others, both of which contributed to the elevated error rates and increased
+latencies experienced by Cloud Pub/Sub.
+
+# REMEDIATION AND PREVENTION
+
+On Monday 20 May, 2019 at 21:16 US/Pacific Google engineers were automatically
+alerted to elevated error rates and immediately began their investigation. At
+22:18, we determined the underlying storage system was responsible for the
+elevated error rates afflicting Cloud Pub/Sub and escalated the issue to the
+storage system’s engineering team. At 22:48, Google engineers attempted to
+mitigate the issue by providing additional resources to the impacted storage
+system servers, however, this did not address the hotspots and error rates
+remained elevated. At 23:00, Google engineers disabled non-essential internal
+traffic to reduce load being sent to the storage system, this improved system
+behavior, but did not lead to a full recovery. On Tuesday 21 May, 2019 at
+00:19 US/Pacific, Google engineers identified the source for the surge of
+requests and implemented a rate limit on the requests, which effectively
+mitigated the issue. Once the traffic had subsided, the storage system’s
+automated mechanisms were able to successfully heal the service, leading to
+full resolution of the incident by 00:24.
+
+In order to prevent a recurrence of the incident we are adding an additional
+layer of caching to further reduce load on the metadata storage system. We are
+preemptively increasing the number of storage servers to improve isolation,
+improve load distribution, and reduce the effect hotspotting may have. We are
+reviewing the schema of the storage system to improve load distribution.
+Finally we will be improving our playbooks with learnings from this incident,
+specifically improving sections around rate limiting, load shedding and
+hotspot detection.  
+  
+| May 21, 2019 | 01:13 |
+
+The issue affecting PubSub and causing elevated error rate on multiple
+operations has been resolved for all affected users as of Tuesday, 2019-05-21
+01:02 US/Pacific. We will conduct an internal investigation of this issue and
+make appropriate improvements to our systems to help prevent or minimize
+future recurrence. We will provide a more detailed analysis of this incident
+once we have completed our internal investigation.  
+  
+|
+
+The issue affecting PubSub and causing elevated error rate on multiple
+operations has been resolved for all affected users as of Tuesday, 2019-05-21
+01:02 US/Pacific. We will conduct an internal investigation of this issue and
+make appropriate improvements to our systems to help prevent or minimize
+future recurrence. We will provide a more detailed analysis of this incident
+once we have completed our internal investigation.  
+  
+| May 21, 2019 | 00:41 |
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Tuesday, 2019-05-21 01:40 US/Pacific with current
+details.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. We will provide
+another status update by Tuesday, 2019-05-21 01:40 US/Pacific with current
+details.  
+  
+| May 20, 2019 | 23:39 |
+
+We are still seeing errors on publish/pull and admin operations on Cloud
+PubSub. Our Engineering Team is investigating possible causes. We will provide
+another status update by Tuesday, 2019-05-21 00:40 US/Pacific with current
+details.  
+  
+|
+
+We are still seeing errors on publish/pull and admin operations on Cloud
+PubSub. Our Engineering Team is investigating possible causes. We will provide
+another status update by Tuesday, 2019-05-21 00:40 US/Pacific with current
+details.  
+  
+| May 20, 2019 | 22:38 |
+
+Further investigation indicates that approximately 3% pull and 5% publish
+operations globally are seeing 5xx and 499 errors. Various admin operations
+like CreateTopic and DeleteTopic are also seeing >50% errors. We will provide
+an update by Monday, 2019-05-20 23:40 US/Pacific with current details.  
+  
+|
+
+Further investigation indicates that approximately 3% pull and 5% publish
+operations globally are seeing 5xx and 499 errors. Various admin operations
+like CreateTopic and DeleteTopic are also seeing >50% errors. We will provide
+an update by Monday, 2019-05-20 23:40 US/Pacific with current details.  
+  
+| May 20, 2019 | 22:16 |
+
+We are experiencing an issue with Cloud PubSub beginning at 2019-05-20 21:35
+US/Pacific. Current data indicates that approximately 1% of publish operations
+globally (15% publish operations in asia-northeast2) and approximately 20~25%
+of various types of admin operations (i.e. CreateTopic) are affected by this
+issue. For everyone who is affected, we apologize for the disruption. We will
+provide an update by Monday, 2019-05-20 22:45 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with Cloud PubSub beginning at 2019-05-20 21:35
+US/Pacific. Current data indicates that approximately 1% of publish operations
+globally (15% publish operations in asia-northeast2) and approximately 20~25%
+of various types of admin operations (i.e. CreateTopic) are affected by this
+issue. For everyone who is affected, we apologize for the disruption. We will
+provide an update by Monday, 2019-05-20 22:45 US/Pacific with current details.  
+  
+| May 20, 2019 | 21:51 |
+
+We are investigating elevated error rate on create/delete/get topics with
+Google Cloud PubSub globally. Our Engineering Team is investigating possible
+causes. We will provide another status update by Monday, 2019-05-20 22:15
+US/Pacific with current details.  
+  
+|
+
+We are investigating elevated error rate on create/delete/get topics with
+Google Cloud PubSub globally. Our Engineering Team is investigating possible
+causes. We will provide another status update by Monday, 2019-05-20 22:15
+US/Pacific with current details.  
+  
+| May 20, 2019 | 21:51 |
+
+We are investigating elevated error rate on create/delete/get topics with
+Google Cloud PubSub globally.  
+  
+|
+
+We are investigating elevated error rate on create/delete/get topics with
+Google Cloud PubSub globally.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

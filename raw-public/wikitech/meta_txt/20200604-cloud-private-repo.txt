@@ -1,0 +1,50 @@
+A change was deployed to puppet which inadvertently deleted the private repo from all puppet backend servers and puppet standalone servers. A few standalone servers in the Cloud environment maintain secrets by applying local commits to the labs/private repo. This event caused all secrets to be deleted required manual restoration
+
+Impact: Any cloud environments which had added private secrets would have reverted to using the dummy secrets in the labs/private repo
+
+All timelines are on 2020-06-04 and are UTC
+• 10:12: OUTAGE Begins Once this change is merged the private repo will be removed the next time puppet is run (anytime between now and 30 mins)
+• 10:32: change is reverted for unrelated reason, to fix a number of syntax errors
+• 10:58: jbond realises the private repo has been erroneously removed from stand-alone masters and applies a fix
+• 10:58: jbond unaware real secrets where stored in some private repos did not realize the changes also affected puppet masters on WMCS projects leading to this incident
+• 12:24: SAL did not work in #wikimedia-operations (worked at 12:18).
+• 12:28: Arturo notices SAL does not work anymore (in #wikimedia-cloud)
+• 12:32 <arturo> we don't have any [local] commit in labs/private in tools-puppetmaster-02
+• 12:37: cloud engineers notice missing data in tools private repo and inquire about recent changes
+• 12:42: confirmation that all private commits had been lost
+• 12:55: explored option on using a temporary copy of the git repo created by , however that script deletes the temporary copy
+• 12:58: start investigating if we can use to recover lost secrets
+• 13:05: Ensure puppet is disabled on all cloud nodes
+• 13:09: efforts made to use block level recovery to save data to an nfs mount
+• 13:13: Bryan makes Antoine aware of the issue in #wikimedia-releng which would affect the CI and deployment-prep puppetmasters
+• 13:18: Antoine backup private.git on integration/deployment-prep, disable puppet on them.
+• 13:29: confirmation that deployment-prep and integrations where uneffected due to a merge conflict causing puppet updates to fail
+• 13:39: Start meet up call to discuss next steps (Bryan, Arturo, John, Antoine [just at the beginning])
+• 13:45: start collection a copy of /var/log/puppet.log from all servers using cloud cumin
+• 15:29: use scp to copy all puppet.log files locally and confirm we have all secrets
+• 16:39: failry confident all 'urgent' breakages are now resolved
+
+The issue was noticed by a member of the Cloud Services team
+
+Copy the relevant alerts that fired in this section.
+
+Did the appropriate alert(s) fire? Was the alert volume manageable? Did they point to the problem with as much accuracy as possible?
+
+TODO: If human only, an actionable should probably be to "add alerting".
+
+What went well?
+• Cloud services and SRE foundations worked well to resolve the issue
+• The environment was broken for ~150 Minutes before being detected
+• lack of knowledge: engineer preforming the original change was unaware the private repository was used in this manner and WMCS was not required to +1 in the code review
+
+Where did we get lucky?
+• deployment-prep and integrations puppet masters are automatically rebasing the puppet.git repository. Luckily there were merge conflicts on each of them that prevented the faulty change from being automatically pulled and deployed.
+• we were able to restore the secrets from the file
+
+How many people were involved in the remediation?
+
+Add links to information that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, add an action item to create it.
+
+Create a list of action items that will help prevent this from happening again as much as possible. Link to or create a Phabricator task for every step.
+
+TODO: Add the #Wikimedia-Incident-Prevention Phabricator tag to these tasks.

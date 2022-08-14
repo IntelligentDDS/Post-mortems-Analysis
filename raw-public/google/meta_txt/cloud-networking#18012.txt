@@ -1,0 +1,287 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+July 19, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Networking](/incident/cloud-networking/18012)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Networking Incident #18012
+
+The issue with Google Cloud Global Loadbalancers returning 502s has been fully
+resolved.
+
+Incident began at **2018-07-17 12:17** and ended at **2018-07-17 12:55** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jul 18, 2018 | 17:26 |
+
+## ISSUE SUMMARY
+
+On Tuesday, 17 July 2018, customers using Google Cloud App Engine, Google
+HTTP(S) Load Balancer, or TCP/SSL Proxy Load Balancers experienced elevated
+error rates ranging between 33% and 87% for a duration of 32 minutes.
+Customers observed errors consisting of either 502 return codes, or connection
+resets. We apologize to our customers whose services or businesses were
+impacted during this incident, and we are taking immediate steps to improve
+the platform’s performance and availability. We will be providing customers
+with a SLA credit for the affected timeframe that impacted the Google Cloud
+HTTP(S) Load Balancer, TCP/SSL Proxy Load Balancer and Google App Engine
+products.
+
+## DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday, 17 July 2018, from 12:17 to 12:49 PDT, Google Cloud HTTP(S) Load
+Balancers returned 502s for some requests they received. The proportion of 502
+return codes varied from 33% to 87% during the period. Automated monitoring
+alerted Google’s engineering team to the event at 12:19, and at 12:44 the team
+had identified the probable root cause and deployed a fix. At 12:49 the fix
+became effective and the rate of 502s rapidly returned to a normal level.
+Services experienced degraded latency for several minutes longer as traffic
+returned and caches warmed. Serving fully recovered by 12:55. Connections to
+Cloud TCP/SSL Proxy Load Balancers would have been reset after connections to
+backends failed. Cloud services depending upon Cloud HTTP Load Balancing, such
+as Google App Engine application serving, Google Cloud Functions,
+Stackdriver's web UI, Dialogflow and the Cloud Support Portal/API, were
+affected for the duration of the incident.
+
+Cloud CDN cache hits dropped 70% due to decreased references to Cloud CDN URLs
+from services behind Cloud HTTP(S) Load balancers and an inability to validate
+stale cache entries or insert new content on cache misses. Services running on
+Google Kubernetes Engine and using the Ingress resource would have served 502
+return codes as mentioned above. Google Cloud Storage traffic served via Cloud
+Load Balancers was also impacted.
+
+Other Google Cloud Platform services were not impacted. For example,
+applications and services that use direct VM access, or Network Load
+Balancing, were not affected.
+
+## ROOT CAUSE
+
+Google’s Global Load Balancers are based on a two-tiered architecture of
+Google Front Ends (GFE). The first tier of GFEs answer requests as close to
+the user as possible to maximize performance during connection setup. These
+GFEs route requests to a second layer of GFEs located close to the service
+which the request makes use of. This type of architecture allows clients to
+have low latency connections anywhere in the world, while taking advantage of
+Google’s global network to serve requests to backends, regardless of in which
+region they are located.
+
+The GFE development team was in the process of adding features to GFE to
+improve security and performance. These features had been introduced into the
+second layer GFE code base but not yet put into service. One of the features
+contained a bug which would cause the GFE to restart; this bug had not been
+detected in either of testing and initial rollout. At the beginning of the
+event, a configuration change in the production environment triggered the bug
+intermittently, which caused affected GFEs to repeatedly restart. Since
+restarts are not instantaneous, the available second layer GFE capacity was
+reduced. While some requests were correctly answered, other requests were
+interrupted (leading to connection resets) or denied due to a temporary lack
+of capacity while the GFEs were coming back online.
+
+## REMEDIATION AND PREVENTION
+
+Google engineers were alerted to the issue within 3 minutes and began
+immediately investigating. At 12:44 PDT, the team discovered the root cause,
+the configuration change was promptly reverted, and the affected GFEs ceased
+their restarts. As all GFEs returned to service, traffic resumed its normal
+levels and behavior.
+
+In addition to fixing the underlying cause, we will be implementing changes to
+both prevent and reduce the impact of this type of failure in several ways:
+
+1\. We are adding additional safeguards to disable features not yet in
+service.
+
+2\. We plan to increase hardening of the GFE testing stack to reduce the risk
+of having a latent bug in production binaries that may cause a task to
+restart.
+
+3\. We will also be pursuing additional isolation between different shards of
+GFE pools in order to reduce the scope of failures.
+
+4\. Finally, to speed diagnosis in the future, we plan to create a
+consolidated dashboard of all configuration changes for GFE pools, allowing
+engineers to more easily and quickly observe, correlate, and identify
+problematic changes to the system.
+
+We would again like to apologize for the impact that this incident had on our
+customers and their businesses. We take any incident that affects the
+availability and reliability of our customers extremely seriously,
+particularly incidents which span regions. We are conducting a thorough
+investigation of the incident and will be making the changes which result from
+that investigation our very top priority in GCP engineering.  
+  
+|
+
+## ISSUE SUMMARY
+
+On Tuesday, 17 July 2018, customers using Google Cloud App Engine, Google
+HTTP(S) Load Balancer, or TCP/SSL Proxy Load Balancers experienced elevated
+error rates ranging between 33% and 87% for a duration of 32 minutes.
+Customers observed errors consisting of either 502 return codes, or connection
+resets. We apologize to our customers whose services or businesses were
+impacted during this incident, and we are taking immediate steps to improve
+the platform’s performance and availability. We will be providing customers
+with a SLA credit for the affected timeframe that impacted the Google Cloud
+HTTP(S) Load Balancer, TCP/SSL Proxy Load Balancer and Google App Engine
+products.
+
+## DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday, 17 July 2018, from 12:17 to 12:49 PDT, Google Cloud HTTP(S) Load
+Balancers returned 502s for some requests they received. The proportion of 502
+return codes varied from 33% to 87% during the period. Automated monitoring
+alerted Google’s engineering team to the event at 12:19, and at 12:44 the team
+had identified the probable root cause and deployed a fix. At 12:49 the fix
+became effective and the rate of 502s rapidly returned to a normal level.
+Services experienced degraded latency for several minutes longer as traffic
+returned and caches warmed. Serving fully recovered by 12:55. Connections to
+Cloud TCP/SSL Proxy Load Balancers would have been reset after connections to
+backends failed. Cloud services depending upon Cloud HTTP Load Balancing, such
+as Google App Engine application serving, Google Cloud Functions,
+Stackdriver's web UI, Dialogflow and the Cloud Support Portal/API, were
+affected for the duration of the incident.
+
+Cloud CDN cache hits dropped 70% due to decreased references to Cloud CDN URLs
+from services behind Cloud HTTP(S) Load balancers and an inability to validate
+stale cache entries or insert new content on cache misses. Services running on
+Google Kubernetes Engine and using the Ingress resource would have served 502
+return codes as mentioned above. Google Cloud Storage traffic served via Cloud
+Load Balancers was also impacted.
+
+Other Google Cloud Platform services were not impacted. For example,
+applications and services that use direct VM access, or Network Load
+Balancing, were not affected.
+
+## ROOT CAUSE
+
+Google’s Global Load Balancers are based on a two-tiered architecture of
+Google Front Ends (GFE). The first tier of GFEs answer requests as close to
+the user as possible to maximize performance during connection setup. These
+GFEs route requests to a second layer of GFEs located close to the service
+which the request makes use of. This type of architecture allows clients to
+have low latency connections anywhere in the world, while taking advantage of
+Google’s global network to serve requests to backends, regardless of in which
+region they are located.
+
+The GFE development team was in the process of adding features to GFE to
+improve security and performance. These features had been introduced into the
+second layer GFE code base but not yet put into service. One of the features
+contained a bug which would cause the GFE to restart; this bug had not been
+detected in either of testing and initial rollout. At the beginning of the
+event, a configuration change in the production environment triggered the bug
+intermittently, which caused affected GFEs to repeatedly restart. Since
+restarts are not instantaneous, the available second layer GFE capacity was
+reduced. While some requests were correctly answered, other requests were
+interrupted (leading to connection resets) or denied due to a temporary lack
+of capacity while the GFEs were coming back online.
+
+## REMEDIATION AND PREVENTION
+
+Google engineers were alerted to the issue within 3 minutes and began
+immediately investigating. At 12:44 PDT, the team discovered the root cause,
+the configuration change was promptly reverted, and the affected GFEs ceased
+their restarts. As all GFEs returned to service, traffic resumed its normal
+levels and behavior.
+
+In addition to fixing the underlying cause, we will be implementing changes to
+both prevent and reduce the impact of this type of failure in several ways:
+
+1\. We are adding additional safeguards to disable features not yet in
+service.
+
+2\. We plan to increase hardening of the GFE testing stack to reduce the risk
+of having a latent bug in production binaries that may cause a task to
+restart.
+
+3\. We will also be pursuing additional isolation between different shards of
+GFE pools in order to reduce the scope of failures.
+
+4\. Finally, to speed diagnosis in the future, we plan to create a
+consolidated dashboard of all configuration changes for GFE pools, allowing
+engineers to more easily and quickly observe, correlate, and identify
+problematic changes to the system.
+
+We would again like to apologize for the impact that this incident had on our
+customers and their businesses. We take any incident that affects the
+availability and reliability of our customers extremely seriously,
+particularly incidents which span regions. We are conducting a thorough
+investigation of the incident and will be making the changes which result from
+that investigation our very top priority in GCP engineering.  
+  
+| Jul 17, 2018 | 13:19 |
+
+The issue with Google Cloud Global Load balancers returning 502s has been
+resolved for all affected users as of 13:05 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+|
+
+The issue with Google Cloud Global Load balancers returning 502s has been
+resolved for all affected users as of 13:05 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+| Jul 17, 2018 | 12:53 |
+
+The issue with Google Cloud Load balancers returning 502s should be resolved
+for majority of users and we expect a full resolution in the near future. We
+will provide another status update by Tuesday, 2018-07-17 13:30 US/Pacific
+with current details.  
+  
+|
+
+The issue with Google Cloud Load balancers returning 502s should be resolved
+for majority of users and we expect a full resolution in the near future. We
+will provide another status update by Tuesday, 2018-07-17 13:30 US/Pacific
+with current details.  
+  
+| Jul 17, 2018 | 12:34 |
+
+We are investigating a problem with Google Cloud Global Loadbalancers
+returning 502s for many services including AppEngine, Stackdriver, Dialogflow,
+as well as customer Global Load Balancers. We will provide another update by
+Tuesday, 2018-07-17 13:00 US/Pacific  
+  
+|
+
+We are investigating a problem with Google Cloud Global Loadbalancers
+returning 502s for many services including AppEngine, Stackdriver, Dialogflow,
+as well as customer Global Load Balancers. We will provide another update by
+Tuesday, 2018-07-17 13:00 US/Pacific  
+  
+| Jul 17, 2018 | 12:34 |
+
+We are investigating a problem with Google Cloud Global Loadbalancers
+returning 502s  
+  
+|
+
+We are investigating a problem with Google Cloud Global Loadbalancers
+returning 502s  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

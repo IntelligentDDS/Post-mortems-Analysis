@@ -1,0 +1,3 @@
+Iot Hub - West Europe and North Europe
+Summary of impact: Between 17:30 UTC on 20 Aug 2018 and 16:42 UTC on 21 Aug 2018, a subset of IoT Hub customers in West Europe may experience errors, such as 'InternalServerError', when trying to access IoT Hub devices hosted in these regions. Customers may also experience issues when attempting to delete resources/devices. Preliminary root cause: Engineers determined that multiple backend service nodes were stuck in a unhealthy state, preventing failover from occurring.
+Mitigation: Engineers performed a manual reboot of backend service nodes to mitigate the issue. Next steps: Engineers will continue to investigate and monitor to identify why the failover was unsuccessful.

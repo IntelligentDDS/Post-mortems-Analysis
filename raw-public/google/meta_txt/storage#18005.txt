@@ -1,0 +1,301 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+December 28, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Storage](/incident/storage/18005)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Storage Incident #18005
+
+We are currently investigating an issue with Google Cloud Storage and App
+Engine. Google Cloud Build and Cloud Functions services are restored
+
+Incident began at **2018-12-21 08:01** and ended at **2018-12-21 11:43** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Dec 28, 2018 | 09:53 |
+
+ISSUE SUMMARY
+
+On Friday 21 December 2018, customers deploying App Engine apps, deploying in
+Cloud Functions, reading from Google Cloud Storage (GCS), or using Cloud Build
+experienced increased latency and elevated error rates ranging from 1.6% to
+18% for a period of 3 hours, 41 minutes.
+
+We understand that these services are critical to our customers and sincerely
+apologize for the disruption caused by this incident; this is not the level of
+quality and reliability that we strive to offer you. We have several
+engineering efforts now under way to prevent a recurrence of this sort of
+problem; they are described in detail below.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Friday 21 December 2018, from 08:01 to 11:43 PST, Google Cloud Storage
+reads, App Engine deployments, Cloud Functions deployments, and Cloud Build
+experienced a disruption due to increased latency and 5xx errors while reading
+from Google Cloud Storage. The peak error rate for GCS reads was 1.6% in US
+multi-region. Writes were not impacted, as the impacted metadata store is not
+utilized on writes.
+
+Elevated deployment errors for App Engine Apps in all regions averaged 8%
+during the incident period. In Cloud Build, a 14% INTERNAL_ERROR rate and 18%
+TIMEOUT error rate occurred at peak. The aggregated average deployment failure
+rate of 4.6% for Cloud Functions occurred in us-central1, us-east1, europe-
+west1, and asia-northeast1.
+
+ROOT CAUSE
+
+Impact began when increased load on one of GCS's metadata stores resulted in
+request queuing, which in turn created an uneven distribution of service load.
+
+The additional load was created by a partially-deployed new feature. A routine
+maintenance operation in combination with this new feature resulted in an
+unexpected increase in the load on the metadata store. This increase in load
+affected read workloads due to increased request latency to the metadata
+store.
+
+In some cases, this latency exceeded the timeout threshold, causing an average
+of 0.6% of requests to fail in the US multi-region for the duration of the
+incident.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were automatically alerted to the increased error rate at
+08:22 PST. Since the issue involved multiple backend systems, multiple teams
+at Google were involved in the investigation and narrowed down the issue to
+the newly-deployed feature. The latency and error rate began to subside as
+Google Engineers initiated the rollback of the new feature. The issue was
+fully mitigated at 11:43 PST when the rollback finished, at which point the
+impacted GCP services recovered completely.
+
+In addition to updating the impacting feature to prevent this type of
+increased load, we will update the rollout workflow to stress feature limits
+before rollout. To improve time to resolution of issues in the metadata store,
+we are implementing additional instrumentation to the requests made of the
+subsystem.  
+  
+|
+
+ISSUE SUMMARY
+
+On Friday 21 December 2018, customers deploying App Engine apps, deploying in
+Cloud Functions, reading from Google Cloud Storage (GCS), or using Cloud Build
+experienced increased latency and elevated error rates ranging from 1.6% to
+18% for a period of 3 hours, 41 minutes.
+
+We understand that these services are critical to our customers and sincerely
+apologize for the disruption caused by this incident; this is not the level of
+quality and reliability that we strive to offer you. We have several
+engineering efforts now under way to prevent a recurrence of this sort of
+problem; they are described in detail below.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Friday 21 December 2018, from 08:01 to 11:43 PST, Google Cloud Storage
+reads, App Engine deployments, Cloud Functions deployments, and Cloud Build
+experienced a disruption due to increased latency and 5xx errors while reading
+from Google Cloud Storage. The peak error rate for GCS reads was 1.6% in US
+multi-region. Writes were not impacted, as the impacted metadata store is not
+utilized on writes.
+
+Elevated deployment errors for App Engine Apps in all regions averaged 8%
+during the incident period. In Cloud Build, a 14% INTERNAL_ERROR rate and 18%
+TIMEOUT error rate occurred at peak. The aggregated average deployment failure
+rate of 4.6% for Cloud Functions occurred in us-central1, us-east1, europe-
+west1, and asia-northeast1.
+
+ROOT CAUSE
+
+Impact began when increased load on one of GCS's metadata stores resulted in
+request queuing, which in turn created an uneven distribution of service load.
+
+The additional load was created by a partially-deployed new feature. A routine
+maintenance operation in combination with this new feature resulted in an
+unexpected increase in the load on the metadata store. This increase in load
+affected read workloads due to increased request latency to the metadata
+store.
+
+In some cases, this latency exceeded the timeout threshold, causing an average
+of 0.6% of requests to fail in the US multi-region for the duration of the
+incident.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were automatically alerted to the increased error rate at
+08:22 PST. Since the issue involved multiple backend systems, multiple teams
+at Google were involved in the investigation and narrowed down the issue to
+the newly-deployed feature. The latency and error rate began to subside as
+Google Engineers initiated the rollback of the new feature. The issue was
+fully mitigated at 11:43 PST when the rollback finished, at which point the
+impacted GCP services recovered completely.
+
+In addition to updating the impacting feature to prevent this type of
+increased load, we will update the rollout workflow to stress feature limits
+before rollout. To improve time to resolution of issues in the metadata store,
+we are implementing additional instrumentation to the requests made of the
+subsystem.  
+  
+| Dec 21, 2018 | 12:10 |
+
+The issue with Google Cloud Storage, App Engine, and Cloud Functions has been
+resolved for all affected projects as of Friday, 2018-12-21 11:46 US/Pacific.
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to help prevent or minimize future recurrence. We
+will provide a more detailed analysis of this incident once we have completed
+our internal investigation.  
+  
+|
+
+The issue with Google Cloud Storage, App Engine, and Cloud Functions has been
+resolved for all affected projects as of Friday, 2018-12-21 11:46 US/Pacific.
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to help prevent or minimize future recurrence. We
+will provide a more detailed analysis of this incident once we have completed
+our internal investigation.  
+  
+| Dec 21, 2018 | 11:46 |
+
+The rollout for the potential fix is continuing its progress. The Google Cloud
+Storage error rate has improved and is currently 0.1% for US multi-region.
+Google App Engine App deployments and Google Cloud Function deployments remain
+affected. We will provide another status update by Friday, 2018-12-21 12:30
+US/Pacific with current details.  
+  
+|
+
+The rollout for the potential fix is continuing its progress. The Google Cloud
+Storage error rate has improved and is currently 0.1% for US multi-region.
+Google App Engine App deployments and Google Cloud Function deployments remain
+affected. We will provide another status update by Friday, 2018-12-21 12:30
+US/Pacific with current details.  
+  
+| Dec 21, 2018 | 10:53 |
+
+We are rolling out a potential fix to mitigate this issue. This currently also
+impacts Google App Engine App deployments and Google Cloud Function
+deployments. We will provide another status update by Friday, 2018-12-21 12:00
+US/Pacific with current details.  
+  
+|
+
+We are rolling out a potential fix to mitigate this issue. This currently also
+impacts Google App Engine App deployments and Google Cloud Function
+deployments. We will provide another status update by Friday, 2018-12-21 12:00
+US/Pacific with current details.  
+  
+| Dec 21, 2018 | 10:30 |
+
+A proximate root cause has been identified and mitigation work is currently
+underway by our Engineering Team. We will provide another status update by
+Friday, 2018-12-21 12:30 US/Pacific with current details.  
+  
+|
+
+A proximate root cause has been identified and mitigation work is currently
+underway by our Engineering Team. We will provide another status update by
+Friday, 2018-12-21 12:30 US/Pacific with current details.  
+  
+| Dec 21, 2018 | 09:59 |
+
+We are experiencing an issue with Google Cloud Storage service returning
+elevated error rates for requests in the US multi-region, starting at Friday,
+2018-12-21 08:06 US/Pacific. This currently also impacts Google App Engine.
+The issue for Google Cloud Build and Google Cloud Functions has been resolved
+as of Friday, 2018-12-21 09:38 US/Pacific.
+
+Mitigation work is currently underway by our engineering team and we expect a
+full resolution in the near future.
+
+Google Cloud Storage service is reporting a 1% error rate for all requests.
+Affected Google Cloud Functions customers may seen their deployments time out.
+Affected customers of Google Cloud Build were observable as "Build failed
+(internal error)"
+
+We will provide another status update by Friday, 2018-12-21 11:00 US/Pacific
+with current details.  
+  
+|
+
+We are experiencing an issue with Google Cloud Storage service returning
+elevated error rates for requests in the US multi-region, starting at Friday,
+2018-12-21 08:06 US/Pacific. This currently also impacts Google App Engine.
+The issue for Google Cloud Build and Google Cloud Functions has been resolved
+as of Friday, 2018-12-21 09:38 US/Pacific.
+
+Mitigation work is currently underway by our engineering team and we expect a
+full resolution in the near future.
+
+Google Cloud Storage service is reporting a 1% error rate for all requests.
+Affected Google Cloud Functions customers may seen their deployments time out.
+Affected customers of Google Cloud Build were observable as "Build failed
+(internal error)"
+
+We will provide another status update by Friday, 2018-12-21 11:00 US/Pacific
+with current details.  
+  
+| Dec 21, 2018 | 09:18 |
+
+The Google Cloud Storage service issue is correlated to issues in Google App
+Engine, Google Cloud Build and Google Cloud Functions in US multi-region. We
+will provide another status update by Friday, 2018-12-21 10:00 US/Pacific with
+current details.  
+  
+|
+
+The Google Cloud Storage service issue is correlated to issues in Google App
+Engine, Google Cloud Build and Google Cloud Functions in US multi-region. We
+will provide another status update by Friday, 2018-12-21 10:00 US/Pacific with
+current details.  
+  
+| Dec 21, 2018 | 09:14 |
+
+The Google Cloud Storage service issue is correlated to issues in Google Cloud
+Build and Google Cloud Functions in US Region. We will provide another status
+update by Friday, 2018-12-21 10:00 US/Pacific with current details.  
+  
+|
+
+The Google Cloud Storage service issue is correlated to issues in Google Cloud
+Build and Google Cloud Functions in US Region. We will provide another status
+update by Friday, 2018-12-21 10:00 US/Pacific with current details.  
+  
+| Dec 21, 2018 | 08:51 |
+
+The Google Cloud Storage service is reporting an error rate increase in US
+region on requests. We will provide another status update by Friday,
+2018-12-21 09:15 US/Pacific with current details.  
+  
+|
+
+The Google Cloud Storage service is reporting an error rate increase in US
+region on requests. We will provide another status update by Friday,
+2018-12-21 09:15 US/Pacific with current details.  
+  
+| Dec 21, 2018 | 08:51 |
+
+We are investigating an issue with Google Cloud Storage.  
+  
+|
+
+We are investigating an issue with Google Cloud Storage.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

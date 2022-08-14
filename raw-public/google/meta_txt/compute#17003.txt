@@ -1,0 +1,223 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 09, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/17003)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #17003
+
+New VMs are experiencing connectivity issues
+
+Incident began at **2017-01-30 10:54** and ended at **2017-01-30 12:50** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Feb 08, 2017 | 18:30 |
+
+ISSUE SUMMARY
+
+On Monday 30 January 2017, newly created Google Compute Engine instances,
+Cloud VPNs and network load balancers were unavailable for a duration of 2
+hours 8 minutes. We understand how important the flexibility to launch new
+resources and scale up GCE is for our users and apologize for this incident.
+In particular, we apologize for the wide scope of this issue and are taking
+steps to address the scope and duration of this incident as well as the root
+cause itself.
+
+DETAILED DESCRIPTION OF IMPACT
+
+Any GCE instances, Cloud VPN tunnels or GCE network load balancers created or
+live migrated on Monday 30 January 2017 between 10:36 and 12:42 PDT were
+unavailable via their public IP addresses until the end of that period. This
+also prevented outbound traffic from affected instances and load balancing
+health checks from succeeding. Previously created VPN tunnels, load balancers
+and instances that did not experience a live migration were unaffected.
+
+ROOT CAUSE
+
+All inbound networking for GCE instances, load balancers and VPN tunnels enter
+via shared layer 2 load balancers. These load balancers are configured with
+changes to IP addresses for these resources, then automatically tested in a
+canary deployment, before changes are globally propagated.
+
+The issue was triggered by a large set of updates which were applied to a
+rarely used load balancing configuration. The application of updates to this
+configuration exposed an inefficient code path which resulted in the canary
+timing out. From this point all changes of public addressing were queued
+behind these changes that could not proceed past the testing phase.
+
+REMEDIATION AND PREVENTION
+
+To resolve the issue, Google engineers restarted the jobs responsible for
+programming changes to the network load balancers. After restarting, the
+problematic changes were processed in a batch, which no longer reached the
+inefficient code path. From this point updates could be processed and normal
+traffic resumed. This fix was applied zone by zone between 11:36 and 12:42.
+
+To prevent this issue from reoccurring in the short term, Google engineers are
+increasing the canary timeout so that updates exercising the inefficient code
+path merely slow network changes rather than completely stop them. As a long
+term resolution, the inefficient code path is being improved, and new tests
+are being written to test behaviour on a wider range of configurations.
+
+Google engineers had already begun work to replace global propagation of
+address configuration with decentralized routing. This work is being
+accelerated as it will prevent issues with this layer having global impact.
+
+Google engineers are also creating additional metrics and alerting that will
+allow the nature of this issue to be identified sooner, which will lead to
+faster resolution.  
+  
+|
+
+ISSUE SUMMARY
+
+On Monday 30 January 2017, newly created Google Compute Engine instances,
+Cloud VPNs and network load balancers were unavailable for a duration of 2
+hours 8 minutes. We understand how important the flexibility to launch new
+resources and scale up GCE is for our users and apologize for this incident.
+In particular, we apologize for the wide scope of this issue and are taking
+steps to address the scope and duration of this incident as well as the root
+cause itself.
+
+DETAILED DESCRIPTION OF IMPACT
+
+Any GCE instances, Cloud VPN tunnels or GCE network load balancers created or
+live migrated on Monday 30 January 2017 between 10:36 and 12:42 PDT were
+unavailable via their public IP addresses until the end of that period. This
+also prevented outbound traffic from affected instances and load balancing
+health checks from succeeding. Previously created VPN tunnels, load balancers
+and instances that did not experience a live migration were unaffected.
+
+ROOT CAUSE
+
+All inbound networking for GCE instances, load balancers and VPN tunnels enter
+via shared layer 2 load balancers. These load balancers are configured with
+changes to IP addresses for these resources, then automatically tested in a
+canary deployment, before changes are globally propagated.
+
+The issue was triggered by a large set of updates which were applied to a
+rarely used load balancing configuration. The application of updates to this
+configuration exposed an inefficient code path which resulted in the canary
+timing out. From this point all changes of public addressing were queued
+behind these changes that could not proceed past the testing phase.
+
+REMEDIATION AND PREVENTION
+
+To resolve the issue, Google engineers restarted the jobs responsible for
+programming changes to the network load balancers. After restarting, the
+problematic changes were processed in a batch, which no longer reached the
+inefficient code path. From this point updates could be processed and normal
+traffic resumed. This fix was applied zone by zone between 11:36 and 12:42.
+
+To prevent this issue from reoccurring in the short term, Google engineers are
+increasing the canary timeout so that updates exercising the inefficient code
+path merely slow network changes rather than completely stop them. As a long
+term resolution, the inefficient code path is being improved, and new tests
+are being written to test behaviour on a wider range of configurations.
+
+Google engineers had already begun work to replace global propagation of
+address configuration with decentralized routing. This work is being
+accelerated as it will prevent issues with this layer having global impact.
+
+Google engineers are also creating additional metrics and alerting that will
+allow the nature of this issue to be identified sooner, which will lead to
+faster resolution.  
+  
+| Jan 30, 2017 | 12:56 |
+
+We have fully mitigated the network connectivity issues for newly-created GCE
+instances as of 12:45 US/Pacific, with VPNs connectivity issues being fully
+mitigated at 12:50 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+|
+
+We have fully mitigated the network connectivity issues for newly-created GCE
+instances as of 12:45 US/Pacific, with VPNs connectivity issues being fully
+mitigated at 12:50 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+| Jan 30, 2017 | 12:40 |
+
+The issue with newly-created GCE instances experiencing network connectivity
+problems should have been mitigated for all GCE regions except europe-west1,
+which is currently clearing. Newly-created VPNs are additionally affected; we
+are still working on a mitigation for this. We will provide another status
+update by 13:10 US/Pacific with current details.  
+  
+|
+
+The issue with newly-created GCE instances experiencing network connectivity
+problems should have been mitigated for all GCE regions except europe-west1,
+which is currently clearing. Newly-created VPNs are additionally affected; we
+are still working on a mitigation for this. We will provide another status
+update by 13:10 US/Pacific with current details.  
+  
+| Jan 30, 2017 | 12:07 |
+
+The issue with newly-created GCE instances experiencing network connectivity
+problems should have been mitigated for the majority of GCE regions and we
+expect a full resolution in the near future. We will provide another status
+update by 12:40 US/Pacific with current details.  
+  
+|
+
+The issue with newly-created GCE instances experiencing network connectivity
+problems should have been mitigated for the majority of GCE regions and we
+expect a full resolution in the near future. We will provide another status
+update by 12:40 US/Pacific with current details.  
+  
+| Jan 30, 2017 | 11:40 |
+
+We are experiencing a connectivity issue affecting newly-created VMs, as well
+as those undergoing live migrations beginning at Monday, 2017-01-30 10:54
+US/Pacific. Mitigation work is currently underway. All zones should be coming
+back online in the next 15-20 minutes. For everyone who is affected, we
+apologize for any inconvenience you may be experiencing. We will provide
+another update at 12:10 PST.  
+  
+|
+
+We are experiencing a connectivity issue affecting newly-created VMs, as well
+as those undergoing live migrations beginning at Monday, 2017-01-30 10:54
+US/Pacific. Mitigation work is currently underway. All zones should be coming
+back online in the next 15-20 minutes. For everyone who is affected, we
+apologize for any inconvenience you may be experiencing. We will provide
+another update at 12:10 PST.  
+  
+| Jan 30, 2017 | 11:13 |
+
+We are investigating an issue with newly-created VMs not having network
+connectivity. This also affects VMs undergoing live migrations. We will
+provide more information by 11:45 US/Pacific.  
+  
+|
+
+We are investigating an issue with newly-created VMs not having network
+connectivity. This also affects VMs undergoing live migrations. We will
+provide more information by 11:45 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

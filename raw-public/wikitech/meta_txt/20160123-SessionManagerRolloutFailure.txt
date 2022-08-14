@@ -1,0 +1,65 @@
+MediaWiki 1.27.0-wmf.11 reverted from all wikis due to SessionManager related problems.
+
+MediaWiki 1.27.0-wmf.11 included the SessionManager component and related work from the AuthManager project. This set of work changed most of the PHP session handling code for MediaWiki. The code went through thorough code and security review and as much testing on the beta cluster as could be done (merged very close the prior branch cut).
+
+A few small issues were spotted early after deployment to the group0 testing wikis but the big scary issues were not found or reported until the code started getting wider usage on the group1 (all non-wikipedia wikis) and group2 (all wikis) wikis. The majority of end user reports did not start coming in until the new code was on group2 wikis.
+
+The most significant issue was first reported as task T124409 at 2016-01-22T12:18Z. Logging out of a user session from any wiki other than login.wikimedia.org was not clearing the session cookie on loginwiki. The active session cookie on loginwiki could be used by the CentralAuth auto-login feature which allows users to move from wiki to wiki without needing to login on each separately. Several attempts were made to correct this but ultimately reasonable time to debug and move forward with bug fixes expired before we were fully confident that the issue had been resolved. Consensus was reached at 2016-01-23T01:02 to roll back to the prior MediaWiki 1.27.0-wmf.10 release rather than leave users unable to properly logout over the weekend of 2016-01-23/24.
+• 2016-01-20T01:20 Bd808 files task T124126 about trending "Can neither load the session nor create an empty session" errors in fatalmonitor
+• 2016-01-20T19:41 <icinga-wm> PROBLEM - Text HTTP 5xx reqs/min on graphite1001 is CRITICAL: CRITICAL: 44.44% of data above the critical threshold [1000.0] https://grafana.wikimedia.org/dashboard/db/varnish-http-errors?from=1453316575736&to=1453328979345
+• 2016-01-20T20:49 Jynus communicates the issue to the last deployer after investigating timing and suggests reverting the change
+• 2016-01-20T22:38 Tgr syncs fixes for task T124143 (infiinite recursion) and task T124126 (can neither load nor create session)
+• 2016-01-20T23:53 Tgr reports a steep increase of NEED_TOKEN errors after deploying .11 to group1 as task T124252
+• 2016-01-22T01:48 Krenair files task T124380 about mw2020 prompting for password during ssh (only relevant to .10 rollback issues later)
+• 2016-01-22T02:56 DBrant reports in task T124384 that login via the Wikipedia Android App is not possible
+• 2016-01-22T05:16 TimStarling reports mw2020 not responding to ssh during sync-file (only relevant to .10 rollback issues later)
+• 2016-01-22T07:09 _joe_ points to kernel restart as likely trigger of mw2020 problems (only relevant to .10 rollback issues later)
+• 2016-01-22T07:34 _joe_ reboots mw2020 to finish reinstall triggered by PXE boot when machine was restarted (only relevant to .10 rollback issues later)
+• 2016-01-22T10:02 Paravoid asks for someone to look into disk usage on fluorine
+• 2016-01-22T10:05 _joe_ finds 109G of session.log on fluorine along with other large logs from CirrusSearch
+• 2016-01-22T11:13 Jynus files unbreak now task T124406 about greatly increased traffic to S7 master
+• 2016-01-22T12:18 Kusma forwards reports from English Wikipedia by creating task T124409 "Logging out immediately logs you back in"
+• 2016-01-22T12:48 Anomie jumps on irc to find out what's going on and is pointed to task T124409
+• 2016-01-22T12:53 Anomie notices that session logs are not going to logstash
+• 2016-01-22T12:58 Reedy again suggests reverting to .10 if fixes can't be found for auth related issues
+• 2016-01-22T13:02 Anomie works with dcausse to get traces of http activity reproducing logout failure
+• 2016-01-22T13:05 _joe_ makes config change and ori syncs to put session logs back into logstash for anomie
+• 2016-01-22T13:09 Anomie suspects that dcausse is describing login caused by the CentralAuth "check if I'm logged in centrally" JS
+• 2016-01-22T14:13 Ori asks if there is any reason not to rollback to .10 and maybe just leave group0 on .11
+• 2016-01-22T16:39 Anomie merges the "SessionManager: Add SessionBackend::setProviderMetadata()" Core fix for task T124409 in
+• 2016-01-22T16:43 Anomie merges the "SessionManager: Track whether the session is supposed to be CA or Local" CentralAuth fix for task T124409 in
+• 2016-01-22T17:51 Niedzelski merges the "Remove expired cookies" Wikipedia Android app fix in to fix task T124384
+• 2016-01-22T18:15 Legoktm starts running CentralAuth's resetGlobalUserTokens.php to force session resets for all users for task T124440
+• 2016-01-22T18:38 Multichill reports in task T124451 that his edits were done logged out though being displayed as logged in
+• 2016-01-22T18:42 IKhitron reports in task T124453 that login on meta fails; Tgr later states that he can only reproduce on wikisource.org
+• 2016-01-22T19:54 Anomie reports that CentralAuth is not logging the user into loginwiki anymore in task T124468 as a regression created by the hotfixes for task T124409 "Logging out immediately logs you back in"
+• 2016-01-22T21:46 Anomie merges the "SessionManager: Kill getPersistedSessionId()" Core patch in to fix the loginwiki regression in task T124468
+• 2016-01-22T23:47 bd808 merges "Ignore auth cookies with value 'deleted'" CentralAuth and Core patches for NEED_TOKEN errors in task T124252: ,
+• 2016-01-23T00:00 bd808 merges "Only delete cookies which are actually set" CentralAuth and Core patches for NEED_TOKEN errors in task T124252: ,
+• 2016-01-23T00:48 bd808 files task T124510 based on reports of local browser cache behavior change on enwiki village pump
+• 2016-01-23T00:53 Tgr reports that he has reproduced the CentralAuth automatic login on the logout page issue from task T124409 again
+• 2016-01-23T01:02 Consensus reached to rollback rather than worry about logout not working over the weekend
+• 2016-01-23T01:29 bd808 Determined that all l10n errors were from mw2020.codfw
+
+The core issue of the loginwiki tokens not being purged is something that could have been discovered in development testing and/or the beta cluster. Replacing major subsystems of MediaWiki should have more detailed test plans than "watch beta & prod metrics". Specifically we should have recruited and coordinated testing by developers and users inside and outside of the WMF while the code was only on the beta testing cluster.
+
+The long tail of issues seem to be mostly related to cookie handling by various user agents. There were several changes to cache and cookie headers which seemed trivially better in code review, but turned out to be problematic when interacting with the very large and diverse set of user agents which visit the Wikimedia projects. Mass testing efforts as suggested above might help this some, but ultimately there are issues that will only be found in a high traffic environment. Some examples:
+
+Not having TLS on the beta cluster makes it unlikely that we would have found task T124252 ("secure" flag being added to cookies returned for non-TLS requests) before group1. (task T50501)
+
+Many of the issues didn't show up in production until 1.27.0-wmf.11 hit group1 and login wiki. Even then end user reports weren't made (or found) until after 1.27.0-wmf.11 was fully deployed. This is likely a by-product of the Wikipedia project being the most heavily used by bots, apps and end-users in general. The current group0/group1/group2 rollout process doesn't hit an extremely wide cross-section of traffic until the last step (with the possible exception of loginwiki and metawiki in group1). (task T115002)
+
+Setting up mw1017 to run 1.27.0-wmf.11 after the 1.27.0-wmf.10 rollback has helped in debugging immensely. Separating mw1017 completely from test.wikimedia.org to make it always available for intensive debugging without disrupting testwiki usage. Ori has started a discussion on this topic.
+
+Our current mechanism for mass expiring active sessions (CentralAuth's resetGlobalUserTokens.php) is ridiculously slow. We should really have the ability to dump all sessions in minutes rather than days. (task T124861)
+• task T124126: Can neither load the session nor create an empty session
+• task T124224: I'm editing in Widar under some else his/her account using oauth
+• task T124252: NEED_TOKEN error spike when 1.27-wmf.11 SessionManager was deployed to group1
+• task T124409: Logging out immediately logs you back in
+• task T124451: Don't add claims if a logged in user gets logged out
+• task T124468: CentralAuth is not logging the user into loginwiki anymore
+• task T124510: Page preview response not being cached for history navigation in 1.27.0-wmf11
+• task T74791: Newly created accounts are not global (at least, according to OAuth)
+• task T124821: SessionManager: unexpectedly logged out after visiting another wiki
+• task T124367: User::loadFromSession called before the end of Setup.php
+• task T124371: Clean up usage of $_SESSION in WMF-deployed extensions

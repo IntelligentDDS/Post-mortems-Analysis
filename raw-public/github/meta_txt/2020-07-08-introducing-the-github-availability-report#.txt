@@ -1,0 +1,45 @@
+What is the Availability Report?
+
+Historically, GitHub has published post-incident reviews for major incidents that impact service availability. Whether we’re sharing new investments to infrastructure or detailing site downtimes, our belief is that we can collectively grow as an industry by learning from one another. This month, we’re excited to introduce the GitHub Availability Report.
+
+What can you expect?
+
+On the first Wednesday of each month, we’ll publish a report describing GitHub’s availability, including a description of any incidents that may have occurred and update you on how we are evolving our engineering systems and practices in response. You should expect these updates to include a summary of what happened, as well as a technical explanation for incidents where we believe the occurrence was novel and contains information that helps engineers around the world learn how to improve product operations at scale.
+
+Why are we doing this?
+
+Availability and performance are a core feature, including how GitHub responds to service disruptions. We strive to engineer systems that are highly available and fault-tolerant and we expect that most of these monthly updates will recap periods of time where GitHub was >99% available. When things don’t go as planned, rather than waiting to share information about particularly interesting incidents, we want to describe all of the events that may impact you. Our hope is that by increasing our transparency and sharing what we’ve learned, rather than simply reporting minutes of downtime on a status page, everyone can learn from our experiences. At GitHub, we take the trust you place in us very seriously, and we hope this is a way for you to help hold us accountable for continuously improving our operational excellence as well as our product functionality.
+
+Availability Report for May and June
+
+In May and June, we experienced four distinct incidents resulting in a lack of availability or degraded service for GitHub.com.
+
+May 5 00:45 UTC (lasting for two hours and 24 minutes)
+
+During the incident, a shared database table’s auto-incrementing ID column exceeded the size that can be represented by the MySQL Integer type (Rails int(11)): 2147483647. When we attempted to insert larger integers into the column, the database rejected the value and Rails raised an ActiveModel::RangeError, which resulted in 500s from our API endpoint.
+
+This impacted GitHub apps that rely on getting installation tokens. The top affected GitHub apps internally included Actions, Pages, and Dependabot.
+
+GitHub’s monitoring systems currently alert when tables hit 70% of the primary key size used. We are now extending our test frameworks to include a linter in place for int / bigint foreign key mismatches.
+
+May 22 16:41 UTC (lasting for five hours and nine minutes)
+
+During a planned maintenance operation (failing over a MySQL primary instance) we experienced a novel crash in the mysqld process on the newly promoted MySQL primary server. To mitigate the impact of the crash, we manually redirected traffic back to the original primary. However, the crashed MySQL primary had already served approximately six seconds of write traffic. At this point, a restore of replicas from the new primary was initiated which took approximately four hours with a further hour for cluster reconfiguration to re-enable full read capacity. For a period of approximately five hours, users may have observed delays before data written to the affected database cluster were visible in the web interface and API.
+
+We’ve run multiple internal gameday exercises in response to ensure a higher degree of preparedness for similar topology inconsistencies and will continue to exercise our automated failover systems to reduce recovery time.
+
+Changes to better instrument A/B experimentation for UI improvements introduced an unknown dependency on the presence of a specific, dynamically generated file that is served by a separate application.
+
+During an application deployment, the file failed to be generated on a significant proportion of the application deployments due to a high retrieval rate being rate limited by the upstream application. This resulted in site-wide application errors for a percentage of users enrolled in the experiment. Upon detection, we were able to disable the requirement on this file which restored service to all users.
+
+Going forward, configuration for A/B and multivariate experiments will be cached internally to ensure successful propagation of dependencies.
+
+June 29 12:03 UTC (lasting for two hours and 29 minutes)
+
+As part of maintenance, the database team rolled out an updated version of ProxySQL on Monday, June 22. A week later, the primary MySQL node on one of our main database clusters failed and was replaced automatically by a new host. Within seconds, the newly promoted primary crashed. Orchestrator’s anti-flapping mechanism prevented a subsequent automatic failover. After we recovered service manually, the new primary became CPU starved and crashed again. A new primary was promoted which also crashed shortly thereafter. To recover, we rolled back to the previous version of ProxySQL and disabled a change in our application that had required the new ProxySQL version. When this completed, we were able to allow writes on the primary node without it crashing.
+
+We are analyzing application logs, MySQL core dumps, and our internal telemetry as part of continued investigation into the CPU starvation issue to avoid similar failure modes going forward.
+
+As an organization we continue to invest heavily in reliability. We treat each incident discussed here as an invaluable opportunity from which to learn and grow. Our systems and processes continue to evolve based on these learnings and we look forward to sharing our progress in future updates.
+
+Please follow our status page for real time updates and watch our blog for next month’s availability report.

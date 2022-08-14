@@ -1,0 +1,9 @@
+ores.wikimedia.org was sending 500 for all score requests for 3 hours starting from 6AM UTC. It was due to config changes that was done as part of upgrading celery version of ores from three to two causing it to change its task serializer.
+• November 29th, 6:25 UTC: Logrotate restarted uwsgi services of ORES causing it to pick up the new config and start sending 500s
+• 9:51 UTC: The revert was created and deployed
+• Puppet should bind ores services to ores configs so it picks up the changes right away.
+• None Logrotate should restart services in a better time. Not really doable
+• Contact number of WMDE staff should be avalible to SREs.
+• Phabricator: Change default serializer of celery from pickle to json
+• Logrotate should restart services when more people are around
+• Contact number of some WMDE staff should be avalible to SRE/RelEng

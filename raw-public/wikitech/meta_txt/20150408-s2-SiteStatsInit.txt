@@ -1,0 +1,3 @@
+At around 2015-04-08 12:25:34 UTC, S2 slaves encountered https://phabricator.wikimedia.org/T95426 (SiteStatsInit::edits and SiteStatsInit::articles query storm) and S2 wikis started returning errors. The slaves' event schedulers started killing slow queries after 5min and by 2015-04-08 12:35:34 things returned to normal.
+
+This happened a year or so ago and led to https://gerrit.wikimedia.org/r/#/c/114994/ . Something else has since broken allowing these to run as wikiuser from the web, and not a maintenance script or job.

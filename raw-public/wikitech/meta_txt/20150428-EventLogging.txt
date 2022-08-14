@@ -1,0 +1,10 @@
+A change to the mediawiki-core api caused EventLogging schemas to be returned with "required": "" instead of "required": true. This caused a schema validation error and stopped all events from validating. While debugging, we lost about 2 hours of data. We can not backfill the lost data.
+
+Noticed that EL was crashing and throwing an error on every event. After help from Bryan Davis and Kunal Mehta we found out this was due to a mediawiki-core change that had just been deployed. They started working on it with Unbreak Now priority (thanks guys).
+
+This patch to core resolved the issue: https://gerrit.wikimedia.org/r/#/c/207297/ and this bug was filed to track the problem from the analytics point of view: https://phabricator.wikimedia.org/T97487.
+
+Event Logging recovered in Icinga. All is well again.
+
+We can't backfill the lost data because we had to stop the processes that create the backup logs in order to debug. A fairly quick fix that's available right now is to start sending events to the kafka pipeline. This would give us a buffer and let us turn off the single point of failure Event Logging server to do maintenance, debugging, etc.
+• Status: Done Fix to API so EventLogging schemas are served as expected.

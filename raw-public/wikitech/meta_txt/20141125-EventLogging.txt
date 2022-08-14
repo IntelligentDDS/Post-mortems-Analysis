@@ -1,0 +1,6 @@
+EventLogging's database writer service failed to write events to the database between ~2014-11-25T03:09 and 2014-11-26T00:03.
+• The many meetings/discussions around recent EventLoggings issues ground us to a halt. We had a fix for the issue in gerrit (since 2014-11-23, before the issue happened), but the meetings/discussions around last week's EventLogging outages consumed too much time, and the fix did not get reviewed/deployed before the thread synchronization issue struck us.
+• Monitoring does not buy us anything, if we cannot grab the time to work on the alerts. We had some internal monitoring alert about the issue twice before Deskana escalated with us. But with the backlog of alerts from previous week, we did not yet get to them.
+• Status: Done Make sure that log files exist for the affected period, so we can backfill.
+• Status: Unresolved Implement monitoring that makes sure that the expected volume of events end up in the database.
+• Status: Done Get the thread synchronization fix reviewed and deployed

@@ -1,0 +1,50 @@
+The configuration setting for Wikibase clients for which ranges of items to read from the old wb term store and which ones from the new, was not passed through from InitialiseSettings.php because of a typo. Instead, the default value in the Wikibase extension was used, which was to read all items from the old store for wmf.16, deployed to the group2 wikis, and to read only from the new store for wmf.18, deployed to the group 0 and 1 wikis. The group 0 and 1 wikis were potentially reading from unmigrated rows, causing pages with missing data to be rendered and cached for Commons and Wikidatawiki; see phab:T244529 for the first report of the issue with group 0 and 1 wikis, and phab:T244697 for a very detailed chart of which settings were in place when.
+
+This was deemed UBN, and a deploy made to fix the configuration setting typo (570892). This resulted in group 2 wikis reading from the new store for items with QID up to 8,000,000. This caused an inordinate load on servers ultimately resulting in an outage.
+
+It is now clear that this is the same root cause as the previous day's outage; wmf.18 was deployed on Monday Feb 10 without the config change and there were no problems. See Incident documentation/20200206-mediawiki for details on the previous day's outage.
+
+Most of the documentation of this issue is in the comments on phab:T244529 and the follow-up task phab:T244697
+
+Wikis were unavailable for users via eqiad for the period of the outage, about 8 minutes. Cached pages accessed via other sites should have been available.
+
+Icinga alerted immediately, starting with MediaWiki exceptions and fatals per minute. The icinga-wm bot flooded out of the IRC channel due to too many reports.
+
+This is a step by step outline of what happened to cause the incident and how it was remedied. Include the lead-up to the incident, as well as any epilogue, and clearly indicate when the user-visible outage began and ended.
+• 14:40 first icinga alert: PROBLEM - MediaWiki exceptions and fatals per minute on icinga1001 is CRITICAL
+• 14:40 many more icinga alerts: PHP7 rendering and Apache HTTP criticals
+• 14:41 hoo: How do I force the deploy
+• 14:41 icinga-wm floods out of the channel
+
+Note that after this, we still had the UBN bug to fix up, without causing another outage.
+
+What weaknesses did we learn about and how can we address them?
+
+What went well?
+• canaries worked as they should.
+• The need for a revert was noticed immediately, and once the revert kicked in, the site recovered almost instantly.
+• Developers, releng folks and SREs were all immediately available and able to spend a good period of time working out how to deal with the UBN bug without a repeat incident.
+• The deploy was done as the site was recovering from an outage, and the SRE team was not aware of the deployment. It was on a Friday afternoon for the active SRE team members, which contributed to the surprise factor. This pointed to a lack of coordination between deployers and SRE folks around UBN deploys.
+• It wasn't immediately obvious that the --force argument needed to be used for the revert.
+• No one knew that wikis hadn't been reading from the new term store for items 8 million and less from the date the config change for that went out on Jan 16 ([1]). The wb terms dashboard ([2]) under "MW all Queries", which concerns the queries to the old store only, shows no drop for the Jan 16 deploy ([3]), which might have tipped folks off. Additionally, the dashboard shows "MW All queries (new term store)" (but were the new term store panels on the dashboard before Jan 16? repo link?) and it shows no uptick in queries then either.
+• The Wikibase wb_terms store dashboard linked above has not been fully updated to reflect queries to both old and new stores, which made analysing the recent outages harder.
+• It was not easy for the postmortem to determine which config and patches were live at any given time for the Wed Feb 6 and Thur Feb 7 incidents. The dpeloyment calendar doesn't lend itself to easy searches of the history to see when older config changes such as the Jan 16th change went live.
+• a problem with the followup for the UBN later that day: Rolling back to the previous branch is complicated if not done right after the group0 deploy, because MW config changes and other deploys may have been made in the meantime.
+
+Where did we get lucky?
+• Many SREs were available during the event and for the post-mortem/plans to fix the UBN, because there had just been a previous incident.
+
+How many people were involved in the remediation?
+• For the immediate incident: one developer, 4 SREs (here "involved" means they were actively following up on the revert process etc.)
+• For the followup, i.e. dealing with the UBN bug, requiring a Friday late afternoon deploy: 4 developers, 6 SRE, one manager
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.
+• Make sure dashboards are up to date for new features/functionality before planned transitions to them begin
+• phab:T248866 - Consider having a linter that could catch config file entries that set unused variables
+• phab:T244697 - Determine why switching group2 wikis to read from the new wb terms store caused the issue
+• phab:T245046 - Make sure that UBN/emergency deploys go through releng and SRE teams so that everyone is in the loop (and if SRE folks are in the middle of something urgent, they can ask deployers to wait a bit). See: Deployments/Emergencies in draft status.
+• phab:T218412 - Consider bundling config and branch versions together for deployments (User:20after4 knows about this)

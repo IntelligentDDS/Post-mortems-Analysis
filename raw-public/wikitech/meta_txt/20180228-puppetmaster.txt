@@ -1,0 +1,13 @@
+
+• 17:38 Filippo merges change to depool rhodium and repool puppetmaster1002 from puppet master duties
+• 17:40 Filippo runs puppet-merge on puppetmaster1001 to make the change above effective in apache configuration
+• 17:47 nitrogen is suspected being the culprit of puppet spam
+• 17:57:55 puppetmaster1002 is allowed to talk to puppetdb, following a puppet run
+• 18:12 A puppet run is forced in eqiad on hosts with failed puppet runs
+• 18:29 ircecho / icinga-wm is restarted and joins IRC again
+
+The root cause is a change deemed to be safe that wasn't: namely pool a puppet master backend, and needing only a puppet run on the puppet master frontend for taking full effect. The list of backends also controls access to puppetdb, in other words a puppet run on the puppetdb host is needed to allow access before repooling the backend.
+
+Multiple factors complicated troubleshooting, including alert spam from puppet failures, leading to muting IRC alerts notifications (and potentially masking other unrelated problems). Long standing issues with puppetdb running out of memory was suspected first (Task T170740) which also contributed to slowing down troubleshooting.
+• Apache httpd mod_proxy logging level should be raised to gain visibility. phab:T188601
+• Decrease the amount of spam in case of widespread puppet failures. phab:T188602

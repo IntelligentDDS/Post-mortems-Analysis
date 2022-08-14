@@ -1,0 +1,44 @@
+Logged-out users saw the user interface in their browser language ( header) rather than the default wiki content language, due to a configuration change inadvertently causing the setting to be unset and falling back to the default in the UniversalLanguageSelector extension.
+
+Anonymous users were affected, registered users were not.
+
+Appserver load was increased due to the cache being split by . Average response time also went up considerably [1].
+
+Reported by users at phabricator:T246071 and other tasks. There were no alerts as far as Lucas Werkmeister (WMDE) is aware.
+
+If human only, an actionable should probably be "add alerting".
+
+This is a step by step outline of what happened to cause the incident and how it was remedied. Include the lead-up to the incident, as well as any epilogue, and clearly indicate when the user-visible outage began and ended.
+• 00:35 Config patch to delete fixcopyrightwiki and related config was merged: https://gerrit.wikimedia.org/r/552549
+• 00:46 Synchronized dblists/ (Delete fixcopyrightwiki). Average response time rises immediately (from ca. 180 ms to ca. 240 ms), though it’s not clear why. The issue may have begun here already.
+• 00:51 Synchronized wmf-config/CommonSettings.php: Stop trying to read wmgUseSkinPerPage or wmgUseEUCopyrightCampaign (duration: 00m 55s)
+• 00:53 ISSUE BEGINS: Synchronized wmf-config/InitialiseSettings.php Remove all IS config related to fixcopyrightwiki (duration: 00m 55s)
+• 10:41 likely cause (turned out to be correct) pointed out at T246071#5915117
+• 12:00 (ca.) Average response time begins to rise much further, not leveling until incident was resolved. Probably the first sync of the EU SWAT finished the previous sync from 00:53.
+• 12:26 T246071 brought up on #mediawiki-i18n (IRC), asking for Language Team attention
+• ~12:30 Average response time starts going up considerably [more traffic?]
+• 14:35 ISSUE ENDS: Synchronized php-1.35.0-wmf.20/extensions/Wikibase/lib (wbterms: only select entity terms that are requested), effectively finishing the previous sync (T236104)
+
+What weaknesses did we learn about and how can we address them?
+
+What went well?
+• No major user impact (arguably this is a feature that we would like for multilingual sites, but done in a planned way)
+• The initial to deploy the fix apparently did not affect all servers, due to T236104. Another happened to take place soon afterwards (for unrelated reasons), with the side-effect of ensuring that the fix reached the remaining servers.
+• Impact was not clear from the beginning, since the additional load was not significant to trigger any alerts (even through average app server response time jumped 33%).
+• Maintainers of ULS were not aware of ULS configuration setting being changed.
+• The configuration setting in InitializeSettings.php was not documented to be required and dangerous.
+
+Where did we get lucky?
+• An unrelated second mitigated the impact of T236104 (the first not reaching all servers).
+• Out of the three alternatives (cache pollution, cache splitting, no cache) we got the "best" option that only increased app server load, and not too much to overload it. Cache pollution would have caused logged out users to see pages in random languages and no cache could have brought the site down.
+
+How many people were involved in the remediation?
+• for example: 2 SREs and 1 software engineer troubleshooting the issue plus 1 incident commander
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.
+• Done Remind more people of double sync workaround for T236104 – ops-l email by , SWAT documentation update
+• T246212 - the setting was moved to CommonSettings.php and documented.

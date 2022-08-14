@@ -1,0 +1,29 @@
+The disk controller on virt1005 failed at about 17:00 UTC. All instances on virt1005 failed -- this included instances vital to the operation of many labs projects, including Tools and Deployment-prep.
+
+A reboot of virt1005 restored disk service, but in order to avoid future calamity all instances were migrated to virt1012. Most tools services were restored by 18:45 UTC, but the complete migration process took several more hours, prolonging the outage for some labs instances. All services were restored (on new hardware) by 23:00 UTC.
+
+A complete list of affected instances is below.
+• [17:00] Shinken reports that several tools hosts are down. Nova shell commands on virt1000, specifically "$ nova show <hostid>" reveal that all the failed VMs are hosted on virt1005. Failed VMs include the Tools web proxy and the labs-wide web proxy, so many labs and tools users notice the outage all at once.
+• [17:15] Andrew notices that basic commands like 'free' and 'df' are failing on virt1005, calls for help on IRC. Brandon immediately diagnosis this as a disk failure, looks at dmesg and determines that the problem is in the disk controller.
+• [17:30] Andrew sends an outage notice to Labs-l which includes a list of all downed instances.
+• [17:30] After a bit of nervous discussion, Brandon, Faidon and Andrew agree to risk a reboot. Andrew reboots virt1005 from the mgmt console, at which point virt1005 starts up without complaint.
+• [17:40] At this point virt1005 is up but all VMs are in a 'shutoff' state. It's agreed that the safest option is to evacuate VMs from virt1005 in anticipation of another disk failure. Because the instances are already off, Andrew opts to cold-migrate the instances rather than boot them and attempt to evacuate running VMs.
+• [17:45-18:00] Andrew retools the cold-migrate script to handle a bulk evacuation. In brief, those changes allowed the script to take a single argument, an instance ID. It also left the migrated instances in a shutoff state after transport. For posterity, here's what that retooling looked like:
+• [18:00] Before starting a bulk migration, a few critical instances were chosen for special treatment: tools-webproxy and tools-submit.
+• [18:40] tools-webproxy and tools-submit are up and running on virt1012. Marc tidies up the tools grid and most tools are able to resume normal operation.
+• [18:45-22:45] The remaining instances are migrated to virt1012 in a batch job. Andrew watches the migration and selectively starts each instance as it migrates, depending on its previous run state on virt1005. Again, Marc cleans up grid issues as tools exec nodes restart.
+• [20:00] The labs web proxy finishes migration and restarts, thus ending the labs-wide outage.
+• [23:15] Alex Monk notes that beta is still suffering and starts MySQL on deployment-db1 (PID file exists, but MySQL had not started). At this point Beta resumes more-or-less normal operations.
+
+Due to the one-off nature of most labs projects, Labs will always be especially vulnerable to catastrophic hardware failures. Nonetheless, there are several things we could do to limit the effect of such disasters; some of these options are practical and some of them grandiose.
+• Next time, triage failed instances: If greater care had been taken with the migration and restoration of the downed instances, this outage could have been much less painful. Specifically, if the labs web proxy and the deployment db server had moved to the head of the line, the outage would have been at least an hour shorter for most users.
+• Replace old hardware: Virt1001-1009 are Cisco servers that are out of warranty. Replacing them with newer hardware may reduce hardware failures. Maybe.
+• Web-proxies: it may be possible to maintain multiple web proxies (both for tools and for general labs use) such that there's redundancy if one of them is lost. There would need to be some sort of failover/load-balancer between them, the implementation details of which are beyond this author.
+• Tools grid: It's already the case that the tools grid engine is fairly well distributed and resistant to failures. It may be possible to add an additional submit host in order to improve this resistance.
+• Shared filesystem for instance storage: If instance storage wasn't local to the virt hosts, evacuation from a failed server would be trivial, and outages such as this would be drastically reduced.
+• Investigate strategies to reduce the SPOF nature of the web proxies. https://phabricator.wikimedia.org/T89995
+• Continue ongoing efforts to harden the tool grid against individual VM failure.
+• Consider replacing all Cisco servers with new hardware.
+• Experiment with using Ceph as a backend for instance storage. (This has been on the long-term list for a while, but won't happen this quarter.)
+
+Here is a complete list of instances affected, as reported by "nova list --all-tenants --host virt1005" early in the outage:

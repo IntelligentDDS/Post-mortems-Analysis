@@ -1,0 +1,13 @@
+EventLogging events were not written to the database during some time spans, starting on March 22nd, 2015. Related Phabricator task: https://phabricator.wikimedia.org/T96082 The data loss affected all schema tables. The actual intervals are (UTC):
+
+The problem continues to persist as of April 20, 2015. Backfilling will be carried out during this week (April 20 - 27, 2015), at least for the intervals not marked with (*).
+
+The problem is observed, studied and presented to the Analytics team.
+
+The issue is researched and scoped. Root cause is found.
+
+The rate in which events are being inserted to the database is slower that the rate in which events come to the EventLogging server. This overhead accumulates events inside a buffer in the EL consumer, which eventually gets too big in memory, and gets killed by the system. All the events that were in the buffer at the time of the process kill are not inserted in the database.
+
+Some weeks ago, this problem happened in the DB layer. Changes were made that optimized the event insertion with success. However, in the last weeks EL throughput has increased significantly, which made the problem surface again, this time in the EL consumer layer.
+• Status: In progress Implementing a quick solution for the problem to cease.
+• Status: In progress Implementing a true solution to the EL scaling problem.

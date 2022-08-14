@@ -1,0 +1,13 @@
+This is a template for an Incident Report. Replace notes with your own description. Save the incident report as a subpage of the Incident documentation, named in this style: YYYYMMDD-$NameOfService.
+
+Tilerator failed on maps100[1-3]. Tilerator is a non-public service to prepare vector tiles (data blobs) from OSM database into Cassandra storage. This happened on the 6th November 2018. Icinga first reported this failure around 00:18 UTC.
+
+This is a step by step outline of what happened to cause the incident and how it was remedied.
+
+PROBLEM - tilerator on maps1003 is CRITICAL: connect to address 10.64.32.117 and port 6534: Connection refused 1:19 AM PROBLEM - tilerator on maps1002 is CRITICAL: connect to address 10.64.16.42 and port 6534: Connection refused 1:19 AM PROBLEM - tilerator on maps1001 is CRITICAL: connect to address 10.64.0.79 and port 6534: Connection refused
+• There's need for a non paging alert whenever problem arises and persists.
+• Similar problems have occurred around Tilerator which was caused by lock contentions - https://phabricator.wikimedia.org/T204047
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.

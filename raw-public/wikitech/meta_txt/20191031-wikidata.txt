@@ -1,0 +1,21 @@
+Wikidata API calls were not getting responses (getting timeouts) due to DB read load due to backported changes reducing deadlocks around writing to the new terms store for wikibase.
+
+Wikidata editors received timeouts to API requests, API response time for writes went through the roof. It seems like most edits from API calls were actually made, but the clients didn't get a response confirming that.
+• 16:02 <ladsgroup@deploy1001> Synchronized php-1.35.0-wmf.3/extensions/Wikibase: Wikibase deadlock reduction, Stop locking and use DISTINCT when finding used terms to delete (T236466) (duration: 01m 05s)
+• 16:05 <ladsgroup@deploy1001> Synchronized php-1.35.0-wmf.4/extensions/Wikibase: Wikibase deadlock reduction, Stop locking and use DISTINCT when finding used terms to delete (T234948) (duration: 01m 04s)
+• 16:38 - Reported timeout in UI editing on wikidata.org in Telegram chat
+• ~17:00 Edit rate on wikidata recovering, but drops again - https://phabricator.wikimedia.org/T236928#5620364
+• We could do with more alarms on things that often indicate a problem
+
+What went well?
+• Was not a total outage, just severe slowness
+• No alarms went off
+• Only a message in Telegram alerted us to an issue (not even a phab task)
+
+Where did we get lucky?
+• People were on hand that knew what the problem was (as the issue did not coincide with deployment time)
+
+How many people were involved in the remediation?
+• Done Add alerting to API response times for wikidata
+• Done Add alerting for wikidata edit rate (if below 100 per minute something somewhere is wrong)
+• Done Add alerting for MASSIVE database read rate on s8

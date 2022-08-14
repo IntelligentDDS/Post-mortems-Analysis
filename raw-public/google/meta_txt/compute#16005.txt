@@ -1,0 +1,183 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+March 30, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/16005)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #16005
+
+Network Connectivity Issues in Europe-West1-C
+
+Incident began at **2016-02-24 12:00** and ended at **2016-02-24 12:57** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Mar 09, 2016 | 16:44 |
+
+SUMMARY:
+
+On Wednesday 24 February 2016, some Google Compute Engine instances in the
+europe-west1-c zone experienced network connectivity loss for a duration of 62
+minutes. If your service or application was affected by these network issues,
+we sincerely apologize. We have taken immediate steps to remedy the issue and
+we are working through a detailed plan to prevent any recurrence.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On 24 February 2016 from 11:43 to 12:45 PST, up to 17% of Google Compute
+Engine instances in the europe-west1-c zone experienced a loss of network
+connectivity. Affected instances lost connectivity to both internal and
+external destinations.
+
+ROOT CAUSE:
+
+The root cause of this incident was complex, involving interactions between
+three components of the Google Compute Engine control plane: the main
+configuration repository, an integration layer for networking configuration,
+and the low-level network programming mechanism.
+
+Several hours before the incident on 24th February 2016, Google engineers
+modified the Google Compute Engine control plane in the europe-west1-c zone,
+migrating the management of network firewall rules from an older system to the
+modern integration layer. This was a well-understood change that had been
+carried out several times in other zones without incident. As on previous
+occasions, the migration was completed without issues.
+
+On this occasion, however, the migrated networking configuration included a
+small ratio (approximately 0.002%) of invalid rules. The GCP network
+programming layer is hardened against invalid or inconsistent configuration
+information, and continued to operate correctly in the presence of these
+invalid rules.
+
+Twenty minutes before the incident, however, a remastering event occurred in
+the network programming layer in the europe-west1-c zone. Events of this kind
+are routine but, in this case, the presence of the invalid rules in the
+configuration coupled with a race condition in the way the new master loads
+its configuration caused the new master to load its network configuration
+incorrectly.. The consequence, at 11:43 PST, was a loss of network programming
+configuration for a subset of Compute Engine instances in the zone,
+effectively removing their network connectivity until the configuration could
+be re-propagated from the central repository.
+
+REMEDIATION AND PREVENTION
+
+Google engineers restored service by forcing another remastering of the
+network programming layer, restoring a correct network configuration.
+
+To prevent recurrence, Google engineers are fixing both the race condition
+which led to an incorrect configuration during mastership change, and adding
+alerting for the presence of invalid rules in the network configuration so
+that they will be detected promptly upon introduction. The combination of
+these two changes provide defense in depth against future configuration
+inconsistency and we believe will preserve correct function of the network
+programming system in the face of invalid information.  
+  
+|
+
+SUMMARY:
+
+On Wednesday 24 February 2016, some Google Compute Engine instances in the
+europe-west1-c zone experienced network connectivity loss for a duration of 62
+minutes. If your service or application was affected by these network issues,
+we sincerely apologize. We have taken immediate steps to remedy the issue and
+we are working through a detailed plan to prevent any recurrence.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On 24 February 2016 from 11:43 to 12:45 PST, up to 17% of Google Compute
+Engine instances in the europe-west1-c zone experienced a loss of network
+connectivity. Affected instances lost connectivity to both internal and
+external destinations.
+
+ROOT CAUSE:
+
+The root cause of this incident was complex, involving interactions between
+three components of the Google Compute Engine control plane: the main
+configuration repository, an integration layer for networking configuration,
+and the low-level network programming mechanism.
+
+Several hours before the incident on 24th February 2016, Google engineers
+modified the Google Compute Engine control plane in the europe-west1-c zone,
+migrating the management of network firewall rules from an older system to the
+modern integration layer. This was a well-understood change that had been
+carried out several times in other zones without incident. As on previous
+occasions, the migration was completed without issues.
+
+On this occasion, however, the migrated networking configuration included a
+small ratio (approximately 0.002%) of invalid rules. The GCP network
+programming layer is hardened against invalid or inconsistent configuration
+information, and continued to operate correctly in the presence of these
+invalid rules.
+
+Twenty minutes before the incident, however, a remastering event occurred in
+the network programming layer in the europe-west1-c zone. Events of this kind
+are routine but, in this case, the presence of the invalid rules in the
+configuration coupled with a race condition in the way the new master loads
+its configuration caused the new master to load its network configuration
+incorrectly.. The consequence, at 11:43 PST, was a loss of network programming
+configuration for a subset of Compute Engine instances in the zone,
+effectively removing their network connectivity until the configuration could
+be re-propagated from the central repository.
+
+REMEDIATION AND PREVENTION
+
+Google engineers restored service by forcing another remastering of the
+network programming layer, restoring a correct network configuration.
+
+To prevent recurrence, Google engineers are fixing both the race condition
+which led to an incorrect configuration during mastership change, and adding
+alerting for the presence of invalid rules in the network configuration so
+that they will be detected promptly upon introduction. The combination of
+these two changes provide defense in depth against future configuration
+inconsistency and we believe will preserve correct function of the network
+programming system in the face of invalid information.  
+  
+| Feb 24, 2016 | 13:00 |
+
+The issue with network connectivity to VMs in europe-west1-c should have been
+resolved for all affected instances as of 12:57 PST. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+|
+
+The issue with network connectivity to VMs in europe-west1-c should have been
+resolved for all affected instances as of 12:57 PST. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+| Feb 24, 2016 | 12:21 |
+
+We are currently investigating network connectivity issues affecting the
+europe-west1-c zone. We will provide another update with more information by
+13:00 PST.  
+  
+|
+
+We are currently investigating network connectivity issues affecting the
+europe-west1-c zone. We will provide another update with more information by
+13:00 PST.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

@@ -1,0 +1,5 @@
+App Service - East US - Mitigated
+Summary of impact: Between 08:00 and 12:30 UTC on 28 Jul 2018, a subset of customers using App Services in East US may have received HTTP 500-level response codes, have experienced timeouts or high latency when accessing App Service (Web, Mobile and API Apps) deployments hosted in this region.
+Preliminary root cause: Engineers identified an internal configuration conflict as part of an ongoing deployment as the potential root cause.
+Mitigation: Engineers made a manual adjustment of the deployment configuration to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

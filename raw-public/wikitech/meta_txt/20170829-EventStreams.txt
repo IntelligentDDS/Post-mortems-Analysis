@@ -1,0 +1,8 @@
+The Services team needed an increase in the maximum message size that the main Kafka brokers would allow, so that they could produce large JobQueue events. https://gerrit.wikimedia.org/r/#/c/372179/ was merged and services were restarted around 2017-08-28T19:00. This change was not applied to analytics Kafka brokers, nor was it applied to MirrorMaker producer and consumer settings. This caused the MirrorMaker processes to die when they attempted to mirror a message from a main Kafka cluster. Because no data from the main Kafka clusters could be mirrored to the analytics Kafka cluster, EventStreams, which uses topics that come from the main Kafka clusters, but consumes from the analytics Kafka cluster, stopped sending events to connected clients.
+
+Otto was notified about no messages in EventStreams by an IRC user at on 2017-08-29, at around 14:44 EST. He looked in MirrorMaker logs, and found a message about a message exceeding max allowed size, and realized that this setting would need to be synced between all clusters (if we are mirroring messages between them) and also for clients less than 0.10 (all of our current clients).
+• Petr confirms that JobQueue can now produce larger messages to main Kafka clusters.
+• Otto begins merging puppet patches to synchronize settings between Kafka clusters and clients:
+• Mirrored events begin flowing again into analytics Kafka, and to connected EventStreams clients.
+
+There were ZERO alerts about a drop of messages in these analytics Kafka topics, and for EventStreams clients!

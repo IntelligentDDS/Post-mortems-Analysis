@@ -1,0 +1,28 @@
+Mira /srv/mediawiki-staging was lost due to an incorrect sync while tin was being installed, causing mediawiki failures everywhere where there was a full sync-common.
+
+This happened because a sync-master was started between tin and mira after tin was reimaged but before it was fully provisioned and ready to go.
+• 09:24 tin re-enabled as co-master
+• Technically, at this point a sync-file from mira would have set everything ok as it would have ran /usr/local/bin/scap-master-sync mira.codfw.wmnet which would have correctly synced the masters.
+• 10:44 _joe_: ls: cannot access /srv/mediawiki/wikiversions.php: No such file or directory
+• 12:20 _joe_: stopping rsync, puppet and l10nupdate on mira and tin
+• 14:21-20:16 rebuilding /srv/mediawiki-staging from scratch on tin, testing on canary servers
+• On tin mostly because its /srv/mediawiki/ was still intact for restoring missing untracked files
+• 19:00: Start batch-syncing mediawiki servers
+• First via salt, then by manually adjusting mediawiki-installation so we could do a "full scap" on batches
+• 23:13: demon@mira Finished scap: everything re-sync one more time for good measure (duration: 17m 04s)
+
+Loss of data was due to a human error during backup server install (but not to the install itself), only actionable about this would be to minimize this possibility with better sanity checks or awareness of the actions about to be done. Also enforcing better coordination between operators.
+
+Only /home was being backed up on tin/mira. /srv has to be included fully, but at the time it increased significantly the time to recover.
+
+The time to recover /srv/mediawiki-staging from scratch was high due to 2 factors: files not tracked/not in the proper place + some existing poor configurations that led to confusion on cloning repos; and the bottleneck in resources needed of doing full resyncs throughout the fleet, which requires doing it in batches.
+
+Due to the quick reaction from Giuseppe, no end user was affected during the process (with only request errors on a small subset of requests from 11:51 to 12:00, before the issue was detected), but Tuesday deployments were affected and had to be rescheduled.
+• Status: Done Include tin and/or mira /srv on our backup system (Task T125527)
+• Status: Vague suggestion, needs discussion Modify the sync scripts, specially `scap-sync-masters` and anything that modifies mediawiki-staging, to avoid this happening again by doing a sanity check (difficult) or adding confirmation "Are you sure you want to sync /srv/mediawiki-stagging from A to B" / "The following actions are going to be performed (delete X, delete Y, ...) OK?"
+• Or possibly use something a little more sane than rsync for syncing the masters.
+• Status: Vague suggestion, needs discussion Modify the pooling of masters to have two levels of being pooled instead of all or nothing. Ideally we should be able to say "sync to me, but don't use me to sync from yet" -- possibly
+• Status: Done Audit (and limit) the untracked bits in staging. This took quite a bit of time and careful action to avoid wiping. (Task T125542)
+• Status: Done Submodules for mw-config need to be initialized at provision time ( ).
+• Status: Almost done, needs deployment Depool proxies temporarily while scap is ongoing to avoid taxing those nodes. (Task T125629)
+• Status: Done Rewrite refreshCdbJsonFiles in python so it doesn't rely on php5 interpreter (Task T125685)

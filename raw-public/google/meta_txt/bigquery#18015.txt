@@ -1,0 +1,131 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+March 29, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/18015)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #18015
+
+Google BigQuery issues
+
+Incident began at **2016-05-18 11:49** and ended at **2016-05-18 12:30** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jun 01, 2016 | 09:38 |
+
+SUMMARY:
+
+On Wednesday 18 May 2016 the BigQuery API was unavailable for two periods
+totaling 31 minutes. We understand how important access to your data stored in
+BigQuery is and we apologize for the impact this had on you. We have
+investigated the incident to determine how we can mitigate future issues and
+provide better service for you in the future.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Wednesday 18 May 2016 from 11:50 until 12:15 PDT all non-streaming BigQuery
+API calls failed, and additionally from 14:41 until 14:47, 70% of calls
+failed. An error rate of 1% occurred from 11:28 until 15:34. API calls
+affected by this issue experienced elevated latency and eventually returned an
+HTTP 500 status with an error message of "Backend Error". The BigQuery web
+console was also unavailable during these periods.
+
+The streaming API and BigQuery export of logs and usage data were unaffected.
+
+ROOT CAUSE:
+
+In 2015 BigQuery introduced datasets located in Europe. This required
+infrastructure to allow BigQuery API calls to be routed to an appropriate
+zone. This infrastructure was deployed uneventfully and has been operating in
+production for some time. The errors on 18 May were caused when a new
+configuration was deployed to improve routing of APIs, and then subsequently
+rolled back. The engineering team has made changes to the routing
+configuration for BigQuery API calls to prevent this issue from recurring in
+the future, and to more rapidly detect elevated error levels in BigQuery API
+calls in the future
+
+Finally, we would like to apologize for this issue - particularly its scope
+and duration. We know that BigQuery is a critical component of many GCP
+deployments, and we are committed to continually improving its availability.  
+  
+|
+
+SUMMARY:
+
+On Wednesday 18 May 2016 the BigQuery API was unavailable for two periods
+totaling 31 minutes. We understand how important access to your data stored in
+BigQuery is and we apologize for the impact this had on you. We have
+investigated the incident to determine how we can mitigate future issues and
+provide better service for you in the future.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Wednesday 18 May 2016 from 11:50 until 12:15 PDT all non-streaming BigQuery
+API calls failed, and additionally from 14:41 until 14:47, 70% of calls
+failed. An error rate of 1% occurred from 11:28 until 15:34. API calls
+affected by this issue experienced elevated latency and eventually returned an
+HTTP 500 status with an error message of "Backend Error". The BigQuery web
+console was also unavailable during these periods.
+
+The streaming API and BigQuery export of logs and usage data were unaffected.
+
+ROOT CAUSE:
+
+In 2015 BigQuery introduced datasets located in Europe. This required
+infrastructure to allow BigQuery API calls to be routed to an appropriate
+zone. This infrastructure was deployed uneventfully and has been operating in
+production for some time. The errors on 18 May were caused when a new
+configuration was deployed to improve routing of APIs, and then subsequently
+rolled back. The engineering team has made changes to the routing
+configuration for BigQuery API calls to prevent this issue from recurring in
+the future, and to more rapidly detect elevated error levels in BigQuery API
+calls in the future
+
+Finally, we would like to apologize for this issue - particularly its scope
+and duration. We know that BigQuery is a critical component of many GCP
+deployments, and we are committed to continually improving its availability.  
+  
+| May 18, 2016 | 12:37 |
+
+The issue with BigQuery API should have been resolved for all affected
+projects as of 12:30 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence.  
+  
+|
+
+The issue with BigQuery API should have been resolved for all affected
+projects as of 12:30 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence.  
+  
+| May 18, 2016 | 12:17 |
+
+We are currently investigating an issue with the BigQuery API. We'll provide
+an update at 12:30 PDT  
+  
+|
+
+We are currently investigating an issue with the BigQuery API. We'll provide
+an update at 12:30 PDT  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

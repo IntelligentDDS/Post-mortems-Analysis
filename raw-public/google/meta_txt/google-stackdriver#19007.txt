@@ -1,0 +1,1117 @@
+# [](//cloud.google.com)
+
+July 19, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Operations](/incident/google-stackdriver/19007)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support-hub/). Learn more about what's
+posted on the dashboard in [ this
+FAQ](//cloud.google.com/support/docs/dashboard). For additional information on
+these services, please visit [cloud.google.com](//cloud.google.com).
+
+# Operations Incident #19007
+
+We've received a report of issues with multiple Cloud products including
+Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and Monitoring,
+Compute Engine, App Engine, Cloud Run, Cloud Bui...
+
+Incident began at **2019-09-24 12:46** and ended at **2019-09-24 20:00** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Sep 27, 2019 | 15:38 |
+
+## ISSUE SUMMARY
+
+On Tuesday 24 September, 2019, the following Google Cloud Platform services
+were partially impacted by an overload condition in an internal
+publish/subscribe messaging system which is a dependency of these products:
+App Engine, Compute Engine, Kubernetes Engine, Cloud Build, Cloud Composer,
+Cloud Dataflow, Cloud Dataproc, Cloud Firestore, Cloud Functions, Cloud DNS,
+Cloud Run, and Stackdriver Logging & Monitoring. Impact was limited to
+administrative operations for a number of these products, with existing
+workloads and instances not affected in most cases.
+
+We apologize to those customers whose services were impacted during this
+incident; we are taking immediate steps to improve the platform’s performance
+and availability.
+
+## DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday 24 September, 2019 from 12:46 to 20:00 US/Pacific, Google Cloud
+Platform experienced a partial disruption to multiple services with their
+respective impacts detailed below:
+
+### App Engine
+
+Google App Engine (GAE) create, update, and delete admin operations failed
+globally from 12:57 to 18:21 for a duration of 5 hours and 24 minutes.
+Affected customers may have seen error messages like “APP_ERROR”. Existing GAE
+workloads were unaffected.
+
+### Compute Engine
+
+Google Compute Engine (GCE) instances failed to start in us-central1-a from
+13:11 to 14:32 for a duration of 1 hour and 21 minutes, and GCE Internal DNS
+in us-central1, us-east1, and us-east4 experienced delays for newly created
+hostnames to become resolvable. Existing GCE instances and hostnames were
+unaffected.
+
+### Kubernetes Engine
+
+Google Kubernetes Engine (GKE) experienced delayed resource metadata and
+inaccurate Stackdriver Monitoring for cluster metrics globally. Additionally,
+cluster creation operations failed in us-central1-a from 3:11 to 14:32 for a
+duration of 1 hour and 21 minutes due to its dependency on GCE instance
+creation. Most existing GKE clusters were unaffected by the GCE instance
+creation failures, except for clusters in us-central1-a that were may have
+been unable to repair nodes or scale a node pool.
+
+### Stackdriver Logging & Monitoring
+
+Stackdriver Logging experienced delays of up to two hours for logging events
+generated globally. Exports were delayed by up to 3 hours and 30 minutes. Some
+user requests to write logs in us-central1 failed. Some logs-based metric
+monitoring charts displayed lower counts, and queries to Stackdriver Logging
+briefly experienced a period of 50% error rates. The impact to Stackdriver
+Logging & Monitoring took place from 12:54 to 18:45 for a total duration of 5
+hours and 51 minutes.
+
+### Cloud Functions
+
+Cloud Functions deployments failed globally from 12:57 to 18:21 and
+experienced peak error rates of 13% in us-east1 and 80% in us-central1 from
+19:12 to 19:57 for a combined duration of 6 hours and 15 minutes. Existing
+Cloud Function deployments were unaffected.
+
+### Cloud Build
+
+Cloud Build failed to update build status for GitHub App triggers from 12:54
+to 16:00 for a duration of 3 hours and 6 minutes.
+
+### Cloud Composer
+
+Cloud Composer environment creations failed globally from 13:25 to 18:05 for a
+duration of 4 hours and 40 minutes. Existing Cloud Composer clusters were
+unaffected.
+
+### Cloud Dataflow
+
+Cloud Dataflow workers failed to start in us-central1-a from 13:11 to 14:32
+for a duration of 1 hour and 21 minutes due to its dependency on Google
+Compute Engine instance creation. Affected jobs saw error messages like
+“Startup of the worker pool in zone us-central1-a failed to bring up any of
+the desired X workers. INTERNAL_ERROR: Internal error. Please try again or
+contact Google Support. (Code: '-473021768383484163')”. All other Cloud
+Dataflow regions and zones were unaffected.
+
+### Cloud Dataproc
+
+Cloud Dataproc cluster creations failed in us-central1-a from 13:11 to 14:32
+for a duration of 1 hour and 21 minutes due to its dependency on Google
+Compute Engine instance creation. All other Cloud Dataproc regions and zones
+were unaffected.
+
+### Cloud DNS
+
+Cloud DNS in us-central1, us-east1, and us-east4 experienced delays for newly
+created or updated Private DNS records to become resolvable from 12:46 to
+19:51 for a duration of 7 hours and 5 minutes.
+
+### Cloud Firestore
+
+Cloud Firestore API was unable to be enabled (if not previously enabled)
+globally from 13:36 to 17:50 for a duration of 4 hours and 14 minutes.
+
+### Cloud Run
+
+Cloud Run new deployments failed in the us-central1 region from 12:48 to 16:35
+for a duration of 3 hours and 53 minutes. Existing Cloud Run workloads, and
+deployments in other regions were unaffected.
+
+## ROOT CAUSE
+
+Google runs an internal publish/subscribe messaging system, which many
+services use to propagate state for control plane operations. That system is
+built using a replicated, high-availability key-value store, holding
+information about current lists of publishers, subscribers and topics, which
+all clients of the system need access to.
+
+The outage was triggered when a routine software rollout of the key-value
+store in a single region restarted one of its tasks. Soon after, a network
+partition isolated other tasks, transferring load to a small number of
+replicas of the key-value store. As a defense-in-depth, clients of the key-
+value store are designed to continue working from existing, cached data when
+it is unavailable; unfortunately, an issue in a large number of clients caused
+them to fail and attempt to resynchronize state. The smaller number of key-
+value store replicas were unable to sustain the load of clients synchronizing
+state, causing those replicas to fail. The continued failures moved load
+around the available replicas of the key-value store, resulting in a degraded
+state of the interconnected components.
+
+The failure of the key-value store, combined with the issue in the key-value
+store client, meant that publishers and subscribers in the impacted region
+were unable to correctly send and receive messages, causing the documented
+impact on dependent services.
+
+## REMEDIATION AND PREVENTION
+
+Google engineers were automatically alerted to the incident at 12:56
+US/Pacific and immediately began their investigation. As the situation began
+to show signs of cascading failures, the scope of the incident quickly became
+apparent and our specialized incident response team joined the investigation
+at 13:58 to address the problem. The early hours of the investigation were
+spent organizing, developing, and trialing various mitigation strategies. At
+15:59 a potential root cause was identified and a configuration change
+submitted which increased the client synchronization delay allowed by the
+system, allowing clients to successfully complete their requests without
+timing out and reducing the overall load on the system. By 17:24, the change
+had fully propagated and the degraded components had returned to nominal
+performance.
+
+In order to reduce the risk of recurrence, Google engineers configured the
+system to limit the number of tasks coordinating publishers and subscribers,
+which is a driver of load on the key-value store. The initial rollout of the
+constraint was faulty, and caused a more limited recurrence of problems at
+19:00. This was quickly spotted and completely mitigated by 20:00, resolving
+the incident.
+
+We would like to apologize for the length and severity of this incident. We
+have taken immediate steps to prevent recurrence of this incident and improve
+reliability in the future. In order to reduce the chance of a similar class of
+errors from occurring we are taking the following actions. We will revise
+provisioning of the key-value store to ensure that it is sufficiently
+resourced to handle sudden failover, and fix the issue in the key-value store
+client so that it continues to work from cached data, as designed, when the
+key-value store fails. We will also shard the data to reduce the scope of
+potential impact when the key-value store fails. Furthermore, we will be
+implementing automatic horizontal scaling of key-value store tasks to enable
+faster time to mitigation in the future. Finally, we will be improving our
+communication tooling to more effectively communicate multi-product outages
+and disruptions.
+
+## NOTE REGARDING CLOUD STATUS DASHBOARD COMMUNICATION
+
+Incident communication was centralized on a single product - in this case
+Stackdriver - in order to provide a central location for customers to follow
+for updates. We realize this may have created the incorrect impression that
+Stackdriver was the root cause. We apologize for the miscommunication and will
+make changes to ensure that we communicate more clearly in the future.
+
+## SLA CREDITS
+
+If you believe your paid application experienced an SLA violation as a result
+of this incident, please submit the SLA credit request:
+<https://support.google.com/cloud/contact/cloud_platform_sla>
+
+A full list of all Google Cloud Platform Service Level Agreements can be found
+at: <https://cloud.google.com/terms/sla/.>  
+  
+|
+
+## ISSUE SUMMARY
+
+On Tuesday 24 September, 2019, the following Google Cloud Platform services
+were partially impacted by an overload condition in an internal
+publish/subscribe messaging system which is a dependency of these products:
+App Engine, Compute Engine, Kubernetes Engine, Cloud Build, Cloud Composer,
+Cloud Dataflow, Cloud Dataproc, Cloud Firestore, Cloud Functions, Cloud DNS,
+Cloud Run, and Stackdriver Logging & Monitoring. Impact was limited to
+administrative operations for a number of these products, with existing
+workloads and instances not affected in most cases.
+
+We apologize to those customers whose services were impacted during this
+incident; we are taking immediate steps to improve the platform’s performance
+and availability.
+
+## DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday 24 September, 2019 from 12:46 to 20:00 US/Pacific, Google Cloud
+Platform experienced a partial disruption to multiple services with their
+respective impacts detailed below:
+
+### App Engine
+
+Google App Engine (GAE) create, update, and delete admin operations failed
+globally from 12:57 to 18:21 for a duration of 5 hours and 24 minutes.
+Affected customers may have seen error messages like “APP_ERROR”. Existing GAE
+workloads were unaffected.
+
+### Compute Engine
+
+Google Compute Engine (GCE) instances failed to start in us-central1-a from
+13:11 to 14:32 for a duration of 1 hour and 21 minutes, and GCE Internal DNS
+in us-central1, us-east1, and us-east4 experienced delays for newly created
+hostnames to become resolvable. Existing GCE instances and hostnames were
+unaffected.
+
+### Kubernetes Engine
+
+Google Kubernetes Engine (GKE) experienced delayed resource metadata and
+inaccurate Stackdriver Monitoring for cluster metrics globally. Additionally,
+cluster creation operations failed in us-central1-a from 3:11 to 14:32 for a
+duration of 1 hour and 21 minutes due to its dependency on GCE instance
+creation. Most existing GKE clusters were unaffected by the GCE instance
+creation failures, except for clusters in us-central1-a that were may have
+been unable to repair nodes or scale a node pool.
+
+### Stackdriver Logging & Monitoring
+
+Stackdriver Logging experienced delays of up to two hours for logging events
+generated globally. Exports were delayed by up to 3 hours and 30 minutes. Some
+user requests to write logs in us-central1 failed. Some logs-based metric
+monitoring charts displayed lower counts, and queries to Stackdriver Logging
+briefly experienced a period of 50% error rates. The impact to Stackdriver
+Logging & Monitoring took place from 12:54 to 18:45 for a total duration of 5
+hours and 51 minutes.
+
+### Cloud Functions
+
+Cloud Functions deployments failed globally from 12:57 to 18:21 and
+experienced peak error rates of 13% in us-east1 and 80% in us-central1 from
+19:12 to 19:57 for a combined duration of 6 hours and 15 minutes. Existing
+Cloud Function deployments were unaffected.
+
+### Cloud Build
+
+Cloud Build failed to update build status for GitHub App triggers from 12:54
+to 16:00 for a duration of 3 hours and 6 minutes.
+
+### Cloud Composer
+
+Cloud Composer environment creations failed globally from 13:25 to 18:05 for a
+duration of 4 hours and 40 minutes. Existing Cloud Composer clusters were
+unaffected.
+
+### Cloud Dataflow
+
+Cloud Dataflow workers failed to start in us-central1-a from 13:11 to 14:32
+for a duration of 1 hour and 21 minutes due to its dependency on Google
+Compute Engine instance creation. Affected jobs saw error messages like
+“Startup of the worker pool in zone us-central1-a failed to bring up any of
+the desired X workers. INTERNAL_ERROR: Internal error. Please try again or
+contact Google Support. (Code: '-473021768383484163')”. All other Cloud
+Dataflow regions and zones were unaffected.
+
+### Cloud Dataproc
+
+Cloud Dataproc cluster creations failed in us-central1-a from 13:11 to 14:32
+for a duration of 1 hour and 21 minutes due to its dependency on Google
+Compute Engine instance creation. All other Cloud Dataproc regions and zones
+were unaffected.
+
+### Cloud DNS
+
+Cloud DNS in us-central1, us-east1, and us-east4 experienced delays for newly
+created or updated Private DNS records to become resolvable from 12:46 to
+19:51 for a duration of 7 hours and 5 minutes.
+
+### Cloud Firestore
+
+Cloud Firestore API was unable to be enabled (if not previously enabled)
+globally from 13:36 to 17:50 for a duration of 4 hours and 14 minutes.
+
+### Cloud Run
+
+Cloud Run new deployments failed in the us-central1 region from 12:48 to 16:35
+for a duration of 3 hours and 53 minutes. Existing Cloud Run workloads, and
+deployments in other regions were unaffected.
+
+## ROOT CAUSE
+
+Google runs an internal publish/subscribe messaging system, which many
+services use to propagate state for control plane operations. That system is
+built using a replicated, high-availability key-value store, holding
+information about current lists of publishers, subscribers and topics, which
+all clients of the system need access to.
+
+The outage was triggered when a routine software rollout of the key-value
+store in a single region restarted one of its tasks. Soon after, a network
+partition isolated other tasks, transferring load to a small number of
+replicas of the key-value store. As a defense-in-depth, clients of the key-
+value store are designed to continue working from existing, cached data when
+it is unavailable; unfortunately, an issue in a large number of clients caused
+them to fail and attempt to resynchronize state. The smaller number of key-
+value store replicas were unable to sustain the load of clients synchronizing
+state, causing those replicas to fail. The continued failures moved load
+around the available replicas of the key-value store, resulting in a degraded
+state of the interconnected components.
+
+The failure of the key-value store, combined with the issue in the key-value
+store client, meant that publishers and subscribers in the impacted region
+were unable to correctly send and receive messages, causing the documented
+impact on dependent services.
+
+## REMEDIATION AND PREVENTION
+
+Google engineers were automatically alerted to the incident at 12:56
+US/Pacific and immediately began their investigation. As the situation began
+to show signs of cascading failures, the scope of the incident quickly became
+apparent and our specialized incident response team joined the investigation
+at 13:58 to address the problem. The early hours of the investigation were
+spent organizing, developing, and trialing various mitigation strategies. At
+15:59 a potential root cause was identified and a configuration change
+submitted which increased the client synchronization delay allowed by the
+system, allowing clients to successfully complete their requests without
+timing out and reducing the overall load on the system. By 17:24, the change
+had fully propagated and the degraded components had returned to nominal
+performance.
+
+In order to reduce the risk of recurrence, Google engineers configured the
+system to limit the number of tasks coordinating publishers and subscribers,
+which is a driver of load on the key-value store. The initial rollout of the
+constraint was faulty, and caused a more limited recurrence of problems at
+19:00. This was quickly spotted and completely mitigated by 20:00, resolving
+the incident.
+
+We would like to apologize for the length and severity of this incident. We
+have taken immediate steps to prevent recurrence of this incident and improve
+reliability in the future. In order to reduce the chance of a similar class of
+errors from occurring we are taking the following actions. We will revise
+provisioning of the key-value store to ensure that it is sufficiently
+resourced to handle sudden failover, and fix the issue in the key-value store
+client so that it continues to work from cached data, as designed, when the
+key-value store fails. We will also shard the data to reduce the scope of
+potential impact when the key-value store fails. Furthermore, we will be
+implementing automatic horizontal scaling of key-value store tasks to enable
+faster time to mitigation in the future. Finally, we will be improving our
+communication tooling to more effectively communicate multi-product outages
+and disruptions.
+
+## NOTE REGARDING CLOUD STATUS DASHBOARD COMMUNICATION
+
+Incident communication was centralized on a single product - in this case
+Stackdriver - in order to provide a central location for customers to follow
+for updates. We realize this may have created the incorrect impression that
+Stackdriver was the root cause. We apologize for the miscommunication and will
+make changes to ensure that we communicate more clearly in the future.
+
+## SLA CREDITS
+
+If you believe your paid application experienced an SLA violation as a result
+of this incident, please submit the SLA credit request:
+<https://support.google.com/cloud/contact/cloud_platform_sla>
+
+A full list of all Google Cloud Platform Service Level Agreements can be found
+at: <https://cloud.google.com/terms/sla/.>  
+  
+| Sep 25, 2019 | 17:26 |
+
+Affected Services: Google Compute Engine, Google Kubernetes Engine, Google App
+Engine, Cloud DNS, Cloud Run, Cloud Build, Cloud Composer, Cloud Firestore,
+Cloud Functions, Cloud Dataflow, Cloud Dataproc, Stackdriver Logging.
+
+Affected Features: Various resource operations, Environment creation, Log
+event ingestion.
+
+Issue Summary: Google Cloud Platform experienced a disruption to multiple
+services in us-central1, us-east1, and us-east4, while a few services were
+affected globally. Impact lasted for 7 hours, 6 minutes. We will publish a
+complete analysis of this incident once we have completed our internal
+investigation.
+
+(preliminary) Root cause: We rolled out a release of a key/value store
+component to an internal Google system which triggered a shift in load causing
+an out of memory (OOM) crash loop on these instances. The control plane was
+unable to automatically coordinate the increased load by publisher and
+subscriber clients, which resulted in degraded state of the interconnected
+components.
+
+Mitigation: Risk of recurrence has been mitigated by a configuration change
+that enabled control plane clients to successfully complete their requests and
+reduce overall load on the system.
+
+A Note on Cloud Status Dashboard Communication: Incident communication was
+centralized on a single product - in this case Stackdriver - in order to
+provide a central location for customers to follow for updates. Neither
+Stackdriver Logging nor Stackdriver Monitoring were the root cause for this
+incident. We realize this may have caused some confusion about the root cause
+of the issue. We apologize for the miscommunication and will make changes to
+ensure that we communicate more clearly in the future.  
+  
+|
+
+Affected Services: Google Compute Engine, Google Kubernetes Engine, Google App
+Engine, Cloud DNS, Cloud Run, Cloud Build, Cloud Composer, Cloud Firestore,
+Cloud Functions, Cloud Dataflow, Cloud Dataproc, Stackdriver Logging.
+
+Affected Features: Various resource operations, Environment creation, Log
+event ingestion.
+
+Issue Summary: Google Cloud Platform experienced a disruption to multiple
+services in us-central1, us-east1, and us-east4, while a few services were
+affected globally. Impact lasted for 7 hours, 6 minutes. We will publish a
+complete analysis of this incident once we have completed our internal
+investigation.
+
+(preliminary) Root cause: We rolled out a release of a key/value store
+component to an internal Google system which triggered a shift in load causing
+an out of memory (OOM) crash loop on these instances. The control plane was
+unable to automatically coordinate the increased load by publisher and
+subscriber clients, which resulted in degraded state of the interconnected
+components.
+
+Mitigation: Risk of recurrence has been mitigated by a configuration change
+that enabled control plane clients to successfully complete their requests and
+reduce overall load on the system.
+
+A Note on Cloud Status Dashboard Communication: Incident communication was
+centralized on a single product - in this case Stackdriver - in order to
+provide a central location for customers to follow for updates. Neither
+Stackdriver Logging nor Stackdriver Monitoring were the root cause for this
+incident. We realize this may have caused some confusion about the root cause
+of the issue. We apologize for the miscommunication and will make changes to
+ensure that we communicate more clearly in the future.  
+  
+| Sep 24, 2019 | 21:32 |
+
+The issue with multiple Cloud products has been resolved for all affected
+projects as of Tuesday, 2019-09-24 21:31 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+|
+
+The issue with multiple Cloud products has been resolved for all affected
+projects as of Tuesday, 2019-09-24 21:31 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+| Sep 24, 2019 | 20:43 |
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, Cloud Firestore, Cloud Dataflow and Cloud Dataproc starting around
+Tuesday, 2019-09-24 13:00 US/Pacific. We have done some mitigations that have
+had positive impact, and some services have reported full recovery. Full
+recovery of all services is ongoing as our systems are processing significant
+backlogs. Services that have recovered include Compute Engine Internal DNS,
+App Engine, Cloud Run, Cloud Functions, Cloud Firestore, Cloud Composer, Cloud
+Build, Cloud Dataflow, Google Kubernetes Engine resource metadata and
+Stackdriver Monitoring metrics for clusters . Cloud DNS has also recovered but
+we are still monitoring to ensure the issue does not reoccur. Stackdriver
+Logging has also recovered for the majority of projects. We will provide
+another status update by Tuesday, 2019-09-24 22:00 US/Pacific with current
+details.
+
+Diagnosis:
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, Cloud Firestore, Cloud Dataflow and Cloud Dataproc starting around
+Tuesday, 2019-09-24 13:00 US/Pacific. We have done some mitigations that have
+had positive impact, and some services have reported full recovery. Full
+recovery of all services is ongoing as our systems are processing significant
+backlogs. Services that have recovered include Compute Engine Internal DNS,
+App Engine, Cloud Run, Cloud Functions, Cloud Firestore, Cloud Composer, Cloud
+Build, Cloud Dataflow, Google Kubernetes Engine resource metadata and
+Stackdriver Monitoring metrics for clusters . Cloud DNS has also recovered but
+we are still monitoring to ensure the issue does not reoccur. Stackdriver
+Logging has also recovered for the majority of projects. We will provide
+another status update by Tuesday, 2019-09-24 22:00 US/Pacific with current
+details.
+
+Diagnosis:
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 20:11 |
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, Cloud Firestore, Cloud Dataflow and Cloud Dataproc starting around
+Tuesday, 2019-09-24 13:00 US/Pacific. We have done some mitigations that have
+had positive impact, and some services have reported full recovery. Full
+recovery of all services is ongoing as our systems are processing significant
+backlogs. Services that have recovered include Compute Engine Internal DNS,
+App Engine, Cloud Run, Cloud Functions, Cloud Firestore, Cloud Composer, Cloud
+Build, Cloud Dataflow, Google Kubernetes Engine resource metadata and
+Stackdriver Monitoring metrics for clusters . Cloud DNS has also recovered but
+we are still monitoring to ensure the issue does not reoccur. Stackdriver
+Logging has also recovered for the majority of projects. We will provide
+another status update by Tuesday, 2019-09-24 20:45 US/Pacific with current
+details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, Cloud Firestore, Cloud Dataflow and Cloud Dataproc starting around
+Tuesday, 2019-09-24 13:00 US/Pacific. We have done some mitigations that have
+had positive impact, and some services have reported full recovery. Full
+recovery of all services is ongoing as our systems are processing significant
+backlogs. Services that have recovered include Compute Engine Internal DNS,
+App Engine, Cloud Run, Cloud Functions, Cloud Firestore, Cloud Composer, Cloud
+Build, Cloud Dataflow, Google Kubernetes Engine resource metadata and
+Stackdriver Monitoring metrics for clusters . Cloud DNS has also recovered but
+we are still monitoring to ensure the issue does not reoccur. Stackdriver
+Logging has also recovered for the majority of projects. We will provide
+another status update by Tuesday, 2019-09-24 20:45 US/Pacific with current
+details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 19:30 |
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, Cloud Firestore, Cloud Dataflow and Cloud Dataproc starting around
+Tuesday, 2019-09-24 13:00 US/Pacific. We have done some mitigations that have
+had positive impact, and some services have reported full recovery. Full
+recovery of all services is ongoing as our systems are processing significant
+backlogs. Services that have recovered include Compute Engine Internal DNS,
+App Engine, Cloud Run, Cloud Functions, Cloud Firestore, Cloud Composer, Cloud
+Build and Cloud Dataflow. Cloud DNS has also recovered but we are still
+monitoring to ensure the issue does not reoccur. Stackdriver Logging has also
+recovered for the majority of projects. We will provide another status update
+by Tuesday, 2019-09-24 20:00 US/Pacific with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Cloud
+DNS users in us-central1 are experiencing a longer than usual delay for newly
+created or updated Private DNS records to become resolvable. Google Kubernetes
+Engine resource metadata may be delayed and Stackdriver Monitoring metrics for
+clusters may be inaccurate during this time.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, Cloud Firestore, Cloud Dataflow and Cloud Dataproc starting around
+Tuesday, 2019-09-24 13:00 US/Pacific. We have done some mitigations that have
+had positive impact, and some services have reported full recovery. Full
+recovery of all services is ongoing as our systems are processing significant
+backlogs. Services that have recovered include Compute Engine Internal DNS,
+App Engine, Cloud Run, Cloud Functions, Cloud Firestore, Cloud Composer, Cloud
+Build and Cloud Dataflow. Cloud DNS has also recovered but we are still
+monitoring to ensure the issue does not reoccur. Stackdriver Logging has also
+recovered for the majority of projects. We will provide another status update
+by Tuesday, 2019-09-24 20:00 US/Pacific with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Cloud
+DNS users in us-central1 are experiencing a longer than usual delay for newly
+created or updated Private DNS records to become resolvable. Google Kubernetes
+Engine resource metadata may be delayed and Stackdriver Monitoring metrics for
+clusters may be inaccurate during this time.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 19:02 |
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, Cloud Firestore, Cloud Dataflow and Cloud Dataproc starting around
+Tuesday, 2019-09-24 13:00 US/Pacific. We have done some mitigations that have
+had positive impact, and some services have reported full recovery. Full
+recovery of all services is ongoing as our systems are processing significant
+backlogs. Services that have recovered include Compute Engine Internal DNS,
+App Engine, Cloud Run, Cloud Functions, Cloud Firestore and Cloud Composer.
+Cloud DNS has also recovered but we are still monitoring to ensure the issue
+does not reoccur. Stackdriver Logging has also recovered for the majority of
+projects. We will provide another status update by Tuesday, 2019-09-24 19:30
+US/Pacific with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Cloud
+DNS users in us-central1 are experiencing a longer than usual delay for newly
+created or updated Private DNS records to become resolvable. Google Kubernetes
+Engine resource metadata may be delayed and Stackdriver Monitoring metrics for
+clusters may be inaccurate during this time. Cloud Build users may see Github
+status updates for GitHub App triggers fail. Cloud Composer environment
+creations are failing.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, Cloud Firestore, Cloud Dataflow and Cloud Dataproc starting around
+Tuesday, 2019-09-24 13:00 US/Pacific. We have done some mitigations that have
+had positive impact, and some services have reported full recovery. Full
+recovery of all services is ongoing as our systems are processing significant
+backlogs. Services that have recovered include Compute Engine Internal DNS,
+App Engine, Cloud Run, Cloud Functions, Cloud Firestore and Cloud Composer.
+Cloud DNS has also recovered but we are still monitoring to ensure the issue
+does not reoccur. Stackdriver Logging has also recovered for the majority of
+projects. We will provide another status update by Tuesday, 2019-09-24 19:30
+US/Pacific with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Cloud
+DNS users in us-central1 are experiencing a longer than usual delay for newly
+created or updated Private DNS records to become resolvable. Google Kubernetes
+Engine resource metadata may be delayed and Stackdriver Monitoring metrics for
+clusters may be inaccurate during this time. Cloud Build users may see Github
+status updates for GitHub App triggers fail. Cloud Composer environment
+creations are failing.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 18:20 |
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, Cloud Firestore, Cloud Dataflow and Cloud Dataproc starting around
+Tuesday, 2019-09-24 13:00 US/Pacific. We have done some mitigations that have
+had positive impact, and some services have reported full recovery. Full
+recovery of all services is ongoing as our systems are processing significant
+backlogs. Services that have recovered include Compute Engine Internal DNS,
+App Engine, Cloud Run, Cloud Functions and Cloud Firestore. We will provide
+another status update by Tuesday, 2019-09-24 18:45 US/Pacific with current
+details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Cloud
+DNS users in us-central1 are experiencing a longer than usual delay for newly
+created or updated Private DNS records to become resolvable. Google Kubernetes
+Engine resource metadata may be delayed and Stackdriver Monitoring metrics for
+clusters may be inaccurate during this time. Cloud Build users may see Github
+status updates for GitHub App triggers fail. Cloud Composer environment
+creations are failing.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, Cloud Firestore, Cloud Dataflow and Cloud Dataproc starting around
+Tuesday, 2019-09-24 13:00 US/Pacific. We have done some mitigations that have
+had positive impact, and some services have reported full recovery. Full
+recovery of all services is ongoing as our systems are processing significant
+backlogs. Services that have recovered include Compute Engine Internal DNS,
+App Engine, Cloud Run, Cloud Functions and Cloud Firestore. We will provide
+another status update by Tuesday, 2019-09-24 18:45 US/Pacific with current
+details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Cloud
+DNS users in us-central1 are experiencing a longer than usual delay for newly
+created or updated Private DNS records to become resolvable. Google Kubernetes
+Engine resource metadata may be delayed and Stackdriver Monitoring metrics for
+clusters may be inaccurate during this time. Cloud Build users may see Github
+status updates for GitHub App triggers fail. Cloud Composer environment
+creations are failing.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 17:24 |
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, and Cloud Firestore starting around Tuesday, 2019-09-24 13:00
+US/Pacific. Mitigation work is still underway by our Engineering Team, and
+some services are starting to see recovery. We will provide another status
+update by Tuesday, 2019-09-24 18:00 US/Pacific with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Compute
+Engine Internal DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created VMs to become
+resolvable. Cloud DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created or updated Private
+DNS records to become resolvable. Google Kubernetes Engine resource metadata
+may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. New Google App Engine deployments and updates to
+existing deployments may fail. Cloud Run deployments are failing for new
+deployments in us-central1. Cloud Build users may see Github status updates
+for GitHub App triggers fail. Cloud Composer environment creations are
+failing. New and existing projects are failing to enable Cloud Firestore if it
+is not already enabled.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, and Cloud Firestore starting around Tuesday, 2019-09-24 13:00
+US/Pacific. Mitigation work is still underway by our Engineering Team, and
+some services are starting to see recovery. We will provide another status
+update by Tuesday, 2019-09-24 18:00 US/Pacific with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Compute
+Engine Internal DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created VMs to become
+resolvable. Cloud DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created or updated Private
+DNS records to become resolvable. Google Kubernetes Engine resource metadata
+may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. New Google App Engine deployments and updates to
+existing deployments may fail. Cloud Run deployments are failing for new
+deployments in us-central1. Cloud Build users may see Github status updates
+for GitHub App triggers fail. Cloud Composer environment creations are
+failing. New and existing projects are failing to enable Cloud Firestore if it
+is not already enabled.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 16:19 |
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, and Cloud Firestore starting around Tuesday, 2019-09-24 13:00
+US/Pacific. Mitigation work is still underway by our Engineering Team. We will
+provide another status update by Tuesday, 2019-09-24 17:30 US/Pacific with
+current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Compute
+Engine Internal DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created VMs to become
+resolvable. Cloud DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created or updated Private
+DNS records to become resolvable. Google Kubernetes Engine resource metadata
+may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. New Google App Engine deployments and updates to
+existing deployments may fail. Cloud Run deployments are failing for new
+deployments in us-central1. Cloud Build users may see Github status updates
+for GitHub App triggers fail. Cloud Composer environment creations are
+failing. New and existing projects are failing to enable Cloud Firestore if it
+is not already enabled.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, and Cloud Firestore starting around Tuesday, 2019-09-24 13:00
+US/Pacific. Mitigation work is still underway by our Engineering Team. We will
+provide another status update by Tuesday, 2019-09-24 17:30 US/Pacific with
+current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Compute
+Engine Internal DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created VMs to become
+resolvable. Cloud DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created or updated Private
+DNS records to become resolvable. Google Kubernetes Engine resource metadata
+may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. New Google App Engine deployments and updates to
+existing deployments may fail. Cloud Run deployments are failing for new
+deployments in us-central1. Cloud Build users may see Github status updates
+for GitHub App triggers fail. Cloud Composer environment creations are
+failing. New and existing projects are failing to enable Cloud Firestore if it
+is not already enabled.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 16:02 |
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, and Cloud Firestore starting around Tuesday, 2019-09-24 13:00
+US/Pacific. Mitigation work is still underway by our Engineering Team. We will
+provide another status update by Tuesday, 2019-09-24 16:45 US/Pacific with
+current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Compute
+Engine Internal DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created VMs to become
+resolvable. Cloud DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created or updated Private
+DNS records to become resolvable. Google Kubernetes Engine resource metadata
+may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. New Google App Engine deployments and updates to
+existing deployments may fail. Cloud Run deployments are failing for new
+deployments in us-central1. Cloud Build users may see Github status updates
+for GitHub App triggers fail. Cloud Composer environment creations are
+failing. New and existing projects are failing to enable Cloud Firestore if it
+is not already enabled.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, Cloud
+Composer, and Cloud Firestore starting around Tuesday, 2019-09-24 13:00
+US/Pacific. Mitigation work is still underway by our Engineering Team. We will
+provide another status update by Tuesday, 2019-09-24 16:45 US/Pacific with
+current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Compute
+Engine Internal DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created VMs to become
+resolvable. Cloud DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created or updated Private
+DNS records to become resolvable. Google Kubernetes Engine resource metadata
+may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. New Google App Engine deployments and updates to
+existing deployments may fail. Cloud Run deployments are failing for new
+deployments in us-central1. Cloud Build users may see Github status updates
+for GitHub App triggers fail. Cloud Composer environment creations are
+failing. New and existing projects are failing to enable Cloud Firestore if it
+is not already enabled.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 15:28 |
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, and Cloud
+Composer starting around Tuesday, 2019-09-24 13:00 US/Pacific. Mitigation work
+is currently underway by our Engineering Team. We will provide another status
+update by Tuesday, 2019-09-24 16:30 US/Pacific with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Compute
+Engine Internal DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created VMs to become
+resolvable. Cloud DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created or updated Private
+DNS records to become resolvable. Google Kubernetes Engine resource metadata
+may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. New Google App Engine deployments and updates to
+existing deployments may fail. Cloud Run deployments are failing for new
+deployments in us-central1. Cloud Build users may see Github status updates
+for GitHub App triggers fail. Cloud Composer environment creations are
+failing.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, and Cloud
+Composer starting around Tuesday, 2019-09-24 13:00 US/Pacific. Mitigation work
+is currently underway by our Engineering Team. We will provide another status
+update by Tuesday, 2019-09-24 16:30 US/Pacific with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Compute
+Engine Internal DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created VMs to become
+resolvable. Cloud DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created or updated Private
+DNS records to become resolvable. Google Kubernetes Engine resource metadata
+may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. New Google App Engine deployments and updates to
+existing deployments may fail. Cloud Run deployments are failing for new
+deployments in us-central1. Cloud Build users may see Github status updates
+for GitHub App triggers fail. Cloud Composer environment creations are
+failing.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 14:51 |
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, and Cloud
+Composer starting around Tuesday, 2019-09-24 13:00 US/Pacific. We will provide
+another status update by Tuesday, 2019-09-24 15:30 US/Pacific with current
+details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Compute
+Engine Internal DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created VMs to become
+resolvable. Cloud DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created or updated Private
+DNS records to become resolvable. Google Kubernetes Engine resource metadata
+may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. New Google App Engine deployments and updates to
+existing deployments may fail. Cloud Run deployments are failing for new
+deployments in us-central1. Cloud Build users may see Github status updates
+for GitHub App triggers fail. Cloud Composer environment creations are
+failing.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including Compute Engine Internal DNS, Cloud DNS, Stackdriver Logging and
+Monitoring, Compute Engine, App Engine, Cloud Run, Cloud Build, and Cloud
+Composer starting around Tuesday, 2019-09-24 13:00 US/Pacific. We will provide
+another status update by Tuesday, 2019-09-24 15:30 US/Pacific with current
+details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. Compute
+Engine Internal DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created VMs to become
+resolvable. Cloud DNS users in us-central1, us-east1, and us-east4 are
+experiencing a longer than usual delay for newly created or updated Private
+DNS records to become resolvable. Google Kubernetes Engine resource metadata
+may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. New Google App Engine deployments and updates to
+existing deployments may fail. Cloud Run deployments are failing for new
+deployments in us-central1. Cloud Build users may see Github status updates
+for GitHub App triggers fail. Cloud Composer environment creations are
+failing.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 14:25 |
+
+Description: We are investigating issues with multiple Cloud products
+including GCE DNS, Stackdriver Logging and Monitoring, Compute Engine, App
+Engine, and Cloud Run starting around Tuesday, 2019-09-24 13:00 US/Pacific. We
+will provide another status update by Tuesday, 2019-09-24 15:00 US/Pacific
+with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. GCE DNS
+users in us-central1, us-east1, and us-east4 are experiencing a longer than
+normal delay for newly created records to become resolvable. Google Kubernetes
+Engine resource metadata may be delayed and Stackdriver Monitoring metrics for
+clusters may be inaccurate during this time. Google Compute Engine instances
+are failing to start in us-central1-a. New Google App Engine deployments and
+updates to existing deployments may fail. Cloud Run deployments are failing
+for new deployments in us-central1.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including GCE DNS, Stackdriver Logging and Monitoring, Compute Engine, App
+Engine, and Cloud Run starting around Tuesday, 2019-09-24 13:00 US/Pacific. We
+will provide another status update by Tuesday, 2019-09-24 15:00 US/Pacific
+with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. GCE DNS
+users in us-central1, us-east1, and us-east4 are experiencing a longer than
+normal delay for newly created records to become resolvable. Google Kubernetes
+Engine resource metadata may be delayed and Stackdriver Monitoring metrics for
+clusters may be inaccurate during this time. Google Compute Engine instances
+are failing to start in us-central1-a. New Google App Engine deployments and
+updates to existing deployments may fail. Cloud Run deployments are failing
+for new deployments in us-central1.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 14:04 |
+
+Description: We are investigating issues with multiple Cloud products
+including GCE DNS, Stackdriver Logging and Monitoring, Compute Engine, and
+Cloud Run and App Engine starting around Tuesday, 2019-09-24 13:00 US/Pacific.
+We will provide another status update by Tuesday, 2019-09-24 15:00 US/Pacific
+with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. GCE DNS
+users in us-central1 are experiencing a longer than normal delays for newly
+created records to become resolvable. Google Kubernetes Engine resource
+metadata may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. Cloud Run deployments are failing for new deployments
+in us-central1.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are investigating issues with multiple Cloud products
+including GCE DNS, Stackdriver Logging and Monitoring, Compute Engine, and
+Cloud Run and App Engine starting around Tuesday, 2019-09-24 13:00 US/Pacific.
+We will provide another status update by Tuesday, 2019-09-24 15:00 US/Pacific
+with current details.
+
+Diagnosis: The Stackdriver Logging service is experiencing a delay on logging
+events generated globally after Tuesday, 2019-09-24 12:53 US/Pacific. GCE DNS
+users in us-central1 are experiencing a longer than normal delays for newly
+created records to become resolvable. Google Kubernetes Engine resource
+metadata may be delayed and Stackdriver Monitoring metrics for clusters may be
+inaccurate during this time. Google Compute Engine instances are failing to
+start in us-central1-a. Cloud Run deployments are failing for new deployments
+in us-central1.
+
+Workaround: None at this time.  
+  
+| Sep 24, 2019 | 13:30 |
+
+Description: The Stackdriver Logging service is experiencing a delay on
+logging events generated after Tuesday, 2019-09-24 12:53 US/Pacific. We will
+provide another status update by Tuesday, 2019-09-24 15:00 US/Pacific with
+current details.
+
+Diagnosis: Log entries after Tuesday, 2019-09-24 12:53 US/Pacific will see a
+delay in propagating to the Stackdriver console
+
+Workaround: None at this time. We will be processing the backlog as soon as we
+can.  
+  
+|
+
+Description: The Stackdriver Logging service is experiencing a delay on
+logging events generated after Tuesday, 2019-09-24 12:53 US/Pacific. We will
+provide another status update by Tuesday, 2019-09-24 15:00 US/Pacific with
+current details.
+
+Diagnosis: Log entries after Tuesday, 2019-09-24 12:53 US/Pacific will see a
+delay in propagating to the Stackdriver console
+
+Workaround: None at this time. We will be processing the backlog as soon as we
+can.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

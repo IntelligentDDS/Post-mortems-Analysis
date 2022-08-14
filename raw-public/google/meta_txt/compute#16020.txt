@@ -1,0 +1,241 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/16020)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #16020
+
+502s from HTTP(S) Load Balancer
+
+Incident began at **2016-10-13 15:07** and ended at **2016-10-13 17:25** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Oct 18, 2016 | 13:15 |
+
+SUMMARY:
+
+On Thursday 13 October 2016, approximately one-third of requests sent to the
+Google Compute Engine HTTP(S) Load Balancers between 15:07 and 17:25 PDT
+received an HTTP 502 error rather than the expected response. If your service
+or application was affected, we apologize. We took immediate action to restore
+service once the problem was detected, and are taking steps to improve the
+Google Compute Engine HTTP(S) Load Balancer’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+Starting at 15:07 PDT on Thursday 13 October 2016, Google Compute Engine
+HTTP(S) Load Balancers started to return elevated rates of HTTP 502 (Bad
+Gateway) responses. The error rate rose progressively from 2% to a peak of 45%
+of all requests at 16:09 and remained there until 17:03. From 17:03 to 17:15,
+the error rate declined rapidly from 45% to 2%. By 17:25 requests were routing
+as expected and the incident was over. During the incident, the error rate
+seen by applications using GCLB varied depending on the network routing of
+their requests to Google.
+
+ROOT CAUSE:
+
+The Google Compute Engine HTTP(S) Load Balancer system is a global,
+geographically-distributed multi-tiered software stack which receives incoming
+HTTP(S) requests via many points in Google's global network, and dispatches
+them to appropriate Google Compute Engine instances. On 13 October 2016, a
+configuration change was rolled out to one of these layers with widespread
+distribution beginning at 15:07. This change triggered a software bug which
+decoupled second-tier load balancers from a number of first-tier load
+balancers. The affected first-tier load balancers therefore had no forwarding
+path for incoming requests and returned the HTTP 502 code to indicate this.
+
+Google’s networking systems have a number of safeguards to prevent them from
+propagating incorrect or invalid configurations, and to reduce the scope of
+the impact in the event that a problem is exposed in production. These
+safeguards were partially successful in this instance, limiting both the scope
+and the duration of the event, but not preventing it entirely. The first
+relevant safeguard is a canary deployment, where the configuration is deployed
+at a single site and that site is verified to be functioning within normal
+bounds. In this case, the canary step did generate a warning, but it was not
+sufficiently precise to cause the on-call engineer to immediately halt the
+rollout. The new configuration subsequently rolled out in stages, but was
+halted part way through as further alerts indicated that it was not
+functioning correctly. By design, this progressive rollout limited the error
+rate experienced by customers.
+
+REMEDIATION AND PREVENTION:
+
+Once the nature and scope of the issue became clear, Google engineers first
+quickly halted and reverted the rollout. This prevented a larger fraction of
+GCLB instances from being affected. Google engineers then set about restoring
+function to the GCLB instances which had been exposed to the configuration.
+They verified that restarting affected GCLB instances restored the pre-rollout
+configuration, and then rapidly restarted all affected GCLB instances, ending
+the event.
+
+One of our guiding principles for avoiding large-scale incidents is to roll
+out global changes slowly and carefully monitor for errors. We typically have
+a period of soak time during a canary release before rolling out more widely.
+In this case, the change was pushed too quickly for accurate detection of the
+class of failure uncovered by the configuration being rolled out. We will
+change our processes to be more conservative when rolling out configuration
+changes to critical systems.
+
+As defense in depth, Google engineers are also changing the black box
+monitoring for GCLB so that it will test the first-tier load balancers
+impacted by this incident. We will also be improving the black box monitoring
+to ensure that our probers cover all use cases. In addition, we will add an
+alert for elevated error rates between first-tier and second-tier load
+balancers.
+
+We apologize again for the impact this issue caused our customers.  
+  
+|
+
+SUMMARY:
+
+On Thursday 13 October 2016, approximately one-third of requests sent to the
+Google Compute Engine HTTP(S) Load Balancers between 15:07 and 17:25 PDT
+received an HTTP 502 error rather than the expected response. If your service
+or application was affected, we apologize. We took immediate action to restore
+service once the problem was detected, and are taking steps to improve the
+Google Compute Engine HTTP(S) Load Balancer’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+Starting at 15:07 PDT on Thursday 13 October 2016, Google Compute Engine
+HTTP(S) Load Balancers started to return elevated rates of HTTP 502 (Bad
+Gateway) responses. The error rate rose progressively from 2% to a peak of 45%
+of all requests at 16:09 and remained there until 17:03. From 17:03 to 17:15,
+the error rate declined rapidly from 45% to 2%. By 17:25 requests were routing
+as expected and the incident was over. During the incident, the error rate
+seen by applications using GCLB varied depending on the network routing of
+their requests to Google.
+
+ROOT CAUSE:
+
+The Google Compute Engine HTTP(S) Load Balancer system is a global,
+geographically-distributed multi-tiered software stack which receives incoming
+HTTP(S) requests via many points in Google's global network, and dispatches
+them to appropriate Google Compute Engine instances. On 13 October 2016, a
+configuration change was rolled out to one of these layers with widespread
+distribution beginning at 15:07. This change triggered a software bug which
+decoupled second-tier load balancers from a number of first-tier load
+balancers. The affected first-tier load balancers therefore had no forwarding
+path for incoming requests and returned the HTTP 502 code to indicate this.
+
+Google’s networking systems have a number of safeguards to prevent them from
+propagating incorrect or invalid configurations, and to reduce the scope of
+the impact in the event that a problem is exposed in production. These
+safeguards were partially successful in this instance, limiting both the scope
+and the duration of the event, but not preventing it entirely. The first
+relevant safeguard is a canary deployment, where the configuration is deployed
+at a single site and that site is verified to be functioning within normal
+bounds. In this case, the canary step did generate a warning, but it was not
+sufficiently precise to cause the on-call engineer to immediately halt the
+rollout. The new configuration subsequently rolled out in stages, but was
+halted part way through as further alerts indicated that it was not
+functioning correctly. By design, this progressive rollout limited the error
+rate experienced by customers.
+
+REMEDIATION AND PREVENTION:
+
+Once the nature and scope of the issue became clear, Google engineers first
+quickly halted and reverted the rollout. This prevented a larger fraction of
+GCLB instances from being affected. Google engineers then set about restoring
+function to the GCLB instances which had been exposed to the configuration.
+They verified that restarting affected GCLB instances restored the pre-rollout
+configuration, and then rapidly restarted all affected GCLB instances, ending
+the event.
+
+One of our guiding principles for avoiding large-scale incidents is to roll
+out global changes slowly and carefully monitor for errors. We typically have
+a period of soak time during a canary release before rolling out more widely.
+In this case, the change was pushed too quickly for accurate detection of the
+class of failure uncovered by the configuration being rolled out. We will
+change our processes to be more conservative when rolling out configuration
+changes to critical systems.
+
+As defense in depth, Google engineers are also changing the black box
+monitoring for GCLB so that it will test the first-tier load balancers
+impacted by this incident. We will also be improving the black box monitoring
+to ensure that our probers cover all use cases. In addition, we will add an
+alert for elevated error rates between first-tier and second-tier load
+balancers.
+
+We apologize again for the impact this issue caused our customers.  
+  
+| Oct 13, 2016 | 17:50 |
+
+The issue with Google Cloud Platform HTTP(s) Load Balancer returning 502
+response code should have been resolved for all affected customers as of 17:25
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+|
+
+The issue with Google Cloud Platform HTTP(s) Load Balancer returning 502
+response code should have been resolved for all affected customers as of 17:25
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+| Oct 13, 2016 | 17:00 |
+
+We are still investigating the issue with Google Cloud Platform HTTP(S) Load
+Balancers returning 502 errors, and will provide an update by 18:00 US/Pacific
+with current details.  
+  
+|
+
+We are still investigating the issue with Google Cloud Platform HTTP(S) Load
+Balancers returning 502 errors, and will provide an update by 18:00 US/Pacific
+with current details.  
+  
+| Oct 13, 2016 | 16:28 |
+
+We are still investigating the issue with Google Cloud Platform HTTP(S) Load
+Balancers returning 502 errors, and will provide an update by 17:00 US/Pacific
+with current details.  
+  
+|
+
+We are still investigating the issue with Google Cloud Platform HTTP(S) Load
+Balancers returning 502 errors, and will provide an update by 17:00 US/Pacific
+with current details.  
+  
+| Oct 13, 2016 | 16:12 |
+
+We are experiencing an issue with Google Cloud Platform HTTP(s) Load Balancer
+returning 502 response codes, starting at 2016-10-13 15:30 US/Pacific.
+
+We are investigating the issue, and will provide an update by 16:30 US/Pacific
+with current details.  
+  
+|
+
+We are experiencing an issue with Google Cloud Platform HTTP(s) Load Balancer
+returning 502 response codes, starting at 2016-10-13 15:30 US/Pacific.
+
+We are investigating the issue, and will provide an update by 16:30 US/Pacific
+with current details.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

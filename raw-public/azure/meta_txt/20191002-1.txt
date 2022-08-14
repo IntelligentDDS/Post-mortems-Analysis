@@ -1,0 +1,6 @@
+Log Analytics - USGov Virginia - Mitigated (Tracking ID 1KNJ-LD8)
+Summary of Impact: Between 19:45 EDT on 02 Oct 2019 and 23:45 EDT on 03 Oct 2019 a subset of customers using Log Analytics in USGov Virginia may have received 500-level errors when performing queries on log analytics data.
+Preliminary root cause: Engineers determined that instances of a back-end service responsible for middle-tier authentication became unhealthy, preventing data queries from completing.
+Mitigation: Engineers deployed a platform hotfix to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service
+health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.

@@ -1,0 +1,7 @@
+This is a short (<= 1 paragraph) of what happened. Please ensure to remove private information.
+
+This is a step by step outline of what happened to cause the incident and how it was remedied. Please ensure to remove private information.
+
+What weakness did we learn about and how can we address them?
+
+Explicit next steps to prevent this from happening again as much as possible, with Bugzilla bugs or RT tickets linked for every step.

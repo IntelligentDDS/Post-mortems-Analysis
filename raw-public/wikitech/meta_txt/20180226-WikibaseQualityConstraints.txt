@@ -1,0 +1,19 @@
+When caching of constraint check results was enabled on Wikidata, some API requests would trigger SQL queries on the , and tables without any clause. This resulted in extremely high server load of general-purpose replica servers in s8.
+• 14:22 – deploys to mwdebug1002 as part of SWAT.
+• 14:22-14:26 – tests the change on Wikidata. It seems to work as expected – successive calls of on the same entity are much faster, since the result is read from cache.
+• 14:27 – reports back to and confirms the change is ready to deploy.
+• 14:28 – eth0 traffic on db1109 immediately begins to grow, crossing 600 Mbps within the next ten minutes (the normal level is around 50 Mbps) – see Grafana. db1092 and db1104 are also affected. CPU load, number of running processes, and disk I/O also increase accordingly. However, according to , the slowdown was slow to buildup, so it was not detected by monitoring immediately .
+• 17:24 – and comment on phabricator:T184812, pointing to the massive spike in Wikidata replicas (Grafana).
+• 17:41 – Chad deploys a revert of the config change ( ). log entry (stashbot failed to log this and some other messages around that time to wiki)
+• 17:41 – eth0 traffic, CPU load etc. begin to drop again (Grafana).
+• 17:41 – I am going to kill [queries?] [a]gain to see they don't come back
+
+Due to a logic bug (phabricator:T188384), WikibaseQualityConstraints’ asked Wikibase’ for the latest revision information of an empty list of entities. The had a special safeguard (added in 294340) for this case to avoid costly queries, adding a condition . However, actually turns this condition into a query with no clause (instead of something like , which probably intended). WikibaseQualityConstraints should pay more attention to special cases when requesting entity IDs (empty list, long list); Wikibase should make sure that safeguards actually work as intended; and core should not let simple programming errors result in completely unlimited queries.
+
+It is also problematic that the incident apparently went undetected for almost three hours, even though it was visible in Grafana within minutes of deployment, but I don’t know why this was possible, or what should have prevented it.
+• WikibaseQualityConstraints: only filter for result statuses after collecting metadata. phab:T188384
+• WikibaseQualityConstraints: don’t pass an empty list of entity IDs to the . phab:T188311
+• WikibaseQualityConstraints: don’t pass overly long lists of entity IDs there, either. phab:T188312
+• WikibaseQualityConstraints + Wikibase: don’t join , and when we just need . phab:T188381
+• Wikibase: fix the safeguard for an empty list of conditions in . phab:T188313
+• core: only should result in a missing clause, not any other value that is according to the PHP empty function. phab:T188314

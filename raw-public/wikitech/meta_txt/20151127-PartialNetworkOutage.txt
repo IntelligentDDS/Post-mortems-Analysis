@@ -1,0 +1,47 @@
+A misbehaving Equinix Ashburn customer was flooding the IXP fabric with multicast IPv6 NDP traffic for three and a half hours. At the exact same start time, certain types of packets (multicast/broadcast) sent over one of our cross data center links (between ulsfo and eqiad) started to get amplified (duplicated) up to a few thousand times, saturating the link. It resulted in a flood of (multicast) routing protocol traffic and caused instability on our network, with flapping links and unstable network connectivity.
+
+This, in combination with a routing misconfiguration between eqiad, eqord and ulsfo, caused a cascading partial outage that spanned both the eqiad data center and the network across the US. The primary effect was a ulsfo outage; ulsfo was depooled from DNS 8 minutes into the outage. The secondary effect was issues between the two core routers in eqiad, which may have caused some traffic loss, as well as intermittent connectivity issues with one of the four links to row D, which resulted in unreliable network connectivity for some hosts for about 34 minutes.
+
+This issue mainly impacted users which were routed to our US West Coast caching center for the first 8-18 minutes of the outage, until the traffic was manually rerouted.
+• 09:15 Icinga reports a string of servers going down, most of them in ulsfo, but some in eqiad. Icinga sends pages to the Ops team. Multiple flaps between up and down follow.
+• 09:21 Faidon depools ulsfo due to most problems being reported there, and reroutes its traffic to eqiad, thereby resolving the problem for the US West Coast and Asian countries in the following minutes.
+• 09:22 Mark observes problems on the eqiad core routers cr1-eqiad and cr2-eqiad, including flapping links and even the redundant link between the two routers down in OSPF
+• 09:25 Freenode IRC has independent problems of its own and multiple netsplits occur, blocking communication for the Operations team, which in the first 5 minutes isn't evident (this is very meta)
+• 09:25 Faidon and Mark investigate independently due to Freenode issues, and focus on the eqiad failures now ulsfo has been depooled. They correlate all connectivity problems for servers in eqiad to row D.
+• 09:39 Faidon suspects cr2-eqiad FPC5, as multiple problems correlate to a group of 4 of its ports.
+• 09:44 Mark disables two links on FPC5 of the LACP link between cr1-eqiad and cr2-eqiad - connectivity between the two router is restored immediately.
+• 09:47 Mark disables the link to row D on cr2-eqiad FPC5.
+• 09:49 Mark lowers VRRP priority for all VRRP sessions on cr2-eqiad - all connectivity problems to servers in eqiad disappear.
+• 09:54 All issues are now resolved.
+• 09:55 Faidon investigates ongoing connectivity issues to ulsfo (which is drained from all traffic), which seems to be caused by a routing loop
+• 10:22 Faidon finds and fixes an inconsistency in the BGP confederation setup in ulsfo
+
+Later in the day, Faidon and Mark concluded that a hardware problem was not likely the culprit. After reenabling one of the 4 ports, the link between ulsfo and eqiad, the packet flood returned - this time without user impact due to the depooled state of ulsfo. Faidon isolated the problem to packet amplification by the MPLS link, which was duplicating packets (for free! Black Friday deal?)
+• 09:12:59 An Equinix customer starts flooding the Equinix Ashburn IXP fabric with NDPv6 traffic
+• 09:12:59 An MPLS link between cr1-ulsfo and cr2-eqiad (xe-5/2/2) starts amplifying traffic
+• 09:12:59 cr2-eqiad, which has the affected link to ulsfo as well as the Equinix Ashburn port on FPC 5 (xe-5/3/3) gets flooded with NDPv6/OSPF/PIM multicast traffic
+• 09:12:59 cr2-eqiad starts losing BFD/OSPF/OSPFv3 sessions for links on FPC 5: xe-5/2/2 to cr1-ulsfo:xe-0/0/3 (GTT) and xe-5/2/3 to cr2-codfw:xe-5/0/1 (Zayo) due to FPC5 DoS protection dropping packets
+• 09:12:59 - 09:13:00 cr1-ulsfo detects BFD session with cr2-eqiad as down
+• 09:13:01 - 09:15:22 cr1-ulsfo BFD sessions & OSPF for both cr2-eqiad and cr1-eqord flap multiple times
+• 09:17:06, 09:17:23 cr1-ulsfo loses BGP peering with PyBal on lvs4001/lvs4002 due to hold timer expired, probably due to the CPU exhaustion
+• 09:18:35 cr1-ulsfo to pybal BGP connectivity is restored but does not win over in preference
+• 09:13:01- 09:53:18 cr1-ulsfo BFD sessions for cr1-eqord flap continue to flap every few seconds, possibly due to the increased CPU
+• 09:21 - 09:31 Faidon depools ulsfo, restoring user-visible ulsfo impact; no visible change to the 10G traffic loop
+• 09:59 Alex/Faidon detect the routing loop which disappears shortly after
+• 10:20-10:40 Faidon founds ulsfo/eqord/eqiad routing loop cause (BGP confederation misconfiguration) and fixes it; this resets all BGP sessions that took ~20 minutes to converge
+• 11:52 Equinix informs customers of an issue with the IXP service (5-33496044285)
+• 14:31 Equinix informs customers that their engineers have "isolated & stopped the source of unwanted traffic on the DC Metro Internet Exchange" as of 13:40 UTC.
+• 09:12:59 An Equinix IX customer starts flooding the Equinix Ashburn IXP fabric with NDPv6
+• 09:12:59 An MPLS link between cr1-ulsfo and cr2-eqiad (xe-5/2/2) starts amplifying traffic
+• 09:12:59 cr2-eqiad, which has the affected link to ulsfo as well as the Equinix Ashburn port on FPC 5 (xe-5/3/3) gets flooded with NDPv6/OSPF/PIM multicast traffic
+• 09:13:04 cr2-eqiad DoS protection for FPC 5 kicks in, starts dropping traffic for various traffic classes
+• 09:15:22 - 09:53:18 ulsfo incoming LVS traffic loops and amplifies between cr1-ulsfo and cr2-eqiad, contributing to a large traffic surge (10Gbps in small packets) and possibly contributing to FPC 5's issues
+
+A packet flood by another Equinix customer on the Ashburn Internet Exchange, as well as packet amplification on a (likely technically related) cross data center link caused issues for traffic to the control plane of the router connected to both. This triggered a series of other events in the network, primarily in the form of network-wide OSPF instability and a routing loop with the ulsfo site due to a misconfiguration in the BGP confederation setup there.
+
+The network is redundant on multiple levels, and this allowed the problem to be routed around. However, explicit Icinga alerting for flapping BFD and OSPF sessions could have sped up the problem investigation somewhat.
+
+MPLS transport links have caused the majority of interconnectivity issues in the past, and are already being phased out in favor of dedicated wavelength paths.
+• Done Fix ulsfo confederation inconsistency and audit all other BGP confederation configurations
+• Status: Unresolved Investigate why disabling an uplink port did not deprioritize VRRP on cr2-eqiad ( )
+• Done Raise a ticket with GTT to investigate traffic amplification on the MPLS link (GTT TT#931715)

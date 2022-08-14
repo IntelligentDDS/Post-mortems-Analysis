@@ -1,0 +1,451 @@
+{
+    "azure-20190808-1": {
+        "title": "RCA - Azure CDN - Connectivity Issues",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+        ],
+        "time": "08/08/2019",
+        "summary": "Summary of impact: Between 14:05 and 19:00 UTC on 08 Aug 2019, you were identified as a customer using Akamai CDN who may have experienced HTTP 504 (Gateway Timeout) errors when attempting to connect to resources.",
+        "details": "Root cause: Engineers determined that a network update to add new peer servers to the US East region caused connections to fail between Akamai CDN and Azure resources. A network filtering policy on a redundant Microsoft peering device was improperly configured, which caused traffic sourced from Akamai CDN and destined for origins hosted on Azure storage in East US and East US 2 to be intermittently dropped. Mitigation: Engineers rolled back the updates to mitigate the issue. After the root cause was identified and the network filtering policy was updated and consistent across the pair of devices, traffic was successfully routed over this path without drops. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Inventory device fleet to ensure no further inconsistencies exist for network filtering policies Update device configuration drift platform to account network filtering policy inconsistencies across device pairs Add additional automation and checks to update network filtering policies across device fleet to remove the risk of inconsistencies Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/KK63-J98",
+        "service_name": [
+            "Azure CDN"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 295,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "service unavailable": [
+                    "HTTP 504 (Gateway Timeout) errors"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Engineers determined that a network update to add new peer servers to the US East region caused connections to fail between Akamai CDN and Azure resources. A network filtering policy on a redundant Microsoft peering device was improperly configured, which caused traffic sourced from Akamai CDN and destined for origins hosted on Azure storage in East US and East US 2 to be intermittently dropped."
+        },
+        "operation": [
+            "network update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "rolled back the updates",
+                "update network filtering policy"
+            ],
+            "details": "Engineers rolled back the updates to mitigate the issue. After the root cause was identified and the network filtering policy was updated and consistent across the pair of devices, traffic was successfully routed over this path without drops.",
+            "troubleshooting": {
+                "1": "roll back the updates",
+                "2": "identify root cause",
+                "3": "update network filtering policy"
+            }
+        },
+        "propagation pass": {
+            "1": "redundant Microsoft peering device",
+            "2": "Azure CDN"
+        },
+        "refined path": {
+            "1": "network device",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure--20190809-1": {
+        "title": "RCA - Azure Portal - Issues Loading Dashboard Tiles",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+        ],
+        "time": "08/09/2019",
+        "summary": "Summary of impact: Between approximately 16:07 and 19:17 UTC on 09 Aug 2019, customers using the Azure portal may have received failure notifications under the following scenarios: Customers who had pinned tiles to their dashboards that provided them with a list of resources such as All Resources, All VMs, etc. would have either seen a 'No resources found' message or just a grey tile. All other tiles on dashboards such as pinned resources continued to function as expected. Access of the following two pages on the Azure Portal. a) 'My permissions' page that enables customers to see what permissions they have in a given subscription and b) 'Resource Providers' option in the resource menu for any given subscription that lets customers view, register and unregister Resource Providers in their subscriptions. Trying to open one of these two pages would have resulted in the page load timing out after 30 seconds.",
+        "details": "Root cause: The issue was caused by a code change that introduced a bug in an underlying API that the affected experiences relied on. The Azure Portal relies on feature flags to enable or disable features and the above regression would occur only when one such flag was set to the disabled state. While engineering had tests to cover these scenarios, those tests were only run with the flag set to enabled which was not the flag state we had in production. Mitigation: Portal engineering received alerts from our monitoring and alerting infrastructure. A roll back to the previous production build that did not contain this regression was initiated. This roll back was completed in multiple regions by 09 Aug 2019 19:09 UTC and affected experiences were back to working as expected at this point of time. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Added new tests that runs with all possible states of the particular feature flag that resulted in this incident to ensure that a similar regression is caught before changes get deployed to production. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/LTJ7-JP0",
+        "service_name": [
+            "Azure Portal"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 190,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "failure notifications"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "The issue was caused by a code change that introduced a bug in an underlying API that the affected experiences relied on. The Azure Portal relies on feature flags to enable or disable features and the above regression would occur only when one such flag was set to the disabled state. While engineering had tests to cover these scenarios, those tests were only run with the flag set to enabled which was not the flag state we had in production."
+        },
+        "operation": [
+            "change"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "rollback to the previous production build"
+            ],
+            "details": "Portal engineering received alerts from our monitoring and alerting infrastructure. A roll back to the previous production build that did not contain this regression was initiated. This roll back was completed in multiple regions by 09 Aug 2019 19:09 UTC and affected experiences were back to working as expected at this point of time.",
+            "troubleshooting": {
+                "1": "Portal engineering received alerts from our monitoring and alerting infrastructure",
+                "2": "A roll back to the previous production build that did not contain this regression was initiated."
+            }
+        },
+        "propagation pass": {
+            "1": "backend services",
+            "2": "Azure Portal"
+        },
+        "refined path": {
+            "1": "backend services",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190814-1": {
+        "title": "RCA - USGov Iowa - Service Availability and Downstream Impact",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+        ],
+        "time": "08/14/2019",
+        "summary": "Between 16:25 EDT on 14 Aug 2019 and 01:00 EDT on 15 Aug 2019, a subset of customers in USGov Iowa may have experienced issues accessing services in that region. Engineers determined that an underlying compute issue was impacting SQL, API Management, Azure Site Recovery, Media Services, Service Bus, and StorSimple. A subset of App Service customers may have experienced Service Management issues across these regions: USDoD Central, USDoD East, USGov Arizona, USGov Iowa, USGov Texas, and USGov Virginia.",
+        "details": "Root cause and mitigation: Automated health monitoring is utilized in all Azure regions to predict and react to telemetry signals that indicate that a failure condition has occurred on a resource. In this instance, health monitoring indicated that several physical host nodes in the scale unit had reached a threshold for high memory utilization, which resulted in those host nodes moving to a state for repair. An investigation is ongoing into the specific cause of the increased memory footprint on these hosts, but as this is the expected behavior for the platform health monitoring, this was functioning as expected. A secondary issue was detected on review that was causing the build-up of the number of nodes requiring non-automated or manual repair. When nodes are taken out of rotation and put into repair, automation processes the node and will perform needed tasks to achieve repair and return the node to service. In this case, the automation was triggering and was putting the nodes into a manual repair mode, waiting for human intervention. With the increased number of nodes failing and requiring human intervention, this impacted the Service Fabric seed nodes of Azure SQL DB in this stamp. Quorum was lost on seed nodes and databases hosted on this instance of Azure SQL DB became unavailable. In parallel, SQL DB and Compute engineering teams worked to restore these services and nodes in the scale unit. Manually applying the repair to these nodes was successful, after which, the cluster fabric and SQL DB services were able to recover, mitigating the issue. After an initial recovery for the SQL DB instance, additional node recovery efforts mistakenly again impacted one of the Service Fabric seed nodes leading to Quorum loss on the seed nodes. This was due to a method of recovery for the systems that were requiring repair. A repair item has been created to address this conflict in recovery. Engineers manually recovered the nodes and brought them back online to restore connectivity to the dependent services, which in turn mitigated the downstream impact once the dependent services were restored. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Improve the automation repair process to track the number of nodes required to operate the Azure SQL DB service and alert when the number of available nodes comes down below the safe operational thresholds Improve alerting from the Service Fabric layer quorum failures to upstream services when failures rate exceeds normal safe operational thresholds Provide feedback: Please help us improve Azure customer communications experience by taking our survey - https://aka.ms/HLR7-N98",
+        "service_name": [
+            "SQL",
+            "API Management",
+            "Azure Site Recovery",
+            "Media Services",
+            "Service Bus",
+            "StorSimple"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 515,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "health monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "high memory utilization"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource",
+                    "layer-3": "memory"
+                }
+            ],
+            "details": "Automated health monitoring is utilized in all Azure regions to predict and react to telemetry signals that indicate that a failure condition has occurred on a resource. In this instance, health monitoring indicated that several physical host nodes in the scale unit had reached a threshold for high memory utilization, which resulted in those host nodes moving to a state for repair. An investigation is ongoing into the specific cause of the increased memory footprint on these hosts, but as this is the expected behavior for the platform health monitoring, this was functioning as expected. A secondary issue was detected on review that was causing the build-up of the number of nodes requiring non-automated or manual repair. When nodes are taken out of rotation and put into repair, automation processes the node and will perform needed tasks to achieve repair and return the node to service. In this case, the automation was triggering and was putting the nodes into a manual repair mode, waiting for human intervention. With the increased number of nodes failing and requiring human intervention, this impacted the Service Fabric seed nodes of Azure SQL DB in this stamp. Quorum was lost on seed nodes and databases hosted on this instance of Azure SQL DB became unavailable."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restore these services and nodes in the scale unit",
+                "Manually applying the repair",
+                "manually recovered the nodes and brought them back online"
+            ],
+            "details": "SQL DB and Compute engineering teams worked to restore these services and nodes in the scale unit. Manually applying the repair to these nodes was successful, after which, the cluster fabric and SQL DB services were able to recover, mitigating the issue; Engineers manually recovered the nodes and brought them back online to restore connectivity to the dependent services, which in turn mitigated the downstream impact once the dependent services were restored.",
+            "troubleshooting": {
+                "1": "health monitoring indicated that several physical host nodes in the scale unit had reached a threshold for high memory utilization, which resulted in those host nodes moving to a state for repair.",
+                "2": "SQL DB and Compute engineering teams worked to restore these services and nodes in the scale unit.",
+                "3": "Manually applying the repair to these nodes was successful, after which, the cluster fabric and SQL DB services were able to recover, mitigating the issue.",
+                "4": "A repair item has been created to address this conflict in recovery. "
+            }
+        },
+        "propagation pass": {
+            "1": "physical host nodes",
+            "2": "Service Fabric seed nodes",
+            "3": "Azure SQL DB"
+        },
+        "refined path": {
+            "1": "datacenter server",
+            "2": "seed server",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190816": {
+        "title": "RCA - Azure Services - South Central US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+        ],
+        "time": "08/16/2019",
+        "summary": "a subset of customers using resources in South Central US may have experienced difficulties connecting to resources hosted in this region.",
+        "details": "An outage occurred during a regional infrastructure update, which is part of a South Central US datacenter refresh initiative. At approximately 14:00 UTC on 8/16/2019, facility engineers proceeded with removal of infrastructure following a pre-approved method of procedure (MOP). However, an error in fiber trunk validation resulted in production impacting connectivity loss. The loss of these physical links resulted in connectivity issues with a scale unit in the datacenter that hosted several Azure infrastructure services. Mitigation: To mitigate, services with multi-region deployments successfully failed out of the region to minimize impact. Residual impact was mitigated by restoring full fiber connectivity to the affected scale unit and placing it back into production rotation. We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Halt infrastructure refresh projects globally until below repair items are addressed - Complete Method of Procedure (MoP) detailed review as related to infrastructure refresh projects – in progress Improve existing physical infrastructure change management process with additional collaboration & validation between facility and infra engineering - in progress.",
+        "service_name": [
+            "Azure infrastructure services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 440,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "component removal"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "An outage occurred during a regional infrastructure update, which is part of a South Central US datacenter refresh initiative. At approximately 14:00 UTC on 8/16/2019, facility engineers proceeded with removal of infrastructure following a pre-approved method of procedure (MOP). However, an error in fiber trunk validation resulted in production impacting connectivity loss. The loss of these physical links resulted in connectivity issues with a scale unit in the datacenter that hosted several Azure infrastructure services."
+        },
+        "operation": [
+            "update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": "",
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "failed out of the region",
+                "restore full fiber connectivity",
+                "Halt infrastructure refresh projects"
+            ],
+            "details": "To mitigate, services with multi-region deployments successfully failed out of the region to minimize impact. Residual impact was mitigated by restoring full fiber connectivity to the affected scale unit and placing it back into production rotation.",
+            "troubleshooting": {
+                "1": "Cannot connect Azure services",
+                "2": "check Method of Procedure (MOP) records",
+                "3": "an error in fiber trunk"
+            }
+        },
+        "propagation pass": {
+            "1": "fiber trunk",
+            "2": "scale unit",
+            "3": "data center",
+            "4": "Azure infrastructure services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "storage scale unit",
+            "3": "data center",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190823": {
+        "title": "RCA - Service Management Operations - West/North Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+        ],
+        "time": "08/23/2019",
+        "summary": "a subset of customers in North Europe and West Europe may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in these regions.",
+        "details": "During this incident, the memory consumption on Azure Resource Manager’s (ARM) worker roles exceeded operational thresholds. This should have initiated a clearing process which attempts to recover additional memory when thresholds are reached. However, the memory cache was unrecoverable at the time given that it was referenced by other (active) objects in the system. CPU utilization on the affected worker roles also increased, which in turn prevented certain processes from completing.Analysis has indicated that all threads on the affected worker roles were busy during the impact window, thus manifesting in impact to service management operations to ARM-dependent services and/or resources. In addition, worker roles recycle on a weekly cadence which, in this scenario, further contributed to thresholds being reached. The nature of the issue required manual intervention to fully mitigate, which further delayed mitigation.Mitigation: Engineers performed a manual restart of the affected worker roles to mitigate the issue. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this included (but was not limited to): Automatically recycling worker roles on a more frequent cadence Separating distinct cache types Adding enhanced logging information to understand memory cache usage in worker roles [In Progress] Reducing cache footprint",
+        "service_name": [
+            "Azure Resource Manager",
+            "ARM dependent services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 266,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate",
+                    "failure notifications"
+                ]
+            },
+            {
+                "system kpi": [
+                    "CPU utilization",
+                    "memory utilization"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource",
+                    "layer-3": "memory"
+                }
+            ],
+            "details": "During this incident, the memory consumption on Azure Resource Manager’s (ARM) worker roles exceeded operational thresholds. This should have initiated a clearing process which attempts to recover additional memory when thresholds are reached. However, the memory cache was unrecoverable at the time given that it was referenced by other (active) objects in the system. CPU utilization on the affected worker roles also increased, which in turn prevented certain processes from completing. Analysis has indicated that all threads on the affected worker roles were busy during the impact window, thus manifesting in impact to service management operations to ARM-dependent services and/or resources. In addition, worker roles recycle on a weekly cadence which, in this scenario, further contributed to thresholds being reached. The nature of the issue required manual intervention to fully mitigate, which further delayed mitigation."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": "",
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restart affected worker",
+                "recycle memory more frequently",
+                "Separate distinct cache",
+                "Add enhanced log",
+                "Reduce cache footprint"
+            ],
+            "details": "Engineers performed a manual restart of the affected worker roles to mitigate the issue, Automatically recycling worker roles on a more frequent cadence Separating distinct cache types, Adding enhanced logging information to understand memory cache usage in worker roles, Reducing cache footprint",
+            "troubleshooting": {
+                "1": "the memory consumption on Azure Resource Manager’s (ARM) worker roles exceeded operational thresholds",
+                "2": "CPU utilization on the affected worker roles also increased, which in turn prevented certain processes from completing.",
+                "3": "all threads on the affected worker roles were busy during the impact window",
+                "4": "worker roles recycle on a weekly cadence which, in this scenario, further contributed to thresholds being reached."
+            }
+        },
+        "propagation pass": {
+            "1": "Azure Resource Manager",
+            "2": "ARM-dependent services and/or resources"
+        },
+        "refined path": {
+            "1": "app",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verificatio": "lixy, yugb"
+    },
+    "azure-20190828": {
+        "title": "Azure Email Alerts - Mitigated",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+        ],
+        "time": "08/28/2019",
+        "summary": "Between 20:22 UTC on 28 Aug 2019 and 01:35 UTC on 29 Aug 2019, a subset of customers may not have received email alerts sent from a subset of Azure services during the impact window",
+        "details": "Engineers determined that instances of a backend email processing service became unhealthy during platform maintenance. This prevented requests from completing successfully, causing impact to downstream services. Mitigation: Engineers halted the maintenance and validated the service health to mitigate the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.",
+        "service_name": [
+            "backend email processing service",
+            "email service"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 313,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "Engineers determined that instances of a backend email processing service became unhealthy during platform maintenance. This prevented requests from completing successfully, causing impact to downstream services."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": "",
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "stop maintenance"
+            ],
+            "details": "Engineers halted the maintenance and validated the service health to mitigate the issue",
+            "troubleshooting": {
+                "1": "Halted the platform maintenance",
+                "2": "Validate the service health"
+            }
+        },
+        "propagation pass": {
+            "1": "instances of a backend email processing service",
+            "2": "email alerts service"
+        },
+        "refined path": {
+            "1": "backend instances",
+            "2": "backend services",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    }
+}

@@ -1,0 +1,35 @@
+Both prometheus@ops servers in eqiad simultaneously began allocating RAM at a prodigious pace until they were OOM-killed. The resulting monitoring artifacts created caused several SREs to believe some sort of network outage / lost traffic happened at eqiad. Prometheus returned to seemingly-normal operation a few minutes after being restarted by systemd.
+
+It is unclear why the global prometheuses seemed to record bad data for the interval after restart.
+
+The stack trace dumped by one of the prometheuses seems to suggest that enormous queries are to blame for the OOM.
+
+As it turns out, loading the Kafka dashboard with 90 days of history will almost OOM the Prometheuses by itself -- refreshing the dashboard once with the first round of queries still in-flight will certainly do it.
+
+Some SREs lost some time, some time intervals have inaccurate metrics
+
+Pseudo-automated: the "traffic drop" Icinga alert fired, and the monitoring artifacts generated looked real enough that SREs were led astray for 30-45 minutes.
+• 20:33:58: first requests seen on for the Kafka dashboard with 90 days of history
+• 20:34: CPU utilization sharply increases and RAM consumption begins increasing at ~11GB/minute on both prometheus1003 and prometheus1004
+• 20:41:49: prometheus1004 prometheus@ops logs "fatal error: runtime: out of memory" and dumps a stack trace
+• 20:45: first sign of traffic drop monitoring artifacts on global prometheus instances
+• 20:48: "detection" by Icinga: PROBLEM - Varnish traffic drop between 30min ago and now at eqiad on icinga1001 is CRITICAL: 39.71 le 60
+
+Apache logs of long-running queries near the time of the incident:
+
+What weaknesses did we learn about and how can we address them?
+
+The following sub-sections should have a couple brief bullet points each.
+
+What went well?
+• proximate cause was easy to find in the Apache logs on prometheus & grafana machines
+• no good dashboard for meta-metrics about Prometheus internals (there is a dashboard but it is not good)
+• the default limits in place in Prometheus don't seem to be good enough at our scale?
+
+Where did we get lucky?
+• while prometheus ate up a ton of RAM and OOMed, it did so only once, not repeatedly
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+• Roll out prometheus query limits (on CPU time, or RSS, or max tsdb points?) T222105 Done
+• After the above is completed: figure out what's so Prometheus-intensive about the Kafka dashboard and fix it T222112 Done
+• Explicit IRC alerting for prometheus OOMs and other restarts, even if just to know to be wary of monitoring artifacts? T222108 Done

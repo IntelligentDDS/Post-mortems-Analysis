@@ -1,0 +1,171 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google App Engine](/incident/appengine/15020)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google App Engine Incident #15020
+
+Google App Engine Search API errors and latency
+
+Incident began at **2015-08-12 11:05** and ended at **2015-08-12 11:46** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 13, 2015 | 16:30 |
+
+SUMMARY:
+
+On Wednesday, 12 August 2015, the Search API for Google App Engine experienced
+increased latency and errors for 40 minutes. We apologize for this incident
+and the effect it had on applications using the Search API. We strive for
+excellent performance and uptime, so we will take appropriate actions right
+away to improve the Search API’s availability.
+
+If you believe your paid application experienced an SLA violation as a result
+of this incident, please contact us at:
+<https://support.google.com/cloud/answer/3420056>
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Wednesday, 12 August 2015 from 11:05am to 11:45am PDT, the Search API
+service experienced an increase in latency and error rate. 8.7% of
+applications using the Search API received a 7.5% error rate with messages
+like: “Timeout: Failed to complete request in NNNNms”
+
+ROOT CAUSE:
+
+A set of queries sent to a Google-owned service running on App Engine caused
+the Search API service to fail.
+
+REMEDIATION AND PREVENTION:
+
+At 10:28, Google engineers were automatically alerted to increasing latency in
+the Search API backend, but at this point, customers were not impacted. At
+11:05, the increasing latency started causing Search API timeouts. Once the
+cause of the latency increase was discovered, the relevant user was isolated
+from other customers, ending the incident at 11:45.
+
+The Search API team is implementing mitigation and monitoring changes as a
+result of this incident, which include changes to the API backend to isolate
+the impact of similar issues and improved monitoring to reduce the time taken
+to detect and isolate problematic workloads for the Search API.  
+  
+|
+
+SUMMARY:
+
+On Wednesday, 12 August 2015, the Search API for Google App Engine experienced
+increased latency and errors for 40 minutes. We apologize for this incident
+and the effect it had on applications using the Search API. We strive for
+excellent performance and uptime, so we will take appropriate actions right
+away to improve the Search API’s availability.
+
+If you believe your paid application experienced an SLA violation as a result
+of this incident, please contact us at:
+<https://support.google.com/cloud/answer/3420056>
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Wednesday, 12 August 2015 from 11:05am to 11:45am PDT, the Search API
+service experienced an increase in latency and error rate. 8.7% of
+applications using the Search API received a 7.5% error rate with messages
+like: “Timeout: Failed to complete request in NNNNms”
+
+ROOT CAUSE:
+
+A set of queries sent to a Google-owned service running on App Engine caused
+the Search API service to fail.
+
+REMEDIATION AND PREVENTION:
+
+At 10:28, Google engineers were automatically alerted to increasing latency in
+the Search API backend, but at this point, customers were not impacted. At
+11:05, the increasing latency started causing Search API timeouts. Once the
+cause of the latency increase was discovered, the relevant user was isolated
+from other customers, ending the incident at 11:45.
+
+The Search API team is implementing mitigation and monitoring changes as a
+result of this incident, which include changes to the API backend to isolate
+the impact of similar issues and improved monitoring to reduce the time taken
+to detect and isolate problematic workloads for the Search API.  
+  
+| Aug 12, 2015 | 12:50 |
+
+The issue with App Engine Search API should be resolved for all affected apps
+as of 11:46 US/Pacific. We will conduct an internal investigation of this
+issue and make appropriate improvements to our systems to prevent or minimize
+future recurrence. We will provide a more detailed analysis of this incident
+once we have completed our internal investigation.  
+  
+|
+
+The issue with App Engine Search API should be resolved for all affected apps
+as of 11:46 US/Pacific. We will conduct an internal investigation of this
+issue and make appropriate improvements to our systems to prevent or minimize
+future recurrence. We will provide a more detailed analysis of this incident
+once we have completed our internal investigation.  
+  
+| Aug 12, 2015 | 12:12 |
+
+The issue with App Engine Search API Timeouts should be resolved as of 12:00
+US/Pacific. Our internal investigation is in progress and at this point cannot
+be certain that the issue cannot re-occur. We will post a further update by
+13:00 as we work towards declaring the incident fully over.  
+  
+|
+
+The issue with App Engine Search API Timeouts should be resolved as of 12:00
+US/Pacific. Our internal investigation is in progress and at this point cannot
+be certain that the issue cannot re-occur. We will post a further update by
+13:00 as we work towards declaring the incident fully over.  
+  
+| Aug 12, 2015 | 12:00 |
+
+We are experiencing an issue with App Engine Search API requests timing out
+beginning at Wednesday, 2015-08-12 11:05 US/Pacific. You may see requests
+timing out or returning successfully with increased latency.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 13:00 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an issue with App Engine Search API requests timing out
+beginning at Wednesday, 2015-08-12 11:05 US/Pacific. You may see requests
+timing out or returning successfully with increased latency.
+
+For everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 13:00 US/Pacific with current
+details.  
+  
+| Aug 12, 2015 | 11:48 |
+
+We are investigating reports of an issue with Google App Engine Datastore. We
+will provide more information by 12:00 US/Pacific.  
+  
+|
+
+We are investigating reports of an issue with Google App Engine Datastore. We
+will provide more information by 12:00 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

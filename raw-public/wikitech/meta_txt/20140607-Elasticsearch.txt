@@ -1,0 +1,13 @@
+Search requests powered by CirrusSearch slowed down and sometimes reported "temporary errors". Cirrus provides search for most wikis but not most large wikipedias and commons. It does provide search for Italian wikipedia, Catalan wikipedia, all wiktionaries, wikisources, wikivoyages, etc.
+
+2014-06-06 ~1900 UTC (Friday afternoon (not a good start to the story)) we added elastic1017 to the Elasticsearch cluster - its an old geo box. It immediately came under reasonably high io wait which is somewhat expected because it was restoring shards to itself. I didn't think it was a problem. <Intervening time> As shards trasferred to it it started serving requests more slowly. 2014-06-07 ~1930 UTC I received a voicemail about searches complaining of "temporary problems". 2014-06-07 ~2000 UTC I got home and discovered that elastic1017 was thrashing its disks. I shut down some long running processes which didn't help. Then I removed the node from the Elasticsearch cluster. The slow queries immediately stopped.
+
+Sorry for the inexact times!
+• Cirrus was using SSDs!
+• Why didn't we know? That's not clear. Obviously some communication breakdown.
+• Status: on going - Don't ever deploy stuff on Friday afternoon.
+• Status: informational - Cirrus was using SSDs!
+• Why didn't we know? That's not clear. Obviously some communication breakdown.
+• Short term: we're going to continue using SSDs.
+• Long term: we don't actually look like we're doing much IO at once at steady state. When shards move around we obviously need more. We might be able to avoid needing expensive ssds. OTOH, it might not be worth the time. Not sure.
+• Status: Done - We're going to have to file a bug upstream to do something about nodes that are *broken* like this one. We've had this issue before when we built a node from puppet and didn't set the memory correctly and it ran out of heap and started running really really slow. The timeouts we added then helped search limp along with the broken node, but it'd be nice to do something automatically to the node that is obviously sick.

@@ -1,0 +1,9 @@
+The planned switch of the filesystem underlying the Labs NFS service unexpectedly caused instances running Ubuntu Precise to require rebooting rather than a simple filesystem remount as expected. As a consequence, a large number of Labs projects (including Tool Labs) were negatively impacted during diagnosis and restart of those instances. In addition, the large number of instances being restarted caused the Labs virtualization infrastructure to overload, slowing recovery down.
+
+Normal operation returned around 22h UTC for Tool Labs, and Labs generally around 00h UTC, with minor issues remaining consistent with a Labs-wide outage that were gradually fixed as they were reported. The rsync did cause another outage a few hours later, however.
+
+The outage to Precise instances seems to have been unavoidable, but if that configuration had been tested we might have been to plan for it and schedule a proper maintenance window for the restarts as opposed to having to recover from an unplanned outage.
+• Create a method to schedule restart of instances in a way that cannot overload virtualization hosts by staggering them https://phabricator.wikimedia.org/T94613
+• Create 'checklists' for all planned maintenance that we should be followed. https://phabricator.wikimedia.org/T94608
+• Make certain to include all extant OS flavors when testing a planned change to the infrastructure. While all new installs are Trusty and Jessie, there remains a number of other releases that may react differently in the fleet. (Should be part of checklist)
+• Schedule a lot more time for any planned maintenance on NFS, no matter how trivial (should be part of checklist)

@@ -1,0 +1,10 @@
+Typo in MediaWiki config change took all of the wikis down for around a minute.
+
+Times are approximate and based on Alex's IRC logs.
+• 23:37:35 Alex merges , to change mw:Extension:WikidataPageBanner config to include all namespaces on ruwikivoyage
+• The change is not ideal, but looks harmless enough and passes automated checks (e.g. syntax)...
+• 23:38:34 First report of fatals in #wikimedia-operations from MaxSem, users begin to notice in other channels
+• There are exactly two 'r's in .
+• Adding an extra r ( ) will form a valid PHP function name so passes a PHP syntax check.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.

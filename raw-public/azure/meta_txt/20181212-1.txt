@@ -1,0 +1,5 @@
+Log Analytics - East US
+Summary of impact: Between 08:00 and 15:50 UTC on 12 Dec 2018, customers using Log Analytics in East US may have experienced delays in metrics data ingestion.
+Preliminary root cause: Engineers determined that several service dependent web roles responsible for processing data became unhealthy, causing a data ingestion backlog.
+Mitigation: Engineers manually rerouted data traffic to backup roles to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause for why the service instances became unhealthy. To stay informed on any issues, maintenance events, or advisories, create service health alerts (https://www.aka.ms/ash-alerts) and you will be notified via your preferred communication channel(s): email, SMS, webhook, etc.

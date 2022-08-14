@@ -1,0 +1,21 @@
+During deployment of a patch for mediawiki/core@wmf/1.31.0-wmf.23, the deployer found out the difference between HEAD the origin/wmf/1.31.0-wmf.23 had too many commits. That prompted for an immediate halt.
+
+The root cause has been determined to be the commit from master being sent for review to the wmf branch. In such a case, Gerrit will implicitly merge master into wmf branch. The Gerrit UI was not showing that and when the patch got merged the master branch made it to the wmf branch.
+• Mar 05 - CR for mediawiki-core submitted and merged into the master branch
+• Mar 06 13:18 UTC - The change cherry-picked from the master branch to wmf/1.31.0-wmf.23 branch with CR and merged. Gerrit implicitly merged all the ancestors of the commit from master branch to wmf/1.31.0-wm.23 branch
+• Mar 06 13:18 UTC Attempt to deploy revealed that the diff is too big and deploy was halted.
+• Mar 06 14:46 UTC A revert of the erroneous commit created and merged, the state of gerrit returns back to normal.
+• Deployer followed the documentation ( ) and properly halted on the first oddity
+• Gerrit is being too helpful
+
+The reason behind is:
+
+Given a git tree such as:
+
+One is locally on the master branch and does a . Gerrit will create a new change Y that implicitly merge master into the wmf branch:
+
+The Gerrit GUI fails to reflect that the new change (Z) is a merge commit. One can tell though since the parent commit will be B from the master branch.
+
+When Z is submitted the master branch ends up having been merged in wmf since B and C got already merged in master.
+
+Gerrit 2.13 offers the option to prevent that implict merge. From | Gerrit 2.13 release notes :

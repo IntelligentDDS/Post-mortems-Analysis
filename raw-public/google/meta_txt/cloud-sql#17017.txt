@@ -1,0 +1,215 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+August 29, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud SQL](/incident/cloud-sql/17017)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud SQL Incident #17017
+
+Cloud SQL connectivity issue in Europe-West1
+
+Incident began at **2017-08-15 17:20** and ended at **2017-08-15 20:55** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 29, 2017 | 13:00 |
+
+ISSUE SUMMARY
+
+On Tuesday 15 August 2017, Google Cloud SQL experienced issues in the europe-
+west1 zones for a duration of 3 hours and 35 minutes. During this time, new
+connections from Google App Engine (GAE) or Cloud SQL Proxy would timeout and
+return an error. In addition, Cloud SQL connections with ephemeral certs that
+had been open for more than one hour timed out and returned an error. We
+apologize to our customers whose projects were affected – we are taking
+immediate action to improve the platform’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday 15 August 2017 from 17:20 to 20:55 PDT, 43.1% of Cloud SQL
+instances located in europe-west1 were unable to be managed with the Google
+Cloud SQL Admin API to create or make changes. Customers who connected from
+GAE or used the Cloud SQL Proxy (which includes most connections from Google
+Container Engine) were denied new connections to their database.
+
+ROOT CAUSE
+
+The issue surfaced through a combination of a spike in error rates internal to
+the Cloud SQL service and a lack of available resources in the Cloud SQL
+control plane for europe-west1.
+
+By way of background, the Cloud SQL system uses a database to store metadata
+for customer instances. This metadata is used for validating new connections.
+Validation will fail if the load on the database is heavy.
+
+In this case, Cloud SQL’s automatic retry logic overloaded the control plane
+and consumed all the available Cloud SQL control plane processing in europe-
+west1. This in turn made the Cloud SQL Proxy and front end client server
+pairing reject connections when ACLs and certificate information stored in the
+Cloud SQL control plane could not be accessed.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were paged at 17:20 when automated monitoring detected an
+increase in control plane errors. Initial troubleshooting steps did not
+sufficiently isolate the issue and reduce the database load. Engineers then
+disabled non-critical control plane services for Cloud SQL to shed load and
+allow the service to catch up. They then began a rollback to the previous
+configuration to bring back the system to a healthy state.
+
+This issue has raised technical issues which hinder our intended level of
+service and reliability for the Cloud SQL service. We have begun a thorough
+investigation of similar potential failure patterns in order to avoid this
+type of service disruption in the future. We are adding additional monitoring
+to quickly detect metadata database timeouts which caused the control plane
+outage. We are also working to make the Cloud SQL control plane services more
+resilient to metadata database latency by making the service not directly call
+the database for connection validation.
+
+We realize this event may have impacted your organization and we apologize for
+this disruption. Thank you again for your business with Google Cloud SQL.  
+  
+|
+
+ISSUE SUMMARY
+
+On Tuesday 15 August 2017, Google Cloud SQL experienced issues in the europe-
+west1 zones for a duration of 3 hours and 35 minutes. During this time, new
+connections from Google App Engine (GAE) or Cloud SQL Proxy would timeout and
+return an error. In addition, Cloud SQL connections with ephemeral certs that
+had been open for more than one hour timed out and returned an error. We
+apologize to our customers whose projects were affected – we are taking
+immediate action to improve the platform’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday 15 August 2017 from 17:20 to 20:55 PDT, 43.1% of Cloud SQL
+instances located in europe-west1 were unable to be managed with the Google
+Cloud SQL Admin API to create or make changes. Customers who connected from
+GAE or used the Cloud SQL Proxy (which includes most connections from Google
+Container Engine) were denied new connections to their database.
+
+ROOT CAUSE
+
+The issue surfaced through a combination of a spike in error rates internal to
+the Cloud SQL service and a lack of available resources in the Cloud SQL
+control plane for europe-west1.
+
+By way of background, the Cloud SQL system uses a database to store metadata
+for customer instances. This metadata is used for validating new connections.
+Validation will fail if the load on the database is heavy.
+
+In this case, Cloud SQL’s automatic retry logic overloaded the control plane
+and consumed all the available Cloud SQL control plane processing in europe-
+west1. This in turn made the Cloud SQL Proxy and front end client server
+pairing reject connections when ACLs and certificate information stored in the
+Cloud SQL control plane could not be accessed.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were paged at 17:20 when automated monitoring detected an
+increase in control plane errors. Initial troubleshooting steps did not
+sufficiently isolate the issue and reduce the database load. Engineers then
+disabled non-critical control plane services for Cloud SQL to shed load and
+allow the service to catch up. They then began a rollback to the previous
+configuration to bring back the system to a healthy state.
+
+This issue has raised technical issues which hinder our intended level of
+service and reliability for the Cloud SQL service. We have begun a thorough
+investigation of similar potential failure patterns in order to avoid this
+type of service disruption in the future. We are adding additional monitoring
+to quickly detect metadata database timeouts which caused the control plane
+outage. We are also working to make the Cloud SQL control plane services more
+resilient to metadata database latency by making the service not directly call
+the database for connection validation.
+
+We realize this event may have impacted your organization and we apologize for
+this disruption. Thank you again for your business with Google Cloud SQL.  
+  
+| Aug 15, 2017 | 21:26 |
+
+The issue with Cloud SQL connectivity affecting connections from App Engine
+and connections using the Cloud SQL Proxy in europe-west1 has been resolved
+for all affected projects as of 20:55 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to help prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+|
+
+The issue with Cloud SQL connectivity affecting connections from App Engine
+and connections using the Cloud SQL Proxy in europe-west1 has been resolved
+for all affected projects as of 20:55 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to help prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+| Aug 15, 2017 | 20:35 |
+
+We are continuing to experience an issue with Cloud SQL connectivity,
+affecting only connections from App Engine and connections using the Cloud SQL
+Proxy, beginning at Tuesday, 2017-08-15 17:20 US/Pacific. Current
+investigation indicates that instances running in Europe-West1 are affected by
+this issue. Engineering is currently working on mitigating the situation. We
+will provide an update by 22:00 US/Pacific with current details.  
+  
+|
+
+We are continuing to experience an issue with Cloud SQL connectivity,
+affecting only connections from App Engine and connections using the Cloud SQL
+Proxy, beginning at Tuesday, 2017-08-15 17:20 US/Pacific. Current
+investigation indicates that instances running in Europe-West1 are affected by
+this issue. Engineering is currently working on mitigating the situation. We
+will provide an update by 22:00 US/Pacific with current details.  
+  
+| Aug 15, 2017 | 19:35 |
+
+We are continuing to experience an issue with Cloud SQL connectivity beginning
+at Tuesday, 2017-08-15 17:20 US/Pacific. Current investigation indicates that
+instances running in Europe-West1 are affected by this issue. Engineering is
+currently working on mitigating the situation. We will provide an update by
+20:30 US/Pacific with current details.  
+  
+|
+
+We are continuing to experience an issue with Cloud SQL connectivity beginning
+at Tuesday, 2017-08-15 17:20 US/Pacific. Current investigation indicates that
+instances running in Europe-West1 are affected by this issue. Engineering is
+currently working on mitigating the situation. We will provide an update by
+20:30 US/Pacific with current details.  
+  
+| Aug 15, 2017 | 18:56 |
+
+We are experiencing an issue with Cloud SQL connectivity beginning at Tuesday,
+2017-08-15 17:20 US/Pacific. Current investigation indicates that instances
+running in Europe-West1 are affected by this issue. For everyone who is
+affected, we apologize for any inconvenience you may be experiencing. We will
+provide an update by 19:30 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with Cloud SQL connectivity beginning at Tuesday,
+2017-08-15 17:20 US/Pacific. Current investigation indicates that instances
+running in Europe-West1 are affected by this issue. For everyone who is
+affected, we apologize for any inconvenience you may be experiencing. We will
+provide an update by 19:30 US/Pacific with current details.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

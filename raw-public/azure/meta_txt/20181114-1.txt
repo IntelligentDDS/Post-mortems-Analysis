@@ -1,0 +1,4 @@
+Azure DevTest Labs - Mitigated
+Summary of impact: Between 20:29 and 22:28 UTC on 14 Nov 2018, a subset of customers using Azure DevTest Labs may have received failure notifications when attempting to access their Labs via the Azure Portal.
+Preliminary root cause: Engineers determined that a recent deployment task contained an update which caused calls to an internal API to fail. Mitigation: Engineers rolled back the recent deployment task to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

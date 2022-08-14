@@ -1,0 +1,15 @@
+On Monday August 10th, Otto and Joal started a second attempt to upgrade Kafka from 0.8.1.1 to 0.8.2.1. The migration plan followed is here: https://etherpad.wikimedia.org/p/kafka_0.8.2.1_migration2 . The incident was caused by step 2 in that plan, specifically by an unforeseen bug in the version of snappy-java that Kafka 0.8.2.1 specified.
+
+See also https://phabricator.wikimedia.org/T106581 and Incident_documentation/20150803-Kafka.
+
+This upgrade started at around 2015-08-10 14:30. It took under 2 hours for all 4 Brokers to be upgraded. We started seeing Kafka metadata timeouts on varnishkafkas, as well as producer errors. Otto suspected that changing request.required.acks from -1 (all replicas) to 1 (only the leader) would help. This was changed at around 22:30. A quick eyeballing of data imported into hadoop seems to show that we lost about 20% of webrequest data between 14:30 and 22:30.
+
+request.required.acks = 1 helped with varnishkafka message production issues, but it manifested a second problem. ISRs started flapping, as replicas could not keep up with incoming data. Kafka message production was working at this point, but the cluster was not stable. It was getting late, so Otto went to sleep. In the morning, with fresh minds, we realized that the actual data sizes that Kafka was writing to disk was around 4 times larger than when we were running 0.8.1.1. Otto emailed the kafka user group and asked if anyone had similar problems. A user referred us to this bug: https://issues.apache.org/jira/browse/KAFKA-2189. The version of snappy that 0.8.2.1 uses incorrectly batches data to compress, causing messages to be compressed individually. This effectively quadrupled the amount of data that Kafka had to replicate and save around the cluster, and the replicas we have now could not keep up.
+
+We applied the snappy fix to analytics1022 and restarted the broker, even though it was the leader for partitions that did not have any in sync replicas. This caused an unknown amount dataloss for the partitions for which analytics1022 was the leader. The newer snappy version showed reduce data sizes and reduced disk and network I/O. About this time, peak traffic was starting to subside, and it seemed clear that other replicas would be able to catch up. We waited until each other broker had a replica for each of its lead partitions, and then applied the fix. Kafka 0.8.2.1-3 (with Snappy 1.1.1.7) fix was finally applied on all 4 brokers around 2015-08-12 05:00. At this time, Camus was reenabled and data started being loaded to Hadoop again.
+
+Much testing was done for this migration. However, the load in labs is not significant enough to have manifested this bug. Also, there was no mention of this bug anywhere expect for the JIRA, and it will only arrive in Kafka 0.8.3. I'm not sure how we could have avoided this without a very extensive Kafka staging environment, in which we could replicate load similar to production.
+
+Apache Kafka will be releasing a new version (0.8.2.2) with this bug fixed because of our experience.
+
+We still need to proceed with the Jessie upgrade and Kafka cluster expansion as part of this migration.

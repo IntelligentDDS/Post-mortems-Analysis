@@ -1,0 +1,11 @@
+OCG (offline content generator) was not able to serve user requests (e.g. PDF versions of pages)
+• 20141128T1140 user report on #wikimedia-operations about PDF generation not working, investigation begins
+• 20141128T1147 disk space is suspected to be the root cause, investigation begins on that
+• 20141128T1200 ocg logs on logstash indicate failure while talking to redis, investigation proceeds on that
+• 20141128T1220 it is discovered that ocg configuration ships with a blank password
+• There was user impact on the PDF generation starting 20141125T1537, no pages were issued
+• The alarm for "ocg.svc.eqiad.wmnet" was silenced, and thus didn't fire pages
+• The icinga OCG health check issue WARNING even for CRITICAL issues (e.g. returning HTTP 500, connection refused, etc)
+• OCG disks were almost full, at >90% utilization
+• Permanent silencing alarms for production services is discouraged, if silencing is desired for a given service the "downtime" facility is to be preferred. Downtime will auto-expire after the chosen period and thus lessen these problems.
+• OCG service excessive disk utilization should be checked and automatically reclaimed (e.g. utilization thresholds or date thresholds)

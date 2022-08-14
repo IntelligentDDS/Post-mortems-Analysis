@@ -1,0 +1,17 @@
+An incomplete deploy of the toollabs webservice package caused restarting webservices to not register themselves with the proxy, causing an outage that lasted about 90mins.
+• New toollabs-webservice package gets built and deployed on to all the bastions & webgrid nodes.
+• Yuvi tests it with a few restarts, is happy, goes away
+• Things happening at this point:
+• webservice-runner (which is what the gridengine runs) now has a new parameter (--register-proxy) that is *required* to tell it to register with the proxy.
+• Grid has jobs running that *do not* have this parameter specified
+• This is fine for right then, but as soon as they restart for any reason, they'll use the new webservice-runner script and lose their proxy registration, since the --register-proxy isn't passed
+• For unknown reasons, some or all tools are restarted by webservicemonitor
+• Puppet's ensure => latest is used for deploying toollabs-webservice package, and puppet is stuck on /public/dumps on tools-services-01, which runs webservicemonitor. So even when webservices get restarted by webservicemonitor, they do not get the --register-proxy flag since it's still the old version of the code on tools-service-01 but new version on the gridengine nodes.
+• the qmod -rj run on all webservice nodes exaggerates this problem, since it continues to run them without the --register-proxy parameter, causing them to not register
+• Yuvi updates package on tools-services-01, and deletes all webservice jobs. This causes webservicemonitor to bring them back up by launching new jobs, which do have the --register-proxy flag
+• Tools webservice infrastructure has a number of moving parts that are kinda fragile. The port assignment + proxy registration is particularly so
+• Debian packages + ensure => latest in puppet do not make for a 'deployment system'
+• Puppet staleness / errors should be looked at with more frequency on the tools project
+• Switch to an actual deployment system for toollabs-webservice
+• Reduce probability of unrelated NFS failures causing puppet / other issues (https://phabricator.wikimedia.org/T136222 and others)
+• Better paging for tools webservices being down (Volunteer noticed: T136162)

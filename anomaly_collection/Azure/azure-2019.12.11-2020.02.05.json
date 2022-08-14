@@ -1,0 +1,588 @@
+{
+    "azure-20191211-1": {
+        "title": "RCA - Azure CDN and Azure Kubernetes Service - Service Availability Issue (Tracking ID LTPP-R98)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+        ],
+        "time": "12/11/2019",
+        "summary": "Between 17:24 and 18:48 UTC on 11 Dec 2019, clients of customers attempting to reach Azure CDN from Verizon endpoints would intermittently receive HTTP (5XX) errors or connection failures instead of expected content.​",
+        "details": "Root Cause: Azure CDN providers use staged deployment processes to deploy configuration changes across their global infrastructure Points of Presence (PoPs). A recent change to Verizon's deployment pipeline introduced a latent bug that caused some deployment service health notifications to provide incorrect health status. While Verizon was performing maintenance to resolve a delay in a separate configuration deployment, an improperly encoded configuration file was deployed to production. Due to the aforementioned bug which caused latency in their service health notifications, the regular safety features in their deployment process did not trigger, and allowed the improper configuration to reach global PoPs. This configuration caused service instability across the their global PoPs and resulted in customers receiving HTTP errors (5XX) or connection errors when attempting to reach Azure CDN from Verizon endpoints. Verizon's monitoring caught this issue immediately however, and teams were engaged to resolve the issue. Upon Verizon mitigating the issue, Microsoft services were restored to a healthy state. Mitigation: After determining the root cause to be the improperly encoded configuration file, a new hotfix was developed and deployed globally. After which, the Verizon's global infrastructure began recovering. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps with our partners to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Review all service change management processes and practices to ensure that all health check mechanisms are monitored and interact correctly with deployment staging. Add additional validation to maintenance and deployment practices to ensure all configuration deployment paths result in valid configuration. Review all CDN monitoring and alerting services to ensure that all CDN infrastructure availability alerting escalates quickly to Microsoft engineering teams. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/LTPP-R98",
+        "service_name": [
+            "Azure CDN",
+            "Azure Kubernetes Service"
+        ],
+        "impact symptom": [
+            "availability",
+            "instability"
+        ],
+        "duration": 84,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "Verizon's monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "HTTP (5XX) errors",
+                    "connection error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Azure CDN providers use staged deployment processes to deploy configuration changes across their global infrastructure Points of Presence (PoPs). A recent change to Verizon's deployment pipeline introduced a latent bug that caused some deployment service health notifications to provide incorrect health status. While Verizon was performing maintenance to resolve a delay in a separate configuration deployment, an improperly encoded configuration file was deployed to production. Due to the aforementioned bug which caused latency in their service health notifications, the regular safety features in their deployment process did not trigger, and allowed the improper configuration to reach global PoPs. This configuration caused service instability across the their global PoPs and resulted in customers receiving HTTP errors (5XX) or connection errors when attempting to reach Azure CDN from Verizon endpoints. Verizon's monitoring caught this issue immediately however, and teams were engaged to resolve the issue. Upon Verizon mitigating the issue, Microsoft services were restored to a healthy state. "
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy a new hotfix"
+            ],
+            "details": "After determining the root cause to be the improperly encoded configuration file, a new hotfix was developed and deployed globally. After which, the Verizon's global infrastructure began recovering.",
+            "troubleshooting": {
+                "1": "determining the root cause to be the improperly encoded configuration file, ",
+                "2": "a new hotfix was developed and deployed globally.",
+                "3": "the Verizon's global infrastructure began recovering."
+            }
+        },
+        "propagation pass": {
+            "1": "service health notifications",
+            "2": "global infrastructure Points of Presence (PoPs)",
+            "3": "Azure CDN and Azure Kubernetes Service"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "network devices",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191212-1": {
+        "title": "RCA - Connectivity issue for Azure Resources in North America (Tracking ID HKZT-N88)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+        ],
+        "time": "12/12/2019",
+        "summary": "Summary of Impact Between 14:19 and 15:34 UTC on 05 Nov 2019, you were identified as a customer using Azure Databricks who may have intermittently experienced the error 'This URL is temporarily unavailable. Please try again later.' when connecting to Databricks workspaces. ",
+        "details": "Root Cause and Mitigation, Root cause: Engineers identified a routing protocol metric change within an ISP backbone network, which resulted in network connectivity degradation for a limited subset of Azure customers. Instead of sending traffic to Microsoft to the closest interconnection point, the ISP was sending traffic from across US regions to an interconnection point in California, saturating some of the links in California. Mitigation: Engineers brought down the affected peerings between Azure and the ISP and failed over network traffic in order to mitigate the issue. Next Steps We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Work with the ISP to streamline the engagement process for service incidents to help reduce the time to repair issues in the future. Fine tune Azure monitoring and telemetry to more quickly detect and mitigate events of this nature. Create automated remediation of interconnection points suffering from network congestion Provide Feedback Please help us improve the Azure customer communications experience by taking our survey at https://aka.ms/HKZT-N88",
+        "service_name": [
+            "Azure Resources"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 401,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "degraded performance",
+                    "timeout",
+                    "network drop"
+                ]
+            },
+            {
+                "system kpi": [
+                    "routing protocol metric change"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "third-party failures"
+                }
+            ],
+            "details": "Root cause: Engineers identified a routing protocol metric change within an ISP backbone network, which resulted in network connectivity degradation for a limited subset of Azure customers. Instead of sending traffic to Microsoft to the closest interconnection point, the ISP was sending traffic from across US regions to an interconnection point in California, saturating some of the links in California. "
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "bring down the affected peerings",
+                "fail over network traffic"
+            ],
+            "details": "Mitigation: Engineers brought down the affected peerings between Azure and the ISP and failed over network traffic in order to mitigate the issue.",
+            "troubleshooting": {
+                "1": "brought down the affected peerings between Azure and the ISP",
+                "2": "failed over network traffic"
+            }
+        },
+        "propagation pass": {
+            "1": "ISP",
+            "2": "Azure Resources"
+        },
+        "refined path": {
+            "1": "third-party",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20191227-1": {
+        "title": "RCA - Unable to create new resources in Azure Portal (Tracking ID 4_6S-NC8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+        ],
+        "time": "12/27/2019",
+        "summary": "Between 15:02 UTC and 16:22 UTC on 27 Dec 2019, customers using the Azure Portal may have received failure notifications or 404 errors when attempting to create new resources through the Azure Portal due to the Marketplace Blade not loading. Programmatic deployments, such as CLI, PowerShell, and template deployments would have been successful.",
+        "details": "Root Cause: Customers were unable to create new resources in the Azure Portal due to a code change that was introduced which caused a key extension to fail, causing a null- reference within the Marketplace blade. The failure surfaced when a set of dependent static data became stale. Approximately 80% of the tenants issuing create calls through the portal were impacted during the incident. Post mitigation, less than 1% of tenants may have seen errors if the faulty extension was cached in their browser. Mitigation: The incident was mitigated by rolling back the Marketplace extension to a previous build. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Code was checked to remove this specific error, and related code was vetted for similar errors. Extend tests to cover all extension flows. Refactor code to remove null return-values and references to static data. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/4_6S-NC8",
+        "service_name": [
+            "Azure Portal"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 80,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Customers were unable to create new resources in the Azure Portal due to a code change that was introduced which caused a key extension to fail, causing a null-reference within the Marketplace blade. The failure surfaced when a set of dependent static data became stale. Approximately 80% of the tenants issuing create calls through the portal were impacted during the incident. Post mitigation, less than 1% of tenants may have seen errors if the faulty extension was cached in their browser."
+        },
+        "operation": [
+            "code change"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back"
+            ],
+            "details": "The incident was mitigated by rolling back the Marketplace extension to a previous build.",
+            "troubleshooting": {
+                "1": "The incident was mitigated by rolling back the Marketplace extension to a previous build."
+            }
+        },
+        "propagation pass": {
+            "1": "MarketPlace blade",
+            "2": "Azure Portal"
+        },
+        "refined path": {
+            "1": "app",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200120-1": {
+        "title": "RCA - Azure connectivity issues (Tracking ID 0TSQ-TT0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+        ],
+        "time": "01/20/2020",
+        "summary": "Between 15:01 and 16:30 UTC on 20 Jan 2020, a subset of customers in Sweden, Finland, Norway, and Russia may have experienced increased latency or difficulties connecting to Azure services. Impact to customers was based on the location of the customer. Customers in other geographic regions would have continued to be able to access resources during this time.",
+        "details": "Root Cause: Microsoft has numerous 'Edge Sites' on its network which greatly enhance the connectivity experience for Microsoft users in geographic regions where Edge sites exist. Starting at 15:01 UTC on 20th Jan 2020, a multiple fiber-cut event isolated the Stockholm and Helsinki Azure Edge sites, impacting internet traffic routing via these regions to the wider Microsoft network. For resiliency, these edge sites typically have 2 degrees of connectivity, but in this case, both paths went offline at the exact same time. Further investigation determined that the two diverse paths collapsed into the same conduit for a section outside Stockholm, and this is where the cut happened. Traffic to/from the internet towards Microsoft automatically shifted to other Edge sites in Europe, but the change in path and increase in traffic caused longer latency for some customers. Mitigation: Microsoft properties in the impacted regions were asked to migrate to other locations to minimize impact. Once this migration completed, the impact to customers was mitigated. In addition, the Microsoft WAN team procured capacity from a different fiber path to bring the impacted sites back online. All sites were fully operational by 2020-01-21 21:18 UTC. Next Steps: We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Improve the speed at which traffic can be routed to other regions to mitigate the impact. Harden the fiber infrastructure in Stockholm and Helsinki to make it more resilient to multiple fiber cuts. Review of Edge Site connectivity architecture to ensure that there are no other circuit-convergences that inadvertently cause a single point of failure. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/0TSQ-TT0",
+        "service_name": [
+            "Azure services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 89,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "increased latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "Microsoft has numerous ‘Edge Sites’ on its network which greatly enhance the connectivity experience for Microsoft users in geographic regions where Edge sites exist. Starting at 15:01 UTC on 20th Jan 2020, a multiple fiber-cut event isolated the Stockholm and Helsinki Azure Edge sites, impacting internet traffic routing via these regions to the wider Microsoft network. For resiliency, these edge sites typically have 2 degrees of connectivity, but in this case, both paths went offline at the exact same time. Further investigation determined that the two diverse paths collapsed into the same conduit for a section outside Stockholm, and this is where the cut happened. Traffic to/from the internet towards Microsoft automatically shifted to other Edge sites in Europe, but the change in path and increase in traffic caused longer latency for some customers."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "migrate properties",
+                "procur capacity"
+            ],
+            "details": "Microsoft properties in the impacted regions were asked to migrate to other locations to minimize impact. Once this migration completed, the impact to customers was mitigated. In addition, the Microsoft WAN team procured capacity from a different fiber path to bring the impacted sites back online. All sites were fully operational by 2020-01-21 21:18 UTC.",
+            "troubleshooting": {
+                "1": "a multiple fiber-cut event isolated the Stockholm and Helsinki Azure Edge sites",
+                "2": "Microsoft properties in the impacted regions were asked to migrate to other locations to minimize impact.",
+                "3": "In addition, the Microsoft WAN team procured capacity from a different fiber path to bring the impacted sites back online. All sites were fully operational by 2020-01-21 21:18 UTC."
+            }
+        },
+        "propagation pass": {
+            "1": "fiber",
+            "2": "edge sites",
+            "3": "Azure services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "edge",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": 377,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200122-1": {
+        "title": "Service Management Failures for Application Gateway, Azure Bastion, and Azure Firewall (Tracking ID HT3R-990)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+        ],
+        "time": "01/22/2019",
+        "summary": "Between 05:55 UTC on 22 Jan and 00:56 UTC on 23 Jan 2020, a subset of customers using Application Gateway/WAF V2 SKU, Azure Firewall, and Azure Bastion services may have received failure notifications when performing service management operations—such as create/scale, update, and delete.",
+        "details": "Preliminary Root Cause: Engineers determined that a recent deployment task impacted service-to-service communication which resulted in failure of management requests. Mitigation: Engineers deployed a platform hotfix to mitigate the issue. Next Steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation. ",
+        "service_name": [
+            "Application Gateway/WAF V2 SKU",
+            "Azure Firewall",
+            "Azure Bastion services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 1141,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "error rate",
+                    "failure notification"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Engineers determined that a recent deployment task impacted service-to-service communication which resulted in failure of management requests."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "deploy a platform hotfix"
+            ],
+            "details": "Engineers deployed a platform hotfix to mitigate the issue.",
+            "troubleshooting": {
+                "1": "Engineers determined that a recent deployment task impacted service-to-service communication which resulted in failure of management requests.",
+                "2": "Engineers deployed a platform hotfix to mitigate the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "service-to-service communication",
+            "2": "services"
+        },
+        "refined path": {
+            "1": "app",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200124-1": {
+        "title": "RCA - Cross-Region Connectivity Issue - North America (Tracking ID 4_YR-FC8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+        ],
+        "time": "01/24/2020",
+        "summary": "Between 21:03 and 22:28 UTC on 24 Jan 2020, a programming error caused network congestion, dropping around 10% of traffic, and causing high latency for services traversing the network between data centers. A software update on the SWAN (Software enabled Wide Area Network)—Microsoft's backbone network that connects large data center regions together—caused the router forwarding tables to become mis-programmed.",
+        "details": "Root Cause: From 21:03 UTC, the SWAN network was unable to generate and program a working Forwarding Information Base (FIB) into the SWAN routers due to a bad configuration push. Incompatible FIB pushes that caused failure on part of the routers resulted in FIB rollbacks. The incompatible FIB push caused all traffic engineering tunnels on the routers to go down, which made traffic go on the shortest path and resulted in congestion drops in the network of around 10% of traffic. Mitigation: When the incompatible FIB was rolled back to the last known good state, Traffic Engineering worked again, and drops subsided. However, the non-working FIB continued to get generated, and its install/rollback kept causing drops until the configuration change was rolled back. Rollback of the configuration change was slow due to safeguards built into the system. The configuration problem was finally rolled back at 22:28 UTC, completely resolving the traffic drops. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): A correction of the software defect that was introduced that prevented router programming Improving testing of SWAN software deployments with the router firmware Improving SWAN rollback procedures to make the process faster and less error-prone Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/4_YR-FC8",
+        "service_name": [
+            "Software enabled Wide Area Network",
+            "router forwarding table"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 85,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "high latency"
+                ]
+            },
+            {
+                "system kpi": [
+                    "network drop"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "incompatibility"
+                }
+            ],
+            "details": "From 21:03 UTC, the SWAN network was unable to generate and program a working Forwarding Information Base (FIB) into the SWAN routers due to a bad configuration push. Incompatible FIB pushes that caused failure on part of the routers resulted in FIB rollbacks. The incompatible FIB push caused all traffic engineering tunnels on the routers to go down, which made traffic go on the shortest path and resulted in congestion drops in the network of around 10% of traffic."
+        },
+        "operation": [
+            "update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back FIB",
+                "roll back configuration change"
+            ],
+            "details": "When the incompatible FIB was rolled back to the last known good state, Traffic Engineering worked again, and drops subsided. However, the non-working FIB continued to get generated, and its install/rollback kept causing drops until the configuration change was rolled back. Rollback of the configuration change was slow due to safeguards built into the system. The configuration problem was finally rolled back at 22:28 UTC, completely resolving the traffic drops.",
+            "troubleshooting": {
+                "1": "the SWAN network was unable to generate and program a working Forwarding Information Base (FIB) into the SWAN routers due to a bad configuration push",
+                "2": "When the incompatible FIB was rolled back to the last known good state, Traffic Engineering worked again, and drops subsided.",
+                "3": "the non-working FIB continued to get generated, and its install/rollback kept causing drops until the configuration change was rolled back",
+                "4": "The configuration problem was finally rolled back at 22:28 UTC, completely resolving the traffic drops"
+            }
+        },
+        "propagation pass": {
+            "1": "Software enabled Wide Area Network routers",
+            "2": "data center"
+        },
+        "refined path": {
+            "1": "network devices",
+            "2": "data center"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200125-1": {
+        "title": "RCA - SQL Database and dependent services - Service Availability Issues (Tracking ID 5TYQ-DC0)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+        ],
+        "time": "01/25/2020",
+        "summary": "Between 22:00 EST on 24 Jan 2020 and 08:15 EST on 25 Jan 2020, customers in the Azure Government regions may have experienced failures when trying to access Azure SQL Database and Data Warehouse resources or dependent services. Specifically, new connections to databases in these regions may have resulted in an error or timeout, but already established pooled connections continued to work. Some manageability operations such as failovers to geo-redundant regions were also impacted.",
+        "details": "Root cause: Connections to Azure SQL Database and Azure Data Warehouse go through a set of load balanced front-end nodes called gateways. Engineers determined that a recent maintenance activity did not complete successfully which in-turn caused the gateways to hold an incorrect certificate configuration that effectively blocked connections to the associated SQL resources. Mitigation: Engineers mitigated the incorrect configuration by deploying an update to the impacted regions. As the deployment progressed through the regions, partial recovery started at approx. 03:30 EST, followed by full recovery at 08:15 EST on 25 Jan 2020. Next Steps: We sincerely apologize for the impact to the affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and to our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Improve the alerting to help detect incorrect configurations quicker. Improve our preventative processes and resiliency of the Azure SQL Database and Azure SQL Data Warehouse to help avoid these types of service disruptions in the future. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/5TYQ-DC0",
+        "service_name": [
+            "SQL database",
+            "Data Warehouse resources",
+            "dependent services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 615,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection error",
+                    "timeout"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Connections to Azure SQL Database and Azure Data Warehouse go through a set of load balanced front-end nodes called gateways. Engineers determined that a recent maintenance activity did not complete successfully which in-turn caused the gateways to hold an incorrect certificate configuration that effectively blocked connections to the associated SQL resources."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "update configuration"
+            ],
+            "details": "Engineers mitigated the incorrect configuration by deploying an update to the impacted regions. As the deployment progressed through the regions, partial recovery started at approx. 03:30 EST, followed by full recovery at 08:15 EST on 25 Jan 2020.",
+            "troubleshooting": {
+                "1": "Engineers mitigated the incorrect configuration by deploying an update to the impacted regions",
+                "2": "As the deployment progressed through the regions, partial recovery started at approx. 03:30 EST, followed by full recovery at 08:15 EST on 25 Jan 2020."
+            }
+        },
+        "propagation pass": {
+            "1": "gateway(load balanced front-end nodes)",
+            "2": "SQL Database and dependent services"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20200130-1": {
+        "title": "RCA - Authentication issues for Microsoft Government Cloud resources (Tracking ID 0KYQ-PP8)",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+        ],
+        "time": "01/30/2020",
+        "summary": "Between 14:12 and 19:10 EST on 30 Jan 2020, approximately 6% of customers in US Government service regions experienced sign-in failures when attempting to access their resources for Azure Government & Office 365 Government services. Customers outside of US Government service regions were not impacted.",
+        "details": "Root cause: Engineers made back end updates to the application collection representing Microsoft services in Azure Active Directory in production. The application settings of these services are routinely synchronized from Commercial Microsoft Services to their US Government equivalent. There was a code defect in the incremental/delta synchronization pipeline which left the applications in an incorrect state in US Government service regions. As a result, these applications failed to get a token from Azure Active Directory in the US Government service regions and sign-ins for users of those services failed. Mitigation: Engineers performed a full synchronization of applications from the Commercial to US Government environment. After the full synchronization cycle was complete, the application state was fixed and the subsequent sign-in requests were successful. To prevent the manifestation of the bug in the US Government service regions, engineers disabled the task which synchronizes the applications from the Commercial to US Government environment. While the task is disabled, applications are kept in sync by making manual updates in both environments. Next Steps: We sincerely apologize for the impact to the affected customers. We are continuously taking steps to improve the Microsoft Platform and to our processes to help ensure such incidents do not occur in the future. In this case, this included (but was not limited to): Engineers are working to fix the bug in the task before re-enabling the synchronization task. Improve telemetry to more quickly detect and mitigate bugs before they enter the production environment. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/0KYQ-PP8",
+        "service_name": [
+            "US Government service",
+            "Azure Government & Office 365 Government services",
+            "Azure Active Directory"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 298,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Engineers made back end updates to the application collection representing Microsoft services in Azure Active Directory in production. The application settings of these services are routinely synchronized from Commercial Microsoft Services to their US Government equivalent. There was a code defect in the incremental/delta synchronization pipeline which left the applications in an incorrect state in US Government service regions. As a result, these applications failed to get a token from Azure Active Directory in the US Government service regions and sign-ins for users of those services failed."
+        },
+        "operation": [
+            "update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "perform a full synchronization",
+                "disabled the synchronization task",
+                "fix the bug"
+            ],
+            "details": "Engineers performed a full synchronization of applications from the Commercial to US Government environment. After the full synchronization cycle was complete, the application state was fixed and the subsequent sign-in requests were successful. To prevent the manifestation of the bug in the US Government service regions, engineers disabled the task which synchronizes the applications from the Commercial to US Government environment. While the task is disabled, applications are kept in sync by making manual updates in both environments.Engineers are working to fix the bug in the task before re-enabling the synchronization task. Improve telemetry to more quickly detect and mitigate bugs before they enter the production environment.",
+            "troubleshooting": {
+                "1": "Engineers performed a full synchronization of applications from the Commercial to US Government environment. ",
+                "2": "engineers disabled the task which synchronizes the applications from the Commercial to US Government environment. "
+            }
+        },
+        "propagation pass": {
+            "1": "US Government service"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    }
+}

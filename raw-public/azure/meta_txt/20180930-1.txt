@@ -1,0 +1,5 @@
+Multiple Services - Korea South
+Summary of impact: Between 13:50 and 19:10 UTC on 30 Sep 2018, a subset of Storage customers in Korea South may have experienced difficulties connecting to resources hosted in this region. Some services with dependencies on Storage in the region were also impacted.
+Preliminary root cause: Engineers determined that a single storage scale unit experienced impact to a limited subset of its storage resources, and engineers are still investigating the underlying cause.
+Mitigation: Engineers manually restarted the impacted Storage nodes to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

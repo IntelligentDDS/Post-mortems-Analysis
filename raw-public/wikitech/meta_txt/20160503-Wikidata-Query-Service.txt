@@ -1,0 +1,9 @@
+Starting from May 03 2016 around 7:30 UTC, WDQS started to have occasionally increased response time, leading to HTTP 502 errors from Varnish. At that time, WDQS was running on a single server due to a reinstall and data reload in progress. Restarting Blazegraph restored the service. Multiple restart were done over the following days.
+
+The issue was tracked to multiple causes: a known bug in the version of Blazegraph that we use and a file descriptor leak related to Jolokia (monitoring agent).
+• 2016-05-03T12:28 wdqs-updater killed as it seems to leak pipes
+• 2016-05-03T13:01 restarting wdqs-updater and keeping it under close scrutiny
+• Running on 2 servers when maintenance tasks (data reload) can take multiple days is not enough.
+• We were alerted by users, our monitoring is not sufficient.
+• Done: run Jolokia as a Java agent, not attaching and detaching it at each run
+• Done: Deploy new Blazregraph version to fix BLZG-1884

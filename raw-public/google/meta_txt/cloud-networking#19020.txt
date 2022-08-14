@@ -1,0 +1,491 @@
+# [](//cloud.google.com)
+
+July 19, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Networking](/incident/cloud-networking/19020)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support-hub/). Learn more about what's
+posted on the dashboard in [ this
+FAQ](//cloud.google.com/support/docs/dashboard). For additional information on
+these services, please visit [cloud.google.com](//cloud.google.com).
+
+# Google Cloud Networking Incident #19020
+
+We've received a report of an issue with Cloud Networking.
+
+Incident began at **2019-10-22 16:47** and ended at **2019-10-22 21:35** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Oct 31, 2019 | 12:07 |
+
+# ISSUE SUMMARY
+
+On Tuesday 22 October, 2019, Google Compute Engine experienced 100% packet
+loss to and from ~20% of instances in us-west1-b for a duration of 2 hours, 31
+minutes. Additionally, 20% of Cloud Routers, and 6% of Cloud VPN gateways
+experienced equivalent packet loss in us-west1. Specific service impact is
+outlined in detail below. We apologize to our customers whose services or
+businesses were impacted during this incident, and we are taking immediate
+steps to improve the platform’s performance and availability.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday 22 October, 2019 from 16:20 to 18:51 US/Pacific, the Google Cloud
+Networking control plane in us-west1-b experienced failures in programming
+Google Cloud's virtualized networking stack. This means that new or migrated
+instances would have been unable to obtain network addresses and routes,
+making them unavailable Existing instances should have seen no impact;
+however, an additional software bug, triggered by the programming failure,
+caused 100% packet loss to 20% of existing instances in this zone. Impact in
+the us-west1 region for specific services is outlined below:
+
+## Compute Engine
+
+Google Compute Engine experienced 100% packet loss to 20% of instances in us-
+west1-b. Additionally, creation of new instances in this zone failed, while
+existing instances that were live migrated during the incident would have
+experienced 100% packet loss.
+
+## Cloud VPN
+
+Google Cloud VPN experienced failures creating new or modifying existing
+gateways in us-west1. Additionally, 6% of existing gateways experienced 100%
+packet loss.
+
+## Cloud Router
+
+Google Cloud Router experienced failures creating new or modifying existing
+routes in us-west1. Additionally, 20% of existing cloud routers experienced
+100% packet loss.
+
+## Cloud Memorystore
+
+<1% of Google Cloud Memorystore instances in us-west1 were unreachable, and
+operations to create new instances failed. This affected basic tier instances
+and standard tier instances with the primary node in the affected zone. None
+of the affected instances experienced a cache flush, and impacted instances
+resumed normal operations as soon as the network was restored.
+
+## Kubernetes Engine
+
+Google Kubernetes Engine clusters in us-west1 may have reported as unhealthy
+due to packet loss to and from the nodes and master, which may have triggered
+unnecessary node repair operations. ~1% of clusters were affected of which
+most were Zonal clusters in us-west1-b. Some regional clusters in us-west1 may
+have been briefly impacted if the elected etcd leader for the master was in
+us-west1-b, until it was re-elected.
+
+## Cloud Bigtable
+
+Google Cloud Bigtable customers in us-west1-b without high availability
+replication and routing configured, would have experienced a high error rate.
+High Availability configurations had their traffic routed around the impact
+zone, and may have experienced a short period of increased latency.
+
+## Cloud SQL
+
+Google Cloud SQL instances in us-west1 may have been temporarily unavailable.
+~1% of instances were affected during the incident.
+
+# ROOT CAUSE
+
+Google Cloud Networking consists of a software stack which is made up of two
+components, a control plane and data plane. The data plane is where packets
+are processed and routed based on the configuration set up by the control
+plane. Each zone has its own control plane service, and each control plane
+service is sharded such that network programming is spread across multiple
+shards. Additionally, each shard is made up of several leader elected [1]
+processes.
+
+During this incident, a failure in the underlying leader election system
+(Chubby [2]) resulted in components in the control plane losing and gaining
+leadership in short succession. These frequent leadership changes halted
+network programming, preventing VM instances from being created or modified.
+
+Google’s standard defense-in-depth philosophy means that existing network
+routes should continue to work normally when programming fails. The impact to
+existing instances was a result of this defense-in-depth failing: a race
+condition in the code which handles leadership changes caused programming
+updates to contain invalid configurations, resulting in packet loss for
+impacted instances. This particular bug has already been fixed, and a rollout
+of this fix was coincidentally in progress at the time of the outage.
+
+# REMEDIATION AND PREVENTION
+
+Google engineers were alerted to the problem at 16:30 US/Pacific and
+immediately began investigating. Mitigation efforts began at 17:20 which
+involved a combination of actions including rate limits, forcing leader
+election, and redirection of traffic. These efforts gradually reduced the rate
+of packet loss, which eventually led to a full recovery of the networking
+control plane by 18:51.
+
+In order to increase the reliability of Cloud Networking, we will be taking
+these immediate steps to prevent a recurrence:
+
+We will complete the rollout of the fix for the race condition during
+leadership election which resulted in incorrect configuration being
+distributed. We will harden the components which process that configuration
+such that they reject obviously invalid configuration. We will improve
+incident response tooling used in this particular failure case to reduce time
+to recover.
+
+Google is committed to quickly and continually improving our technology and
+operations to prevent service disruptions. We appreciate your patience and
+apologize again for the impact to your organization. We thank you for your
+business.
+
+[1] <https://landing.google.com/sre/sre-book/chapters/managing-critical-
+state/#highly-available-processing-using-leader-election> [2]
+<https://ai.google/research/pubs/pub27897>  
+  
+|
+
+# ISSUE SUMMARY
+
+On Tuesday 22 October, 2019, Google Compute Engine experienced 100% packet
+loss to and from ~20% of instances in us-west1-b for a duration of 2 hours, 31
+minutes. Additionally, 20% of Cloud Routers, and 6% of Cloud VPN gateways
+experienced equivalent packet loss in us-west1. Specific service impact is
+outlined in detail below. We apologize to our customers whose services or
+businesses were impacted during this incident, and we are taking immediate
+steps to improve the platform’s performance and availability.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday 22 October, 2019 from 16:20 to 18:51 US/Pacific, the Google Cloud
+Networking control plane in us-west1-b experienced failures in programming
+Google Cloud's virtualized networking stack. This means that new or migrated
+instances would have been unable to obtain network addresses and routes,
+making them unavailable Existing instances should have seen no impact;
+however, an additional software bug, triggered by the programming failure,
+caused 100% packet loss to 20% of existing instances in this zone. Impact in
+the us-west1 region for specific services is outlined below:
+
+## Compute Engine
+
+Google Compute Engine experienced 100% packet loss to 20% of instances in us-
+west1-b. Additionally, creation of new instances in this zone failed, while
+existing instances that were live migrated during the incident would have
+experienced 100% packet loss.
+
+## Cloud VPN
+
+Google Cloud VPN experienced failures creating new or modifying existing
+gateways in us-west1. Additionally, 6% of existing gateways experienced 100%
+packet loss.
+
+## Cloud Router
+
+Google Cloud Router experienced failures creating new or modifying existing
+routes in us-west1. Additionally, 20% of existing cloud routers experienced
+100% packet loss.
+
+## Cloud Memorystore
+
+<1% of Google Cloud Memorystore instances in us-west1 were unreachable, and
+operations to create new instances failed. This affected basic tier instances
+and standard tier instances with the primary node in the affected zone. None
+of the affected instances experienced a cache flush, and impacted instances
+resumed normal operations as soon as the network was restored.
+
+## Kubernetes Engine
+
+Google Kubernetes Engine clusters in us-west1 may have reported as unhealthy
+due to packet loss to and from the nodes and master, which may have triggered
+unnecessary node repair operations. ~1% of clusters were affected of which
+most were Zonal clusters in us-west1-b. Some regional clusters in us-west1 may
+have been briefly impacted if the elected etcd leader for the master was in
+us-west1-b, until it was re-elected.
+
+## Cloud Bigtable
+
+Google Cloud Bigtable customers in us-west1-b without high availability
+replication and routing configured, would have experienced a high error rate.
+High Availability configurations had their traffic routed around the impact
+zone, and may have experienced a short period of increased latency.
+
+## Cloud SQL
+
+Google Cloud SQL instances in us-west1 may have been temporarily unavailable.
+~1% of instances were affected during the incident.
+
+# ROOT CAUSE
+
+Google Cloud Networking consists of a software stack which is made up of two
+components, a control plane and data plane. The data plane is where packets
+are processed and routed based on the configuration set up by the control
+plane. Each zone has its own control plane service, and each control plane
+service is sharded such that network programming is spread across multiple
+shards. Additionally, each shard is made up of several leader elected [1]
+processes.
+
+During this incident, a failure in the underlying leader election system
+(Chubby [2]) resulted in components in the control plane losing and gaining
+leadership in short succession. These frequent leadership changes halted
+network programming, preventing VM instances from being created or modified.
+
+Google’s standard defense-in-depth philosophy means that existing network
+routes should continue to work normally when programming fails. The impact to
+existing instances was a result of this defense-in-depth failing: a race
+condition in the code which handles leadership changes caused programming
+updates to contain invalid configurations, resulting in packet loss for
+impacted instances. This particular bug has already been fixed, and a rollout
+of this fix was coincidentally in progress at the time of the outage.
+
+# REMEDIATION AND PREVENTION
+
+Google engineers were alerted to the problem at 16:30 US/Pacific and
+immediately began investigating. Mitigation efforts began at 17:20 which
+involved a combination of actions including rate limits, forcing leader
+election, and redirection of traffic. These efforts gradually reduced the rate
+of packet loss, which eventually led to a full recovery of the networking
+control plane by 18:51.
+
+In order to increase the reliability of Cloud Networking, we will be taking
+these immediate steps to prevent a recurrence:
+
+We will complete the rollout of the fix for the race condition during
+leadership election which resulted in incorrect configuration being
+distributed. We will harden the components which process that configuration
+such that they reject obviously invalid configuration. We will improve
+incident response tooling used in this particular failure case to reduce time
+to recover.
+
+Google is committed to quickly and continually improving our technology and
+operations to prevent service disruptions. We appreciate your patience and
+apologize again for the impact to your organization. We thank you for your
+business.
+
+[1] <https://landing.google.com/sre/sre-book/chapters/managing-critical-
+state/#highly-available-processing-using-leader-election> [2]
+<https://ai.google/research/pubs/pub27897>  
+  
+| Oct 22, 2019 | 21:35 |
+
+The issue with Cloud Networking has been resolved for all affected projects as
+of Tuesday, 2019-10-22 19:19 US/Pacific.
+
+We will publish analysis of this incident once we have completed our internal
+investigation.
+
+We thank you for your patience while we've worked on resolving the issue.  
+  
+|
+
+The issue with Cloud Networking has been resolved for all affected projects as
+of Tuesday, 2019-10-22 19:19 US/Pacific.
+
+We will publish analysis of this incident once we have completed our internal
+investigation.
+
+We thank you for your patience while we've worked on resolving the issue.  
+  
+| Oct 22, 2019 | 20:23 |
+
+Summary: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage
+
+Description: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage starting around Tuesday, 2019-10-22
+16:47 US/Pacific. Mitigation work has been completed by our Engineering Team
+and services such as Cloud Memorystore, Google Kubernetes Engine, Cloud
+Bigtable and Google Cloud Storage have recovered. We will provide another
+status update by Tuesday. 2019-10-22 23:00 US/Pacific with current details.
+
+Details:
+
+Cloud Networking - Network programming and packet loss levels have recovered,
+but not all jobs have recovered.
+
+Google Compute Engine - Packet loss behavior is starting to recover. There may
+be some remaining stuck VMs that are not reachable by SSH but the engineering
+team is working on fixing this.  
+  
+|
+
+Summary: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage
+
+Description: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage starting around Tuesday, 2019-10-22
+16:47 US/Pacific. Mitigation work has been completed by our Engineering Team
+and services such as Cloud Memorystore, Google Kubernetes Engine, Cloud
+Bigtable and Google Cloud Storage have recovered. We will provide another
+status update by Tuesday. 2019-10-22 23:00 US/Pacific with current details.
+
+Details:
+
+Cloud Networking - Network programming and packet loss levels have recovered,
+but not all jobs have recovered.
+
+Google Compute Engine - Packet loss behavior is starting to recover. There may
+be some remaining stuck VMs that are not reachable by SSH but the engineering
+team is working on fixing this.  
+  
+| Oct 22, 2019 | 19:50 |
+
+Summary: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage
+
+Description: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage starting around Tuesday, 2019-10-22
+16:47 US/Pacific. Mitigation work has been completed by our Engineering Team
+and some services are starting to recover. We will provide another status
+update by Tuesday. 2019-10-22 22:00 US/Pacific with current details.
+
+Details:
+
+Cloud Networking - Network programming and packet loss levels have recovered,
+but not all jobs have recovered.
+
+Google Compute Engine - Packet loss behavior is starting to recover. There may
+be some remaining stuck VMs that are not reachable by SSH but the engineering
+team is working on fixing this.
+
+Cloud Memorystore - Redis instances are recovering in us-west1-b.
+
+Google Kubernetes Engine - Situation has recovered.
+
+Cloud Bigtable - We are still seeing elevated levels of latency and errors in
+us-west1-b. Our engineering team is still working on recovery.
+
+Google Cloud Storage - Services in us-west1-b should be recovering.  
+  
+|
+
+Summary: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage
+
+Description: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage starting around Tuesday, 2019-10-22
+16:47 US/Pacific. Mitigation work has been completed by our Engineering Team
+and some services are starting to recover. We will provide another status
+update by Tuesday. 2019-10-22 22:00 US/Pacific with current details.
+
+Details:
+
+Cloud Networking - Network programming and packet loss levels have recovered,
+but not all jobs have recovered.
+
+Google Compute Engine - Packet loss behavior is starting to recover. There may
+be some remaining stuck VMs that are not reachable by SSH but the engineering
+team is working on fixing this.
+
+Cloud Memorystore - Redis instances are recovering in us-west1-b.
+
+Google Kubernetes Engine - Situation has recovered.
+
+Cloud Bigtable - We are still seeing elevated levels of latency and errors in
+us-west1-b. Our engineering team is still working on recovery.
+
+Google Cloud Storage - Services in us-west1-b should be recovering.  
+  
+| Oct 22, 2019 | 18:33 |
+
+Summary: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage
+
+Description: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage starting around Tuesday, 2019-10-22
+16:47 US/Pacific. Mitigation work is currently underway by our Engineering
+Team. We will provide another status update by Tuesday. 2019-10-22 19:00
+US/Pacific with current details.
+
+Diagnosis:
+
+Cloud Networking - Affected customers will experience packet loss or network
+programming changes fail to complete in us-west1-b.
+
+Google Compute Engine - Unpredictable behavior due to packet loss such as
+failure to SSH to VMs in us-west1-b.
+
+Cloud Memorystore - New instances cannot be created and existing instances
+might not be reachable in us-west1-b.
+
+Google Kubernetes Engine - Regional clusters in us-west1 are impacted, zonal
+clusters in us-west1-b are impacted.
+
+Cloud Bigtable - Elevated latency and errors in us-west1-b.
+
+Google Cloud Storage - Service disruption in us-west1-b.  
+  
+|
+
+Summary: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage
+
+Description: We've received a report of issues with multiple Cloud products
+including Google Compute Engine, Cloud Memorystore, Google Kubernetes Engine,
+Cloud Bigtable and Google Cloud Storage starting around Tuesday, 2019-10-22
+16:47 US/Pacific. Mitigation work is currently underway by our Engineering
+Team. We will provide another status update by Tuesday. 2019-10-22 19:00
+US/Pacific with current details.
+
+Diagnosis:
+
+Cloud Networking - Affected customers will experience packet loss or network
+programming changes fail to complete in us-west1-b.
+
+Google Compute Engine - Unpredictable behavior due to packet loss such as
+failure to SSH to VMs in us-west1-b.
+
+Cloud Memorystore - New instances cannot be created and existing instances
+might not be reachable in us-west1-b.
+
+Google Kubernetes Engine - Regional clusters in us-west1 are impacted, zonal
+clusters in us-west1-b are impacted.
+
+Cloud Bigtable - Elevated latency and errors in us-west1-b.
+
+Google Cloud Storage - Service disruption in us-west1-b.  
+  
+| Oct 22, 2019 | 17:36 |
+
+Description: We are experiencing an issue with Cloud Networking in us-west1.
+Our engineering team continues to investigate the issue. We will provide an
+update by Tuesday, 2019-10-22 17:41 US/Pacific with current details. We
+apologize to all who are affected by the disruption.
+
+Diagnosis: Affected customers will experience network programming changes fail
+to complete in us-west1-b.
+
+Workaround: None at this time.  
+  
+|
+
+Description: We are experiencing an issue with Cloud Networking in us-west1.
+Our engineering team continues to investigate the issue. We will provide an
+update by Tuesday, 2019-10-22 17:41 US/Pacific with current details. We
+apologize to all who are affected by the disruption.
+
+Diagnosis: Affected customers will experience network programming changes fail
+to complete in us-west1-b.
+
+Workaround: None at this time.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

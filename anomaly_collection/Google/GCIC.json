@@ -1,0 +1,428 @@
+{
+  "google-gcic-20003": {
+    "title": "Google Cloud Infrastructure Components Incident #20003",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCIC/Google%20Cloud%20Infrastructure%20Components%20Incident%20%2320003.pdf"
+    ],
+    "time": "03/26/2020",
+    "summary": "On Thursday 26 March, 2020 at 16:14 US/Pacific, Cloud IAM experienced elevated error rates which caused disruption across many services for a duration of 3.5 hours, and stale data (resulting in continued disruption in administrative operations for a subset of services) for a duration of 14 hours. Google's commitment to user privacy and data security means that IAM is a common dependency across many GCP services. To our Cloud customers whose business was impacted during this disruption, we sincerely apologize – this is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability. We have conducted an internal investigation and are taking steps to improve the resiliency of our service.",
+    "details": "Root cause: Many Cloud services depend on a distributed Access Control List (ACL) in Identity and Access Management (IAM) for validating permissions, activating new APIs, or creating new cloud resources. These permissions are stored in a distributed database and are heavily cached. Two processes keep the database up-to-date; one real-time, and one batch. However, if the real-time pipeline falls too far behind, stale data is served which may cause impact operations in downstream services. The trigger of the incident was a bulk update of group memberships that expanded to an unexpectedly high number of modified permissions, which generated a large backlog of queued mutations to be applied in real-time. The processing of the backlog was degraded by a latent issue with the cache servers, which led to them running out of memory; this in turn resulted in requests to IAM timing out. The problem was temporarily exacerbated in various regions by emergency rollouts performed to mitigate the high memory usage. REMEDIATION AND PREVENTION: Once the scope of the issue became clear at 2020-03-26 16:35 US/Pacific, Google engineers quickly began looking for viable mitigations. At 17:06, an offine job to build an updated cache was manually started. Additionally, at 17:34, cache servers were restarted with additional memory, along with a configuration change to allow temporarily serving stale data (a snapshot from before the problematic bulk update) while investigation continued; this mitigated the first impact window. A second window of impact began in other regions at 18:49. At 19:13, similar efforts to mitigate with additional memory began, which mitigated the second impact window by 19:42. Additional efforts to fix the stale data continued, and finally the latest o#ine backfill of IAM data was loaded into the cache servers. The remaining time was spent progressing through the backlog of changes, and live data was slowly re-enabled region-by-region to successfully mitigate the staleness globally at 2020-03-27 05:55. Impact: On Thursday 26 March, 2020 from 16:14 to Friday 27 March 2020, 06:20 US/Pacific, Cloud IAM experienced out of date (stale) data, which had varying degrees of impact as described in detail below. Additionally, multiple services experienced bursts of Cloud IAM errors. These spikes were clustered around 16:35 to 17:45, 18:45 to 19:00, and 19:20 to 19:40, however the precise timing for each Cloud region differed. Error rates reached up to 100% in the later two periods as mitigations propagated globally. As a result, many Cloud services experienced concurrent outages in multiple regions, and most regions experienced some impact. Even though error rates recovered after mitigations, Cloud IAM members from Google Groups [1] remained stale until the full incident had been resolved. The staleness varied in severity throughout the incident as new batch processes completed, with an approximate four hour delay at 16:14, up to a 9 hour delay at 21:13. Users directly granted IAM roles were not impacted by stale permissions.",
+    "service_name": [
+      "Google Cloud Identity and Access Management"
+    ],
+    "impact symptom": [
+      "availability",
+      "performance"
+    ],
+    "duration": 881,
+    "detection": {
+      "method": null,
+      "tool": null
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "system kpi": [
+          "high memory usage"
+        ]
+      },
+      {
+        "business kpi": [
+          "elevated error rate"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "external causes",
+          "layer-2": "excessive flow"
+        },
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs"
+        }
+      ],
+      "details": "Many Cloud services depend on a distributed Access Control List (ACL) in Identity and Access Management (IAM) for validating permissions, activating new APIs, or creating new cloud resources. These permissions are stored in a distributed database and are heavily cached. Two processes keep the database up-to-date; one real-time, and one batch. However, if the real-time pipeline falls too far behind, stale data is served which may cause impact operations in downstream services. The trigger of the incident was a bulk update of group memberships that expanded to an unexpectedly high number of modified permissions, which generated a large backlog of queued mutations to be applied in real-time. The processing of the backlog was degraded by a latent issue with the cache servers, which led to them running out of memory; this in turn resulted in requests to IAM timing out. The problem was temporarily exacerbated in various regions by emergency rollouts performed to mitigate the high memory usage."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "build an updated cache",
+        "restart cache servers with additional memory",
+        "change configuration",
+        "progress through the backlog of changes"
+      ],
+      "details": "Once the scope of the issue became clear at 2020-03-26 16:35 US/Pacific, Google engineers quickly began looking for viable mitigations. At 17:06, an offine job to build an updated cache was manually started. Additionally, at 17:34, cache servers were restarted with additional memory, along with a configuration change to allow temporarily serving stale data (a snapshot from before the problematic bulk update) while investigation continued; this mitigated the first impact window. A second window of impact began in other regions at 18:49. At 19:13, similar efforts to mitigate with additional memory began, which mitigated the second impact window by 19:42. Additional efforts to fix the stale data continued, and finally the latest onine backfill of IAM data was loaded into the cache servers. The remaining time was spent progressing through the backlog of changes, and live data was slowly re-enabled region-by-region to successfully mitigate the staleness globally at 2020-03-27 05:55.",
+      "troubleshooting": {
+        "1": "Once the scope of the issue became clear, Google engineers quickly began looking for viable mitigations.",
+        "2": "an offline job to build an updated cache was manually started. ",
+        "3": "cache servers were restarted with additional memory, along with a configuration change to allow temporarily serving stale data (a snapshot from before the problematic bulk update).this mitigated the first impact window. ",
+        "4": "A second window of impact began in other regions at 18:49. At 19:13, similar efforts to mitigate with additional memory began, which mitigated the second impact window by 19:42 ",
+        "5": "Additional efforts to fix the stale data continued, and finally the latest offline backfill of IAM data was loaded into the cache servers. ",
+        "6": "The remaining time was spent progressing through the backlog of changes, and live data was slowly re- enabled region-by-region to successfully mitigate the staleness globally at 2020-03-27 05:55. "
+      }
+    },
+    "propagation pass": {
+      "1": "cache server",
+      "2": "Identity and Access Management",
+      "3": "GCP services"
+    },
+    "refined path": {
+      "1": "cache server",
+      "2": "middleware",
+      "3": "app"
+    },
+    "identification time": 21,
+    "detection time": null,
+    "fix time": 800,
+    "verification": "lixy"
+  },
+  "google-gcic-20005": {
+    "title": "Google Cloud Infrastructure Components Incident #20005",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCIC/Google%20Cloud%20Infrastructure%20Components%20Incident%20%2320005.pdf"
+    ],
+    "time": "04/08/2020",
+    "summary": "On Wednesday 08 April, 2020 beginning at 06:48 US/Pacific, Google Cloud Identity and Access Management (IAM) experienced significantly elevated error rates for a duration of 54 minutes. IAM is used by several Google services to manage user information, and the elevated IAM error rates resulted in degraded performance that extended beyond 54 minutes for the following Cloud services: - Google BigQuery’s streaming service experienced degraded performance for 116 minutes; - Cloud IAM’s external API returned elevated errors for 102 minutes; - 3% of Cloud SQL HA instances were degraded for durations ranging from 54 to 192 minutes. To our Cloud customers whose businesses were impacted during this disruption, we sincerely apologize – we have conducted a thorough internal investigation and are taking immediate action to improve the resiliency, performance, and availability of our service.",
+    "details": "ROOT Cause: Many Cloud services depend on a distributed Access Control List (ACL) in Cloud Identity and Access Management (IAM) for validating permissions, activating new APIs, or creating new Cloud resources. Cloud IAM in turn relies on a centralized and planet-scale system to manage and evaluate access control for data stored within Google, known as Zanzibar [1]. Cloud IAM consists of regional and global instances; regional instances are isolated from each other and from the global instance for reliability. However, some specific IAM checks, such as checking an organizational policy, reference the global IAM instance. The trigger of this incident was a rarely-exercised type of configuration change in Zanzibar which also impacted Cloud IAM. A typical change to this configuration mutates existing configuration namespaces, and is gradually rolled out through a sequence of canary steps. However, in this case, a new configuration namespace was added, and a latent issue with our canarying system allowed this specific type of configuration change to propagate globally in a rapid manner. As the configuration was pushed to production, the global Cloud IAM service quickly began to experience internal errors. This resulted in downstream operations with a dependency on global Cloud IAM to fail. [1] https://research.google/pubs/pub48190/; Remediation and prevention: Google engineers were automatically alerted to elevated error rates affecting Cloud IAM at 2020-04-08 06:52 US/Pacific and immediately began investigating. By 07:27, the engineering team responsible for managing Zanzibar identified the configuration change responsible for the issue, and swiftly reverted the change to mitigate. The mitigation finished propagating by 07:42, partially resolving the incident for a majority of internal services. Specific services such as the external Cloud IAM API, high- availability Cloud SQL, and Google BigQuery streaming took additional time to recover due to complications arising from the initial outage. Services with extended recovery timelines are described in the “detailed description of impact” section below. Google's standard production practice is to push any change gradually, in increments designed to maximize the probability of detecting problems before they have broad impact. Furthermore, we adhere to a philosophy of defence-in-depth: when problems occur, rapid mitigations (typically rollbacks) are used to restore service within service level objectives. In this outage, a combination of bugs resulted in these practices failing to be applied effectively. In addition to rolling back the configuration change responsible for this outage, we are fixing the issue with our canarying and release system that allowed this specific class of change to rapidly roll out globally; instead, such changes will in the future be subject to multiple layers of canarying, with automated rollback if problems are detected, and a progressive deployment over the course of multiple days. Both Cloud IAM and Zanzibar will enter a change freeze to prevent the possibility of further disruption to either service before these changes are implemented. Impact: On Wednesday 08 April, 2020 from 6:48 to 7:42 US/Pacific, Cloud IAM experienced an outage, which had varying degrees of impact on downstream services as described in detail below. (Cloud IAM) Experienced a 100% error rate globally on all internal Cloud IAM API requests from 6:48 - 7:42. Upon the internal Cloud IAM service becoming unavailable (which impacted downstream Cloud services), the external Cloud IAM API also began returning HTTP 500 INTERNAL_ERROR codes. The rate and volume of incoming requests (due to aggressive retry policies) triggered the system’s Denial of Service (DoS) protection mechanism. The automatic DoS protection throttled the service, implementing a rate- limit on incoming requests resulting in query failures and a large volume of retry attempts. Upon the incident’s mitigation, the DoS protection was removed but took additional time to propagate across the #eet. Its removal finished propagating by 8:30, returning the service to normal operation. (Gmail) Experienced delays receiving and sending emails from 6:50 to 7:39. For inbound emails, 20% G Suite emails, 21% of G Suite customers, and 0.3% of consumer emails were affected. For outbound emails (including Gmail-to-Gmail) 1.3% of G Suite emails, and 0.3% of consumer emails were affected. Message delay period varied, with the 50th percentile peaking at 3.7 seconds, up to 2580 seconds for the 90th percentile. (Compute Engine) Experienced a 100% error rate when performing firewall modifications or create, update, or delete instance operations globally from 6:48 to 7:42. (Cloud SQL) Experienced a 100% error rate when performing instance creation, deletion, backup, and failover operations globally for high- availability (HA) instances from 6:48 - 7:42, due to the inability to authenticate VMs via the Cloud IAM service. Additionally, Cloud SQL experienced extended impact from this outage for 3% of HA instances. Such instances initiated failover when upstream health metrics were not propagated due to the Cloud IAM issues. HA instances automatically failed over in an attempt to recover from what was believed to be failures occurring on the master instances. Upon failing over, these instances became stuck in a failed state. The Cloud IAM outage prevented the master’s underlying data disk from being attached to the failover instance, leaving the failover instance in a stuck state. These stuck instances required manual engineer intervention to bring them back online. Affected instances impact ranged from 6:48 - 10:00 for a total duration of 3 hours and 12 minutes. To prevent HA Cloud SQL instances from encountering these failures in the future, we will change the auto-failover system to avoid triggering based on IAM issues. We are also re-examining the auto-failover system more generally to make sure it can distinguish a real outage from a system-communications issue going forward. (Cloud Pub/Sub) Experienced 100% error rates globally for Topic administration operations (create, get, and list) from 6:48 - 7:42. (Kubernetes Engine) Experienced a 100% error rate for cluster creation requests globally from 6:49 - 7:42. (BigQuery) Datasets.get and projects.getServiceAccount experienced nearly 100% failures globally from 6:48 - 7:42. Other dataset operations experienced elevated error rates up to 40% for the duration of the incident. BigQuery streaming was also impacted in us-east1 for 6 minutes, us-east4 for 20 minutes, asia-east1 for 12 minutes, asia-east2 for 40 minutes, europe-north1 for 11 minutes, and the EU multi-region for 52 minutes. With most of the above regions experiencing up to a maximum of 30% average error rates. The EU multi-region, US multi-region, and us-east2 regions specifically experienced higher error rates, reaching nearly 100% for the duration of their impact windows. Additionally, BigQuery streaming in the US multi-region experienced issues coping with tra$c volume once IAM recovered. BigQuery streaming in the US multi-region experienced a 55% error rate from 7:42 - 8:44 for a total impact duration of 1 hour and 56 minutes. (App Engine) Experienced a 100% error rate when creating, updating, or deleting app deployments globally from 6:48 to 7:42. Public apps did not have HTTP serving affected. (Cloud Run) Experienced a 100% error rate when creating, updating, or deleting deployments globally from 6:48 to 7:42. Public services did not have HTTP serving affected. (Cloud Functions) Experienced a 100% error rate when creating, updating, or deleting functions with access control [2] globally from 6:48 to 7:42. Public functions did not have HTTP serving affected. [2] https://cloud.google.com/functions/docs/concepts/iam ;(Cloud Monitoring) Experienced intermittent errors when listing workspaces via the Cloud Monitoring UI from 6:42 - 7:42. (Cloud Logging) Experienced average and peak error rates of 60% for ListLogEntries API calls from 6:48 - 7:42. Affected customers received INTERNAL_ERRORs. Additionally, create, update, and delete sink calls experienced a nearly 100% error rate during the impact window. Log Ingestion and other Cloud Logging APIs were unaffected. (Cloud Dataflow) Experienced 100% error rates on several administrative operations including job creation, deletion, and autoscaling from 6:55 - 7:42. (Cloud Dataproc) Experienced a 100% error rate when attempting to create clusters globally from 6:50 - 7:42. (Cloud Data Fusion) Experienced a 100% error rate for create instance operations globally from 6:48 - 7:42. (Cloud Composer) Experienced 100% error rates when creating, updating, or deleting Cloud Composer environments globally between 6:48 - 7:42. Existing environments were unaffected. (Cloud AI Platform Notebooks) Experienced elevated average error rates of 97.2% (peaking to 100%) from 6:52 - 7:48 in the following regions: asia-east1, asia- northeast1, asia-southeast1, australia-southeast1, europe-west1, northamerica-northeast1, us-central1, us-east1, us-east4, and us-west1. (Cloud KMS) Experienced a 100% error rate for Create operations globally from 6:49 - 7:40. (Cloud Tasks) Experienced an average error rate of 8% (up to 15%) for CreateTasks, and a 96% error rate for AddTasks in the following regions: asia-northeast3, asia-south1, australia-southeast1, europe-west1, europe-west6, northamerica-northeast1, southamerica-east1, us-central1, us-east4, and us-west3.. Delivery of existing tasks were unaffected, but downstream services may have experienced other issues as documented. (Cloud Scheduler) Experienced 100% error rates for CreateJob and UpdateJob requests globally from 6:48 - 7:42. (App Engine Task Queues) Experienced an average error rate of 18% (up to 25% at peak) for UpdateTask requests from 6:48 - 7:42. (Cloud Build) Experienced no API errors, however, all builds submitted between 6:48 and 7:42 were queued until the issue was resolved. (Cloud Deployment Manager) Experienced an elevated average error rate of 20%, peaking to 36% for operations globally between 6:49 and 7:39. (Data Catalogue) Experienced a 100% error rate for API operations globally from 6:48 - 7:42. (Firebase Real-time Database) Experienced elevated average error rates of 7% for REST API and long-polling requests (peaking to 10%) during the incident window. (Firebase Test Lab) Experienced elevated average error rates of 85% (peaking to 100%) globally for Android tests running on virtual devices in Google Compute Engine instances. Impact lasted from 6:48 - 7:54 for a duration of 1 hour and 6 minutes. (Firebase Hosting) Experienced a 100% error rate when creating new versions globally from 6:48 - 7:42. (Firebase Console) Experienced a 100% error rate for developer resources globally. Additionally, the Firedata API experienced an average error rate of 20% for API operations from 6:48 - 7:42. Affected customers experienced a range of issues related to the Firebase Console and API. API invocations returned empty lists of projects, HTTP 404 errors, affected customers were unable to create, delete, update, or list many Firebase entities including (Android, iOS, and Web Apps), hosting sites, Real-time Database instances, Firebase-linked GCP buckets. Firebase developers were also unable to update billing settings. Firebase Cloud Functions could not be deployed successfully. Some customers experienced quota exhaustion errors due to extensive retry attempts. (Cloud IoT) Experienced a 100% error rate when performing DeleteRegistry API calls from 6:48 - 7:42. Though DeleteRegistry API calls threw errors, the deletions issued did complete successfully. (Cloud Memorystore) Experienced a 100% error rate for create, update, cancel, delete, and ListInstances operations on Redis instances globally from 6:48 - 7:42. (Cloud Filestore) Experienced an average error rate of 70% for instance and snapshot creation, update, list, and deletion operations, with a peak error rate of 92% globally between 6:48 and 7:45. (Cloud Healthcare and Cloud Life Sciences) Experienced a 100% error rate for CreateDataset operations globally from 6:48 - 7:42.",
+    "service_name": [
+      "Google Cloud Identity and Access Management",
+      "Google BigQuery’s streaming service",
+      "Gmail",
+      "Compute Engine",
+      "Cloud SQL",
+      "Cloud Pub/Sub",
+      "Kubernetes Engine",
+      "BigQuery",
+      "App Engine",
+      "Cloud Run",
+      "Cloud Functions",
+      "Cloud Monitoring",
+      "Cloud Logging",
+      "Cloud Dataflow",
+      "Cloud Dataproc",
+      "Cloud Data Fusion",
+      "Cloud Composer",
+      "Cloud AI Platform Notebooks",
+      "Cloud KMS",
+      "Cloud Tasks",
+      "Cloud Scheduler",
+      "App Engine Task Queues",
+      "Cloud Build",
+      "Cloud Deployment Manager",
+      "Data Catalogue",
+      "Firebase Real-time Database",
+      " Firebase Test Lab",
+      "Firebase Hosting",
+      "Firebase Console",
+      "Cloud IoT",
+      "Cloud Memorystore",
+      "Cloud Filestore",
+      "Cloud Healthcare and Cloud Life Sciences",
+      "SLA CREDITS"
+    ],
+    "impact symptom": [
+      "performance",
+      "availability"
+    ],
+    "duration": 192,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        ""
+      ]
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "elevated error rate",
+          "degraded performance"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        },
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs"
+        }
+      ],
+      "details": "Many Cloud services depend on a distributed Access Control List (ACL) in Cloud Identity and Access Management (IAM) for validating permissions, activating new APIs, or creating new Cloud resources. Cloud IAM in turn relies on a centralized and planet-scale system to manage and evaluate access control for data stored within Google, known as Zanzibar [1]. Cloud IAM consists of regional and global instances; regional instances are isolated from each other and from the global instance for reliability. However, some specific IAM checks, such as checking an organizational policy, reference the global IAM instance. The trigger of this incident was a rarely-exercised type of configuration change in Zanzibar which also impacted Cloud IAM. A typical change to this configuration mutates existing configuration namespaces, and is gradually rolled out through a sequence of canary steps. However, in this case, a new configuration namespace was added, and a latent issue with our canarying system allowed this specific type of configuration change to propagate globally in a rapid manner. As the configuration was pushed to production, the global Cloud IAM service quickly began to experience internal errors. This resulted in downstream operations with a dependency on global Cloud IAM to fail. [1] https://research.google/pubs/pub48190/"
+    },
+    "operation": [
+      "change"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "revert the change",
+        "fix bugs",
+        "remove the Dos protection"
+      ],
+      "details": "Google engineers were automatically alerted to elevated error rates affecting Cloud IAM at 2020-04-08 06:52 US/Pacific and immediately began investigating. By 07:27, the engineering team responsible for managing Zanzibar identified the configuration change responsible for the issue, and swiftly reverted the change to mitigate. The mitigation finished propagating by 07:42, partially resolving the incident for a majority of internal services. Specific services such as the external Cloud IAM API, high- availability Cloud SQL, and Google BigQuery streaming took additional time to recover due to complications arising from the initial outage. Services with extended recovery timelines are described in the “detailed description of impact” section below. Google's standard production practice is to push any change gradually, in increments designed to maximize the probability of detecting problems before they have broad impact. Furthermore, we adhere to a philosophy of defence-in-depth: when problems occur, rapid mitigations (typically rollbacks) are used to restore service within service level objectives. In this outage, a combination of bugs resulted in these practices failing to be applied effectively. In addition to rolling back the configuration change responsible for this outage, we are fixing the issue with our canarying and release system that allowed this specific class of change to rapidly roll out globally; instead, such changes will in the future be subject to multiple layers of canarying, with automated rollback if problems are detected, and a progressive deployment over the course of multiple days. Both Cloud IAM and Zanzibar will enter a change freeze to prevent the possibility of further disruption to either service before these changes are implemented.",
+      "troubleshooting": {
+        "1": "Google engineers were automatically alerted to elevated error rates affecting Cloud IAM at 2020-04-08 06:52 US/Pacific and immediately began investigating. ",
+        "2": "By 07:27, the engineering team responsible for managing Zanzibar identified the configuration change responsible for the issue, and swiftly reverted the change to mitigate. ",
+        "3": " The mitigation finished propagating by 07:42, partially resolving the incident for a majority of internal services. ",
+        "4": "Specific services such as the external Cloud IAM API, high-availability Cloud SQL, and Google BigQuery streaming took additional time to recover due to complications arising from the initial outage. "
+      }
+    },
+    "propagation pass": {
+      "1": "Identity and Access Management",
+      "2": "Other GCP services"
+    },
+    "refined path": {
+      "1": "middleware",
+      "2": "app"
+    },
+    "identification time": 35,
+    "detection time": 4,
+    "fix time": 188,
+    "verification": "lixy"
+  },
+  "google-gcic-20010": {
+    "title": "Google Cloud Infrastructure Components Incident #20010",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/google/meta_pdf/new/gcici-20010.pdf"
+    ],
+    "time": "09/24/2020",
+    "summary": "On Thursday 24 September, 2020 at 18:00 US/Pacific, one of Google’s several second-tier GFE pools experienced intermittent failures resulting in impact to several downstream services. Almost all services recovered within the initial 33 minutes of the incident; exceptions are outlined in the detailed impact section below. A#ected customers experienced elevated error rates and latency when connecting to Google APIs. Existing workloads (i.e. running instances on GCE, or containers on GKE) were not impacted unless they needed to invoke impacted APIs. Service impact can be divided into two categories, direct and indirect. Services which have a request path that $ows through the impacted GFE pool would have been directly impacted. Calls to these services would have experienced higher latency or elevated errors in the form of HTTP 502 response codes. Alternatively, services which did not directly rely on this pool of impacted GFEs may invoke other services, such as authentication, that depend on this shared pool of GFEs. This indirect impact would have varied between customers. One example of this, which we expect to be one of the most common forms of indirect impact, would be use of an oauth token that needed to be refreshed or retrieved. While a service such as Cloud Spanner may not have been serving errors, customers using the Cloud Spanner Client may have seen errors when the client attempted to refresh credentials, depending on the API used to refresh/obtain the credential. A detailed description of impact can be found below. To our Cloud customers whose businesses were impacted during this disruption, we sincerely apologize – we have conducted a thorough internal investigation and are taking immediate action to improve the resiliency, performance, and availability of our services.",
+    "details": "ROOT CAUSE For any given pool of tasks, the GFE control plane has a global view of capacity, service configurations, and network conditions, which are all combined and sent to GFEs to create efficient request serving paths. This global view allows requests to be routed seamlessly to other regions, which is useful in scenarios like failover or for load balancing between regions. GFEs are grouped into pools for a variety of traffic profiles, health checking requirements, and other factors; the impacted second-layer GFE pool was used by multiple services. The GFE control plane picks up service configuration changes and distributes them to GFEs. For this incident, two service changes contained an error that resulted in a significant increase in the number of backends accessed by GFEs in this pool. The particular nature of these changes additionally meant that they would be distributed to all GFEs in this pool globally, instead of being limited to a particular region. While the global aspect was intended, the magnitude of backend increases was not. The greatly increased number of programmed backends caused GFEs to exceed their memory allocation in many locations. GFE has many internal protections which are activated when there is memory pressure, such as closing idle connections or refusing to accept new connections, allowing them to keep running despite a memory shortage. Tasks which exceeded memory limits were terminated. The combination of a reduced number of available GFEs and a reduction in accepted connections meant that traffic to services behind the impacted GFE pool dropped by 50%. REMEDIATION AND PREVENTION Google engineers were alerted to the outage three minutes after impact began at 2020-09-24 18:03, and immediately began an investigation. At 18:15 the first service change, which significantly increased the number of programmed backends, was rolled back. At 18:18 the second service configuration change was rolled back. Google engineers started seeing recovery at 18:20 and at 18:33 the issue was fully mitigated. GFE is one of the most critical pieces of infrastructure at Google and has multiple lines of defense in depth, both in software and operating procedure. As the result of this outage, we are adding additional protections to both in order to eliminate this class of failure. As an immediate step we have limited the type of configuration changes that can be made until additional safeguards are in place. Those additional safeguards will include stricter validation of configuration changes; specifically, rejecting changes that cause a large increase in backend count across multiple services. In addition to a check in the control plane, we will be augmenting existing protections in the GFE against unbounded growth in any resource dimension, such as backend counts. We will also be performing an audit of existing configurations and converting risky configurations to alternative setups. A restriction will be placed on certain configuration options, only allowing use with additional review and allow lists. Finally, an audit will be performed of services in shared GFE pools, with additional pools being created to reduce impact radius, should an issue in this part of the infrastructure surface again.",
+    "service_name": [
+      "Google Front End",
+      "Google services"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 33,
+    "detection": {
+      "method": "automate",
+      "tool": null
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "error rate",
+          "high latency",
+          "an elevated rate of HTTP 500 & 502 errors",
+          "connection timeouts",
+          "request drops"
+        ]
+      },
+      "'The attempted action failed' error messages"
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        },
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "code change"
+        }
+      ],
+      "details": "For any given pool of tasks, the GFE control plane has a global view of capacity, service configurations, and network conditions, which are all combined and sent to GFEs to create efficient request serving paths. This global view allows requests to be routed seamlessly to other regions, which is useful in scenarios like failover or for load balancing between regions. GFEs are grouped into pools for a variety of traffic profiles, health checking requirements, and other factors; the impacted second-layer GFE pool was used by multiple services. The GFE control plane picks up service configuration changes and distributes them to GFEs. For this incident, two service changes contained an error that resulted in a significant increase in the number of backends accessed by GFEs in this pool. The particular nature of these changes additionally meant that they would be distributed to all GFEs in this pool globally, instead of being limited to a particular region. While the global aspect was intended, the magnitude of backend increases was not. The greatly increased number of programmed backends caused GFEs to exceed their memory allocation in many locations. GFE has many internal protections which are activated when there is memory pressure, such as closing idle connections or refusing to accept new connections, allowing them to keep running despite a memory shortage. Tasks which exceeded memory limits were terminated. The combination of a reduced number of available GFEs and a reduction in accepted connections meant that traffic to services behind the impacted GFE pool dropped by 50%."
+    },
+    "operation": [
+      "change"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "first service change was rolled back",
+        "second service configuration change was rolled back"
+      ],
+      "details": "Google engineers were alerted to the outage three minutes after impact began at 2020-09-24 18:03, and immediately began an investigation. At 18:15 the first service change, which significantly increased the number of programmed backends, was rolled back. At 18:18 the second service configuration change was rolled back. Google engineers started seeing recovery at 18:20 and at 18:33 the issue was fully mitigated.GFE is one of the most critical pieces of infrastructure at Google and has multiple lines of defense in depth, both in software and operating procedure. As the result of this outage, we are adding additional protections to both in order to eliminate this class of failure. As an immediate step we have limited the type of configuration changes that can be made until additional safeguards are in place. Those additional safeguards will include stricter validation of configuration changes; specifically, rejecting changes that cause a large increase in backend count across multiple services. In addition to a check in the control plane, we will be augmenting existing protections in the GFE against unbounded growth in any resource dimension, such as backend counts. We will also be performing an audit of existing configurations and converting risky configurations to alternative setups. A restriction will be placed on certain configuration options, only allowing use with additional review and allow lists. Finally, an audit will be performed of services in shared GFE pools, with additional pools being created to reduce impact radius, should an issue in this part of the infrastructure surface again.",
+      "troubleshooting": {
+        "1": "Google engineers rolled back first service change",
+        "2": "Google engineers rolled back second service configuration change"
+      }
+    },
+    "propagation pass": {
+      "1": "Google Front End",
+      "2": "Other GCP services"
+    },
+    "refined path": {
+      "1": "load balancer",
+      "2": "app"
+    },
+    "identification time": 15,
+    "detection time": 3,
+    "fix time": 13,
+    "verification": "lixy, yugb"
+  },
+  "google-gcic-20011": {
+    "title": "Google Cloud Infrastructure Components Incident #20011",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/google/meta_pdf/new/gcici-20011.pdf"
+    ],
+    "time": "12/09/2020",
+    "summary": "On Wednesday 9 December, 2020, Google Cloud Platform experienced networking unavailability in zone europe-west2-a, resulting in some customers being unable to access their resources, for a duration of 1 hour 24 minutes. The following Google services had degraded service that extended beyond the initial 1 hour 24 minute network disruption: 1.5% of Cloud Memorystore Redis instances were unhealthy for a total duration of 2 hours 24 minutes 4.5% of Classic Cloud VPN tunnels in the europe-west2 region experienced unavailability after the main disruption had recovered and these tunnels remained down for a duration of 8 hours and 10 minutes App Engine Flex experienced increased deployment error rates for a total duration of 1 hour 45 minutes We apologize to our Cloud customers who were impacted during this disruption. We have conducted a thorough internal investigation and are taking immediate action to improve the resiliency and availability of our service.",
+    "details": "ROOT CAUSE Google’s underlying networking control plane consists of multiple distributed components that make up the Software Defined Networking (SDN) stack. These components run on multiple machines so that failure of a machine or even multiple machines does not impact network capacity. To achieve this, the control plane elects a leader from a pool of machines to provide configuration to the various infrastructure components. The leader election process depends on a local instance of Google’s internal lock service to read various configurations and files for determining the leader. The control plane is responsible for Border Gateway Protocol (BGP) peering sessions between physical routers connecting a cloud zone to the Google backbone. Google’s internal lock service provides Access Control List (ACLs) mechanisms to control reading and writing of various files stored in the service. A change to the ACLs used by the network control plane caused the tasks responsible for leader election to no longer have access to the files required for the process. The production environment contained ACLs not present in the staging or canary environments due to those environments being rebuilt using updated processes during previous maintenance events. This meant that some of the ACLs removed in the change were in use in europe-west2-a, and the validation of the configuration change in testing and canary environments did not surface the issue. Google's resilience strategy relies on the principle of defense in depth. Specifically, despite the network control infrastructure being designed to be highly resilient, the network is designed to 'fail static' and run for a period of time without the control plane being present as an additional line of defense against failure. The network ran normally for a short period - several minutes - after the control plane had been unable to elect a leader task. After this period, BGP routing between europe-west2-a and the rest of the Google backbone network was withdrawn, resulting in isolation of the zone and inaccessibility of resources in the zone. REMEDIATION AND PREVENTION Google engineers were automatically alerted to elevated error rates in europe-west2-a at 2020-12-09 18:29 US/Pacific and immediately started an investigation. The configuration change rollout was automatically halted as soon as the issue was detected, preventing it from reaching any other zones. At 19:30, mitigation was applied to rollback the configuration change in europe-west2-a. This completed at 19:55, mitigating the immediate issue. Some services such as Cloud MemoryStore and Cloud VPN took additional time to recover due to complications arising from the initial disruption. Services with extended recovery timelines are described in the “detailed description of impact” section below. We are committed to preventing this situation from happening again and are implementing the following actions: In addition to rolling back the configuration change responsible for this disruption, we are auditing all network ACLs to ensure they are consistent across environments. While the network continued to operate for a short time after the change was rolled out, we are improving the operating mode of the data plane when the control plane is unavailable for extended periods. Improvements in visibility to recent changes will be made to reduce the time to mitigation. Additional observability will be added to lock service ACLs allowing for additional validation when making changes to ACLs. We are also improving the canary and release process for future changes of this type to ensure these changes are made safely.",
+    "service_name": [
+      "Google’s internal lock service",
+      "Google services"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 84,
+    "detection": {
+      "method": "automate",
+      "tool": null
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "error rate"
+        ]
+      },
+      {
+        "system kpi": [
+          "high I/O latency"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "Google’s underlying networking control plane consists of multiple distributed components that make up the Software Defined Networking (SDN) stack. These components run on multiple machines so that failure of a machine or even multiple machines does not impact network capacity. To achieve this, the control plane elects a leader from a pool of machines to provide configuration to the various infrastructure components. The leader election process depends on a local instance of Google’s internal lock service to read various configurations and files for determining the leader. The control plane is responsible for Border Gateway Protocol (BGP) peering sessions between physical routers connecting a cloud zone to the Google backbone. Google’s internal lock service provides Access Control List (ACLs) mechanisms to control reading and writing of various files stored in the service. A change to the ACLs used by the network control plane caused the tasks responsible for leader election to no longer have access to the files required for the process. The production environment contained ACLs not present in the staging or canary environments due to those environments being rebuilt using updated processes during previous maintenance events. This meant that some of the ACLs removed in the change were in use in europe-west2-a, and the validation of the configuration change in testing and canary environments did not surface the issue. Google's resilience strategy relies on the principle of defense in depth. Specifically, despite the network control infrastructure being designed to be highly resilient, the network is designed to 'fail static' and run for a period of time without the control plane being present as an additional line of defense against failure. The network ran normally for a short period - several minutes - after the control plane had been unable to elect a leader task. After this period, BGP routing between europe-west2-a and the rest of the Google backbone network was withdrawn, resulting in isolation of the zone and inaccessibility of resources in the zone."
+    },
+    "operation": [
+      "change"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "rollback the configuration change in europe-west2-a"
+      ],
+      "details": "Google engineers were automatically alerted to elevated error rates in europe-west2-a at 2020-12-09 18:29 US/Paci!c and immediately started an investigation. The configuration change rollout was automatically halted as soon as the issue was detected, preventing it from reaching any other zones. At 19:30, mitigation was applied to rollback the configuration change in europe-west2-a. This completed at 19:55, mitigating the immediate issue. Some services such as Cloud MemoryStore and Cloud VPN took additional time to recover due to complications arising from the initial disruption. Services with extended recovery timelines are described in the “detailed description of impact” section below.",
+      "troubleshooting": {
+        "1": "Google engineers rollback the configuration change in europe-west2-a"
+      }
+    },
+    "propagation pass": {
+      "1": "network control plane",
+      "2": "Other GCP services"
+    },
+    "refined path": {
+      "1": "network",
+      "2": "app"
+    },
+    "identification time": null,
+    "detection time": null,
+    "fix time": 25,
+    "verification": "lixy, yugb"
+  },
+  "google-gcic-201214": {
+    "title": "Google Cloud Infrastructure Components Incident #201214",
+    "link": [
+      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/google/meta_pdf/new/gcici-20011.pdf"
+    ],
+    "time": "12/09/2020",
+    "summary": "On Monday 14 December, 2020, for a duration of 47 minutes, customer-facing Google services that required Google OAuth access were unavailable. Cloud Service accounts used by GCP workloads were not impacted and continued to function. We apologize to our customers whose services or businesses were impacted during this incident, and we are taking immediate steps to improve the platform’s performance and availability.",
+    "details": "ROOT CAUSE The Google User ID Service maintains a unique identifier for every account and handles authentication credentials for OAuth tokens and cookies. It stores account data in a distributed database, which uses Paxos protocols to coordinate updates. For security reasons, this service will reject requests when it detects outdated data. Google uses an evolving suite of automation tools to manage the quota of various resources allocated for services. As part of an ongoing migration of the User ID Service to a new quota system, a change was made in October to register the User ID Service with the new quota system, but parts of the previous quota system were left in place which incorrectly reported the usage for the User ID Service as 0. An existing grace period on enforcing quota restrictions delayed the impact, which eventually expired, triggering automated quota systems to decrease the quota allowed for the User ID service and triggering this incident. Existing safety checks exist to prevent many unintended quota changes, but at the time they did not cover the scenario of zero reported load for a single service: • Quota changes to large number of users, since only a single group was the target of the change, • Lowering quota below usage, since the reported usage was inaccurately being reported as zero, • Excessive quota reduction to storage systems, since no alert fired during the grace period, • Low quota, since the difference between usage and quota exceeded the protection limit. As a result, the quota for the account database was reduced, which prevented the Paxos leader from writing. Shortly after, the majority of read operations became outdated which resulted in errors on authentication lookups. REMEDIATION AND PREVENTION The scope of the problem was immediately clear as the new quotas took effect. This was detected by automated alerts for capacity at 2020-12-14 03:43 US/Pacific, and for errors with the User ID Service starting at 03:46, which paged Google Engineers at 03:48 within one minute of customer impact. At 04:08 the root cause and a potential fix were identified, which led to disabling the quota enforcement in one datacenter at 04:22. This quickly improved the situation, and at 04:27 the same mitigation was applied to all datacenters, which returned error rates to normal levels by 04:33. As outlined below, some user services took longer to fully recover. In addition to fixing the underlying cause, we will be implementing changes to prevent, reduce the impact of, and better communicate about this type of failure in several ways: 1. Review our quota management automation to prevent fast implementation of global changes 2. Improve monitoring and alerting to catch incorrect configurations sooner 3. Improve reliability of tools and procedures for posting external communications during outages that affect internal tools 4. Evaluate and implement improved write failure resilience into our User ID service database 5. Improve resilience of GCP Services to more strictly limit the impact to the data plane during User ID Service failures We would like to apologize for the scope of impact that this incident had on our customers and their businesses. We take any incident that affects the availability and reliability of our customers extremely seriously, particularly incidents which span multiple regions. We are conducting a thorough investigation of the incident and will be making the changes which result from that investigation our top priority in Google Engineering.",
+    "service_name": [
+      "Google Cloud Infrastructure",
+      "Google services"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 47,
+    "detection": {
+      "method": "automate",
+      "tool": null
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "error rate",
+          "5xx errors"
+        ]
+      },
+      {
+        "system kpi": [
+          "low capacity"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "others"
+        }
+      ],
+      "details": "The Google User ID Service maintains a unique identifier for every account and handles authentication credentials for OAuth tokens and cookies. It stores account data in a distributed database, which uses Paxos protocols to coordinate updates. For security reasons, this service will reject requests when it detects outdated data. Google uses an evolving suite of automation tools to manage the quota of various resources allocated for services. As part of an ongoing migration of the User ID Service to a new quota system, a change was made in October to register the User ID Service with the new quota system, but parts of the previous quota system were left in place which incorrectly reported the usage for the User ID Service as 0. An existing grace period on enforcing quota restrictions delayed the impact, which eventually expired, triggering automated quota systems to decrease the quota allowed for the User ID service and triggering this incident. Existing safety checks exist to prevent many unintended quota changes, but at the time they did not cover the scenario of zero reported load for a single service: • Quota changes to large number of users, since only a single group was the target of the change, • Lowering quota below usage, since the reported usage was inaccurately being reported as zero, • Excessive quota reduction to storage systems, since no alert fired during the grace period, • Low quota, since the difference between usage and quota exceeded the protection limit. As a result, the quota for the account database was reduced, which prevented the Paxos leader from writing. Shortly after, the majority of read operations became outdated which resulted in errors on authentication lookups."
+    },
+    "operation": [
+      "change"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "disabling the quota enforcement"
+      ],
+      "details": "Google engineers were automatically alerted to elevated error rates in europe-west2-a at 2020-12-09 18:29 US/Paci!c and immediately started an investigation. The configuration change rollout was automatically halted as soon as the issue was detected, preventing it from reaching any other zones. At 19:30, mitigation was applied to rollback the configuration change in europe-west2-a. This completed at 19:55, mitigating the immediate issue. Some services such as Cloud MemoryStore and Cloud VPN took additional time to recover due to complications arising from the initial disruption. Services with extended recovery timelines are described in the “detailed description of impact” section below.",
+      "troubleshooting": {
+        "1": "Google engineers disabled the quota enforcement in one datacenter"
+      }
+    },
+    "propagation pass": {
+      "1": "Google User ID Service",
+      "2": "Other GCP services"
+    },
+    "refined path": {
+      "1": "backend service",
+      "2": "app"
+    },
+    "identification time": 20,
+    "detection time": null,
+    "fix time": 25,
+    "verification": "lixy, yugb"
+  }
+}

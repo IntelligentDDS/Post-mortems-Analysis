@@ -1,0 +1,14 @@
+ORES had an intermittent outage from 1600 - 1940 UTC on June 13th. The issue was traced to scb1001.eqiad.wmnet.
+• 1600 UTC: Errors rise for ORES (not noticed. no icinga pings)
+• 1715 UTC: During canary check, error rate is noted and Task T167819 is created with "Unbreak now"
+• 1740 UTC: Problem is independent of deploy. The decision is made to continue with deploy.
+• 1816 UTC: Ops is pulled in (mutante responds). Rollback of deploy is considered but rejected.
+• 1828 UTC: Problem is narrowed down to scb1001 specifically. Logs show no errors despite intermittent 500s
+• 1923 UTC: Mutante notes that pdf rendering is taking a lot of CPU and kills it
+• icinga didn't tell us about the issue
+• for some reason, the error wasn't being written to app.log
+• it looks like there was some conflict with resource usage WRT pdf rendering
+• memory was very tight on SCB for the duration of the outage:
+• Task T167830 -- "Extend icinga check to catch 500 errors like those of the 20170613 incident"
+• Task T146664 -- "Limit resources used by ORES", move ORES to dedicated hardware. See Task T157222.
+• Limit resources used by the pdfrender service: Task T167834

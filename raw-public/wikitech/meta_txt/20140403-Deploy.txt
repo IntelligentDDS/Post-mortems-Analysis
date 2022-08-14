@@ -1,0 +1,23 @@
+
+• debugging etc with Andrew and Chad
+• Chad reverted all phase0 wikis but testwiki to wmf20
+• Niklas woke up and fixed testwiki (see his section below)
+• Bryan and Roan have long discussion in -operations trying to figure out what exactly made it break
+• Greg suggested to Bryan to put us back to all phase0 wikis to wmf21, he did
+• Friday night it broke again with the nightly l10nupdate
+• Andrew put us back again to all phase0 wikis but testwiki to wmf20
+
+(responding to Chad/Andrew's late night attempt at determining cause) The actual issue last time was with ExtensionMessages-wmfNN.php not being regenerated at the right time so the new JSON files weren't included. I believe this can be fixed by running scap a second time. Someone who isn't about to go to sleep (a European perhaps) should try that and see if it fixes testwiki.
+
+I should have flagged this after fixing it last week, but I totally forgot, because it was late and Ori had to babysit the last step while I drove home.
+
+As far as I understand this had nothing to do with LU. As Roan already mentioned, we had this issue last time and it was caused by ExtensionMessages-X.php being out of date. Before last branch point core i18n files were converted to json, and they were added to $wgMessagesDirs. That and many more entries were missing from ExtensionMessages-1.23wmf21.
+
+This seems to be confirmed by the fact that running "mw-update-l10n", "sync-l10nupdate" and "sync-l10nupdate-1 1.23wmf21" fixed test.wikipedia.org.
+
+I can share the blame with Roan of not following up that issue. Now that conversions are over, core is unlikely to break again, but new extensions might be broken due to same cause?
+
+While debugging and browsing through the docs, I found many places where the docs were outdated 1, 2, 3. I also cancelled "sync-l10nupdate-1 1.23wmf21" after ~30 minutes as it gave no progress output, so please do full scap before moving more wikis to 1.23wmf21.
+
+The creation of ExtensionMessages-X.php for a new branch has been broken on and off for quite some time 0. I thought I had finally squashed this when I added the `--force` to the l10n build following the bootstrap phase 1, but I wouldn't be surprised at all if the php -> json changes found another way to break generating the file. It would be really nice to fix all of this so that you don't have to have an l10n cache in order to generate the file that tells you what to add to the 10n cache 2.
+• Status: Declined - revive and come to conclusion on testwiki served from mw1017 issue

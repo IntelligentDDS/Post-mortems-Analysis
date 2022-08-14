@@ -1,0 +1,69 @@
+The sessionstore service suffered an outage that lead to the inability of logged-in users to submit edits. The root cause of the outage was insufficient capacity to respond to a sudden increase of requests reaching mediawiki.
+
+TODO: These are raw numbers, to be used as input to a calculation of actual user impact that hasn't been performed yet. More to come here.
+
+Sessionstore impact: About 32 million requests were lost between 18:36 and 19:20. Based on the pre-incident steady state of about 85% 404s from sessionstore, about 4.8 million requests were lost that would have returned with 2xx status. (source). It's important to point out that 404s from sessionstore are from readers and hence are totally expected. TODO: Clarify why the error rate is normally so high, and whether it's the total or 2xx requests that reflect actual impact here.
+
+MediaWiki-reported save failures: A total of 8,953 during the same period (all edit.failures.session_loss), which is unrealistically low, given that we believe all logged-in edits failed during the outage. (source)
+
+Deficit in MediaWiki-reported edits: The trough in successful edits between 18:36 and 19:00 can be seen in MediaWiki-reported stats, as well as an increase from 19:00 to about 20:30, as users—presumably both humans and bots—retried their edits that failed during the outage. During the outage, the deficit is about 24,000 edits; for the total window from 18:36 to 20:30, the deficit is about 18,000 edits (that is, about 6k edits were effectively delayed rather than dropped). (source)
+
+Editors were affected on all wikis in all geographic regions by being unable to edit, login or logout of the sites. Readers were completely unaffected.
+
+Due to the outage, stashbot was intermittently unable to edit the SAL. Every !log command from #wikimedia-operations is included here for completeness.
+• 14:14 Start of a backlog in change propagation causing CPU and memory issues, which in turn caused iowait CPU starvation as it attempted to do garbage collection. (graph)
+• 18:41 first icinga CRITICAL (Prometheus jobs reduced availability for {eventgate_analytics_cluster,eventgate_analytics_external_cluster,eventgate_main_cluster,mathoid_cluster,sessionstore} in eqiad)
+• 18:42-18:45 Icinga alerts and recoveries for a number of unrelated kubernetes services, as well as host down alerts for kubernetes[1001,1003,1005]. (Full alert history under #Detection.) It was later found the kubernetes hosts never actually rebooted, but they did stop responding to pings.
+• 18:47:04 <icinga-wm> PROBLEM - MediaWiki edit session loss on graphite1004 is CRITICAL: CRITICAL: 60.00% of data above the critical threshold [50.0] https://wikitech.wikimedia.org/wiki/Application_servers https://grafana.wikimedia.org/dashboard/db/edit-count?panelId=13&fullscreen&orgId=1
+• 18:49:52 <cdanis> all the kask pods [for sessionstore] are in CrashLoopBackOff
+• 18:52:11 <cdanis> kask @ sessionstore is OOM-looping and killing the whole machine
+• 18:56:57 <akosiaris> let me increase sessionstore capacity to make sure we aren't going down under pressure
+• 19:00:25 <akosiaris> !log increase sessionstore capacity in codfw from 4 pods to 6
+• 19:02:13 <_joe_> so as of now everything should be migrated and sessions should still work, because of the fact sessionstore is multi-dc
+• 19:04:55 <_joe_> akosiaris: restarts happening in codfw now, so not everything is ok
+• 19:05:54 <cdanis> Warning FailedScheduling 21s (x10 over 5m40s) default-scheduler 0/6 nodes are available: 2 Insufficient cpu, 4 node(s) didn't match node selector.
+• 19:07:05 <rzl> if we can't stabilize on sessionstore, we should consider switching back to redis even if it logs everyone out -- I'm not saying do it right now, but let's keep it on the table
+• 19:07:34 <akosiaris> !log increase memory limits for sessionstore in eqiad to 400Mi from 300Mi
+• 19:10:34 <akosiaris> !log remove the podaffinity restrictions for sessionstore in eqiad
+• 19:13:46 <_joe_> so, it's interesting how one service (although the most called one) failing made kube-proxy suffer so much
+• 19:14:14 <akosiaris> yes, that's my main question, how on earth did this affect machines that did not run those pods?
+• 19:16:19 <akosiaris> https://grafana.wikimedia.org/d/000001590/sessionstore?panelId=47&fullscreen&orgId=1&var-dc=eqiad%20prometheus%2Fk8s&var-service=sessionstore&from=1591900236776&to=1591900788867 that’s the initial reason: somehow session requests to session store increased from 15k to 20k
+• 19:17:02 <_joe_> so we were quite under capacity with just 4 pods, and those VMs can’t host more
+• 19:17:10 <akosiaris> that probably pushed the pod pretty close to the memory limit and from there malloc() failures or whatever sent it spiralling down
+• 19:18:50 <rzl> two broader k8s-related AIs -- one is capacity planning (plus maybe capacity alerting) for k8s services so we don't get taken by surprise like this, the other is “why was other k8s stuff affected”
+• 19:20:33 <_joe_> akosiaris: should we do the same in codfw btw?
+• 19:21:32 <_joe_> sessions are all back to eqiad, fwiw
+• 19:24:18 “MediaWiki exceptions and fatals per minute” fires again; this is determined to be a delayed alert, due to logstash ingestion backlog (https://grafana.wikimedia.org/d/000000561/logstash?orgId=1&refresh=5m)
+• 19:30 akosiaris merges 604844, committing his emergency changes to git for both eqiad and codfw.
+• 19:33:06 <akosiaris> !log apply emergency sessionstore fixes in codfw as well
+• 19:33:38 <akosiaris> 8 pods in codfw as well, at least on the trigger front I think we are ok now
+• 19:36 _joe_ observes that something has been starving kubernetes[1001-1004] CPU with iowait since May 28 or 29: https://grafana.wikimedia.org/explore?orgId=1&left=%5B%221590019200000%22,%221591912800000%22,%22eqiad%20prometheus%2Fops%22,%7B%22expr%22:%22avg%20by%20(instance)%20(irate(node_cpu_seconds_total%7Bmode%3D%5C%22iowait%5C%22,%20instance%3D~%5C%22kubernetes100.*%5C%22%7D%5B5m%5D))%22%7D,%7B%22mode%22:%22Metrics%22%7D,%7B%22ui%22:%5Btrue,true,true,%22none%22%5D%7D%5D
+• 19:59:08 <rzl> I'll keep monitoring for the rest of the day just to make sure logstash catches up, since that's our only remaining thing, but otherwise I'm considering the incident resolved
+
+TODO: Clearly indicate when the user-visible outage began and ended.
+
+Detection was automated, with the first IRC alert about five minutes after the kask pods initially crashed, and the first (and only) page about 30 seconds later. Icinga's full transcript from #wikimedia-operations is below, comprising 39 total alerts.
+
+Note that the "MediaWiki exceptions and fatals per minute" alerts persisted, spuriously, for some hours after the underlying problem was solved. This was due to Logstash's delay in processing MediaWiki log entries: the alert reacts to the rate of log entry ingestion, not log entry production, so when Logstash is behind, the alert is behind too.
+
+A lot of alerts that fired were unrelated to sessionstore. However the total volume (39) was manageable. The first alerts pinpointed the problematic service accurately.
+
+What weaknesses did we learn about and how can we address them?
+
+What went well?
+• We were able to switchover temporarily to codfw (and back to eqiad) within 5mins each.
+• It was during a timeframe many SREs were able to respond.
+• Automated monitoring detected and informed of the incident quickly.
+• We already had very good graphs and statistics built in our infrastructure
+• This could have been caught beforehand and extra capacity could have been added to the system, manually or automatically
+• The dedicated nodes for sessionstore were already filled with instances and could not afford.
+
+Where did we get lucky?
+
+How many people were involved in the remediation?
+
+Add links to information that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, add an action item to create it.
+• Increase capacity of the sessionstore dedicated kubernetes nodes https://phabricator.wikimedia.org/T256236 Done
+• Increase kubernetes capacity overall https://phabricator.wikimedia.org/T252185 (codfw) and https://phabricator.wikimedia.org/T241850 (eqiad) Done
+• Investigate the iowait issues plaguing kubernetes nodes since 2020-05-29. https://phabricator.wikimedia.org/T255975 Done
+• Investigate the apparent network connectivity loss for kubernetes100[1,3,5] during the incident

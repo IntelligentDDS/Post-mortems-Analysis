@@ -1,0 +1,4 @@
+Service Management Failures for Application Gateway, Azure Bastion, and Azure Firewall (Tracking ID HT3R-990)
+Summary of Impact: Between 05:55 UTC on 22 Jan and 00:56 UTC on 23 Jan 2020, a subset of customers using Application Gateway/WAF V2 SKU, Azure Firewall, and Azure Bastion services may have received failure notifications when performing service management operations—such as create/scale, update, and delete.
+Preliminary Root Cause: Engineers determined that a recent deployment task impacted service-to-service communication which resulted in failure of management requests. Mitigation: Engineers deployed a platform hotfix to mitigate the issue.
+Next Steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.

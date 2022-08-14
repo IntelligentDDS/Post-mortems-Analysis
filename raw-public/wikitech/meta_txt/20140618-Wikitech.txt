@@ -1,0 +1,14 @@
+Wikitech failed for about 10 minutes. The proximate cause was fixing puppet; the ultimate cause was a bug in Apache puppet refactoring.
+• Andrew B notices that puppet runs are failing on wikitech, fixes duplicate definition problem
+
+Earlier in afternoon I discovered that puppet was failing to run on virt1000 (aka wikitech) along with the other puppet servers (e.g. palladium). This was due to a duplicate package definition (libapache2-mod-passenger) that crept in somewhere around the 'Kill apache_module' patch [1].
+
+Despite this being a catalog compilation failure, icinga failed to notify us about puppet failures.
+
+I fixed the duplicate package [2] and forced a puppet update on palladium. Everything went fine, puppet ran cleanly and palladium's clients continued happily. So, I forced a puppet run on virt1000, which also ran cleanly. Alas, during the intervening puppet outage, virt1000 had accumulated a backlog of unapplied patches. Another Apache refactor patch [3] added a new (spurious) sites-enabled file to wikitech with some settings that conflicted with the proper wikitech virthost. When apache2 restarted, it just chose one, and chose poorly, such that the only functional vhost on wikitech redirected to virt1000. This worked poorly.
+
+I fixed the accidental renaming with a couple of hurried patches [4][5]. After a bit of fumbling, wikitech is happy again.
+
+What weakness did we learn about and how can we address them?
+• We need to improve puppet monitoring so that puppet breakages produce some sort of notification.
+• Add a reporter to our puppetmaster that registers an icinga check when a puppet run has errors.

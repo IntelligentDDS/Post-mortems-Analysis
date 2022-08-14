@@ -1,0 +1,29 @@
+Update 2015-06-19 21:00 UTC: All other projects should be up now (including tools) - restored from a backup taken on June 9. Some have had NFS disabled - but those mostly have had no significant NFS usage or have had members of the project confirm NFS is unused. This increases their reliability significantly. If your project has something missing, please file a bug or respond on list.
+
+Update 2015-06-19 15:25 UTC: NFS for other projects made available, they are being brought back one at a time. A fsck is in progress on the old filesystem, and on completion it will tell us if we can recover data newer than 10 days old.
+
+Update 2015-06-19 14:50 UTC: NFS stalled again, investigation under way.
+
+Update 2015-06-19 12:30 UTC: The 6 excluded tools are back, maintainers please start them back up. Webservices have automatically been started up. https://lists.wikimedia.org/pipermail/labs-l/2015-June/003831.html for more information.
+
+Update 2015-06-19 06:20 UTC: Tools are back, see https://lists.wikimedia.org/pipermail/labs-l/2015-June/003814.html for update.
+
+Update 2015-06-18 17:20 UTC: We are prioritizing bringing tools.wmflabs.org back up, and in the interest of time have excluded the following tools from initial copy: cluebot, zoomviewer, oar, templatetiger, bub, fawiki-tools. They'll be copied over in subsequent iterations.
+
+Labs (including tool labs) is down, and it's not clear when it will be back up again
+
+Yesterday, the file system used by many Labs tools suffered a catastrophic failure, causing most tools to break. This was noticed quickly but recovery is taking a long time because of the size of the filesystem.
+
+There has been file system corruption on the filesystem backing the NFS setup that all of labs uses, causing a prolonged outage. The Operations team is at work attempting to restore a backup made on June 9 at 16:00.
+
+If you are an editor on one of our projects
+
+Sorry; you will not be able to use the tool you want to use at this moment. We are working hard to get everything back up and running, but it's going to take some time. Please be patient.
+
+If you are a tool developer
+
+It's not clear yet what the impact of the file system corruption is. The backup is more than a week old, so it is possible recent changes will be lost.
+
+If you manage your own project on Labs
+
+If you have a non-tools project on labs that does not depend on NFS and is currently down, you can recover it by getting rid of NFS and we will help with that. Recover instance from NFS shows how to do it, and we would prefer you showed up on #wikimedia-labs connect so we can help you do it faster / easier as well.

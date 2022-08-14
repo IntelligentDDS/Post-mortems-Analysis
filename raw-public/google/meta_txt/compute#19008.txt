@@ -1,0 +1,1253 @@
+# [](//cloud.google.com)
+
+July 19, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/19008)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support-hub/). Learn more about what's
+posted on the dashboard in [ this
+FAQ](//cloud.google.com/support/docs/dashboard). For additional information on
+these services, please visit [cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #19008
+
+Some networking update/create/delete operations pending globally
+
+Incident began at **2019-10-31 16:30** and ended at **2019-11-02 14:00** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Nov 08, 2019 | 16:13 |
+
+# ISSUE SUMMARY
+
+On Thursday 31 October, 2019, network administration operations on Google
+Compute Engine (GCE), such as creating/deleting firewall rules, routes, global
+load balancers, subnets, or new VPCs, were subject to elevated latency and
+errors. Specific service impact is outlined in detail below.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 31 October, 2019 from 16:30 to 18:00 US/Pacific and again from
+20:24 to 23:08 Google Compute Engine experienced elevated latency and errors
+applying certain network administration operations. At 23:08, the issue was
+mitigated fully, and as a result, administrative operations began to succeed
+for most projects. However, projects which saw network administration
+operations fail during the incident were left stuck in a state where new
+operations could not be applied. The cleanup process for these stuck projects
+took until 2019-11-02 14:00.
+
+The following services experienced up to a 100% error rate when submitting
+create, modify, and/or delete requests that relied on Google Compute Engine’s
+global (and in some cases, regional) networking APIs between 2019-10-31 16:40
+- 18:00 and 20:24 - 23:08 US/Pacific for a combined duration of 4 hours and 4
+minutes:
+
+\-- Google Compute Engine
+
+\-- Google Kubernetes Engine
+
+\-- Google App Engine Flexible
+
+\-- Google Cloud Filestore
+
+\-- Google Cloud Machine Learning Engine
+
+\-- Google Cloud Memorystore
+
+\-- Google Cloud Composer
+
+\-- Google Cloud Data Fusion
+
+# ROOT CAUSE
+
+Google Compute Engine’s networking stack consists of software which is made up
+of two components, a control plane and data plane. The data plane is where
+packets are processed and routed based on the configuration set up by the
+control plane. GCE’s networking control plane has global components that are
+responsible for fanning-out network configurations that can affect an entire
+VPC network to downstream (regional/zonal) networking controllers. Each region
+and zone has their own control plane service, and each control plane service
+is sharded such that network programming is spread across multiple shards.
+
+A performance regression introduced in a recent release of the networking
+control software caused the service to begin accumulating a backlog of
+requests. The backlog eventually became significant enough that requests timed
+out, leaving some projects stuck in a state where further administrative
+operations could not be applied. The backlog was further exacerbated by the
+retry policy in the system sending the requests, which increased load still
+further. Manual intervention was required to clear the stuck projects,
+prolonging the incident.
+
+# REMEDIATION AND PREVENTION
+
+Google engineers were alerted to the problem on 2019-10-31 at 17:10 US/Pacific
+and immediately began investigating. From 17:10 to 18:00, engineers ruled out
+potential sources of the outage without finding a definitive root cause. The
+networking control plane performed an automatic failover at 17:57, dropping
+the error rate. This greatly reduced the number of stuck operations in the
+system and significantly mitigated user impact. However, after 18:59, the
+overload condition returned and error rates again increased. After further
+investigation from multiple teams, additional mitigation efforts began at
+19:52, when Google engineers allotted additional resources to the overloaded
+components. At 22:16, as a further mitigation, Google engineers introduced a
+rate limit designed to throttle requests to the network programming
+distribution service. At 22:28, this service was restarted, allowing it to
+drop any pending requests from its queue. The rate limit coupled with the
+restart mitigated the issue of new operations becoming stuck, allowing the
+team to begin focusing on the cleanup of stuck projects.
+
+Resolving the stuck projects required manual intervention, which was unique to
+each failed operation type. Engineers worked round the clock to address each
+operation type in turn; as each was processed, further operations of the same
+type (from the same project) also began to be processed. 80% of the stuck
+operations were processed by 2019-11-01 16:00, and all operations were fully
+processed by 2019-11-02 14:00.
+
+We will be taking these immediate steps to prevent this class of error from
+recurring:
+
+\-- We are implementing continuous load testing as part of the deployment
+pipeline of the component which suffered the performance regression, so that
+such issues are identified before they reach production in future.
+
+\-- We have rate-limited the traffic between the impacted control plane
+components to avoid the congestion collapse experienced during this incident.
+
+\-- We are further sharding the global network programming distribution
+service to allow for graceful horizontal scaling under high traffic.
+
+\-- We are automating the steps taken to unstick administrative operations, to
+eliminate the need for manual cleanup after failures such as this one.
+
+\-- We are adding alerting to the network programming distribution service, to
+reduce response time in the event of a similar problem in the future.
+
+\-- We are changing the way the control plane processes requests to allow
+forward progress even when there is a significant backlog.
+
+Google is committed to quickly and continually improving our technology and
+operations to prevent service disruptions. We appreciate your patience and
+apologize again for the impact to your organization. We thank you for your
+business.
+
+If you believe your application experienced an SLA violation as a result of
+this incident, please contact us
+(https://support.google.com/cloud/answer/6282346).  
+  
+|
+
+# ISSUE SUMMARY
+
+On Thursday 31 October, 2019, network administration operations on Google
+Compute Engine (GCE), such as creating/deleting firewall rules, routes, global
+load balancers, subnets, or new VPCs, were subject to elevated latency and
+errors. Specific service impact is outlined in detail below.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Thursday 31 October, 2019 from 16:30 to 18:00 US/Pacific and again from
+20:24 to 23:08 Google Compute Engine experienced elevated latency and errors
+applying certain network administration operations. At 23:08, the issue was
+mitigated fully, and as a result, administrative operations began to succeed
+for most projects. However, projects which saw network administration
+operations fail during the incident were left stuck in a state where new
+operations could not be applied. The cleanup process for these stuck projects
+took until 2019-11-02 14:00.
+
+The following services experienced up to a 100% error rate when submitting
+create, modify, and/or delete requests that relied on Google Compute Engine’s
+global (and in some cases, regional) networking APIs between 2019-10-31 16:40
+- 18:00 and 20:24 - 23:08 US/Pacific for a combined duration of 4 hours and 4
+minutes:
+
+\-- Google Compute Engine
+
+\-- Google Kubernetes Engine
+
+\-- Google App Engine Flexible
+
+\-- Google Cloud Filestore
+
+\-- Google Cloud Machine Learning Engine
+
+\-- Google Cloud Memorystore
+
+\-- Google Cloud Composer
+
+\-- Google Cloud Data Fusion
+
+# ROOT CAUSE
+
+Google Compute Engine’s networking stack consists of software which is made up
+of two components, a control plane and data plane. The data plane is where
+packets are processed and routed based on the configuration set up by the
+control plane. GCE’s networking control plane has global components that are
+responsible for fanning-out network configurations that can affect an entire
+VPC network to downstream (regional/zonal) networking controllers. Each region
+and zone has their own control plane service, and each control plane service
+is sharded such that network programming is spread across multiple shards.
+
+A performance regression introduced in a recent release of the networking
+control software caused the service to begin accumulating a backlog of
+requests. The backlog eventually became significant enough that requests timed
+out, leaving some projects stuck in a state where further administrative
+operations could not be applied. The backlog was further exacerbated by the
+retry policy in the system sending the requests, which increased load still
+further. Manual intervention was required to clear the stuck projects,
+prolonging the incident.
+
+# REMEDIATION AND PREVENTION
+
+Google engineers were alerted to the problem on 2019-10-31 at 17:10 US/Pacific
+and immediately began investigating. From 17:10 to 18:00, engineers ruled out
+potential sources of the outage without finding a definitive root cause. The
+networking control plane performed an automatic failover at 17:57, dropping
+the error rate. This greatly reduced the number of stuck operations in the
+system and significantly mitigated user impact. However, after 18:59, the
+overload condition returned and error rates again increased. After further
+investigation from multiple teams, additional mitigation efforts began at
+19:52, when Google engineers allotted additional resources to the overloaded
+components. At 22:16, as a further mitigation, Google engineers introduced a
+rate limit designed to throttle requests to the network programming
+distribution service. At 22:28, this service was restarted, allowing it to
+drop any pending requests from its queue. The rate limit coupled with the
+restart mitigated the issue of new operations becoming stuck, allowing the
+team to begin focusing on the cleanup of stuck projects.
+
+Resolving the stuck projects required manual intervention, which was unique to
+each failed operation type. Engineers worked round the clock to address each
+operation type in turn; as each was processed, further operations of the same
+type (from the same project) also began to be processed. 80% of the stuck
+operations were processed by 2019-11-01 16:00, and all operations were fully
+processed by 2019-11-02 14:00.
+
+We will be taking these immediate steps to prevent this class of error from
+recurring:
+
+\-- We are implementing continuous load testing as part of the deployment
+pipeline of the component which suffered the performance regression, so that
+such issues are identified before they reach production in future.
+
+\-- We have rate-limited the traffic between the impacted control plane
+components to avoid the congestion collapse experienced during this incident.
+
+\-- We are further sharding the global network programming distribution
+service to allow for graceful horizontal scaling under high traffic.
+
+\-- We are automating the steps taken to unstick administrative operations, to
+eliminate the need for manual cleanup after failures such as this one.
+
+\-- We are adding alerting to the network programming distribution service, to
+reduce response time in the event of a similar problem in the future.
+
+\-- We are changing the way the control plane processes requests to allow
+forward progress even when there is a significant backlog.
+
+Google is committed to quickly and continually improving our technology and
+operations to prevent service disruptions. We appreciate your patience and
+apologize again for the impact to your organization. We thank you for your
+business.
+
+If you believe your application experienced an SLA violation as a result of
+this incident, please contact us
+(https://support.google.com/cloud/answer/6282346).  
+  
+| Nov 02, 2019 | 10:51 |
+
+Our engineers have made significant progress unsticking operations overnight
+and early this morning. At this point in time, the issue with Google Cloud
+Networking operations being stuck is believed to be affecting a very small
+number of remaining projects and our Engineering Team is actively working on
+unsticking the final stuck operations.
+
+If you have questions or are still impacted, please open a case with the
+Support Team and we will work with you directly until this issue is fully
+resolved.
+
+No further updates will be provided here.  
+  
+|
+
+Our engineers have made significant progress unsticking operations overnight
+and early this morning. At this point in time, the issue with Google Cloud
+Networking operations being stuck is believed to be affecting a very small
+number of remaining projects and our Engineering Team is actively working on
+unsticking the final stuck operations.
+
+If you have questions or are still impacted, please open a case with the
+Support Team and we will work with you directly until this issue is fully
+resolved.
+
+No further updates will be provided here.  
+  
+| Nov 01, 2019 | 20:35 |
+
+Description: Mitigation efforts have successfully mitigated most types of
+operations. At this time the backlog consists of mostly network and subnet
+deletion operations, and a small fraction of create subnet operations. This
+affects subnets created during the impact window. Subnets created outside of
+this window remain unaffected.
+
+Mitigation efforts will continue overnight to unstick the remaining
+operations.
+
+We will publish an analysis of this incident once we have completed our
+internal investigation. We thank you for your patience while we have worked on
+resolving the issue. We will provide more information by Saturday, 2019-11-02
+11:00 US/Pacific.
+
+Diagnosis: Google Cloud Networking
+
+  * Networking-related Compute API operations stuck pending if submitted during the above time.
+  * The affected operations include: deleting and creating subnets, creating networks. Resubmitting similar requests may also enter a pending state as they are waiting for the previous operation to complete.
+
+Google Kubernetes Engine
+
+  * Cluster operations including creation, update, auto scaling may have failed due to the networking API failures mentioned under Google Compute Engine
+  * New Cluster operations are now succeeding and further updates on recovering from this are underway as part of the mitigation mentioned under Google Cloud Networking. 
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Mitigation efforts have successfully mitigated most types of
+operations. At this time the backlog consists of mostly network and subnet
+deletion operations, and a small fraction of create subnet operations. This
+affects subnets created during the impact window. Subnets created outside of
+this window remain unaffected.
+
+Mitigation efforts will continue overnight to unstick the remaining
+operations.
+
+We will publish an analysis of this incident once we have completed our
+internal investigation. We thank you for your patience while we have worked on
+resolving the issue. We will provide more information by Saturday, 2019-11-02
+11:00 US/Pacific.
+
+Diagnosis: Google Cloud Networking
+
+  * Networking-related Compute API operations stuck pending if submitted during the above time.
+  * The affected operations include: deleting and creating subnets, creating networks. Resubmitting similar requests may also enter a pending state as they are waiting for the previous operation to complete.
+
+Google Kubernetes Engine
+
+  * Cluster operations including creation, update, auto scaling may have failed due to the networking API failures mentioned under Google Compute Engine
+  * New Cluster operations are now succeeding and further updates on recovering from this are underway as part of the mitigation mentioned under Google Cloud Networking. 
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 16:32 |
+
+Description: Approximately 25% of global (and regional) route and subnet
+deletion operations remain stuck in a pending state. Mitigation work is still
+underway to unblock pending network operations globally. We expect the
+majority of mitigations to complete over the next several hours, with the
+long-tail going into tomorrow.
+
+Please note, this will allow newer incoming operations of the same type to
+eventually process successfully. However, resubmitting similar requests may
+still get stuck in a running state as they are waiting for previously queued
+operations to complete.
+
+We will publish an analysis of this incident once we have completed our
+internal investigation. We thank you for your patience while we have worked on
+resolving the issue. We will provide more information by Friday, 2019-11-01
+20:30 US/Pacific.
+
+Diagnosis: Google Cloud Networking
+
+  * Networking-related Compute API operations stuck pending if submitted during the above time.
+  * The affected operations include: [deleting/creating] backend services, subnets, instance groups, routes and firewall rules.
+  * Resubmitting similar requests may also enter a pending state as they are waiting for the previous operation to complete.
+  * Our product team is working to unblock any pending operation
+
+Google Compute Engine
+
+  * 40-80% of Compute Engine API operations may have become stuck pending if submitted during the above time.
+  * Affected operations include any operation which would need to update Networking on affected projects
+
+Google Cloud Filestore
+
+  * Impacts instance creation/deletion
+
+Google Kubernetes Engine
+
+  * Cluster operations including creation, update, auto scaling may have failed due to the networking API failures mentioned under Google Compute Engine
+  * New Cluster operations are now succeeding and further updates on recovering from this are underway as part of the mitigation mentioned under Google Cloud Networking. 
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Approximately 25% of global (and regional) route and subnet
+deletion operations remain stuck in a pending state. Mitigation work is still
+underway to unblock pending network operations globally. We expect the
+majority of mitigations to complete over the next several hours, with the
+long-tail going into tomorrow.
+
+Please note, this will allow newer incoming operations of the same type to
+eventually process successfully. However, resubmitting similar requests may
+still get stuck in a running state as they are waiting for previously queued
+operations to complete.
+
+We will publish an analysis of this incident once we have completed our
+internal investigation. We thank you for your patience while we have worked on
+resolving the issue. We will provide more information by Friday, 2019-11-01
+20:30 US/Pacific.
+
+Diagnosis: Google Cloud Networking
+
+  * Networking-related Compute API operations stuck pending if submitted during the above time.
+  * The affected operations include: [deleting/creating] backend services, subnets, instance groups, routes and firewall rules.
+  * Resubmitting similar requests may also enter a pending state as they are waiting for the previous operation to complete.
+  * Our product team is working to unblock any pending operation
+
+Google Compute Engine
+
+  * 40-80% of Compute Engine API operations may have become stuck pending if submitted during the above time.
+  * Affected operations include any operation which would need to update Networking on affected projects
+
+Google Cloud Filestore
+
+  * Impacts instance creation/deletion
+
+Google Kubernetes Engine
+
+  * Cluster operations including creation, update, auto scaling may have failed due to the networking API failures mentioned under Google Compute Engine
+  * New Cluster operations are now succeeding and further updates on recovering from this are underway as part of the mitigation mentioned under Google Cloud Networking. 
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 14:38 |
+
+Currently, the backlog of pending operations has been reduced by approximately
+70%, and we expect the majority of mitigations to complete over the next
+several hours, with the long-tail going into tomorrow. Mitigation work is
+still underway to unblock pending network operations globally.
+
+To determine whether you are affected by this incident, you may run the
+following command [1] “gcloud compute operations list --filter="status!=DONE”
+to view your project’s pending operations. If you see global operations (or
+regional subnet operations) that are running for a long time (or significantly
+longer than usual), then you are likely still impacted.
+
+The remaining 30% of stuck operations are currently either being processed
+successfully or marked as failed. This will allow newer incoming operations of
+the same type to be eventually processed successfully, however, resubmitting
+similar requests may also get stuck in a running state as they are waiting for
+the queued operations to complete.
+
+If you have an operation that does not appear to be finishing, please wait for
+it to succeed or be marked as failed before retrying the operation.
+
+For Context: 40-80% of Cloud Networking operations submitted between
+2019-10-31 16:41 US/Pacific and 2019-10-31 23:01 US/Pacific may have been
+affected. The exact percentage of failures is region dependent.
+
+We will provide more information by Friday, 2019-11-01 16:30 US/Pacific.
+
+[1] <https://cloud.google.com/sdk/gcloud/reference/compute/operations/list>
+
+Diagnosis:
+
+As we become aware of products which were impacted we will update this post to
+ensure transparency.
+
+Google Cloud Networking Networking-related Compute API operations stuck
+pending if submitted during the above time. The affected operations include:
+[deleting/creating] backend services, subnets, instance groups, routes and
+firewall rules. Resubmitting similar requests may also enter a pending state
+as they are waiting for the previous operation to complete. Our product team
+is working to unblock any pending operation
+
+Google Compute Engine 40-80% of Compute Engine API operations may have become
+stuck pending if submitted during the above time. Affected operations include
+any operation which would need to update Networking on affected projects
+
+Google Cloud DNS Some DNS updates may be stuck pending from during the above
+time.
+
+Google Cloud Filestore Impacts instance creation/deletion
+
+Cloud Machine Learning Online prediction jobs using Google Kubernetes Engine
+may have experienced failures during this time The team is no longer seeing
+issues affecting Cloud Machine Learning and we feel the incident for this
+product is now resolved.
+
+Cloud Composer Create Environment operations during the affected time may have
+experienced failures. Customers should no longer being seeing impact
+
+Google Kubernetes Engine Cluster operations including creation, update, auto
+scaling may have failed due to the networking API failures mentioned under
+Google Compute Engine New Cluster operations are now succeeding and further
+updates on recovering from this are underway as part of the mitigation
+mentioned under Google Cloud Networking.
+
+Google Cloud Memorystore This issue is believed to have affected less than 1%
+of projects The affected projects should find full resolution once the issue
+affecting Google Compute Engine is resolved.
+
+App Engine Flexible New deployments experienced elevated failure rates during
+the affected time. The team is no longer seeing issues affecting new
+deployment creation  
+  
+|
+
+Currently, the backlog of pending operations has been reduced by approximately
+70%, and we expect the majority of mitigations to complete over the next
+several hours, with the long-tail going into tomorrow. Mitigation work is
+still underway to unblock pending network operations globally.
+
+To determine whether you are affected by this incident, you may run the
+following command [1] “gcloud compute operations list --filter="status!=DONE”
+to view your project’s pending operations. If you see global operations (or
+regional subnet operations) that are running for a long time (or significantly
+longer than usual), then you are likely still impacted.
+
+The remaining 30% of stuck operations are currently either being processed
+successfully or marked as failed. This will allow newer incoming operations of
+the same type to be eventually processed successfully, however, resubmitting
+similar requests may also get stuck in a running state as they are waiting for
+the queued operations to complete.
+
+If you have an operation that does not appear to be finishing, please wait for
+it to succeed or be marked as failed before retrying the operation.
+
+For Context: 40-80% of Cloud Networking operations submitted between
+2019-10-31 16:41 US/Pacific and 2019-10-31 23:01 US/Pacific may have been
+affected. The exact percentage of failures is region dependent.
+
+We will provide more information by Friday, 2019-11-01 16:30 US/Pacific.
+
+[1] <https://cloud.google.com/sdk/gcloud/reference/compute/operations/list>
+
+Diagnosis:
+
+As we become aware of products which were impacted we will update this post to
+ensure transparency.
+
+Google Cloud Networking Networking-related Compute API operations stuck
+pending if submitted during the above time. The affected operations include:
+[deleting/creating] backend services, subnets, instance groups, routes and
+firewall rules. Resubmitting similar requests may also enter a pending state
+as they are waiting for the previous operation to complete. Our product team
+is working to unblock any pending operation
+
+Google Compute Engine 40-80% of Compute Engine API operations may have become
+stuck pending if submitted during the above time. Affected operations include
+any operation which would need to update Networking on affected projects
+
+Google Cloud DNS Some DNS updates may be stuck pending from during the above
+time.
+
+Google Cloud Filestore Impacts instance creation/deletion
+
+Cloud Machine Learning Online prediction jobs using Google Kubernetes Engine
+may have experienced failures during this time The team is no longer seeing
+issues affecting Cloud Machine Learning and we feel the incident for this
+product is now resolved.
+
+Cloud Composer Create Environment operations during the affected time may have
+experienced failures. Customers should no longer being seeing impact
+
+Google Kubernetes Engine Cluster operations including creation, update, auto
+scaling may have failed due to the networking API failures mentioned under
+Google Compute Engine New Cluster operations are now succeeding and further
+updates on recovering from this are underway as part of the mitigation
+mentioned under Google Cloud Networking.
+
+Google Cloud Memorystore This issue is believed to have affected less than 1%
+of projects The affected projects should find full resolution once the issue
+affecting Google Compute Engine is resolved.
+
+App Engine Flexible New deployments experienced elevated failure rates during
+the affected time. The team is no longer seeing issues affecting new
+deployment creation  
+  
+| Nov 01, 2019 | 12:22 |
+
+Description: Mitigation work continues to unblock pending network operations
+globally. 40-80% of Cloud Networking operations submitted between Thursday,
+2019-10-31 16:41 US/Pacific and Thursday, 2019-10-31 23:01 US/Pacific may have
+been affected. The exact amount of failures is region dependent.
+
+Our team has been able to reduce the number of pending operations by 60% at
+this time. We expect mitigation to continue over the next 4 hours and are
+working to clear the pending operations by largest type impacted.
+
+We will provide more information by Friday, 2019-11-01 14:30 US/Pacific.
+
+Diagnosis: As we become aware of products which were impacted we will update
+this post to ensure transparency.
+
+Google Compute Engine \- Networking-related Compute API operations pending to
+complete if submitted during the above time. \- Resubmitting similar requests
+may fail as they are waiting for the above operations to complete. \- The
+affected operations include: deleting backend services, subnets, instance
+groups, routes and firewall rules. \- Some operations may still show as
+pending and are being mitigated at this time. We are currently working to
+address operations around subnet deletion as our next target group
+
+Google Kubernetes Engine \- Cluster operations including creation, update,
+auto scaling may have failed due to the networking API failures mentioned
+under Google Compute Engine \- New Cluster operations are now succeeding and
+further updates on recovering from this are underway as part of the mitigation
+mentioned under Google Compute Engine. No further updates will be provided for
+Google Kubernetes Engine in this post.
+
+Google Cloud Memorystore \- This issue is believed to have affected less than
+1% of projects \- The affected projects should find full resolution once the
+issue affecting Google Compute Engine is resolved. No further updates will be
+provided for Google Cloud Memorystore
+
+App Engine Flexible \- New deployments experienced elevated failure rates
+during the affected time. \- The team is no longer seeing issues affecting new
+deployment creation and we feel the incident for this product is now resolved.
+No further updates will be provided for App Engine Flexible
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Mitigation work continues to unblock pending network operations
+globally. 40-80% of Cloud Networking operations submitted between Thursday,
+2019-10-31 16:41 US/Pacific and Thursday, 2019-10-31 23:01 US/Pacific may have
+been affected. The exact amount of failures is region dependent.
+
+Our team has been able to reduce the number of pending operations by 60% at
+this time. We expect mitigation to continue over the next 4 hours and are
+working to clear the pending operations by largest type impacted.
+
+We will provide more information by Friday, 2019-11-01 14:30 US/Pacific.
+
+Diagnosis: As we become aware of products which were impacted we will update
+this post to ensure transparency.
+
+Google Compute Engine \- Networking-related Compute API operations pending to
+complete if submitted during the above time. \- Resubmitting similar requests
+may fail as they are waiting for the above operations to complete. \- The
+affected operations include: deleting backend services, subnets, instance
+groups, routes and firewall rules. \- Some operations may still show as
+pending and are being mitigated at this time. We are currently working to
+address operations around subnet deletion as our next target group
+
+Google Kubernetes Engine \- Cluster operations including creation, update,
+auto scaling may have failed due to the networking API failures mentioned
+under Google Compute Engine \- New Cluster operations are now succeeding and
+further updates on recovering from this are underway as part of the mitigation
+mentioned under Google Compute Engine. No further updates will be provided for
+Google Kubernetes Engine in this post.
+
+Google Cloud Memorystore \- This issue is believed to have affected less than
+1% of projects \- The affected projects should find full resolution once the
+issue affecting Google Compute Engine is resolved. No further updates will be
+provided for Google Cloud Memorystore
+
+App Engine Flexible \- New deployments experienced elevated failure rates
+during the affected time. \- The team is no longer seeing issues affecting new
+deployment creation and we feel the incident for this product is now resolved.
+No further updates will be provided for App Engine Flexible
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 10:13 |
+
+Description: Mitigation work is currently underway by our product team to
+unblock stuck network operations globally. Network operations submitted
+between Thursday, 2019-10-31 16:41 US/Pacific and Thursday, 2019-10-31 23:01
+US/Pacific may be affected.
+
+New operations are succeeding as expected currently and we are currently
+working to clear a back log of pending operations in our system.
+
+We will provide more information by Friday, 2019-11-01 12:30 US/Pacific.
+
+Diagnosis: Customer may have encountered errors across the below products if
+affected.
+
+Google Compute Engine \- Networking-related Compute API operations pending to
+complete if submitted during the above time. \- Resubmitting similar requests
+may fail as they are waiting for the above operations to complete. \- The
+affected operations include: deleting backend services, subnets, instance
+groups, routes and firewall rules. \- Some operations may still show as
+pending and are being mitigated at this time. We expect this current
+mitigation work to be completed no later than 2019-11-01 12:30 PDT
+
+Google Kubernetes Engine \- Cluster operations including creation, update,
+auto scaling may have failed due to the networking API failures mentioned
+under Google Compute Engine \- New Cluster operations are now succeeding and
+further updates on recovering from this are underway as part of the mitigation
+mentioned under Google Compute Engine. No further updates will be provided for
+Google Kubernetes Engine in this post.
+
+Google Cloud Memorystore \- This issue is believed to have affected less than
+1% of projects \- The affected projects should find full resolution once the
+issue affecting Google Compute Engine is resolved. No further updates will be
+provided for Google Cloud Memorystore
+
+App Engine Flexible \- New deployments experienced elevated failure rates
+during the affected time. \- The team is no longer seeing issues affecting new
+deployment creation and we feel the incident for this product is now resolved.
+No further updates will be provided for App Engine Flexible
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Mitigation work is currently underway by our product team to
+unblock stuck network operations globally. Network operations submitted
+between Thursday, 2019-10-31 16:41 US/Pacific and Thursday, 2019-10-31 23:01
+US/Pacific may be affected.
+
+New operations are succeeding as expected currently and we are currently
+working to clear a back log of pending operations in our system.
+
+We will provide more information by Friday, 2019-11-01 12:30 US/Pacific.
+
+Diagnosis: Customer may have encountered errors across the below products if
+affected.
+
+Google Compute Engine \- Networking-related Compute API operations pending to
+complete if submitted during the above time. \- Resubmitting similar requests
+may fail as they are waiting for the above operations to complete. \- The
+affected operations include: deleting backend services, subnets, instance
+groups, routes and firewall rules. \- Some operations may still show as
+pending and are being mitigated at this time. We expect this current
+mitigation work to be completed no later than 2019-11-01 12:30 PDT
+
+Google Kubernetes Engine \- Cluster operations including creation, update,
+auto scaling may have failed due to the networking API failures mentioned
+under Google Compute Engine \- New Cluster operations are now succeeding and
+further updates on recovering from this are underway as part of the mitigation
+mentioned under Google Compute Engine. No further updates will be provided for
+Google Kubernetes Engine in this post.
+
+Google Cloud Memorystore \- This issue is believed to have affected less than
+1% of projects \- The affected projects should find full resolution once the
+issue affecting Google Compute Engine is resolved. No further updates will be
+provided for Google Cloud Memorystore
+
+App Engine Flexible \- New deployments experienced elevated failure rates
+during the affected time. \- The team is no longer seeing issues affecting new
+deployment creation and we feel the incident for this product is now resolved.
+No further updates will be provided for App Engine Flexible
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 10:05 |
+
+Description: Mitigation work is currently underway by our product team to
+unblock stuck network operations globally. Network operations submitted
+between Thursday, 2019-10-31 16:41 US/Pacific and Thursday, 2019-10-31 23:01
+US/Pacific may be affected.
+
+New operations are showing a reduction in failures currently and we are
+currently working to clear a back log of pending operations in our system.
+
+We will provide more information by Friday, 2019-11-01 12:00 US/Pacific.
+
+Diagnosis: Customer may have encountered errors across the below products if
+affected.
+
+Google Compute Engine \- Networking-related Compute API operations pending to
+complete if submitted during the above time. \- The affected operations
+include: deleting backend services, subnets, instance groups, routes and
+firewall rules. \- Some operations may still show as pending and are being
+mitigated at this time. We expect this current mitigation work to be completed
+no later than 2019-11-01 12:30 PDT
+
+Google Kubernetes Engine \- Cluster operations including creation, update,
+auto scaling may have failed due to the networking API failures mentioned
+under Google Compute Engine \- New Cluster operations are now succeeding and
+further updates on recovering from this are underway as part of the mitigation
+mentioned under Google Compute Engine. No further updates will be provided for
+Google Kubernetes Engine in this post.
+
+Google Cloud Memorystore \- This issue is believed to have affected less than
+1% of projects \- The affected projects should find full resolution once the
+issue affecting Google Compute Engine is resolved. No further updates will be
+provided for Google Cloud Memorystore
+
+App Engine Flexible \- New deployments experienced elevated failure rates
+during the affected time. \- The team is no longer seeing issues affecting new
+deployment creation and we feel the incident for this product is now resolved.
+No further updates will be provided for App Engine Flexible
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Mitigation work is currently underway by our product team to
+unblock stuck network operations globally. Network operations submitted
+between Thursday, 2019-10-31 16:41 US/Pacific and Thursday, 2019-10-31 23:01
+US/Pacific may be affected.
+
+New operations are showing a reduction in failures currently and we are
+currently working to clear a back log of pending operations in our system.
+
+We will provide more information by Friday, 2019-11-01 12:00 US/Pacific.
+
+Diagnosis: Customer may have encountered errors across the below products if
+affected.
+
+Google Compute Engine \- Networking-related Compute API operations pending to
+complete if submitted during the above time. \- The affected operations
+include: deleting backend services, subnets, instance groups, routes and
+firewall rules. \- Some operations may still show as pending and are being
+mitigated at this time. We expect this current mitigation work to be completed
+no later than 2019-11-01 12:30 PDT
+
+Google Kubernetes Engine \- Cluster operations including creation, update,
+auto scaling may have failed due to the networking API failures mentioned
+under Google Compute Engine \- New Cluster operations are now succeeding and
+further updates on recovering from this are underway as part of the mitigation
+mentioned under Google Compute Engine. No further updates will be provided for
+Google Kubernetes Engine in this post.
+
+Google Cloud Memorystore \- This issue is believed to have affected less than
+1% of projects \- The affected projects should find full resolution once the
+issue affecting Google Compute Engine is resolved. No further updates will be
+provided for Google Cloud Memorystore
+
+App Engine Flexible \- New deployments experienced elevated failure rates
+during the affected time. \- The team is no longer seeing issues affecting new
+deployment creation and we feel the incident for this product is now resolved.
+No further updates will be provided for App Engine Flexible
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 09:06 |
+
+Description: Mitigation work is currently underway by our product team to
+unblock stuck network operations globally. Network operations submitted
+between Thursday, 2019-10-31 16:41 US/Pacific and Thursday, 2019-10-31 23:01
+US/Pacific may be affected.
+
+New operations are showing a reduction in failures currently and we are
+currently working to clear a back log of pending operations in our system.
+
+We will provide more information by Friday, 2019-11-01 12:00 US/Pacific.
+
+Diagnosis: Customer may have encountered errors across the below products if
+affected.
+
+Google Compute Engine \- Networking-related Compute API operations pending to
+complete if submitted during the above time. \- The affected operations
+include: deleting backend services, subnets, instance groups, routes and
+firewall rules. \- Some operations may still show as pending and are being
+mitigated at this time. We expect this current mitigation work to be completed
+no later than 2019-11-01 12:30 PDT
+
+Google Kubernetes Engine \- Cluster operations including creation, update,
+auto scaling may have failed due to the networking API failures mentioned
+under Google Compute Engine \- New Cluster operations are now succeeding and
+further updates on recovering from this can be found
+<https://status.cloud.google.com/incident/container-engine/19011>. No further
+updates will be provided for Google Kubernetes Engine in this post.
+
+Google Cloud Memorystore \- This issue is believed to have affected less than
+1% of projects \- The affected projects should find full resolution once the
+issue affecting Google Compute Engine is resolved. No further updates will be
+provided for Google Cloud Memorystore
+
+App Engine Flexible \- New deployments experienced elevated failure rates
+during the affected time. \- The team is no longer seeing issues affecting new
+deployment creation and we feel the incident for this product is now resolved.
+No further updates will be provided for App Engine Flexible
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Mitigation work is currently underway by our product team to
+unblock stuck network operations globally. Network operations submitted
+between Thursday, 2019-10-31 16:41 US/Pacific and Thursday, 2019-10-31 23:01
+US/Pacific may be affected.
+
+New operations are showing a reduction in failures currently and we are
+currently working to clear a back log of pending operations in our system.
+
+We will provide more information by Friday, 2019-11-01 12:00 US/Pacific.
+
+Diagnosis: Customer may have encountered errors across the below products if
+affected.
+
+Google Compute Engine \- Networking-related Compute API operations pending to
+complete if submitted during the above time. \- The affected operations
+include: deleting backend services, subnets, instance groups, routes and
+firewall rules. \- Some operations may still show as pending and are being
+mitigated at this time. We expect this current mitigation work to be completed
+no later than 2019-11-01 12:30 PDT
+
+Google Kubernetes Engine \- Cluster operations including creation, update,
+auto scaling may have failed due to the networking API failures mentioned
+under Google Compute Engine \- New Cluster operations are now succeeding and
+further updates on recovering from this can be found
+<https://status.cloud.google.com/incident/container-engine/19011>. No further
+updates will be provided for Google Kubernetes Engine in this post.
+
+Google Cloud Memorystore \- This issue is believed to have affected less than
+1% of projects \- The affected projects should find full resolution once the
+issue affecting Google Compute Engine is resolved. No further updates will be
+provided for Google Cloud Memorystore
+
+App Engine Flexible \- New deployments experienced elevated failure rates
+during the affected time. \- The team is no longer seeing issues affecting new
+deployment creation and we feel the incident for this product is now resolved.
+No further updates will be provided for App Engine Flexible
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 08:50 |
+
+Description: Mitigation work is currently underway by our product team to
+unblock stuck network operations globally. Network operations submitted
+between Thursday, 2019-10-31 16:41 US/Pacific and Thursday, 2019-10-31 23:01
+US/Pacific may be affected.
+
+New operations are showing a reduction in failures currently and we are
+currently working to clear a back log of pending operations in our system.
+
+We will provide more information by Friday, 2019-11-01 10:00 US/Pacific.
+
+Diagnosis: Customer may be seeing errors across the below products if
+affected.
+
+Google Compute Engine \- Networking-related Compute API operations failing to
+complete if submitted during the above time. \- This may include deleting
+backend services, subnets, instance groups, routes and firewall rules.
+
+Google Kubernetes Engine \- Cluster operations including creation, update,
+auto scaling may have failed due to the networking API failures mentioned
+under Google Compute Engine \- New Cluster operations are now succeeding and
+further updates on restoring this can be found
+<https://status.cloud.google.com/incident/container-engine/19011>
+
+Google Cloud Memorystore \- Create/Delete events failed during the above time
+
+App Engine Flexible \- Deployments seeing elevated failure rates
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Mitigation work is currently underway by our product team to
+unblock stuck network operations globally. Network operations submitted
+between Thursday, 2019-10-31 16:41 US/Pacific and Thursday, 2019-10-31 23:01
+US/Pacific may be affected.
+
+New operations are showing a reduction in failures currently and we are
+currently working to clear a back log of pending operations in our system.
+
+We will provide more information by Friday, 2019-11-01 10:00 US/Pacific.
+
+Diagnosis: Customer may be seeing errors across the below products if
+affected.
+
+Google Compute Engine \- Networking-related Compute API operations failing to
+complete if submitted during the above time. \- This may include deleting
+backend services, subnets, instance groups, routes and firewall rules.
+
+Google Kubernetes Engine \- Cluster operations including creation, update,
+auto scaling may have failed due to the networking API failures mentioned
+under Google Compute Engine \- New Cluster operations are now succeeding and
+further updates on restoring this can be found
+<https://status.cloud.google.com/incident/container-engine/19011>
+
+Google Cloud Memorystore \- Create/Delete events failed during the above time
+
+App Engine Flexible \- Deployments seeing elevated failure rates
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 08:28 |
+
+Description: Mitigation work is currently underway by our product team to
+address the ongoing issue with some network operations failing globally at
+this time. These reports started Thursday, 2019-10-31 16:41 US/Pacific.
+Operations are showing a reduction in failures currently and we are currently
+working to clear a back log of stuck operations in our system.
+
+We will provide more information by Friday, 2019-11-01 09:30 US/Pacific.
+
+Diagnosis: Customer may experience errors with the below products if affected
+
+Google Compute Engine * Networking-related Compute API operations failing *
+This may include deleting backend services, subnets, instance groups, routes
+and firewall rules and more.
+
+Google Kubernetes Engine * Cluster operations including creation, update, auto
+scaling may fail due to the networking API failures
+
+Google Cloud Memorystore * Create/Delete events failing
+
+App Engine Flexible * Deployments seeing elevated failure rates
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Mitigation work is currently underway by our product team to
+address the ongoing issue with some network operations failing globally at
+this time. These reports started Thursday, 2019-10-31 16:41 US/Pacific.
+Operations are showing a reduction in failures currently and we are currently
+working to clear a back log of stuck operations in our system.
+
+We will provide more information by Friday, 2019-11-01 09:30 US/Pacific.
+
+Diagnosis: Customer may experience errors with the below products if affected
+
+Google Compute Engine * Networking-related Compute API operations failing *
+This may include deleting backend services, subnets, instance groups, routes
+and firewall rules and more.
+
+Google Kubernetes Engine * Cluster operations including creation, update, auto
+scaling may fail due to the networking API failures
+
+Google Cloud Memorystore * Create/Delete events failing
+
+App Engine Flexible * Deployments seeing elevated failure rates
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 07:15 |
+
+Description: Mitigation work is still underway by our engineering team.
+
+We will provide more information by Friday, 2019-11-01 08:30 US/Pacific.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups, routes and firewall rules. Cloud Armor
+rules might not be updated.
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Mitigation work is still underway by our engineering team.
+
+We will provide more information by Friday, 2019-11-01 08:30 US/Pacific.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups, routes and firewall rules. Cloud Armor
+rules might not be updated.
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 05:51 |
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 07:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups, routes and firewall rules. Cloud Armor
+rules might not be updated.
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 07:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups, routes and firewall rules. Cloud Armor
+rules might not be updated.
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 04:56 |
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 06:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules. New GKE nodes creation
+might fail with NetworkUnavailable status set to True. Cloud Armor rules might
+not be updated.
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 06:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules. New GKE nodes creation
+might fail with NetworkUnavailable status set to True. Cloud Armor rules might
+not be updated.
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 03:54 |
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 05:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 05:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 02:55 |
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 04:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 04:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+| Nov 01, 2019 | 01:53 |
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 03:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 03:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+| Oct 31, 2019 | 23:51 |
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 02:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Our engineering team still investigating the issue.
+
+We will provide an update by Friday, 2019-11-01 02:00 US/Pacific with current
+details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+| Oct 31, 2019 | 22:54 |
+
+Description: Our engineering team has determined that further investigation is
+required to mitigate the issue.
+
+We will provide an update by Thursday, 2019-10-31 23:50 US/Pacific with
+current details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: Our engineering team has determined that further investigation is
+required to mitigate the issue.
+
+We will provide an update by Thursday, 2019-10-31 23:50 US/Pacific with
+current details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+| Oct 31, 2019 | 22:06 |
+
+Description: We observing recurrence of the issue. The engineering team
+continues the investigation.
+
+We will provide an update by Thursday, 2019-10-31 23:00 US/Pacific with
+current details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+|
+
+Description: We observing recurrence of the issue. The engineering team
+continues the investigation.
+
+We will provide an update by Thursday, 2019-10-31 23:00 US/Pacific with
+current details.
+
+Diagnosis: Customer may experience errors while creating or deleting backend
+services, subnets, instance groups and firewall rules.
+
+Workaround: No workaround is available at the moment  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

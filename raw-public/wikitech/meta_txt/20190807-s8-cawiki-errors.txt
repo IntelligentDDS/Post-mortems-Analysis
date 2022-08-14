@@ -1,0 +1,30 @@
+Table wb_terms in wikidatawiki that provides labels and description lookup of entities (but also getting labels and description of entities; works both ways) is being replaced by a set normalized tables we call TermStore. Part of TermStore, is a class called , picked up the right host for retrieving wikidata data in client wikis (including cawiki) but didn't use the right db name - - thus code was trying to get information from wrong database - -. The patch that fixes the issue gives more in-depth information on it. It was deployed five hours earlier on client wikis (The patch that enabled it on client wiki is 527087) then after caches got invalidated and started to use the new store.
+
+Some pages on cawiki were returning a 500 error due to failing to connect to the database. It potentially impacted all non-wikidata wikis but cawiki and ruwiki use wikidata extensively enough for this to cause issues (retrieving property term data is not very commons in client wikis)
+
+We got the alert on IRC:
+• 17:33 Some mw* servers complain about having communication issues to s8 replicas
+• 17:42 Otto runs scap-file again as we were suspecting that a previous revert didn't make it to the intended servers; it didn't work:)
+• 17:45 We find out that cawiki (s7) is trying to access the cawiki db on s8 (wikidata) replicas
+• 17:46 We notice that this affects maintly cawiki (catalan wikipedia)
+• 17:53 We verify that some pages on cawiki return 500 errors due to database issues
+• 18:00 Train gets blocked until this is resolved
+• 18:15 Effie restarts hhvm and php-fpm on app canary servers to rule out any possible cache corruptions (s7 (cawiki) and s8 are off by one); it didn't work:)
+• 18:36 Reached out for more help
+• 18:57 Amir says he knows what it up
+• 19:15 Jenkins finally merges the patch and Reedy deploys to prod
+
+We don't have proper knowledge of how wikidata works and interacts with wikis.
+
+What went well?
+• People with Mediawiki knowledge were online and available to help.
+• We didn't think to look for commits to mediawiki-config further back from before the issue started.
+
+Where did we get lucky?
+• Amir was online and knew exactly to what this was related to.
+• SAL
+• 16:34 mobrovac@deploy1001: scap failed: average error rate on 6/11 canaries increased by 10x (rerun with --force to override this check, see <> for details)
+
+None for now - TBA
+
+ NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.

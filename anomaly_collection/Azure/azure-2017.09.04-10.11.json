@@ -1,0 +1,673 @@
+{
+    "azure-20170904-1": {
+        "title": "RCA - ExpressRoute \\ ExpressRoute Circuits - Washington DC",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+        ],
+        "time": "09/04/2017",
+        "summary": "Between approximately 09:07 and 14:56 UTC on 04 Sep 2017, a subset of customers using ExpressRoute Services with circuits terminating in the Washington DC region may have experienced difficulties connecting to Microsoft Azure resources, Dynamics 365 services or Office 365 services. Customers with backup Express Route Service circuits in other regions or with internet failover paths should not have been impacted. Customers using Azure Virtual Network\nservices were not impacted during this time.",
+        "details": "Customer impact: Connectivity between customer sites and Microsoft Express Route Service Endpoints was interrupted in the Washington DC region. Workaround: Customers with a failover path would not have been impacted. More information can be found here: aka.ms/s3w930\nRoot cause and mitigation: A routine maintenance was being conducted on the Microsoft Network in the Washington DC area. As part of the change, a legacy configuration was applied that did not include required routing policy statements. As a result, multiple routes in the Washington DC location were withdrawn, which resulted in the connectivity failures.\nNext steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Standard Operational Procedures (SOP) updated for this class of change world-wide including health validation signals at time of change; Additional rigor applied to SOP reviews and changes; and ExpressRoute Engineering will be adding monitoring to generate alerts on all routes that are withdrawn.\nProvide feedback: Please help us improve the Azure customer communications experience by taking our survey https://survey.microsoft.com/462133",
+        "service_name": [
+            "ExpressRoute Services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 349,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connectivity issue"
+                ] 
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "A routine maintenance was being conducted on the Microsoft Network in the Washington DC area. As part of the change, a legacy configuration was applied that did not include required routing policy statements. As a result, multiple routes in the Washington DC location were withdrawn,\nwhich resulted in the connectivity failures."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "Insert required routing policy statements to legacy configuration."
+            ],
+            "details": "A routine maintenance was being conducted on the Microsoft Network in the Washington DC area. As part of the change, a legacy configuration was applied that did not include required routing policy statements. As a result, multiple routes in the Washington DC location were withdrawn,\nwhich resulted in the connectivity failures.",
+            "troubleshooting": {
+                "1": "Insert required routing policy statements to legacy configuration."
+            }
+        },
+        "propagation pass": {
+            "1": "ExpressRoute Services",
+            "2": "Microsoft Azure, Dynamics 365 services or Office 365 services"
+        },
+        "refined path": {
+            "1": "router",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20170915-1": {
+        "title": "App Service - North Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+        ],
+        "time": "09/15/2017",
+        "summary": "Between 19:30 and 20:15 UTC on 15 Sep 2017, a subset of customers using App Service in North Europe may have received HTTP 500-level response codes, have experienced timeouts or high latency when accessing App Service deployments hosted in this region",
+        "details": "Preliminary root cause: At this stage engineers do not have a definitive root cause. Mitigation: Engineers determined that the issue was self-healed by the Azure platform.\nNext steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.",
+        "service_name": [
+            "App Service"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 45,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "high latency",
+                    "http 500 error code",
+                    "timeout"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "At this stage engineers do not have a definitive root cause."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "self-healed"
+            ],
+            "details": "Engineers determined that the issue was self-healed by the Azure platform.",
+            "troubleshooting": {
+                "1": "The issue was self-healed by the Azure platform."
+            }
+        },
+        "propagation pass": {
+            "1": "App Service"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20170921-1": {
+        "title": "Unable to Access Azure Management Portal",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+        ],
+        "time": "09/21/2017",
+        "summary": "Between approximately 12:45 and 16:15 UTC on 21 Sep 2017, a subset of customers may have received intermittent HTTP 503 errors or seen a blue error screen when loading the Azure Management Portal page (https://portal.azure.com).",
+        "details": "Preliminary root cause: At this stage engineers do not have a definitive root cause. Mitigation: Engineers determined that the issue was self-healed by the Azure platform.\nNext steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.",
+        "service_name": [
+            "Azure Management Portal"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 210,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "http 503 error code"
+                ]
+            },
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "At this stage engineers do not have a definitive root cause."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "self-healed"
+            ],
+            "details": "Engineers determined that the issue was self-healed by the Azure platform.",
+            "troubleshooting": {
+                "1": "The issue was self-healed by the Azure platform."
+            }
+        },
+        "propagation pass": {
+            "1": "Azure Management Portal"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20170922-1": {
+        "title": "App Service / Web Apps - North Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+        ],
+        "time": "09/22/2017",
+        "summary": "Between 10:00 and 12:09 UTC on 22 Sep 2017, a subset of customers using App Service \\ Web Apps in North Europe may have received HTTP 500-level response codes, or experienced timeouts or high latency when accessing Web Apps deployments hosted in this region.",
+        "details": "Preliminary root cause: At this stage engineers do not have a definitive root cause. Mitigation: Engineers determined that the issue was self-healed by the Azure platform.\nNext steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.",
+        "service_name": [
+            "App Service / Web Apps"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 129,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "low availability"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "At this stage engineers do not have a definitive root cause."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "self-healed"
+            ],
+            "details": "Engineers determined that the issue was self-healed by the Azure platform.",
+            "troubleshooting": {
+                "1": "The issue was self-healed by the Azure platform."
+            }
+        },
+        "propagation pass": {
+            "1": "App Service / Web Apps"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20170924-1": {
+        "title": "App Service - South Central US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+        ],
+        "time": "09/24/2017",
+        "summary": "Between 23:18 and 23:37 UTC on 23 Sep 2017, a subset of customers using App Service in South Central US may have experienced intermittent latency, timeouts, or HTTP 500-level response codes while performing service management operations such as site create, delete, and move resources on their App Service applications.",
+        "details": "Preliminary root cause: Engineers determined preliminary root cause as a backend networking connectivity issue. Mitigation: Engineers determined that the issue was self-healed by the Azure platform.\nNext steps: Engineers are continuing to investigate to establish the full root cause.",
+        "service_name": [
+            "App Service"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 19,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "intermittent latency",
+                    "http 500 error code",
+                    "timeout"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "Engineers determined preliminary root cause as a backend networking connectivity issue."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "self-healed."
+            ],
+            "details": "Engineers determined that the issue was self-healed by the Azure platform.",
+            "troubleshooting": {
+                "1": "The issue was self-healed by the Azure platform."
+            }
+        },
+        "propagation pass": {
+            "1": "backend network",
+            "2": "App service"
+        },
+        "refined path": {
+            "1": "backend",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20170929-1": {
+        "title": "RCA - Storage Related Incident - North Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+        ],
+        "time": "09/29/2017",
+        "summary": "Between 13:27 and 20:15 UTC on 29 Sep 2017, a subset of customers in North Europe may have experienced difficulties connecting to or managing resources hosted in this region due to availability loss of a storage scale unit. Services that depend on the impacted storage resources in this region that may have seen impact are Virtual Machines, Cloud Services, Azure Backup, App Services\\Web Apps, Azure Cache, Azure Monitor, Azure Functions, Time Series\nInsights, Stream Analytics, HDInsight, Data Factory and Azure Scheduler, Azure Site Recovery.",
+        "details": "Customer impact: A portion of storage resources were unavailable resulting in dependent Virtual Machines shutting down to ensure data durability. Some Azure Backup vaults were not available for the duration resulting in backup and restore operation failures. Azure Site Recovery may not be able to failover to latest recovery points or replicate VMs. HDInsight, Azure Scheduler and Functions may have experienced service management and job failure where resources were dependent on the impacted storage scale unit. Azure Monitor and Data Factory may have seen latency and errors in pipelines that have dependencies in this scale unit. Azure Stream Analytics jobs stopped processing input and/or producing output for several minutes. Azure Media Services saw failures & latency for streaming requests, uploads, and encoding.\nWorkaround: Implementation of Virtual Machines in Availability Sets with Managed Disks would have provided resiliency against significant service impact for VM based workloads.\nRoot cause and mitigation: During a routine periodic fire suppression system maintenance, an unexpected release of inert fire suppression agent occurred. When suppression was triggered, it initiated the automatic shutdown of Air Handler Units (AHU) as designed for containment and safety. While conditions in the data center were being reaffirmed and AHUs were being restarted, the ambient temperature in isolated areas of the impacted suppression zone rose above normal operational parameters. Some systems in the impacted zone performed auto shutdowns or reboots triggered by internal thermal health monitoring to prevent overheating of those systems. The triggering of inert fire suppression was immediately known, and in the following 35 minutes, all AHUs were recovered and ambient temperatures had returned to normal operational levels. Facility power was not impacted during the event. All systems have been restored to full operational conditions and further system maintenance has been suspended pending investigation of the unexpected agent release. Due to the nature of the above event and variance in thermal conditions in isolated areas of the impacted suppression zone, some servers and storage resources did not shutdown in a controlled manner. As a result, additional time was required to troubleshoot and recover the impacted resources. Once the scale unit reached the required number of operational nodes, customers would have seen gradual, but consistent improvement until fully mitigated at 20:15 UTC when storage and dependent services were able to fully recover.\nNext steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Suppression system maintenance analysis continues with facility engineers to identify the cause of the unexpected agent release, and to mitigate risk of recurrence. Engineering continues to investigate the failure conditions and recovery time improvements for storage resources in this scenario. As important investigation and analysis are ongoing, an additional update to this RCA will be provided before Friday, 10/13.\nProvide feedback: Please help us improve the Azure customer communications experience by taking our survey: https://survey.microsoft.com/476163",
+        "service_name": [
+            "Storage scale unit"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 468,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connectivity",
+                    "error rate"
+                ]
+            },
+            {
+                "system kpi": [
+                    "latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "fire supression system"
+                }
+            ],
+            "details": "an unexpected release of inert fire suppression agent occurred"
+        },
+        "operation": [
+            "routine periodic fire suppression system maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "recovered the impacted resources"
+            ],
+            "details": "During a routine periodic fire suppression system maintenance, an unexpected release of inert fire suppression agent occurred. When suppression was triggered, it initiated the automatic shutdown of Air Handler Units (AHU) as designed for containment and safety. While conditions in the data center were being reaffirmed and AHUs were being restarted, the ambient temperature in isolated areas of the impacted suppression zone rose above normal operational parameters. Some systems in the impacted zone performed auto shutdowns or reboots triggered by internal thermal health monitoring to prevent overheating of those systems. The triggering of inert fire suppression was immediately known, and in the following 35 minutes, all AHUs were recovered and ambient temperatures had returned to normal operational levels. Facility power was not impacted during the event. All systems have been restored to full operational conditions and further system maintenance has been suspended pending investigation of the unexpected agent release. Due to the nature of the above event and variance in thermal conditions in isolated areas of the impacted suppression zone, some servers and storage resources did not shutdown in a controlled manner. As a result, additional time was required to troubleshoot and recover the impacted resources. Once the scale unit reached the required number of operational nodes, customers would have seen gradual, but consistent improvement until fully mitigated at 20:15 UTC when storage and dependent\nservices were able to fully recover.",
+            "troubleshooting": {
+                "1": "The triggering of inert fire suppression was known",
+                "2": "All AHUs were recovered",
+                "3": "Engineers troubleshooted and recovered the impacted resources"
+            }
+        },
+        "propagation pass": {
+            "1": "storage scale unit",
+            "2": "Virtual Machines, Cloud Services, Azure Backup, App Services Web Apps, Azure Cache, Azure Monitor, Azure Functions, Time Series Insights, Stream Analytics, HDInsight, Data Factory and Azure Scheduler, Azure Site Recovery"
+        },
+        "refined path": {
+            "1": "storage scale unit",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20171004-1": {
+        "title": "Azure Cloud Shell - Authentication Issues",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+        ],
+        "time": "10/04/2017",
+        "summary": "Between 02:30 and 08:30 UTC on 04 Oct 2017, a subset of customers using Cloud Shell may have experienced the following authentication error when running Azure CLI command: \"A Cloud Shell credential problem occurred. When you report the issue with the error below, please mention the\nhostname 'host-name'. Could not retrieve token from local cache.",
+        "details": "Preliminary root cause: From initial investigations, engineers suspect that there was an issue with the cloud shell images used in the backend to provision this service, which were causing logins to take longer than normal.\nMitigation: Engineers redeployed the Cloud Shell images with a newer image, which was verified as not having the same symptoms, to mitigate the issue.\nNext steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.",
+        "service_name": [
+            "Azure Cloud Shell"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 360,
+        "detection": {
+            "method": "manual",
+            "tool": [
+                "monitoring"
+            ]
+        },
+        "manifestation": [
+            {
+                "service unavailable": [
+                    "authentication error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "an issue with the cloud shell images used in the backend to provision this service"
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "redeployed the Cloud Shell images"
+            ],
+            "details": " Engineers redeployed the Cloud Shell images with a newer image, which was verified as not having the same symptoms, to mitigate the issue.",
+            "troubleshooting": {
+                "1": "Engineers redeployed the Cloud Shell images with a newer image"
+            }
+        },
+        "propagation pass": {
+            "1": "backend service",
+            "2": "cloud shell service"
+        },
+        "refined path": {
+            "1": "backend service",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20171007-1": {
+        "title": "Infrastructure issue impacting multiple Azure services - Australia East",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+        ],
+        "time": "10/07/2017",
+        "summary": "Between 22:19 and 22:46 UTC on 6 October 2017, a subset of customer resources and services were impacted by network availability loss in a portion of the Australia East region. Facility engineers were quickly aware, took steps to remediate the issue, and network availability was restored by 22:39 UTC.\nAzure infrastructure and customer resources largely recovered in the few minutes following.",
+        "details": "Customer impact: Because network connectivity was lost between some Virtual Machines and storage resources, VMs would have been shut down and then restarted once connectivity was restored. Additional impacted services include Cloud Services, Azure Search, Service Bus, Event Hub, DevTest Lab, Azure Site Recovery, Azure Key Vault, Visual Studio Team Services, and may have experienced latency or loss in availability to/from portions of the Australia East region.\nRoot cause and mitigation: During a planned facility power maintenance activity, power was removed from a single feed. No impact was expected from this planned activity, as there are redundant power feeds in the facility. Facility engineers were in the datacenter monitoring this planned activity, and detected unexpected breaker trips on the redundant feeds shortly after the start of maintenance. Engineers performed immediate investigation, and determined that the datacenter spine network devices in the portion of the facility impacted by the power maintenance had lost power. Engineers mitigated the loss of power to these devices by distributing load across additional circuits restoring network connectivity. A review of the datacenter spine network devices revealed that these devices were not power striped across feeds optimally to be resilient to loss of one of the two power feeds. The devices have been subsequently corrected in this facility, and Microsoft is reviewing design and implementation worldwide for these devices. All other devices, servers, and infrastructure maintained availability, as expected during the maintenance. The maintenance was completed without any further impact as originally expected. Azure networks are designed to be resilient to loss of individual or even multiple datacenter spine devices, however, due to the unexpected breaker trips, all devices in this physical facility were impacted, resulting in a loss of connectivity within the facility and with other segments in the Australia East region.\nNext steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): 1) Remediate known vulnerability in Australia East facility [COMPLETE] 2) Facility team continuing to work with network engineering on design review to audit and remediate worldwide. [PENDING]\nProvide feedback: Please help us improve the Azure customer communications experience by taking our survey https://survey.microsoft.com/481145",
+        "service_name": [
+            "multiple Azure services"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 27,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "connectivity"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "power outage"
+                }
+            ],
+            "details": "detected unexpected breaker trips on the redundant feeds shortly after the start of maintenance"
+        },
+        "operation": [
+            "power maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "distributing load across additional circuits restoring network connectivity",
+                "correct device"
+            ],
+            "details": " Facility engineers were in the datacenter monitoring this planned activity, and detected unexpected breaker trips on the redundant feeds shortly after the start of maintenance. Engineers performed immediate investigation, and determined that the datacenter spine network devices in the portion of the facility impacted by the power maintenance had lost power. Engineers mitigated the loss of power to these devices by distributing load across additional circuits restoring network connectivity. A review of the datacenter spine network devices revealed that these devices were not power striped across feeds optimally to be resilient to loss of one of the two power feeds. The devices have been subsequently corrected in this facility, and Microsoft is reviewing design and implementation worldwide for these devices. All other devices, servers, and infrastructure maintained availability, as expected during the maintenance. The maintenance was completed without any further impact as originally expected. Azure networks are designed to be resilient to loss of individual or even multiple datacenter spine devices, however, due to the unexpected breaker trips, all devices in this physical facility were impacted,\nresulting in a loss of connectivity within the facility and with other segments in the Australia East region.",
+            "troubleshooting": {
+                "1": "Engineers performed immediate investigation, and determined that the datacenter spine network devices in the portion of the facility impacted by the power maintenance had lost power.",
+                "2": "Engineers mitigated the loss of power to these devices by distributing load across additional circuits restoring network connectivity."
+            }
+        },
+        "propagation pass": {
+            "1": "all devices in this physical facility",
+            "2": "services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20171009-1": {
+        "title": "Backup and Site Recovery - UK South",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+        ],
+        "time": "10/09/2017",
+        "summary": "Starting at 06:10 UTC on 09 Oct 2017, engineers identified that a subset of customers using Backup and Site Recovery in UK South may have received failure notifications when performing service management operations via Powershell or the Azure Management Portal (https://portal.azure.com), for resources hosted in this region.",
+        "details": "Preliminary root cause: Engineers at this time do not have a definitive root cause but suspect that a recent deployment task impacted instances of a backend service which became unhealthy, preventing requests from completing.\nMitigation: Engineers are exploring mitigation options.\nNext steps: This message will be closed and impacted customers will receive further communications via their Portal. Engineers will continue to investigate to\nestablish the full root cause and prevent future occurrences.",
+        "service_name": [
+            "Backup and Site Recovery Services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": null,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "failure notification"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "a recent deployment task impacted instances of a backend service which became unhealthy, preventing requests from completing."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "exploring mitigation options"
+            ],
+            "details": "Engineers are exploring mitigation options.",
+            "troubleshooting": {
+                "1": "Engineers are exploring mitigation options."
+            }
+        },
+        "propagation pass": {
+            "1": "instances of a backend service",
+            "2": "Backup and Site Recovery services"
+        },
+        "refined path": {
+            "1": "backend instance",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "azure-20171010-1": {
+        "title": "Visual Studio Team Services - Portal Access Issues",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+        ],
+        "time": "10/10/2017",
+        "summary": "Between 08:16 and 15:00 UTC on 10 Oct 2017, customers using Visual Studio Team Services may have experienced difficulties connecting to resources hosted by VisualStudio.com.",
+        "details": "Preliminary root cause: Engineers suspected that a recent deployment increased the load on servers that handle requests to Shared Platform Services. Mitigation: Engineers scaled out the number of web roles in the Shared Platform Service to mitigate the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. More information can be found on https://aka.ms/VSTS49171007",
+        "service_name": [
+            "Shared Platform Services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 404,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connectivity"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "a recent deployment increased the load on servers that handle requests to Shared Platform Services."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "scaled out the number of web roles"
+            ],
+            "details": "Engineers scaled out the number of web roles in the Shared Platform Service to mitigate the issue.",
+            "troubleshooting": {
+                "1": "Engineers suspected that a recent deployment increased the load on servers that handle requests to Shared Platform Services.",
+                "2": "Engineers scaled out the number of web roles in the Shared Platform Service."
+            }
+        },
+        "propagation pass": {
+            "1": "backend servers",
+            "2": "services"
+        },
+        "refined path": {
+            "1": "backend server",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy"
+    }
+}

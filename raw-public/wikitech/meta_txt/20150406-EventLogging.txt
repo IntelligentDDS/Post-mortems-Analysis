@@ -1,0 +1,14 @@
+Eventlogging was moved from vanadium.eqiad.wmnet to eventlog1001.eqiad.wmnet, the move did not introduced any outage per-se. The issue that caused the outage was the disk filling up on eventlog1001.eqiad.wmnet due to eventlogging normal functions.
+
+We noticed that the service was logging every single event to the application logs (/var/log/eventlogging) and also to the upstart logs (/var/log/upstart). This had been happening on vanadium too but the partition to which upstart logs were stored was a lot bigger in vanadium and the big logs were unnoticed.
+
+There were also two additional issues with alarming: 1. Analytics team was not receiving "disk full" alarms, only eventlogging process alarms. 2. A prior deployment of EL had broken graphite counts on hafnium that are also used for alarming
+
+icinga alarms regarding eventlogging processes are raised, teams looks at issue on disk, creates space and re-starts. Disk fills short after again.
+
+Fixing eventlogging so application data (events) is not logged to /var/log/upstart
+
+We can see no way to anticipate an issue like this one and all things consider alarming and fixing worked well so team was able to respond promptly.
+
+Please note that while disk was full events were not logged properly (none of them) thus backfilling will be at best incomplete and analytics team will not be backfilling events for this outage.
+• Status: Done Fix alarms so analytics team gets disk full alarms.

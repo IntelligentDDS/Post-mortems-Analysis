@@ -1,0 +1,4 @@
+Elasticsearch service (on elastic*.eqiad.wmnet nodes) backing the search functionality went red for few minutes. We didn't lose any real data and we failed to service some searches during 10 minutes.
+• 05:28: dcausse pauses write before applying the firewall rules to master (elastic1001)
+• 05:32: master is starting to lose track of its nodes
+• 05:48: there's a 10 min spike of "Pool errors", dcausse and chasemp test some queries on enwiki and they all worked

@@ -1,0 +1,31 @@
+A combination of an uncacheable asset requested by the iOS Wikipedia App in combination with serialisation of these requests in our Varnish caches caused dropped connections on our bits.wikimedia.org infastructure.
+• 2014-09-05T16:40:00Z The first non-critical Icinga alert for one of the Varnish servers
+• 2014-09-05T16:52:00Z Critical alert on the bits LVS service, first page
+• 2014-09-05T16:54:00Z Mark notices that all Bits varnish servers are maxed out on client sessions
+• 2014-09-05T17:10:00Z Mark increases the session limit on the eqiad bits Varnish servers to alleviate the immediate issue, which resolved the issue from a user PoV
+• 2014-09-05T18:33:00Z One server is drained of all traffic to aid debugging, Domas investigates Varnish activity
+• 2014-09-05T19:39:00Z We determined that Varnish was busy requesting one particular uncacheable object from the backend in an unbounded serialized way, long after all user traffic had been drained from the server and long after the original requesting clients had disconnected.
+• 2014-09-05T22:08:00Z Brandon merges a fix for creation of hit_for_pass objects in Varnish VCL.
+• 2014-09-08T12:55:40Z A bugzilla bug was filed to report new 404 errors with bits
+• 2014-09-08T14:58:00Z Giuseppe and Brandon start investigating this bug after a notification by Andre Klapper.
+• 2014-09-08T15:57:00Z They realize the problem is a lack of bits (ResourceLoader) URL rewrites due to rewrites not happening in vcl_pass, only in vcl_miss.
+
+Around 16:33 UTC various people on IRC started reporting some issues with bits (missing JS/CSS), at 16:52 we got paged. Mark looked at the eqiad bits servers, found that that they were hitting the (high) session limit at 200k connections, and was therefore dropping new connections. Normal usage is an order of magnitude lower. Ganglia graphs showed that the nr. of sessions had been ramping up since the day before, around 21:00 UTC. We didn’t know if something may have been triggered by a change/deploy on our end, or this is unrelated, or even a DoS attack.
+
+Mark raised the limit to 300k on one box, which alleviated the issue on this box for users. Session usage climbed steadily still, but because the limit wasn’t hit it was no longer causing the issues for users. Mark replicated this on the other eqiad servers at 17:10, and asked Giuseppe to do the same for ulsfo and esams which were hitting the limit as well. At that point, the performance issues for users were resolved. Strangely, for esams and ulsfo, the number of sessions dropped to normal levels immediately, but for eqiad it didn’t.
+
+We drained cp1056 from all traffic for debugging, and to see if the number of sessions will go down with (nearly) no traffic on it. Domas started debugging Varnish on cp1056 while Mark and Giuseppe went to dinner.
+
+Domas noticed that Varnish was spending a lot of time in vcl_fetch without any user traffic, and tracked it down to one particular URL which was uncacheable and for which all requests got serialized due to the lack of any hit_for_pass creation. The particular URL was uncacheable due to debug mode being on; and unlike the other Varnish clusters, the bits VCL didn't create any hit_for_pass objects. The latter issue got fixed in VCL, and a fix for the debug mode issue was pushed to Apple for review.
+
+The next Monday, a bugzilla bug was reported about 404s from bits for certain assets. Giuseppe and Brandon investigated this, and found that this was caused by a missing URL rewrite step in VCL. Because some URLs are now explicitly pass'ed in Varnish due to hit_for_pass objects, vcl_miss isn't always used for all backend requests, and some crucial URL rewrite code wasn't done in vcl_pass as well. Giuseppe pushed a fix for this.
+• Released builds should be tested for having debugging turned off
+• hit_for_pass should be used on all Varnish clusters to mitigate this issue unless explicitly unwanted
+• It would be nice to get better Varnish metrics to detect this long serialization queue at a particular object
+• Varnish should have a way to bound the maximum number of requests waiting on one backend request.
+• We didn't detect that Varnish was dropping connections for a while. Explicitly monitoring of the counter should help here.
+• Status: Done - Push a fix to disable debug mode in the iOS app
+• Status: Done - Prevent serialization of uncacheable requests on the bits Varnish servers using hit_for_pass
+• Status: Declined - Investigate whether there is a metric indicating long serialization queues in Varnish, or investigate the implementation of one.
+• Status: Declined - Possibly implement the ability to bound the number of requests waiting on a certain object in Varnish
+• Status: Done - Perform bits ResourceLoader URL rewriting in vcl_pass as well.

@@ -1,0 +1,130 @@
+
+[01/09/2012][System is currently having issues]
+r-unk
+i-down
+t-1h6m
+p-no
+
+[01/12/2012][Issues with our push notifications and 'last seen' status]
+r-unk
+i-op
+t-1h22m
+p-no
+
+[01/28/2012][Issue with sending photos and other multimedia]
+r-unk
+i-op
+t-48m
+p-no
+
+[02/22/2014][WhatsApp Is Down, Confirms Server Issues]
+http://techcrunch.com/2014/02/22/whatsapp-is-down-facebooks-new-acquisition-confirms/
+http://www.theguardian.com/technology/2014/feb/24/telegram-messaging-app-whatsapp-down-facebook
+http://news.yahoo.com/whatsapp-restored-brief-outage-230516073.html
+http://www.idownloadblog.com/2014/02/22/whatsapp-confirms-outage-working-to-restore-service/
+http://www.reuters.com/article/2014/02/22/us-facebook-whatsapp-idUSBREA1L15220140222
+http://techcrunch.com/2014/02/25/line-gets-whatsapp-outage-bump/
+i-down
+t-3h40m
+p-no
+
+[03/11/2012][System is having problems]
+r-unk
+i-down
+t-25m
+p-no
+
+[04/11/2012][Servers problems at the moment]
+r-fail
+i-down
+t-3h10m
+p-no
+
+[05/08/2012][Experience server issues]
+r-unk
+i-down
+t-1h17m
+p-no
+
+[05/30/2013][Experiencing an outage]
+r-unk
+i-down
+t-12m
+p-no
+
+[07/29/2013][Network is currently experiencing issues]
+r-fail
+i-down
+t-2h37m
+p-no
+
+[08/10/2012][Updating system to deal with new Sao Paulo numbers]
+r-upgrade
+i-down
+t-3h
+p-yes
+
+[10/15/2013][Service issues with sending and receiving messages]
+r-unk
+i-op
+t-41m
+p-no
+
+[11/08/2011][System is currently having issues]
+r-unk
+i-down
+t-8h32m
+p-no
+
+[12/01/2011][A brief outage today]
+r-unk
+t-1h
+i-down
+p-no
+
+[12/05/2011][System is having problems]
+r-unk
+i-down
+t-11h41m
+p-no
+
+[12/07/2013][System is currently experiencing an outage]
+r-unk
+i-down
+t-4h32m
+p-no
+
+[12/12/2011][System is having issues]
+r-unk
+i-down
+t-2h32m
+p-no
+
+[12/15/2012][Experiencing system issues]
+r-unk
+i-down
+t-unk
+f-restore
+p-no
+
+[12/21/2011][System is having problems]
+r-unk
+i-down
+t-20m
+p-no
+
+[12/31/2012][New year capacity problems]
+i-down
+t-1h41m
+p-no
+
+[12/31/2015][WhatsApp users across world suffer outages due to technical glitch]
+http://www.ibtimes.co.uk/whatsapp-users-across-world-suffer-outages-due-technical-glitch-1535593
+http://www.dailymail.co.uk/sciencetech/article-3380408/WhatsApp-goes-Users-Europe-report-problems-connecting-chats-messaging-app.html
+http://www.ibtimes.com/whatsapp-down-messenger-app-outages-reported-across-europe-2246136
+http://mashable.com/2015/12/31/whatsapp-goes-down-on-new-years-eve/#f15AiJi0Wuqy
+r-unk
+t-unk
+i-down
+p-no
+

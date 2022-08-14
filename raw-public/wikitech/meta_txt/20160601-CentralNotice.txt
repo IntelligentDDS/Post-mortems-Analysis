@@ -1,0 +1,11 @@
+
+• Mukunda failed to follow up with Bartosz after the deploy (or verifying the fix himself)
+• This would have caught the lack of submodule update mistake.
+• The patch in question was a patch to wmf.3 that was not applied to master before the wmf.4 branch cut (hence some of the confusion).
+
+There was an issue in CentralNotice (Task T136387) that was unexpectedly also in wmf.4 (as the patch that was made to wmf.3 wasn't done in master before the wmf.4 branch cut). Bartosz asked Mukunda to deploy the fix for wmf.4 at 21:52. Mukunda deployed the revert (or so he thought: he failed to do a `git submodule update`) after a ping from Bartosz at 22:30 UTC (after pining Bartosz that he was deploying at 22:17). At this point Mukunda believed the fix was deployed and since he notified Matma that he was doing the deploy took it to mean everything was done. Mukunda moves on to preparing for the Phabricator upgrade (coming at 00:00).
+
+A little over an hour later (23:21) Bartosz pings Mukunda to see if it was deployed as the symptoms were still present. Without response, forty minutes later Bartosz complains again in -operations and get's others' attention. At that point Adam Wight said "MatmaRex: We're paying attention and trying to set up a lightning deploy right now."
+• All deployers, including Mukunda, should explicitly verify that every deployed patch was A) actually deployed and B) had the intended effect.
+• All deployers, including Mukunda, should explicitly verify that every deployed patch was A) actually deployed and B) had the intended effect.
+• Mukunda will look into moving the Phabricator upgrade window to not conflict as much with the evening SWAT window

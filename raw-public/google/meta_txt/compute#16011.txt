@@ -1,0 +1,179 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/16011)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #16011
+
+Compute Engine SSD Persistent disk latency in zone US-Central1-a
+
+Incident began at **2016-06-28 18:55** and ended at **2016-06-28 21:57** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jul 10, 2016 | 17:57 |
+
+SUMMARY:
+
+On Tuesday, 28 June 2016 Google Compute Engine SSD Persistent Disks
+experienced elevated write latency and errors in one zone for a duration of
+211 minutes. We would like to apologize for the length and severity of this
+incident. We are taking immediate steps to prevent a recurrence and improve
+reliability in the future.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday, 28 June 2016 from 18:15 to 21:46 PDT SSD Persistent Disks (PD) in
+zone us-central1-a experienced elevated latency and errors for most writes.
+Instances using SSD as their root partition were likely unresponsive. For
+instances using SSD as a secondary disk, IO latency and errors were visible to
+applications. Standard (i.e. non-SSD) PD in us-central1-a suffered slightly
+elevated latency and errors.
+
+Latency and errors also occurred when taking and restoring from snapshots of
+Persistent Disks. Disk creation operations also had elevated error rates, both
+for standard and SSD PD.
+
+Persistent Disks outside of us-central1-a were unaffected.
+
+ROOT CAUSE:
+
+Two concurrent routine maintenance events triggered a rebalancing of data by
+the distributed storage system underlying Persistent Disk. This rebalancing is
+designed to make maintenance events invisible to the user, by redistributing
+data evenly around unavailable storage devices and machines. A previously
+unseen software bug, triggered by the two concurrent maintenance events, meant
+that disk blocks which became unused as a result of the rebalance were not
+freed up for subsequent reuse, depleting the available SSD space in the zone
+until writes were rejected.
+
+REMEDIATION AND PREVENTION:
+
+The issue was resolved when Google engineers reverted one of the maintenance
+events that triggered the issue. A fix for the underlying issue is already
+being tested in non-production zones.
+
+To reduce downtime related to similar issues in future, Google engineers are
+refining automated monitoring such that, if this issue were to recur,
+engineers would be alerted before users saw impact. We are also improving our
+automation to better coordinate different maintenance operations on the same
+zone to reduce the time it takes to revert such operations if necessary.  
+  
+|
+
+SUMMARY:
+
+On Tuesday, 28 June 2016 Google Compute Engine SSD Persistent Disks
+experienced elevated write latency and errors in one zone for a duration of
+211 minutes. We would like to apologize for the length and severity of this
+incident. We are taking immediate steps to prevent a recurrence and improve
+reliability in the future.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Tuesday, 28 June 2016 from 18:15 to 21:46 PDT SSD Persistent Disks (PD) in
+zone us-central1-a experienced elevated latency and errors for most writes.
+Instances using SSD as their root partition were likely unresponsive. For
+instances using SSD as a secondary disk, IO latency and errors were visible to
+applications. Standard (i.e. non-SSD) PD in us-central1-a suffered slightly
+elevated latency and errors.
+
+Latency and errors also occurred when taking and restoring from snapshots of
+Persistent Disks. Disk creation operations also had elevated error rates, both
+for standard and SSD PD.
+
+Persistent Disks outside of us-central1-a were unaffected.
+
+ROOT CAUSE:
+
+Two concurrent routine maintenance events triggered a rebalancing of data by
+the distributed storage system underlying Persistent Disk. This rebalancing is
+designed to make maintenance events invisible to the user, by redistributing
+data evenly around unavailable storage devices and machines. A previously
+unseen software bug, triggered by the two concurrent maintenance events, meant
+that disk blocks which became unused as a result of the rebalance were not
+freed up for subsequent reuse, depleting the available SSD space in the zone
+until writes were rejected.
+
+REMEDIATION AND PREVENTION:
+
+The issue was resolved when Google engineers reverted one of the maintenance
+events that triggered the issue. A fix for the underlying issue is already
+being tested in non-production zones.
+
+To reduce downtime related to similar issues in future, Google engineers are
+refining automated monitoring such that, if this issue were to recur,
+engineers would be alerted before users saw impact. We are also improving our
+automation to better coordinate different maintenance operations on the same
+zone to reduce the time it takes to revert such operations if necessary.  
+  
+| Jun 28, 2016 | 22:12 |
+
+The issue with Compute Engine SSD persistent disk latency in zone US-
+Central1-a should have been resolved for all projects as of 21:57 US/Pacific.
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrence.  
+  
+|
+
+The issue with Compute Engine SSD persistent disk latency in zone US-
+Central1-a should have been resolved for all projects as of 21:57 US/Pacific.
+We will conduct an internal investigation of this issue and make appropriate
+improvements to our systems to prevent or minimize future recurrence.  
+  
+| Jun 28, 2016 | 22:03 |
+
+The issue with Compute Engine SSD Persistent disk latency in zone US-
+Central1-a should have been resolved for the majority of projects and we
+expect a full resolution in the near future. We will provide another status
+update by 23:00 US/Pacific with current details.  
+  
+|
+
+The issue with Compute Engine SSD Persistent disk latency in zone US-
+Central1-a should have been resolved for the majority of projects and we
+expect a full resolution in the near future. We will provide another status
+update by 23:00 US/Pacific with current details.  
+  
+| Jun 28, 2016 | 21:04 |
+
+We are still investigating the issue with Compute Engine SSD Persistent disk
+latency in zone US-Central1-a. We will provide another status update by 22:00
+US/Pacific with current details.  
+  
+|
+
+We are still investigating the issue with Compute Engine SSD Persistent disk
+latency in zone US-Central1-a. We will provide another status update by 22:00
+US/Pacific with current details.  
+  
+| Jun 28, 2016 | 20:13 |
+
+We are investigating an issue with Compute Engine SSD Persistent disk latency
+in zone US-Central1-a. We will provide more information by 21:00 US/Pacific.  
+  
+|
+
+We are investigating an issue with Compute Engine SSD Persistent disk latency
+in zone US-Central1-a. We will provide more information by 21:00 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

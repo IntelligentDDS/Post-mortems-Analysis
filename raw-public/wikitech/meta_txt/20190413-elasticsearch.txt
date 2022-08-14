@@ -1,0 +1,32 @@
+Search latency increased to the point where it had user impact and search was limited by pool counter. This happened twice. First instance was recovered by restarting elastic1027, second instance was recovered by switching part of the traffic to codfw.
+
+All search queries reported significantly increased latency (2x-5x). Around 400 queries per minute were rejected with no search results out of total traffic of around 30k queries per minute.
+
+Automated alerts on CirrusSearch latency first alerted the problem. Alerts for a downstream service, the recommendation api, also started flapping.
+
+This is a step by step outline of what happened to cause the incident and how it was remedied. Include the lead-up to the incident, as well as any epilogue, and clearly indicate when the user-visible outage began and ended.
+• 13:19 avg cpu usage across cluster increases from 40% to 60%
+• 13:45 elastic1026 and elastic1027 cpu pegged to 100%. Many nodes across cluster showed elevated cpu usage.
+• 14:00 (approx) _joe_ and shdubsh start look into flapping recommendation api alerts
+• 15:48 shdubsh and _joe_ decide to elevate problem to search platform. ebernhardson recieved phone call from shdubsh.
+• 04:58 shift most expensive query types (more_like and regex) for all wikis to codfw
+
+What weaknesses did we learn about and how can we address them?
+
+The following sub-sections should have a couple brief bullet points each.
+
+What went well?
+• Automated alerting noticed the degraded user experience and send out alert emails
+• Incidents resolved relatively quickly once search engineers were able to look at the problem
+• In terms of total search traffic only a small fraction of requests were completely rejected. The incident was mostly a degraded, and not a broken, search experience.
+• Both incidents continued for multiple hours before being addressed
+• Due to the incident occurring on a weekend no one was around to respond to alerts immediately
+• The servers showing problems are known to be old and unlike the rest of the servers in the cluster. They are planned to be replaced Q1 of FY19-20, but perhaps they should have been replaced earlier.
+
+Where did we get lucky?
+• for example: user's error report was exceptionally detailed, incident occurred when the most people were online to assist, etc
+
+Where is the documentation that someone responding to this alert should have (runbook, plus supporting docs). If that documentation does not exist, there should be an action item to create it.
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+• Repair per-node elasticsearch latency metrics. These were not available during the incident and have been useful for diagnosing previous incidents. (merged)

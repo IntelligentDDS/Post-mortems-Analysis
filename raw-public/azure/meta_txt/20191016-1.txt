@@ -1,0 +1,18 @@
+RCA - Azure Portal (Tracking ID 0_0D-VP8)
+Summary of Impact: Between 13:45 and 14:59 UTC (approx.) on 16 Oct 2019, a subset of customers may have experienced latency issues with the Azure Portal, Command Line, and
+Azure PowerShell. Services already running would not have experienced impact during this issue.
+Root Cause: Azure Resource Manager (ARM) is the underlying deployment and management service for Azure, providing the management layer that allows create, update, delete, etc. functions for the platform. Customers interact with ARM every time they use the platform, but the primary interaction points are via PowerShell, Command line, APIs and/or the Azure Portal.
+During this incident a number of scale units in one of our UK South data centers responsible for processing ARM requests became overloaded. This caused intermittent latency for some customers in this region as they would have been directed to their nearest ARM endpoints. As retry logic and customer initiated retries ensued, this added to the load for these scale units, and impact to customers became more prevalent.
+The underlying cause was twofold:
+A routine deployment update for the ARM backend service had taken place overnight in UK South. The update was successful, but as it deployed, it reduced the number of ARM instances, as the code branch for this deployment had not been updated to the new value required in this region.
+The resources in UK South are normally over-scaled versus demand, and thus they were not aligned with the same auto-scale functionality as other regions that ARM uses.
+Following the above deployment, there was no immediate impact to ARM workloads in the region. However, as requests to ARM began to climb during the business day, the lower number of instances, and the lack of an immediate auto-scale response caused this to manifest as customer-impacting latency.
+Mitigation: Initially engineers manually scaled-out the service to ensure adequate resources were available. There were some delays in the application of these steps, as this is a highly secure environment, and the change-approvals process had recently been updated.
+Subsequently, engineers applied a mitigation to ensure the auto-scale functionality was restored to prevent this issue reoccurring. Engineers then monitored the service for an extended period following mitigation to ensure all requests backlogs cleared, and that auto-scale functionality was correctly enabled.
+Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Review of monitoring and alerting relating to resource consumption, and requests success rates in ARM
+Review of alerting for scale-up functionality underpinning the ARM platform
+Investigation of auto-mitigation options to prevent this scenario from reoccurring
+Verifying that all on-call engineers are aware of the updated processes for change requests in this environment
+Update of the process regarding change of minimum instance thresholds for regions to ensure deployments do not revert to previous values
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/0_0D-VP8

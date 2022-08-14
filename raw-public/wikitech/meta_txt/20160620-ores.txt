@@ -1,0 +1,8 @@
+ores.wikimedia.org was down today for about twenty minutes because of deploying a commit that changed reading config directory without proper order.
+• 11:04 deployment finished and ores went down
+• puppet agent ran and services got restarted (uwsgi-ores, celery-ores-worker). Didn't solve the problem
+• 12:13 Amir1: deploying bdc1e2bd only to ores on scb2001 (codfw)
+• Did not work as expected. (No down time because it only affected that node in codfw).
+• We fixed it in
+
+A very shallow reasoning would be the issue of reading config directories which got changed a lot and now it's in a rather stable situation but that's dangerous. What we really need is a safe method to deploy ores which we did the second time today. The only thing is documenting them

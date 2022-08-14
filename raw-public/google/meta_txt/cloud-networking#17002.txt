@@ -1,0 +1,661 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+September 06, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Networking](/incident/cloud-networking/17002)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Networking Incident #17002
+
+Issue with Cloud Network Load Balancers connectivity
+
+Incident began at **2017-08-29 13:56** and ended at **2017-08-30 20:18** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Sep 05, 2017 | 17:16 |
+
+Revised Tuesday 05 September 2017 to clarify the impact and timing.
+
+ISSUE SUMMARY
+
+For portions of Tuesday 29 August and Wednesday 30 August 2017, some Google
+Compute Engine instances which were live migrated from one server to another
+stopped receiving network traffic from Google Cloud Network Load Balancers and
+Internal Load balancers. On average, less than 1% of GCE instances were
+affected by this behavior over the duration of the incident, and at its peak,
+2% of instances were affected. For the 2% of instances which were ultimately
+affected, the mean duration of the impact was 9 hours and the maximum duration
+was 30 hours and 22 minutes. We apologize for the impact this had on your
+services. We are particularly cognizant of the unusual duration of the
+incident. We have completed an extensive postmortem to learn from the issue
+and improve Google Cloud Platform.
+
+DETAILED DESCRIPTION OF IMPACT
+
+Any GCE instance that was live-migrated between 13:56 PDT on Tuesday 29 August
+2017 and 08:32 on Wednesday 30 August 2017 became unreachable via Google Cloud
+Network or Internal Load Balancing until between 08:56 and 14:18 (for regions
+other than us-central1) or 20:16 (for us-central1) on Wednesday. See
+<https://goo.gl/NjqQ31> for a visual representation of the cumulative number
+of instances live-migrated over time.
+
+Our internal investigation shows that, at peak, 2% of GCE instances were
+affected by the issue.
+
+Instances which were not live-migrated during this period were not affected.
+In addition, instances that do not use Network Load Balancing or Internal Load
+Balancing were not affected. Related capabilities such as Google Cloud HTTP(S)
+Load Balancing, TCP and SSL Proxy Load Balancing and direct connectivity on
+instance internal and external IP addresses were unaffected.
+
+ROOT CAUSE
+
+Live-migration transfers a running VM from one host machine to another host
+machine within the same zone. All VM properties and attributes remain
+unchanged, including internal and external IP addresses, instance metadata,
+block storage data and volumes, OS and application state, network settings,
+network connections, and so on.
+
+In this case, a change in the internal representation of networking
+information in VM instances caused inconsistency between two values, both of
+which were supposed to hold the external and internal virtual IP addresses of
+load balancers. When an affected instance was live-migrated, the instance was
+deprogrammed from the load balancer because of the inconsistency. This made it
+impossible for load balancers that used the instance as backend to look up the
+destination IP address of the instance following its migration, so traffic
+destined for that instance was not forwarded from the load balancer.
+
+REMEDIATION AND PREVENTION
+
+At 08:32 Google engineers rolled back the triggering change, at which point no
+new live-migration would cause the issue. At 08:56 they then started a process
+which fixed all mismatched network information; this process completed at
+14:18 except for us-central1 which took until 20:18.
+
+In order to prevent the issue from recurring, Google engineers are enhancing
+the automated canary testing that simulates live-migration events, increasing
+detection of load balancing packets loss, and enforcing more restrictions on
+new configuration changes deployment for internal representation changes.  
+  
+|
+
+Revised Tuesday 05 September 2017 to clarify the impact and timing.
+
+ISSUE SUMMARY
+
+For portions of Tuesday 29 August and Wednesday 30 August 2017, some Google
+Compute Engine instances which were live migrated from one server to another
+stopped receiving network traffic from Google Cloud Network Load Balancers and
+Internal Load balancers. On average, less than 1% of GCE instances were
+affected by this behavior over the duration of the incident, and at its peak,
+2% of instances were affected. For the 2% of instances which were ultimately
+affected, the mean duration of the impact was 9 hours and the maximum duration
+was 30 hours and 22 minutes. We apologize for the impact this had on your
+services. We are particularly cognizant of the unusual duration of the
+incident. We have completed an extensive postmortem to learn from the issue
+and improve Google Cloud Platform.
+
+DETAILED DESCRIPTION OF IMPACT
+
+Any GCE instance that was live-migrated between 13:56 PDT on Tuesday 29 August
+2017 and 08:32 on Wednesday 30 August 2017 became unreachable via Google Cloud
+Network or Internal Load Balancing until between 08:56 and 14:18 (for regions
+other than us-central1) or 20:16 (for us-central1) on Wednesday. See
+<https://goo.gl/NjqQ31> for a visual representation of the cumulative number
+of instances live-migrated over time.
+
+Our internal investigation shows that, at peak, 2% of GCE instances were
+affected by the issue.
+
+Instances which were not live-migrated during this period were not affected.
+In addition, instances that do not use Network Load Balancing or Internal Load
+Balancing were not affected. Related capabilities such as Google Cloud HTTP(S)
+Load Balancing, TCP and SSL Proxy Load Balancing and direct connectivity on
+instance internal and external IP addresses were unaffected.
+
+ROOT CAUSE
+
+Live-migration transfers a running VM from one host machine to another host
+machine within the same zone. All VM properties and attributes remain
+unchanged, including internal and external IP addresses, instance metadata,
+block storage data and volumes, OS and application state, network settings,
+network connections, and so on.
+
+In this case, a change in the internal representation of networking
+information in VM instances caused inconsistency between two values, both of
+which were supposed to hold the external and internal virtual IP addresses of
+load balancers. When an affected instance was live-migrated, the instance was
+deprogrammed from the load balancer because of the inconsistency. This made it
+impossible for load balancers that used the instance as backend to look up the
+destination IP address of the instance following its migration, so traffic
+destined for that instance was not forwarded from the load balancer.
+
+REMEDIATION AND PREVENTION
+
+At 08:32 Google engineers rolled back the triggering change, at which point no
+new live-migration would cause the issue. At 08:56 they then started a process
+which fixed all mismatched network information; this process completed at
+14:18 except for us-central1 which took until 20:18.
+
+In order to prevent the issue from recurring, Google engineers are enhancing
+the automated canary testing that simulates live-migration events, increasing
+detection of load balancing packets loss, and enforcing more restrictions on
+new configuration changes deployment for internal representation changes.  
+  
+| Aug 30, 2017 | 20:18 |
+
+The issue with Network Load Balancers has been resolved for all affected
+projects as of 20:18 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+|
+
+The issue with Network Load Balancers has been resolved for all affected
+projects as of 20:18 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+| Aug 30, 2017 | 19:18 |
+
+The issue with Network Load Balancers should be resolved for all regions
+except for < 10% of affected Network Load Balancers in us-central1. The last
+few will be resolved in the upcoming hours. We will provide another status
+update by 21:00 US/Pacific with current details.  
+  
+|
+
+The issue with Network Load Balancers should be resolved for all regions
+except for < 10% of affected Network Load Balancers in us-central1. The last
+few will be resolved in the upcoming hours. We will provide another status
+update by 21:00 US/Pacific with current details.  
+  
+| Aug 30, 2017 | 16:54 |
+
+The issue with Network Load Balancers should be resolved for all regions
+except for < 10% of affected Network Load Balancers in us-central1. The last
+few will be resolved in the upcoming hours. We will provide another status
+update by 19:00 US/Pacific with current details.  
+  
+|
+
+The issue with Network Load Balancers should be resolved for all regions
+except for < 10% of affected Network Load Balancers in us-central1. The last
+few will be resolved in the upcoming hours. We will provide another status
+update by 19:00 US/Pacific with current details.  
+  
+| Aug 30, 2017 | 15:58 |
+
+The issue with Network Load Balancers should be resolved for all regions
+except us-central1, for which repairs are almost complete. We expect a full
+resolution in the next hour, and will provide another status update by 17:00
+US/Pacific with current details.  
+  
+|
+
+The issue with Network Load Balancers should be resolved for all regions
+except us-central1, for which repairs are almost complete. We expect a full
+resolution in the next hour, and will provide another status update by 17:00
+US/Pacific with current details.  
+  
+| Aug 30, 2017 | 14:35 |
+
+The issue with Network Load Balancers should be resolved for all regions
+except us-central1, for which repairs are ongoing. We expect a full resolution
+in the next few hours, and will provide another status update by 16:00
+US/Pacific with current details.  
+  
+|
+
+The issue with Network Load Balancers should be resolved for all regions
+except us-central1, for which repairs are ongoing. We expect a full resolution
+in the next few hours, and will provide another status update by 16:00
+US/Pacific with current details.  
+  
+| Aug 30, 2017 | 13:36 |
+
+The issue with Network Load Balancers should be resolved for all regions are
+fixed except for us-central1, us-east1, and europe-west1. Those 3 are
+underway. We expect a full resolution in the next few hours. We will provide
+another status update by 16:00 US/Pacific with current details.  
+  
+|
+
+The issue with Network Load Balancers should be resolved for all regions are
+fixed except for us-central1, us-east1, and europe-west1. Those 3 are
+underway. We expect a full resolution in the next few hours. We will provide
+another status update by 16:00 US/Pacific with current details.  
+  
+| Aug 30, 2017 | 12:00 |
+
+We have identified all possibly affected instances and are currently testing
+the fix for these instances. We will be deploying the fix once it has been
+verified. No additional action is required. Performing the workaround
+mentioned previously will not cause any adverse effects.
+
+Next update at 14:00 US/Pacific  
+  
+|
+
+We have identified all possibly affected instances and are currently testing
+the fix for these instances. We will be deploying the fix once it has been
+verified. No additional action is required. Performing the workaround
+mentioned previously will not cause any adverse effects.
+
+Next update at 14:00 US/Pacific  
+  
+| Aug 30, 2017 | 11:02 |
+
+We wanted to send another update with better formatting. We will provide more
+another update on resolving effected instances by 12 PDT.
+
+Affected customers can also mitigate their affected instances with the
+following procedure (which causes Network Load Balancer to be reprogrammed)
+using gcloud tool or via the Compute Engine API.
+
+NB: No modification to the existing load balancer configurations is necessary,
+but a temporary TargetPool needs to be created.
+
+Create a new TargetPool. Add the affected VMs in a region to the new
+TargetPool. Wait for the VMs to start working in their existing load balancer
+configuration. Delete the new TargetPool. DO NOT delete the existing load
+balancer config, including the old target pool. It is not necessary to create
+a new ForwardingRule.
+
+Example:
+
+1) gcloud compute target-pools create dummy-pool --project=<your_project>
+--region=<region>
+
+2) gcloud compute target-pools add-instances dummy-pool
+--instances=<instance1,instance2,...> --project=<your_project>
+--region=<region> --instances-zone=<zone>
+
+3) (Wait)
+
+4) gcloud compute target-pools delete dummy-pool --project=<your_project>
+--region=<region>  
+  
+|
+
+We wanted to send another update with better formatting. We will provide more
+another update on resolving effected instances by 12 PDT.
+
+Affected customers can also mitigate their affected instances with the
+following procedure (which causes Network Load Balancer to be reprogrammed)
+using gcloud tool or via the Compute Engine API.
+
+NB: No modification to the existing load balancer configurations is necessary,
+but a temporary TargetPool needs to be created.
+
+Create a new TargetPool. Add the affected VMs in a region to the new
+TargetPool. Wait for the VMs to start working in their existing load balancer
+configuration. Delete the new TargetPool. DO NOT delete the existing load
+balancer config, including the old target pool. It is not necessary to create
+a new ForwardingRule.
+
+Example:
+
+1) gcloud compute target-pools create dummy-pool --project=<your_project>
+--region=<region>
+
+2) gcloud compute target-pools add-instances dummy-pool
+--instances=<instance1,instance2,...> --project=<your_project>
+--region=<region> --instances-zone=<zone>
+
+3) (Wait)
+
+4) gcloud compute target-pools delete dummy-pool --project=<your_project>
+--region=<region>  
+  
+| Aug 30, 2017 | 10:30 |
+
+Our first mitigation has completed at this point and no new instances should
+be effected. We are slowly going through an fixing affected customers.
+Affected customers can also mitigate their affected instances with the
+following procedure (which causes Network Load Balancer to be reprogrammed)
+using gcloud tool or via the Compute Engine API.
+
+NB: No modification to the existing load balancer configurations is necessary,
+but a temporary TargetPool needs to be created.
+
+Create a new TargetPool. Add the affected VMs in a region to the new
+TargetPool. Wait for the VMs to start working in their existing load balancer
+configuration. Delete the new TargetPool. DO NOT delete the existing load
+balancer config, including the old target pool. It is not necessary to create
+a new ForwardingRule.
+
+Example: gcloud compute target-pools create dummy-pool --project= \--region=
+gcloud compute target-pools add-instances dummy-pool --instances= \--project=
+\--region= \--instances-zone= (Wait) gcloud compute target-pools delete dummy-
+pool --project= \--region=  
+  
+|
+
+Our first mitigation has completed at this point and no new instances should
+be effected. We are slowly going through an fixing affected customers.
+Affected customers can also mitigate their affected instances with the
+following procedure (which causes Network Load Balancer to be reprogrammed)
+using gcloud tool or via the Compute Engine API.
+
+NB: No modification to the existing load balancer configurations is necessary,
+but a temporary TargetPool needs to be created.
+
+Create a new TargetPool. Add the affected VMs in a region to the new
+TargetPool. Wait for the VMs to start working in their existing load balancer
+configuration. Delete the new TargetPool. DO NOT delete the existing load
+balancer config, including the old target pool. It is not necessary to create
+a new ForwardingRule.
+
+Example: gcloud compute target-pools create dummy-pool --project= \--region=
+gcloud compute target-pools add-instances dummy-pool --instances= \--project=
+\--region= \--instances-zone= (Wait) gcloud compute target-pools delete dummy-
+pool --project= \--region=  
+  
+| Aug 30, 2017 | 09:30 |
+
+We are experiencing an issue with a subset of Network Load Balance. The
+configuration change to mitigate this issue has been rolled out and we are
+working on further measures to completely resolve the issue. For everyone who
+is affected, we apologize for any inconvenience you may be experiencing. We
+will provide an update by 10:30 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with a subset of Network Load Balance. The
+configuration change to mitigate this issue has been rolled out and we are
+working on further measures to completely resolve the issue. For everyone who
+is affected, we apologize for any inconvenience you may be experiencing. We
+will provide an update by 10:30 US/Pacific with current details.  
+  
+| Aug 30, 2017 | 09:00 |
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. The configuration change to mitigate this issue
+has been rolled out and we are working on further measures to completly
+resolve the issue. For everyone who is affected, we apologize for any
+inconvenience you may be experiencing. We will provide an update by 09:30
+US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. The configuration change to mitigate this issue
+has been rolled out and we are working on further measures to completly
+resolve the issue. For everyone who is affected, we apologize for any
+inconvenience you may be experiencing. We will provide an update by 09:30
+US/Pacific with current details.  
+  
+| Aug 30, 2017 | 08:30 |
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. We have identified the event that triggers this
+issue and are rolling back a configuration change to mitigate this issue. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 09:00 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. We have identified the event that triggers this
+issue and are rolling back a configuration change to mitigate this issue. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 09:00 US/Pacific with current
+details.  
+  
+| Aug 30, 2017 | 08:00 |
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Mitigation work is still in progress. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 08:30 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Mitigation work is still in progress. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 08:30 US/Pacific with current
+details.  
+  
+| Aug 30, 2017 | 07:30 |
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Mitigation work is still in progress. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 08:00 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Mitigation work is still in progress. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 08:00 US/Pacific with current
+details.  
+  
+| Aug 30, 2017 | 07:00 |
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Our previous actions did not resolve the issue.
+We are pursuing alternative solutions. For everyone who is affected, we
+apologize for any inconvenience you may be experiencing. We will provide an
+update by 07:30 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Our previous actions did not resolve the issue.
+We are pursuing alternative solutions. For everyone who is affected, we
+apologize for any inconvenience you may be experiencing. We will provide an
+update by 07:30 US/Pacific with current details.  
+  
+| Aug 30, 2017 | 06:30 |
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Mitigation work is currently underway by our
+Engineering Team. For everyone who is affected, we apologize for any
+inconvenience you may be experiencing. We will provide an update by 07:00
+US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Mitigation work is currently underway by our
+Engineering Team. For everyone who is affected, we apologize for any
+inconvenience you may be experiencing. We will provide an update by 07:00
+US/Pacific with current details.  
+  
+| Aug 30, 2017 | 06:00 |
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Our Engineering Team has determined the
+infrastructure component responsible for the issue and mitigation work is
+currently underway. For everyone who is affected, we apologize for any
+inconvenience you may be experiencing. We will provide an update by 06:30
+US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Our Engineering Team has determined the
+infrastructure component responsible for the issue and mitigation work is
+currently underway. For everyone who is affected, we apologize for any
+inconvenience you may be experiencing. We will provide an update by 06:30
+US/Pacific with current details.  
+  
+| Aug 30, 2017 | 05:30 |
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Our Engineering Team has reduced the scope of
+possible root causes and is still investigating. For everyone who is affected,
+we apologize for any inconvenience you may be experiencing. We will provide an
+update by 06:00 US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue with a subset of Network Load Balancer in regions
+us-east1, us-central1, europe-west1, asia-northeast1 and asia-east1 not being
+able to connect to backends. Our Engineering Team has reduced the scope of
+possible root causes and is still investigating. For everyone who is affected,
+we apologize for any inconvenience you may be experiencing. We will provide an
+update by 06:00 US/Pacific with current details.  
+  
+| Aug 30, 2017 | 05:00 |
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. The investigation is still ongoing. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 05:30 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. The investigation is still ongoing. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 05:30 US/Pacific with current
+details.  
+  
+| Aug 30, 2017 | 04:30 |
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. The investigation is still ongoing. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 05:00 US/Pacific with current
+details.  
+  
+|
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. The investigation is still ongoing. For
+everyone who is affected, we apologize for any inconvenience you may be
+experiencing. We will provide an update by 05:00 US/Pacific with current
+details.  
+  
+| Aug 30, 2017 | 04:00 |
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. We have ruled out several possible failure
+scenarios. The investigation is still ongoing. For everyone who is affected,
+we apologize for any inconvenience you may be experiencing. We will provide an
+update by 04:30 US/Pacific with current details.  
+  
+|
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. We have ruled out several possible failure
+scenarios. The investigation is still ongoing. For everyone who is affected,
+we apologize for any inconvenience you may be experiencing. We will provide an
+update by 04:30 US/Pacific with current details.  
+  
+| Aug 30, 2017 | 03:30 |
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. For everyone who is affected, we apologize for
+any inconvenience you may be experiencing. We will provide an update by 04:00
+US/Pacific with current details.  
+  
+|
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. For everyone who is affected, we apologize for
+any inconvenience you may be experiencing. We will provide an update by 04:00
+US/Pacific with current details.  
+  
+| Aug 30, 2017 | 03:00 |
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. For everyone who is affected, we apologize for
+any inconvenience you may be experiencing. We will provide an update by 03:30
+US/Pacific with current details.  
+  
+|
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. For everyone who is affected, we apologize for
+any inconvenience you may be experiencing. We will provide an update by 03:30
+US/Pacific with current details.  
+  
+| Aug 30, 2017 | 02:30 |
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. For everyone who is affected, we apologize for
+any inconvenience you may be experiencing. We will provide an update by 03:00
+US/Pacific with current details.  
+  
+|
+
+We are experiencing an intermittent issue with Network Load Balancer
+connectivity to their backends. For everyone who is affected, we apologize for
+any inconvenience you may be experiencing. We will provide an update by 03:00
+US/Pacific with current details.  
+  
+| Aug 30, 2017 | 01:50 |
+
+We are investigating an issue with network load balancer connectivity. We will
+provide more information by 02:30 US/Pacific.  
+  
+|
+
+We are investigating an issue with network load balancer connectivity. We will
+provide more information by 02:30 US/Pacific.  
+  
+| Aug 30, 2017 | 01:20 |
+
+We are investigating an issue with network connectivity. We will provide more
+information by 01:50 US/Pacific.  
+  
+|
+
+We are investigating an issue with network connectivity. We will provide more
+information by 01:50 US/Pacific.  
+  
+| Aug 30, 2017 | 00:52 |
+
+We are investigating an issue with network connectivity. We will provide more
+information by 01:20 US/Pacific.  
+  
+|
+
+We are investigating an issue with network connectivity. We will provide more
+information by 01:20 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

@@ -1,0 +1,7 @@
+Server side events were not affected but they only constitute about 30% of the pipeline. Client side events were not entered in the database at all during this outage.
+
+'clientValidated' and 'isTruncated'. Clients did not have the latest version of this code where these two fields are not being sent.
+
+Procedure for removal of optional fields is normally to deploy changes to clients first and once changes are propagated to all clients we deploy the removal of changes to the server thus making the change backwards compatible for the period of the transition.
+• EventLogging deployments are anonymous. But as (regardless of who deployed) only an existing, reviewed commit from gerrit and not rogue code got deployed, it seems the deployment happened accidentally by trusted people, and was not ill-intentioned. We are making sure all team members are aware that before code gets deployed to production it needs to go through Beta Cluster and be tested there.
+• Status: Done Make sure that log files exist for the affected period, so we can backfill.

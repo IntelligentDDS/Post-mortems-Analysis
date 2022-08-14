@@ -1,0 +1,6 @@
+Azure DevOps
+Summary of impact: Between 17:47 and 18:40 UTC on 04 Oct 2018, users with Azure DevOps organizations in South Central US may have experienced errors while
+using the service.
+Preliminary root cause: Engineers determined that this was caused by a networking event that impacted communication between one Azure DevOps scale unit in South Central US from the rest of the world.
+Mitigation: After the network event was self-recovered, Azure DevOps performed a manual action to reset our web servers which expedited the recovery from the network incident.
+Next steps: Azure DevOps and Networking teams will continue to investigate to establish the full root cause and prevent future occurrences.

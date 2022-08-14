@@ -1,0 +1,9 @@
+RCA - Networking in West US
+Summary of impact: Between 22:40 UTC on 24 Oct 2018 and 00:03 UTC on 25 Oct 2018, a subset of customers may have experienced degraded network performance and/or difficulties connecting to resources in the West US region.
+Root cause: A network device connecting a datacenter in the West US region experienced a fault during routine fiber maintenance. Azure Networking lost a subset of capacity between the affected data center and other facilities in the West US region. The failed network device also began silently dropping a portion of the flows that traversed it.
+Mitigation: The incident was mitigated by rebalancing traffic across the remaining links. The incident was resolved via restoration of the fiber and the optical system. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our
+processes to help ensure such incidents do not occur in the future. Steps specific to this incident include:
+Evaluate faster link level bidirectional failure detection [in progress]
+Evaluate escalated timeline for higher capacity links for this data center [in progress] Expand existing black hole detection scenarios [in progress]
+Review process and validations after fiber plant maintenance [in progress]
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/BRH3-JT0

@@ -1,0 +1,4 @@
+Wikimedia sites experienced an outage on 6th August 2012 that started at about 6:15am PDT (13:15 UTC). Except for the mobile site, the sites were brought back up by 7:18am PDT (14:18 UTC). Mobile site services resumed at about 8:35 am PDT (15:35 UTC). The team worked around the outage by rerouting traffic to Tampa, bypassing the Ashburn site and failing over services to Tampa data center.
+• Duration: From about 13:15 UTC to 14:18 UTC; approximately 63 minutes
+• Impact: Wikimedia sites were down throughout that period. The mobile site was not up till 15:35 UTC)
+• Resolution: Fail-over network traffic and services from Ashburn to Tampa data center

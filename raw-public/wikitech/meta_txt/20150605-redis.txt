@@ -1,0 +1,8 @@
+redis slaves rdb1002 and rdb1004 were unable to fully sync from master after a restart from 15.30 until 20.00 UTC. OCG, job queue and other services have seen impact whenever trying to read from slaves
+• 15:30 moritzm upgrades redis on rdb1002/rdb1004 (slaves) and rdb1001/rdb1003 (masters) followed by a restart
+• 18:22 OCG throws sporadic 500s which show up in icinga but not enough to trigger a notification, investigation begins
+• 19:07 redis logs indicate periodic slave failures to sync from master, root cause being output buffers limits for slave clients
+• 19:17 rdb1003 is restarted with new buffer limits, full sync is achieved
+• 19:50 new settings applied to all rdb100[1-4], full sync and full recovery (https://gerrit.wikimedia.org/r/216293)
+
+redis is an important service that can have a visible impact on users, even though not complete failures like http 500. Also the job queue, ocg and other services are impacted if redis is malfunctioning. There are no alarms if a redis slave is behind from the master or fails to sync, also operational procedures for a full redis restart and validation are missing. In addition to the failures, the redis processes were running since 2013 and the running theory is that the dataset grew in the meantime, so a full slave sync was never needed before.

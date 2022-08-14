@@ -1,0 +1,13 @@
+The Parsoid cluster corrupted the charset in wikitext converted from HTML for about 55 minutes after a broken Parsoid deployment.
+
+After several delays due to npmjs.org server issues and broken file permissions on tin, we deployed Parsoid version d7b556f25353 at 19:45 UTC. This version included a host of changes including the new busboy form data parser library. We switched to this library as the bodyParser library we used so far is deprecated in the connect framework and suffers from a potential DOS vector with temporary file creation on file upload requests.
+
+At 20:04 UTC, there was a first IRC reports about VisualEditor edit corruption on the French Wikipedia. At 20:14, we became aware of this. The issue looked a lot like charset corruption. Due to some issues with git-deploy revert this took a while to revert. At 20:40 UTC, Parsoid was reverted to the pre-deploy version and the edit corruption stopped. At 20:47, both the code and the dependencies were fully reverted and Parsoid was back up.
+
+The issue was caused by the busboy library defaulting to ISO-8859-1 encoding for incoming POST data rather than UTF8, which corrupted incoming HTML to Wikitext serialization requests from VisualEditor. This affected the full posted HTML if it included non-ASCII chars, so corruption was not limited to edited parts of the page.
+• 20:47 Parsoid cluster back up with old version after the code is reverted too
+• create HTTP-based Parsoid API tests in addition to parser tests and round-trip tests so that the full stack is tested. Tracked in bug 56590. Done
+• Manually test VisualEditor on non-English wikis before and after deployment. Added to the deployment instructions. Done
+• allow Parsoid deployers to quickly stop Parsoid machines to avoid further corruption in case of emergencies.
+• consider sanity checks on wikitext diff vs. HTML diff size in VE to flag corruptions at any point along the way including the VisualEditor PHP extension
+• maybe only list non-active commits in the dialog and default to the previous deploy to reduce the potential for mistakes

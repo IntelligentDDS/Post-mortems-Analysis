@@ -1,0 +1,23 @@
+On Jan 3, 2015, Saturday, CPU load on the Parsoid cluster was very high and memory usage was also very high. Gabriel Wicke noticed the load and reported this on ops and requested a restart since he did not have root to do this. Restart of parsoid service on the cluster did not seem to fix the problem since the high load returned within the hour on the cluster. I (subbu) subsequently investigated the issue and narrowed it to a single page (with a 25000 item list) that Parsoid was unable to handle and pushed a temporary hotfix to return a HTTP 500 for that title which resolved the problem. Yuvi Panda from Ops helped with restarts and deploys since some stuck processes had to be periodically killed till the fix was rolled out.
+• 17:36 Gabriel emailed back: "Giuseppe restarted the parsoid instances across the cluster, and load is back to normal."
+• 18:43 Gabriel emailed back: "The high load has returned, along with the restart loop. Somebody with the permissions, please restart the parsoids .."
+• 20:43 By looking at parsoid.log on wtp10xx and correlating a parsoid pid with high cpu load and 20+ cpu time with the most recent 'started parsing' log entry in parsoid log with that pid, subbu found a problem page: http://ur.wikipedia.org/wiki/%D9%86%D8%A7%D9%85_%D9%85%D9%82%D8%A7%D9%85%D8%A7%D8%AA_%D8%A7%DB%92
+• 20:50 subbu replicates the problem on laptop and traces it to the 25000 element list on the page
+• ..... subbu pokes around logstash and notices high number of timeout events over the last few hours. Pokes around a bit with timeout handling code to see if something is broken (nothing obvious pops out) and tries to see if there is any easy fix for the list handler (nothing obvious pops out).
+• 22:10 subbu and YuviPanda figure it is simpler to just return a http 500 for the title for now. subbu looks at parsoid.log on a bunch of other cores and traces all stuck processes to the same title
+• ..... subbu tests fix locally on laptop and copy-pastes the fix over to tin, creates a hotfix commit for parsoid and parsoid/deploy.
+• 22:29 subbu: hotfix synced to parsoid cores (to return 500 for urwiki:نام_مقامات_اے); restart coming next
+• ..... dsh restarts after the hotfix go slowly and YuviPanda does a rolling restart since there are a lot of stuck processes from previous round
+• 22:57 subbu and YuviPanda notice that the problem is not fixed yet. subbu finds from the logs that http 500 is not being returned and traces it to the copy-paste of code and the title having subtly changed on tin.
+• 23:03 subbu and YuviPanda figure it is better to push the fix through gerrit and cherry-pick on tin
+• 23:12 paravoid shows up on irc and suggests we could fix this in varnish as well.
+• ..... after some discussion, we decide to go ahead with the gerrit since it is almost ready for deploy and we can also log the http 500 ...
+• 23:23 subbu: Try #2: hotfix synced to parsoid cores (to return 500 for urwiki:نام_مقامات_اے); git sha 85d8818ec1b692aaab440630a119c539d63d5ca5
+• 23:36 subbu verifies from the kibana logstash ui: "Returning http 500 for urwiki:نام_مقامات_اے'" and a reducing in cpu timeouts
+• 23:44 subbu and YuviPanda agree that the problem is fixed
+• Better to go through gerrit and cherry-pick rather than use copy-paste to transfer code from laptop to tin.
+• Improved server logging in Parsoid made it quick and easy to identify the failing title.
+• We should investigate the problem on that title and make our list handling more robust -- now fixed with gerrit-183158 (tracked at T85744)
+• We should investigate why the processes are getting stuck rather than being restarted cleanly with titles -- now fixed with gerrit-182644
+• We should also figure out why the title is being repeatedly retried (is it the job queue retrying?) -- tracked at T85939
+• Parsoid deployers should be able to restart service -- now fixed with gerrit-182585

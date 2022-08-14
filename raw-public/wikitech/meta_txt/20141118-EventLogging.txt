@@ -1,0 +1,5 @@
+Accidentally deployed EventLogging code (for which the database writer failed after some time) rendered EventLogging's writing of events to the database unreliably between 2014-11-18T00:59 -- 2014-11-13T01:21.
+• EventLogging deployments are anonymous. But as (regardless of who deployed) only an existing, reviewed commit from gerrit and not rogue code got deployed, it seems the deployment happened accidentally by trusted people, and was not ill-intentioned. Also, this is the first time it happened for EventLogging. So no need to take measures against it.
+• Monitoring of EventLogging processes is not sufficient. We need monitoring that checks if events actually end up in the database. That's on our to-do list anyways.
+• Status: Done Make sure that log files exist for the affected period, so we can backfill.
+• Status: Unresolved Implement monitoring that makes sure that the events end up in the database.

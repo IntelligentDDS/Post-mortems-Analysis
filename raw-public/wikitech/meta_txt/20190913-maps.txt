@@ -1,0 +1,36 @@
+On Friday September 13, map servers were saturating CPU due to some badly formed requests that were not validated properly by the service. This led to partial unavailability of maps from ~4:30 UTC to ~14:30 UTC. Situation was resolved by validating traffic at the caching layer.
+
+Thanks to tiles high cache hit ratio, only ~2% of requests were affected according to Turnilo. Given the high number of tiles seen by a single user during a session, it is probably that most users were affected to some extend.
+• HTTP availability for Varnish was flapping starting 4:26 UTC, getting worse by 6:49 UTC
+• No page was sent, no direct alert pointing to maps / kartotherian explicitly
+• 06:49 icinga alert about HTTP availability for Varnish, starts falling regularly from now on
+• 06:52 maps identified as the cause of the above alert
+• 08:33 kartotherian restarted on maps1003, with no effect
+• 08:45 stop tilerator on maps to help reduce load - no effect
+• 08:57 identified increased occurrence of issue about parsing geojson in logs (can't actually find that again, the graph now looks flat)
+• 09:38 deny access to /geoshape on maps1004 - seems to reduce CPU load
+• 09:54 /geoshape heavily throttled on varnish - seems to be effective ( )
+• 10:55 icinga alert for maps100[12] kartotherian endpoints health on maps1001 is CRITICAL
+• 12:37 temp ban of class of urls on maps1003 nginx
+
+A bug was introduced when fixing linting issues to introduce the CI into the CI pipeline, this created a failure in the HTTP error handler making Kartotherian unable to validate request parameters that leads to high CPU cost and timeout. This needs to be addressed in Kartotherian itself (536641).
+
+The deploy of the code containing the bug occurred September 12 at 21:09 UTC.
+
+The amount of support we have on maps does not match the exposure of the service. While the few people working on maps are dedicated to their work and doing their best, we have too many (bad) surprises. The technical stack has many known and unknown issues and our knowledge of that stack is insufficient.
+
+The majority of maps traffic comes from other websites or apps reusing our tiles. This is allowed (at least to some extend) by Maps Terms of Use and was the original intent of the project. Given the amount of support we have at the moment, this might need to be revisited.
+
+What went well?
+• high caching ratio mitigated the visibility of the issue
+• knowledge of the stack is insufficient
+• logs were not very helpful and somewhat misleading (e.g. phab:T158657).
+
+Where did we get lucky?
+
+How many people were involved in the remediation?
+• 2 SWE during the second half of the incident
+
+Documentation is minimal (Maps), but this specific problem is being addressed and unlikely to occur again.
+• Fix HTTP error handler in kartotherian - (code merged, but needs to be tested and deployed)
+• Review the amount of support Maps has in regard of its visibility and use cases

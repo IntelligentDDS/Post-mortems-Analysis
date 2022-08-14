@@ -1,0 +1,3 @@
+Today, an ORES deployment resulted in a big pile of timeout errors in CODFW, but not in EQIAD. It looks like uwsgi was running old code while celery was running new code. No service restarts rectified the situation. So we switched traffic to point to EQIAD instead. The problem was then resolved.
+
+No idea what could have caused this. Filed a task to investigate. T163950 -- Investigate failed deploy to CODFW

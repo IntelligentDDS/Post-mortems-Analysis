@@ -1,0 +1,22 @@
+The GC logs of some Kafka nodes grew so big that filled their disks. A couple hours later, EventLogging's processors lost connection with Kafka and stopped consuming events (EL's mysql consumers were already disabled at the time of the incident for db maintenance). Operations fixed the issue removing the GC logs and setting up rotation for them (https://phabricator.wikimedia.org/T124644). Analytics restarted EventLogging and backfilled the missing data.
+
+First occurrence of the issue in the wikimedia-operations channel, followed by other ones.
+
+The Ops team started to see the following errors in the wikimedia-operations channel:
+
+They quickly identified the problem, the disk was full:
+
+This was more or less spread across all nodes.
+
+The Ops team filed a gerrit code review to add a better rotation policy to Kafka brokers (https://gerrit.wikimedia.org/r/#/c/266203/).
+
+The Ops team restarted the first Kafka broker (kafka1012).
+
+The Analytics team received the following alert in the wikimedia-analytics channel:
+
+The Kafka brokers restarts caused an expected metadata change that was not handled correctly by pykafka clients. EL's logs were stuck to Connection refused messages from Kafka brokers.
+
+Analytics restarted EventLogging and processors went back to normal. The root cause of the Kafka failure was that the GC logs were not setup for rotation. The root cause for the EventLogging producers blocking is still unknown.
+• Status: Pending Investigate the root cause of the Kafka disconnects.
+• Status: Pending Investigate if a stricter set of alarms would have helped (triggering for example at 70/80% disk utilization rather than 96%).
+• Status: Pending Adding Kafka and Hadoop alarms to the analytics channel for better visibility.

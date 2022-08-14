@@ -1,0 +1,130 @@
+
+[01/02/2015][Microsoft And Yahoo Confirm Search Outages]
+http://techcrunch.com/2015/01/02/following-bing-coms-brief-outage-search-yahoo-com-goes-down-too/
+r-unk
+t-20m
+i-down
+p-no
+
+[01/07/2013][Hotmail Outage Today? Users Report Third Day of Service Interruption]
+http://www.latintimes.com/hotmail-outage-today-users-report-third-day-service-interruption-125247
+t-3d
+r-unk
+p-no
+i-down
+p-no
+
+[02/14/2012][Sorry, there is a problem with Hotmail right now]
+http://techpaul.wordpress.com/2012/02/14/sorry-theres-a-problem-with-hotmail-right-now/
+t-1h30m
+r-unk
+p-no
+i-down
+
+[02/16/2010][Hotmail back up after Tuesday outage]
+http://scitech.blogs.cnn.com/2010/02/16/hotmail-back-up-after-tuesday-outage/
+http://windowsitpro.com/exchange-server/after-hotmail-outage-privacy-fears
+t-1h
+p-no
+r-fail
+i-down
+
+[02/24/2013][Uh oh: Microsoft Hotmail, Outlook troubles bubble up again]
+http://www.zdnet.com/outlook-com-outage-leaves-users-locked-out-of-accounts-7000011792/
+t-7h
+i-down
+r-unk
+p-no
+
+[03/12/2009][Microsoft Restores Service After Hotmail Outage]
+http://www.pcworld.com/article/161194/article.html
+http://www.liveside.net/2009/03/12/hotmail-is-down/
+t-7h
+i-down
+p-no
+r-unk
+
+[03/12/2013][Details of the Hotmail / Outlook.com outage on March 12th]
+http://blogs.office.com/2013/03/13/details-of-the-hotmail-outlook-com-outage-on-march-12th/
+http://techcrunch.com/2013/03/13/the-great-hotmail-outlook-outage-of-2013-continues-as-downtime-passes-12-hour/
+http://blog.chron.com/techblog/2013/03/hotmail-outlook-com-experiencing-an-outage/
+r-upgrade
+r-fail
+t-15h
+p-no
+i-down
+
+[04/07/2015][Widespread outages hit Windows 8/8.1 Metro Mail, Windows Live Mail, Windows Phone 8.1 mail]
+http://www.infoworld.com/article/2907067/operating-systems/widespread-outage-for-windows-8-8-1-metro-mail-windows-live-mail-windows-phone-8-1-mail.html
+http://www.cnet.com/news/outlook-com-is-having-hiccups/
+http://www.windowscentral.com/psa-microsoft-currently-looking-issues-outlookcom
+r-unk
+t-6h
+i-down
+p-no
+
+[04/10/2009][Hotmail users suffer through outage]
+http://www.cnet.com/news/hotmail-users-suffer-through-outage/
+t-2h
+r-unk
+i-down
+p-no
+
+[04/18/2010][Hotmail Problems Resolved: Messenger, Hotmail Down Briefly Earlier Today]
+http://www.huffingtonpost.com/2010/02/16/hotmail-problems-resolved_n_464503.html
+t-1h
+p-no
+r-unk
+i-down
+
+[05/25/2011][Microsoft: Lost Hotmail Emails Now Restored]
+http://www.huffingtonpost.com/2011/01/03/microsoft-lost-hotmail-em_n_803721.html
+t-unk
+i-loss
+p-no
+r-unk
+
+[06/24/2014][Microsoft says it is resolved Outlook outage for business users across the country]
+http://www.washingtonpost.com/blogs/the-switch/wp/2014/06/24/microsoft-outlook-outage-reported-across-much-of-the-country/
+t-9h
+p-no
+r-unk
+
+[08/14/2013][Update: Microsoft restores Outlook.com after three-day outage]
+http://www.computerworld.com/article/2483799/web-apps/update--microsoft-restores-outlook-com-after-three-day-outage.html
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide6
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide7
+http://www.infoworld.com/article/2610247/applications/microsoft-s-skydrive--outlook-com-are-down-for-some-users.html
+r-fail
+t-3d22h
+i-down
+p-no
+f-add
+f-fix
+
+[09/08/2011][Office 365, Google Docs go down again, could give pause to the cloud-wary]
+http://arstechnica.com/business/2011/09/office-365-google-docs-go-down-again-could-give-pause-to-the-cloud-wary/
+http://www.channelregister.co.uk/2011/09/09/microsoft_cloud_outage/
+http://www.crn.com/news/cloud/231400092/microsoft-crediting-customers-in-recent-bpos-cloud-outage.htm
+http://windowsteamblog.com/windows_live/b/windowslive/archive/2011/09/20/follow-up-on-the-sept-8-service-outage.aspx
+http://www.itnews.com.au/News/271521,microsoft-office365-hotmail-blacks-out.aspx
+http://www.itnews.com.au/News/271835,is-microsofts-office365-vulnerable.aspx
+http://www.channelregister.co.uk/2011/09/21/microsoft_reveals_cloud_outage_causes/
+r-upgrade
+r-config
+r-fail
+i-down
+t-3h30m
+f-fix
+p-no
+
+[12/30/2010][Hotmail outage explained and fixed]
+http://www.neowin.net/news/hotmail-outage-explained-and-fixed
+http://www.pcworld.com/article/215442/microsoft_blames_server_problem_for_hotmail_outage.html
+t-5d
+r-upgrade
+i-loss
+p-no
+f-restore
+f-roll
+

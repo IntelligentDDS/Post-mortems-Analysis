@@ -1,0 +1,574 @@
+{
+    "azure-20190409-1": {
+        "title": "Virtual Machines - North Central US",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.03.29-05.13.pdf"
+        ],
+        "time": "04/09/2019",
+        "summary": "Between 21:39 on 9 Apr 2019 and 6:20 UTC on 10 Apr 2019, a subset of customers using Virtual Machines in North Central US may have experienced connection failures when trying to access some Virtual Machines hosted in the region. These Virtual Machines may have also restarted unexpectedly. Some residual impact was detected, impacting a small subset of recovered Virtual Machine connectivity with the underlying disk storage.",
+        "details": "Root cause: Azure Storage team made a configuration change on 9 April 2019 at 21:30 UTC to our back-end infrastructure in North Central US to improve performance and latency consistency for Azure Disks running inside Azure Virtual Machines. This change was designed to be transparent to customers. It was enabled following our normal deployment process, first to our test environment, and lower impact scale units before being rolled out to the North Central US region. However, this region hit bugs which impacted customer VM availability. Due to a bug, VM hosts were able to establish session with the storage scale unit but hit issues when trying to receive/send data from/to storage scale unit. This situation was designed to be handled with fallback to our existing data path, but an additional bug led to failure in the fallback path and resulted in in VM reboots. Mitigation: The system automatically recovered. Some of the customer VMs which didn’t auto recover, needed an additional recovery step. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): We have paused further deployment of this configuration change until the underlying bugs are fixed [complete]. Fix bugs that caused the background operation to have customer-facing impact [in progress]. Additional validation rigor to cover the scenario that caused the bugs to be missed in test environment [in progress].",
+        "service_name": [
+            "Virtual Machines"
+        ],
+        "impact symptom": [
+            "availability",
+            "consistency"
+        ],
+        "duration": 521,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Azure Storage team made a configuration change on 9 April 2019 at 21:30 UTC to our back-end infrastructure in North Central US to improve performance and latency consistency for Azure Disks running inside Azure Virtual Machines. This change was designed to be transparent to customers. It was enabled following our normal deployment process, first to our test environment, and lower impact scale units before being rolled out to the North Central US region. However, this region hit bugs which impacted customer VM availability. Due to a bug, VM hosts were able to establish session with the storage scale unit but hit issues when trying to receive/send data from/to storage scale unit. This situation was designed to be handled with fallback to our existing data path, but an additional bug led to failure in the fallback path and resulted in in VM reboots."
+        },
+        "operation": [
+            "improvement"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "self heal",
+                "manual recovery"
+            ],
+            "details": "The system automatically recovered. Some of the customer VMs which didn’t auto recover, needed an additional recovery step.",
+            "troubleshooting": {
+                "1": "The system automatically recovered. Some of the customer VMs which didn’t auto recover, needed an additional recovery step."
+            }
+        },
+        "propagation pass": {
+            "1": "Azure Storage",
+            "2": "Virtual machines"
+        },
+        "refined path": {
+            "1": "storage",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190412-1": {
+        "title": "RCA - Cognitive Services",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.03.29-05.13.pdf"
+        ],
+        "time": "04/12/2019",
+        "summary": "Between 01:50 and 11:30 UTC on 12 Apr 2019 a subset of customers using Cognitive Services including Computer Vision, Face and Text Analytics in West Europe and/or West Central US may have experienced 500-level response codes, high latency and/or timeouts when connecting to resources hosted in this region.",
+        "details": "Root cause: Engineers determined a recent deployment introduced a software regression, manifesting in increased latency across two regions. Mitigation: The issue was not detected in pre-deployment testing, however, once manually detected, engineers proceeded to roll-back the recent deployment task to mitigate the issue. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Improve pre-deployment tests to catch this kind of issue in the future [In Progress] Improve monitoring to more closely represent production traffic patterns [In Progress] Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/Q4JN-7FG",
+        "service_name": [
+            "Cognitive Services",
+            "Azure resources"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 580,
+        "detection": {
+            "method": "manual",
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "500-level response codes",
+                    "high latency",
+                    "timeout"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "Engineers determined a recent deployment introduced a software regression, manifesting in increased latency across two regions."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "rollback deployment"
+            ],
+            "details": "The issue was not detected in pre-deployment testing, however, once manually detected, engineers proceeded to roll-back the recent deployment task to mitigate the issue. ",
+            "troubleshooting": {
+                "1": "Engineers determined a recent deployment introduced a software regression, manifesting in increased latency across two regions.",
+                "2": "The issue was not detected in pre-deployment testing, however, once manually detected, engineers proceeded to roll-back the recent deployment task to mitigate the issue. "
+            }
+        },
+        "propagation pass": {
+            "1": "Azure resources",
+            "2": "Cognitive Services"
+        },
+        "refined path": {
+            "1": "backend",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190416-1": {
+        "title": "RCA - Networking Degradation - Australia Southeast / Australia East",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.03.29-05.13.pdf"
+        ],
+        "time": "04/16/2019",
+        "summary": "Between 07:12 and 08:02 UTC on 16 Apr 2019, a subset of customers with resources in Australia Southeast / Australia East may have experienced difficulties connecting to Azure endpoints, which in-turn may have caused errors when accessing Microsoft Services in the impacted regions.",
+        "details": "Root cause: Microsoft received automated notification alerts that the Australia East and Australia Southeast regions were experiencing degraded network availability from a select number of Internet Service Providers (ISPs). During this time, a subset of network prefix paths changed for the select number of ISPs, this manifested in traffic not reaching the destinations within the Australia East and Australia Southeast regions. The issue stemmed from a routing anomaly due to an erroneous advertisement of prefixes received via an ExpressRoute circuit to an Internet Exchange (IX). Mitigation: Microsoft disabled the incorrect ExpressRoute peering. The IX also identified a high amount of traffic and automatically mitigated by bringing down the peering with the IX. Once the peerings were brought down by Microsoft and the IX, availability was restored to Australia East and Australia Southeast regions. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Engage Internet Service Providers to add additional policies/protections to Internet facing routing infrastructure to block future routing anomalies [Complete] Add additional automated route mitigation steps within the Azure platform to reduce mitigation time [In Progress] Investigate further route optimizations in the Azure/Microsoft ecosystem to inherently block future routing anomalies [In Progress] Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/QFVY-1FG",
+        "service_name": [
+            "ExpressRoute",
+            "Internet Service Providers (ISPs)",
+            "Internet Exchange (IX)"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 50,
+        "detection": {
+            "method": "automate",
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "system kpi": [
+                    "degraded network availability",
+                    "traffic loss"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Microsoft received automated notification alerts that the Australia East and Australia Southeast regions were experiencing degraded network availability from a select number of Internet Service Providers (ISPs). During this time, a subset of network prefix paths changed for the select number of ISPs, this manifested in traffic not reaching the destinations within the Australia East and Australia Southeast regions. The issue stemmed from a routing anomaly due to an erroneous advertisement of prefixes received via an ExpressRoute circuit to an Internet Exchange (IX)."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "disable the incorrect ExpressRoute peering",
+                "bring down the peering with the IX"
+            ],
+            "details": "Microsoft disabled the incorrect ExpressRoute peering. The IX also identified a high amount of traffic and automatically mitigated by bringing down the peering with the IX. Once the peerings were brought down by Microsoft and the IX, availability was restored to Australia East and Australia Southeast regions.",
+            "troubleshooting": {
+                "1": "Microsoft received automated notification alerts that the Australia East and Australia Southeast regions were experiencing degraded network availability from a select number of Internet Service Providers (ISPs).",
+                "2": "Microsoft disabled the incorrect ExpressRoute peering.",
+                "3": "Once the peerings were brought down by Microsoft and the IX, availability was restored to Australia East and Australia Southeast regions."
+            }
+        },
+        "propagation pass": {
+            "1": "Internet Service Provider",
+            "2": "ExpressRoute circuit",
+            "3": "Internet Exchange",
+            "4": "Azure endpoints"
+        },
+        "refined path": {
+            "1": "third-party",
+            "2": "network devices",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190419-1": {
+        "title": "RCA - Availability degradation for Azure DevOps",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.03.29-05.13.pdf"
+        ],
+        "time": "04/19/2019",
+        "summary": "Between 03:30 and 15:20 UTC, and then again between 17:00 and 17:32 UTC on the 19 Apr 2019, a subset of customers experienced issues connecting to Azure DevOps. These issues primarily affected customers physically located on the East Coast and those whose organizations are located on the East Coast.",
+        "details": "Root cause: During a planned maintenance event for Azure Front Door (AFD), a configuration change caused network traffic to be incorrectly advertised. The AFD ring impacted by this maintenance hosted Azure DevOps and other Microsoft internal tenants. This may have resulted in timeouts and 500 errors for customers of Azure DevOps. The maintenance event started at 3:30 UTC, which started dropping around 5-10% of requests. When the environment severely degraded at 14:44 UTC, engineering observed the major impact start. The maintenance event was on a ToR (Top of Rack) switch. The standard operating procedure is to take the environment offline by removing edge machines. By design, the MUX stopped advertising BGP (Border Gateway Protocol) routes and traffic is not routed through these MUX. Within this environment one of the MUX Load Balancers was in an unhealthy state but the BGP session between the load balancer and the TOR was still active. Consequently, the MUX was still active in the environment and the TOR was advertising traffic incorrectly. Mitigation: The first impact window was mitigated by withdrawing the invalid route so that traffic would be routed correctly. The recurrence was caused by the maintenance process resetting the configuration back to the previous state, publishing an invalid route. The 2nd mitigation was re-applying the change again. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): reviewing and implementing more stringent measures for when we take environments offline for maintenance events. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/WCMY-JQG",
+        "service_name": [
+            "Azure DevOps",
+            "Azure Front Door"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 710,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "timeout",
+                    "500-level response codes",
+                    "degraded performance",
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "During a planned maintenance event for Azure Front Door (AFD), a configuration change caused network traffic to be incorrectly advertised. The AFD ring impacted by this maintenance hosted Azure DevOps and other Microsoft internal tenants. This may have resulted in timeouts and 500 errors for customers of Azure DevOps. The maintenance event started at 3:30 UTC, which started dropping around 5-10% of requests. When the environment severely degraded at 14:44 UTC, engineering observed the major impact start. The maintenance event was on a ToR (Top of Rack) switch. The standard operating procedure is to take the environment offline by removing edge machines. By design, the MUX stopped advertising BGP (Border Gateway Protocol) routes and traffic is not routed through these MUX. Within this environment one of the MUX Load Balancers was in an unhealthy state but the BGP session between the load balancer and the TOR was still active. Consequently, the MUX was still active in the environment and the TOR was advertising traffic incorrectly."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "withdraw the invalid route"
+            ],
+            "details": "The first impact window was mitigated by withdrawing the invalid route so that traffic would be routed correctly. The recurrence was caused by the maintenance process resetting the configuration back to the previous state, publishing an invalid route. The 2nd mitigation was re-applying the change again.",
+            "troubleshooting": {
+                "1": "The first impact window was mitigated by withdrawing the invalid route so that traffic would be routed correctly."
+            }
+        },
+        "propagation pass": {
+            "1": "MUX load balancer",
+            "2": "Azure Front Door",
+            "3": "Azure DevOps"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "2": "middleware",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190501-1": {
+        "title": "Issue signing in to https://shell.azure.com",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.03.29-05.13.pdf"
+        ],
+        "time": "05/01/2019",
+        "summary": "Between 18:00 UTC on 30 Apr 2019 and 23:20 UTC on 01 May 2019, customers may have experienced issues signing in to https://shell.azure.com During this time, customers were able to access Cloud Shell through the Azure portal at https://portal.azure.com",
+        "details": "Preliminary root cause: Engineers identified a mis-match between a configuration file which had been recently updated and its corresponding code in shell.azure.com Mitigation: The Cloud Shell team developed, tested, and rolled out a new build which addressed and corrected the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.",
+        "service_name": [
+            "website",
+            "azure portal"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 1760,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection failure"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Engineers identified a mis-match between a configuration file which had been recently updated and its corresponding code in shell.azure.com"
+        },
+        "operation": [
+            "update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll out a new build"
+            ],
+            "details": "The Cloud Shell team developed, tested, and rolled out a new build which addressed and corrected the issue.",
+            "troubleshooting": {
+                "1": "Engineers identified a mis-match between a configuration file which had been recently updated and its corresponding code in shell.azure.com",
+                "2": "The Cloud Shell team developed, tested, and rolled out a new build which addressed and corrected the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "website"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190502-1": {
+        "title": "RCA - Azure Map",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.03.29-05.13.pdf"
+        ],
+        "time": "05/02/2019",
+        "summary": "Between 04:35 and 11:00 UTC on 02 May 2019, a subset of customers using Azure Maps may have experienced 500 errors when attempting to make calls to Azure Maps Rest APIs. ",
+        "details": "Root cause and mitigation: Engineers were notified by internal monitoring that connectivity between internal components/services required by Azure Maps were disrupted. This lead to the failure to fulfill incoming customer requests. Upon investigation, engineers found that the authentication application was inadvertently removed in error during regular maintenance operations. Restoration of authentication application was performed manually, which led to the mitigation of this incident. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Moving the authentication applications to a more protected repository, and setting up fail safes to prevent future incidents. Augmenting monitoring for authentication issues and improving troubleshooting guides for faster response. Longer term, engineers are planning to move to a different authentication platform which will provide better insights earlier.",
+        "service_name": [
+            "Azure Maps"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 385,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "internal monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "connection failure",
+                    "500 error codes"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "component removal"
+                }
+            ],
+            "details": "Engineers were notified by internal monitoring that connectivity between internal components/services required by Azure Maps were disrupted. This lead to the failure to fulfill incoming customer requests. Upon investigation, engineers found that the authentication application was inadvertently removed in error during regular maintenance operations."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restore authentication application"
+            ],
+            "details": "Restoration of authentication application was performed manually, which led to the mitigation of this incident.",
+            "troubleshooting": {
+                "1": "Engineers were notified by internal monitoring that connectivity between internal components/services required by Azure Maps were disrupted",
+                "2": "engineers found that the authentication application was inadvertently removed in error during regular maintenance operations.",
+                "3": "Restoration of authentication application was performed manually, which led to the mitigation of this incident."
+            }
+        },
+        "propagation pass": {
+            "1": "authentication application",
+            "2": "Azure Map"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190502-2": {
+        "title": "RCA - Network Connectivity - DNS Resolution",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.03.29-05.13.pdf"
+        ],
+        "time": "05/02/2019",
+        "summary": "Between 19:29 and 22:35 UTC on 02 May 2019, customers may have experienced connectivity issues with Microsoft cloud services including Azure, Microsoft 365, Dynamics 365 and Azure DevOps. Most services were recovered by 21:40 UTC with the remaining recovered by 22:35 UTC. ",
+        "details": "Root cause: As part of planned maintenance activity, Microsoft engineers executed a configuration change to update one of the name servers for DNS zones used to reach several Microsoft services, including Azure Storage and Azure SQL Database. A failure in the change process resulted in one of the four name servers' records for these zones to point to a DNS server having blank zone data and returning negative responses. The result was that approximately 25% of the queries for domains used by these services (such as database.windows.net) produced incorrect results, and reachability to these services was degraded. Consequently, multiple other Azure and Microsoft services that depend upon these core services were also impacted to varying degrees. More details: This incident resulted from the coincidence of two separate errors. Either error by itself would have been non-impacting: 1) Microsoft engineers executed a name server delegation change to update one name server for several Microsoft zones including Azure Storage and Azure SQL Database. Each of these zones has four name servers for redundancy, and the update was made to only one name server during this maintenance. A misconfiguration in the parameters of the automation being used to make the change resulted in an incorrect delegation for the name server under maintenance. 2) As an artifact of automation from prior maintenance, empty zone files existed on servers that were not the intended target of the assigned delegation. This by itself was not a problem as these name servers were not serving the zones in question. Due to the configuration error in change automation in this instance, the name server delegation made during the maintenance targeted a name server that had an empty copy of the zones. As a result, this name server replied with negative (nxdomain) answers to all queries in the zones. Since only one out of the four name server's records for the zones was incorrect, approximately one in four queries for the impacted zones would have received an incorrect negative response. DNS resolvers may cache negative responses for some period of time (negative caching), so even though erroneous configuration was promptly fixed, customers continued to be impacted by this change for varying lengths of time. Mitigation: To mitigate the issue, Microsoft engineers corrected the delegation issue by reverting the name server value to the previous setting. Engineers verified that all responses were then correct, and the DNS resolvers began returning correct results within 5 minutes. Some applications and services that accessed the incorrect values and cached the results may have experienced longer restoration times until the expiration of the incorrect cached information. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): 1) Additional checks in the code that performs nameserver updates to prevent unintended changes [in progress]. 2) Pre-execution modeling to accurately predict the outcome of the change and detect potential problems before execution [in progress]. 3) Improve per-zone, per-nameserver monitors to immediately detect changes that cause one nameserver’s drift from the others [in progress]. 4) Improve DNS namespace design to better allow staged rollouts of changes with lower incremental impact [in progress]. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/R50C-5RZ",
+        "service_name": [
+            "Azure",
+            "Microsoft 365",
+            "Dynamics 365",
+            "Azure DevOps"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 186,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "degraded reachability",
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "As part of planned maintenance activity, Microsoft engineers executed a configuration change to update one of the name servers for DNS zones used to reach several Microsoft services, including Azure Storage and Azure SQL Database. A failure in the change process resulted in one of the four name servers' records for these zones to point to a DNS server having blank zone data and returning negative responses. The result was that approximately 25% of the queries for domains used by these services (such as database.windows.net) produced incorrect results, and reachability to these services was degraded. Consequently, multiple other Azure and Microsoft services that depend upon these core services were also impacted to varying degrees. This incident resulted from the coincidence of two separate errors. Either error by itself would have been non-impacting: 1) Microsoft engineers executed a name server delegation change to update one name server for several Microsoft zones including Azure Storage and Azure SQL Database. Each of these zones has four name servers for redundancy, and the update was made to only one name server during this maintenance. A misconfiguration in the parameters of the automation being used to make the change resulted in an incorrect delegation for the name server under maintenance. 2) As an artifact of automation from prior maintenance, empty zone files existed on servers that were not the intended target of the assigned delegation. This by itself was not a problem as these name servers were not serving the zones in question. Due to the configuration error in change automation in this instance, the name server delegation made during the maintenance targeted a name server that had an empty copy of the zones. As a result, this name server replied with negative (nxdomain) answers to all queries in the zones. Since only one out of the four name server's records for the zones was incorrect, approximately one in four queries for the impacted zones would have received an incorrect negative response. DNS resolvers may cache negative responses for some period of time (negative caching), so even though erroneous configuration was promptly fixed, customers continued to be impacted by this change for varying lengths of time."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "correct the delegation issue",
+                "verify all responses"
+            ],
+            "details": "To mitigate the issue, Microsoft engineers corrected the delegation issue by reverting the name server value to the previous setting. Engineers verified that all responses were then correct, and the DNS resolvers began returning correct results within 5 minutes. Some applications and services that accessed the incorrect values and cached the results may have experienced longer restoration times until the expiration of the incorrect cached information.",
+            "troubleshooting": {
+                "1": "Microsoft engineers corrected the delegation issue by reverting the name server value to the previous setting",
+                "2": "Engineers verified that all responses were then correct, and the DNS resolvers began returning correct results within 5 minutes."
+            }
+        },
+        "propagation pass": {
+            "1": "DNS zones",
+            "2": "name server",
+            "3": "services"
+        },
+        "refined path": {
+            "1": "DNS",
+            "2": "name server",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190507-1": {
+        "title": "SQL Services - West Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.03.29-05.13.pdf"
+        ],
+        "time": "05/07/2019",
+        "summary": "Between 10:57 and 12:48 UTC on 07 May 2019, a subset of customers using SQL Database, SQL Data Warehouse, Azure Database for PostgreSQL, Azure Database for MySQL, Azure Database for MariaDB, in West Europe may have experienced issues performing service management operations – such as create, update, rename and delete- for resources hosted in this region. In addition, customers may have been unable to see their list of databases using SMSS. However as this was a Service Management issue, these databases would not have been impacted (despite not being visible from SMSS).",
+        "details": "Preliminary root cause: Engineers identified a back-end database service responsible for processing service management requests in the region became unhealthy preventing the requests from completing. Mitigation: Engineers performed a manual restart of the impacting back-end service, which restored its capacity to process requests, mitigating the issue. Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation",
+        "service_name": [
+            "SQL Database",
+            "SQL Data Warehouse",
+            "Azure Database for PostgreSQL",
+            "Azure Database for MySQL",
+            "Azure Database for MariaDB"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 111,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "unknown"
+                }
+            ],
+            "details": "Engineers identified a back-end database service responsible for processing service management requests in the region became unhealthy preventing the requests from completing."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restart service"
+            ],
+            "details": "Engineers performed a manual restart of the impacting back-end service, which restored its capacity to process requests, mitigating the issue.",
+            "troubleshooting": {
+                "1": "Engineers identified a back-end database service responsible for processing service management requests in the region became unhealthy preventing the requests from completing.",
+                "2": "Engineers performed a manual restart of the impacting back-end service, which restored its capacity to process requests, mitigating the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "backend database service",
+            "2": "SQL Services"
+        },
+        "refined path": {
+            "1": "database",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    }
+}

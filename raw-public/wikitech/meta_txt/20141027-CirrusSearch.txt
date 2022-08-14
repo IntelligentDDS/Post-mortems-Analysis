@@ -1,0 +1,14 @@
+CirrusSearch fell over for a few hours. We mitigated the problem by falling back to lsearchd during most of the outage. It isn't clear what caused the outage at this point but we've added instrumentation so if whatever caused the outage happens again we'll learn more.
+
+A few days later the same thing happened and we were able to learn more
+• 2014-10-27 12:26:43 utc - Queries started to fail on the Elasticsearch side.
+• 2014-10-27 ~13:00 utc - logs in for the day and learns about the issue. The cause of the problem is determined to be huge spikes in Java heap usage to the point where the JVM can't free enough heap to take any actions including dumping the heap for analysis.
+• 2014-10-27 13:47 utc - We fall back to lsearchd after determining that we don't know what is causing the high heap usage.
+• 2014-10-27 14:54 utc - After trying for a while to get heap dumps for analysis without success we give up and reboot all the frozen machines and Elasticsearch immediately becomes healthy again. Nik goes to get coffee.
+• 2014-10-27 15:32 utc - After finding out that falling back to lsearchd turned off the Geo extension we reenable cirrus as a secondary search engine to fix geo.
+• 2014-10-27 ~17:00 utc - Elasticsearch cluster locks up again with the same symptoms. We spend more time trying to get heap dumps. We're still on lsearchd at this point so we have time.
+• 2014-10-27 ~18:00 utc - We make configuration changes to Elasticsearch such that if the crash happens again again we'll get a heap dump we can use and we restart Elasticsearch.
+• 2014-10-28 1:01 utc - After Elasticsearch cluster has stabilized bring reenable Cirrus everywhere.
+
+The outage is caused by some nasty regex queries that Lucene tries to compile using a O(2^n) algorithm. Not cool dude.
+• Done Add JVM settings to dump heap on out of memory. If the problem happens again we'll be able to figure out what it is.

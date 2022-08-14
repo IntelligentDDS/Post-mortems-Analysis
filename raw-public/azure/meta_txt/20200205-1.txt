@@ -1,0 +1,5 @@
+Connectivity errors with Azure Portal - Mitigated (Tracking ID LN__-JC0)
+Summary of impact: Between 20:25 and 22:10 UTC on 05 Feb 2020, a subset of customers may have experienced difficulties connecting to the Azure Portal.
+Preliminary root cause: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.
+Mitigation: Engineers successfully rerouted traffic to another region, allowing connectivity to the Azure Portal to resume, mitigating the issue.
+Next Steps: We sincerely apologize for the impact to the affected customers. Stay informed about Azure service issues by creating custom service health alerts: https://aka.ms/ash- videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.

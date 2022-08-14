@@ -1,0 +1,41 @@
+
+[01/31/2013][Amazon Responds To Outage, Confirms Offline For 49 Mins, AWS Unaffected, Outside Groups Uninvolved]
+http://techcrunch.com/2013/01/31/amazon-responds-to-outage-confirms-offline-for-49-mins-aws-unaffected-outside-groups-uninvolved/
+http://techcrunch.com/2013/01/31/amazon-com-down-503-service-unavailable/
+http://www.infoworld.com/article/2606768/cloud-computing/107783-The-worst-cloud-outages-of-2013-so-far.html#slide2
+http://cloutage.org/incidents/528-amazon-web-site
+t-49m
+r-unk
+i-down
+p-no
+
+[06/29/2010][Amazon.com experiences hours-long outage]
+http://www.cnet.com/news/amazon-com-experiences-hours-long-outage/
+http://cloutage.org/incidents/92-amazon-amazon-com
+t-3h
+r-unk
+i-down
+p-no
+
+[08/19/2013][The High Cost Of An Amazon Outage]
+http://www.buzzfeed.com/mattlynley/the-high-cost-of-an-amazon-outage#.caqAr4kom
+http://www.cnet.com/news/amazon-shopping-site-goes-down/
+http://venturebeat.com/2013/08/19/amazon-website-down/
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide8
+http://www.infoworld.com/article/2606921/cloud-computing/133109-The-worst-cloud-outages-of-2013-part-2.html#slide9
+http://cloutage.org/incidents/1150-amazon-website
+r-unk
+t-40m
+i-down
+p-no
+
+[12/12/2010][Amazon outage due to ‘hardware failure’ not hackers]
+http://www.computerweekly.com/news/1280094596/Amazon-outage-due-to-hardware-failure-not-hackers
+http://www.reuters.com/article/2010/12/13/us-europe-amazon-idUSTRE6BB1TH20101213
+http://cloutage.org/incidents/429-amazon-amazon-com
+t-1h
+r-fail
+i-down
+f-fix
+p-no
+

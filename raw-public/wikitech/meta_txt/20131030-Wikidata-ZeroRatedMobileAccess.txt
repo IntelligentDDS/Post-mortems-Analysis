@@ -1,0 +1,13 @@
+ZeroRatedMobileAccess has always depended on MobileFrontend and used it liberally, including calls to its classes. However, it was done in hooks called by MF so Zero simply stopped working in absence of MF. This, however, changed in [1] where Zero started using a ResourceLoader module from MF.
+
+At 23:02pm UTC, after deploying Zero extension updates, fatal monitor was flooded with:
+
+The issue was tracked down to Wikidata having MobileFrontend disabled, while ZeroRatedMobileAccess was enabled. It didn't impact page views directly, however all load.php calls that requested the startup module caused fatals because it attempted to instantiate MFResourceLoader class and couldn't find it. As a consequence, people might have seen pages without styles or scripts.
+
+A number of people (MaxSem, Reedy, Roan, and Greg, and possibly others) gave great assistance to track down the issue and rapidly disable the ZeroRatedMobileAccess extension in Wikidata. Furthermore, mobile configuration [2] will add an additional guard against calling ZeroRatedMobileAccess.php unless it's explicitly within the context of MF.
+
+Thank you to everyone!!!
+• 23:02 Zero 1.23wmf1 deployed, first errors appear - initially unnoticed
+• 23:17 Max reverts his MobileFrontend changes, errors don't go away
+• Allow a bit more time between deployments and observe fatalmonitor before and after
+• Ensure Zero extension checks if Mobile extension is loaded before enabling itself if it relies on MFResourceLoader.

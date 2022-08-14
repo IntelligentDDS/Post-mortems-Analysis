@@ -1,0 +1,6 @@
+Azure Databricks and Data Factory v2 - Workspace and Data Flow Errors (Tracking ID KNQ8-BP0)
+Summary of impact: Between approximately 11:00 and 14:40 UTC on 25 Oct 2019, a subset of customers using Azure Databricks may have received 'No Web App available' error notifications when logging into a Databricks workspace. Related API calls may have also not returned a response. Additionally, a very limited subset of customers using Data Factory v2 may have received failure notifications for Data Flow jobs.
+Preliminary root cause: Engineers determined that a backend database used to process workspace access requests became unhealthy, causing requests to fail. As this database supports the control plane for the East US, East US 2, Central US, and North Central US regions, only customers in these regions would have seen impact. Additionally, a small number of Data Factory v2 customers in these regions would have seen downstream impact from this issue.
+Mitigation: Engineers redeployed the affected backend database to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service
+health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.

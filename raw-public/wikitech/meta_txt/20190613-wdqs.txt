@@ -1,0 +1,23 @@
+From June 13 ~15:10UTC to ~15:50 UTC the public WDQS endpoint in eqiad was overloaded by a bot to the point where it was not serving user queries. There is no reason to think that this bot was malicious. To mitigate this, the python-requests user agent is temporarily banned from accessing WDQS, consistent with our user agent policy.
+
+The WDQS public endpoint in eqiad was unavailable from ~15:25 to ~15:45 UTC.
+
+The python-requests user agent is still being banned, we are waiting to implement a more gentle solution before removing this ban.
+
+The internal WDQS endpoint was not impacted.
+
+Problem was detected by the Icinga LVS probe.
+• 15:10: load starts to increase on the public wdqs eqiad cluster
+• we need to take more drastic action to protect the stability of the service (aggressively throttle generic user agents)
+
+What went well?
+• while we do have logic to throttle abusive bots, this throttling was not sufficient to protect the service
+• we are still banning python-requests as a user agent, which affects a number of bots
+
+Where did we get lucky?
+• This happened during SRE offsite, when most SRE are in the same timezone. Luckily this wasn't when all of them were sleeping!
+• We know that our throttling of bot is far from perfect (this is a hard problem). Some idea are already being discussed on phab:T219477
+• ban logs are too verbose on disk (mitigated by https://gerrit.wikimedia.org/r/c/operations/puppet/+/516837)
+• our user agent policy discourages the use of generic user agents, we should start to be more agressive in throttling generic UA or ban requests with no UA (https://gerrit.wikimedia.org/r/c/wikidata/query/rdf/+/516834)
+• our own clients should follow our policy, for example our icinga checks should have a meaningful UA (https://gerrit.wikimedia.org/r/c/operations/puppet/+/517032)
+• remove the ban on the python-requests UA once we have a more gently throttling solution in place

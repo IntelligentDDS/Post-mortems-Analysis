@@ -1,0 +1,137 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Dataflow](/incident/cloud-dataflow/16001)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Dataflow Incident #16001
+
+Cloud Dataflow unavailable for all customers
+
+Incident began at **2016-08-12 13:30** and ended at **2016-08-12 15:15** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 18, 2016 | 15:29 |
+
+SUMMARY:
+
+On Friday 12 August 2016, Cloud Dataflow experienced pipeline delays for 99
+minutes. Although all pipelines did eventually successfully complete, we know
+that you rely on the timely execution of these flows and apologise for the
+long duration and impact of this incident. We are taking steps to improve
+reliability and time to resolution so that we meet the level of service that
+you rightly expect.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Friday 12 August 2016 13:29 to 15:08 PDT all Dataflow pipelines ceased to
+process data, but remained in "Running" state. Requests to start new Dataflow
+pipelines or cancel existing ones failed. After the period of impact, existing
+pipelines resumed processing without missing any input data.
+
+ROOT CAUSE:
+
+During mitigation of a lower impact performance issue, Google engineers made a
+configuration change to pipeline orchestration. An error in this configuration
+caused validation within the orchestration component to reject all requests.
+As calls to this component are needed to create jobs, cancel jobs and make
+progress on existing jobs, none of these operations were possible.
+
+REMEDIATION AND PREVENTION:
+
+At 14:59 Google engineers rolled back the erroneous configuration change, a
+few minutes after which errors ceased and normal pipeline execution resumed.
+
+In future Dataflow configuration changes will go through additional validation
+in the form of pre-deployment tests, staging and progressive rollouts. This
+defense in depth will minimize the possible impact of future errors.
+
+To improve detection and isolation time, Dataflow servers are being altered to
+abort if started with invalid configuration. This provides a strong signal
+that can be used in automated systems and is fast for engineers to identify.
+Additionally we are improving our availability alerting such that elevated
+error rates on all operations will notify engineers of problems more quickly.
+
+We apologize for the difficulty this issue caused you.  
+  
+|
+
+SUMMARY:
+
+On Friday 12 August 2016, Cloud Dataflow experienced pipeline delays for 99
+minutes. Although all pipelines did eventually successfully complete, we know
+that you rely on the timely execution of these flows and apologise for the
+long duration and impact of this incident. We are taking steps to improve
+reliability and time to resolution so that we meet the level of service that
+you rightly expect.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Friday 12 August 2016 13:29 to 15:08 PDT all Dataflow pipelines ceased to
+process data, but remained in "Running" state. Requests to start new Dataflow
+pipelines or cancel existing ones failed. After the period of impact, existing
+pipelines resumed processing without missing any input data.
+
+ROOT CAUSE:
+
+During mitigation of a lower impact performance issue, Google engineers made a
+configuration change to pipeline orchestration. An error in this configuration
+caused validation within the orchestration component to reject all requests.
+As calls to this component are needed to create jobs, cancel jobs and make
+progress on existing jobs, none of these operations were possible.
+
+REMEDIATION AND PREVENTION:
+
+At 14:59 Google engineers rolled back the erroneous configuration change, a
+few minutes after which errors ceased and normal pipeline execution resumed.
+
+In future Dataflow configuration changes will go through additional validation
+in the form of pre-deployment tests, staging and progressive rollouts. This
+defense in depth will minimize the possible impact of future errors.
+
+To improve detection and isolation time, Dataflow servers are being altered to
+abort if started with invalid configuration. This provides a strong signal
+that can be used in automated systems and is fast for engineers to identify.
+Additionally we are improving our availability alerting such that elevated
+error rates on all operations will notify engineers of problems more quickly.
+
+We apologize for the difficulty this issue caused you.  
+  
+| Aug 12, 2016 | 16:53 |
+
+We experienced an issue with Cloud Dataflow that resulted in complete
+unavailability of the service. This has been resolved for all affected
+customers as of 15:15 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+|
+
+We experienced an issue with Cloud Dataflow that resulted in complete
+unavailability of the service. This has been resolved for all affected
+customers as of 15:15 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence. We will provide a more detailed analysis of this
+incident once we have completed our internal investigation.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

@@ -1,0 +1,183 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+April 13, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/17007)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #17007
+
+502 errors for HTTP(S) Load Balancers
+
+Incident began at **2017-04-05 01:13** and ended at **2017-04-05 01:35** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Apr 12, 2017 | 14:11 |
+
+ISSUE SUMMARY
+
+On Wednesday 5 April 2017, requests to the Google Cloud HTTP(S) Load Balancer
+experienced a 25% error rate for a duration of 22 minutes.
+
+We apologize for this incident. We understand that the Load Balancer needs to
+be very reliable for you to offer a high quality service to your customers. We
+have taken and will be taking various measures to prevent this type of
+incident from recurring.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 5 April 2017 from 01:13 to 01:35 PDT, requests to the Google
+Cloud HTTP(S) Load Balancer experienced a 25% error rate for a duration of 22
+minutes. Clients received 502 errors for failed requests. Some HTTP(S) Load
+Balancers that were recently modified experienced error rates of 100%.
+
+Google paused all configuration changes to the HTTP(S) Load Balancer for three
+hours and 41 minutes after the incident, until our engineers had understood
+the root cause. This caused deployments of App Engine Flexible apps to fail
+during that period.
+
+ROOT CAUSE
+
+A bug in the HTTP(S) Load Balancer configuration update process caused it to
+revert to a configuration that was substantially out of date.
+
+The configuration update process is controlled by a master server. In this
+case, one of the replicas of the master servers lost access to Google's
+distributed file system and was unable to read recent configuration files.
+Mastership then passed to the server that could not access Google's
+distributed file system. When the mastership changes, it begins the next
+configuration push as normal by testing on a subset of HTTP(S) Load Balancers.
+If this test succeeds, the configuration is pushed globally to all HTTP(S)
+Load Balancers. If the test fails (as it did in this case), the new master
+will revert all HTTP(S) Load Balancers to the last "known good" configuration.
+The combination of a mastership change, lack of access to more recent updates,
+and the initial test failure for the latest config caused the HTTP(S) Load
+Balancers to revert to the latest configuration that the master could read,
+which was substantially out-of-date.
+
+In addition, the update with the out-of-date configuration triggered a garbage
+collection process on the Google Frontend servers to free up memory used by
+the deleted configurations. The high number of deleted configurations caused
+the Google Frontend servers to spend a large proportion of CPU cycles on
+garbage collection which lead to failed health checks and eventual restart of
+the affected Google Frontend server. Any client requests served by a
+restarting server received 502 errors.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were paged at 01:22 PDT. They switched the configuration
+update process to use a different master server at 01:34 which mitigated the
+issue for most services within one minute. Our engineers then paused the
+configuration updates to the HTTP(S) Load Balancer until 05:16 while the root
+cause was confirmed.
+
+To prevent incidents of this type in future, we are taking the following
+actions:
+
+  * Master servers will be configured to never push HTTP(S) Load Balancer configurations that are more than a few hours old.
+
+  * Google Frontend servers will reject loading a configuration file that is more than a few hours old.
+
+  * Improve testing for new HTTP(S) Load Balancer configurations so that out-of-date configurations are flagged before being pushed to production.
+
+  * Fix the issue that caused the master server to fail when reading files from Google's distributed file system.
+
+  * Fix the issue that caused health check failures on Google Frontends during heavy garbage collection.
+
+Once again, we apologize for the impact that this incident had on your
+service.  
+  
+|
+
+ISSUE SUMMARY
+
+On Wednesday 5 April 2017, requests to the Google Cloud HTTP(S) Load Balancer
+experienced a 25% error rate for a duration of 22 minutes.
+
+We apologize for this incident. We understand that the Load Balancer needs to
+be very reliable for you to offer a high quality service to your customers. We
+have taken and will be taking various measures to prevent this type of
+incident from recurring.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday 5 April 2017 from 01:13 to 01:35 PDT, requests to the Google
+Cloud HTTP(S) Load Balancer experienced a 25% error rate for a duration of 22
+minutes. Clients received 502 errors for failed requests. Some HTTP(S) Load
+Balancers that were recently modified experienced error rates of 100%.
+
+Google paused all configuration changes to the HTTP(S) Load Balancer for three
+hours and 41 minutes after the incident, until our engineers had understood
+the root cause. This caused deployments of App Engine Flexible apps to fail
+during that period.
+
+ROOT CAUSE
+
+A bug in the HTTP(S) Load Balancer configuration update process caused it to
+revert to a configuration that was substantially out of date.
+
+The configuration update process is controlled by a master server. In this
+case, one of the replicas of the master servers lost access to Google's
+distributed file system and was unable to read recent configuration files.
+Mastership then passed to the server that could not access Google's
+distributed file system. When the mastership changes, it begins the next
+configuration push as normal by testing on a subset of HTTP(S) Load Balancers.
+If this test succeeds, the configuration is pushed globally to all HTTP(S)
+Load Balancers. If the test fails (as it did in this case), the new master
+will revert all HTTP(S) Load Balancers to the last "known good" configuration.
+The combination of a mastership change, lack of access to more recent updates,
+and the initial test failure for the latest config caused the HTTP(S) Load
+Balancers to revert to the latest configuration that the master could read,
+which was substantially out-of-date.
+
+In addition, the update with the out-of-date configuration triggered a garbage
+collection process on the Google Frontend servers to free up memory used by
+the deleted configurations. The high number of deleted configurations caused
+the Google Frontend servers to spend a large proportion of CPU cycles on
+garbage collection which lead to failed health checks and eventual restart of
+the affected Google Frontend server. Any client requests served by a
+restarting server received 502 errors.
+
+REMEDIATION AND PREVENTION
+
+Google engineers were paged at 01:22 PDT. They switched the configuration
+update process to use a different master server at 01:34 which mitigated the
+issue for most services within one minute. Our engineers then paused the
+configuration updates to the HTTP(S) Load Balancer until 05:16 while the root
+cause was confirmed.
+
+To prevent incidents of this type in future, we are taking the following
+actions:
+
+  * Master servers will be configured to never push HTTP(S) Load Balancer configurations that are more than a few hours old.
+
+  * Google Frontend servers will reject loading a configuration file that is more than a few hours old.
+
+  * Improve testing for new HTTP(S) Load Balancer configurations so that out-of-date configurations are flagged before being pushed to production.
+
+  * Fix the issue that caused the master server to fail when reading files from Google's distributed file system.
+
+  * Fix the issue that caused health check failures on Google Frontends during heavy garbage collection.
+
+Once again, we apologize for the impact that this incident had on your
+service.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

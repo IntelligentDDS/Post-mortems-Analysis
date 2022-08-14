@@ -1,0 +1,141 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+March 15, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/18026)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #18026
+
+BigQuery streaming inserts issue
+
+Incident began at **2017-03-13 10:37** and ended at **2017-03-13 11:06** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Mar 15, 2017 | 15:55 |
+
+ISSUE SUMMARY
+
+On Monday 13 March 2017, the BigQuery streaming API experienced 91% error rate
+in the US and 63% error rate in the EU for a duration of 30 minutes. We
+apologize for the impact of this issue on our customers, and the widespread
+nature of the issue in particular. We have completed a post mortem of the
+incident and are making changes to mitigate and prevent recurrences.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Monday 13 March 2017 from 10:22 to 10:52 PDT 91% of streaming API requests
+to US BigQuery datasets and 63% of streaming API requests to EU BigQuery
+datasets failed with error code 503 and an HTML message indicating "We're
+sorry... but your computer or network may be sending automated queries. To
+protect our users, we can't process your request right now."
+
+All non-streaming API requests, including DDL requests and query, load extract
+and copy jobs were unaffected.
+
+ROOT CAUSE
+
+The trigger for this incident was a sudden increase in log entries being
+streamed from Stackdriver Logging to BigQuery by logs export. The denial of
+service (DoS) protection used by BigQuery responded to this by rejecting
+excess streaming API traffic. However the configuration of the DoS protection
+did not adequately segregate traffic streams resulting in normal sources of
+BigQuery streaming API requests being rejected.
+
+REMEDIATION AND PREVENTION
+
+Google engineers initially mitigated the issue by blocking the source of
+unexpected load. This prevented the overload and allowed all other traffic to
+resume normally. Engineers fully resolved the issue by identifying and
+reverting the change that triggered the increase in log entries and clearing
+the backlog of log entries that had grown.
+
+To prevent future occurrences, BigQuery engineers are updating configuration
+to increase isolation between different traffic sources. Tests are also being
+added to verify behavior under several new load scenarios.  
+  
+|
+
+ISSUE SUMMARY
+
+On Monday 13 March 2017, the BigQuery streaming API experienced 91% error rate
+in the US and 63% error rate in the EU for a duration of 30 minutes. We
+apologize for the impact of this issue on our customers, and the widespread
+nature of the issue in particular. We have completed a post mortem of the
+incident and are making changes to mitigate and prevent recurrences.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Monday 13 March 2017 from 10:22 to 10:52 PDT 91% of streaming API requests
+to US BigQuery datasets and 63% of streaming API requests to EU BigQuery
+datasets failed with error code 503 and an HTML message indicating "We're
+sorry... but your computer or network may be sending automated queries. To
+protect our users, we can't process your request right now."
+
+All non-streaming API requests, including DDL requests and query, load extract
+and copy jobs were unaffected.
+
+ROOT CAUSE
+
+The trigger for this incident was a sudden increase in log entries being
+streamed from Stackdriver Logging to BigQuery by logs export. The denial of
+service (DoS) protection used by BigQuery responded to this by rejecting
+excess streaming API traffic. However the configuration of the DoS protection
+did not adequately segregate traffic streams resulting in normal sources of
+BigQuery streaming API requests being rejected.
+
+REMEDIATION AND PREVENTION
+
+Google engineers initially mitigated the issue by blocking the source of
+unexpected load. This prevented the overload and allowed all other traffic to
+resume normally. Engineers fully resolved the issue by identifying and
+reverting the change that triggered the increase in log entries and clearing
+the backlog of log entries that had grown.
+
+To prevent future occurrences, BigQuery engineers are updating configuration
+to increase isolation between different traffic sources. Tests are also being
+added to verify behavior under several new load scenarios.  
+  
+| Mar 13, 2017 | 11:45 |
+
+The issue with BigQuery streaming inserts has been resolved for all affected
+projects as of 11:06 AM US/Pacific. We will conduct an internal investigation
+of this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence.  
+  
+|
+
+The issue with BigQuery streaming inserts has been resolved for all affected
+projects as of 11:06 AM US/Pacific. We will conduct an internal investigation
+of this issue and make appropriate improvements to our systems to prevent or
+minimize future recurrence.  
+  
+| Mar 13, 2017 | 11:18 |
+
+We are investigating an issue with BigQuery streaming inserts. We will provide
+more information by 11:45 AM US/Pacific.  
+  
+|
+
+We are investigating an issue with BigQuery streaming inserts. We will provide
+more information by 11:45 AM US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

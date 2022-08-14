@@ -1,0 +1,28 @@
+The deployment of faulty code to 2 RESTBase nodes caused empty responses to be returned to clients for some requests.
+
+Mostly our monitoring infrastructure, very low to no impact for users.
+• (15:36:34) icinga-wm: PROBLEM - Mobileapps LVS codfw on mobileapps.svc.codfw.wmnet is CRITICAL: /{domain}/v1/page/metadata/{title}{/revision}{/tid} (retrieve extended metadata for Video article on English Wikipedia) is CRITICAL: Test retrieve extended metadata for Video article on English Wikipedia returned the unexpected status 504 (expecting: 200): /{domain}/v1/page/summary/{title}{/revision}{/tid} (Get summary for test page) is CRITICAL: Test Get s
+• (15:36:34) icinga-wm: age returned the unexpected status 504 (expecting: 200): /{domain}/v1/media/image/featured/{year}/{month}/{day} (retrieve featured image data for April 29, 2016) is CRITICAL: Test retrieve featured image data for April 29, 2016 returned the unexpected status 404 (expecting: 200): /{domain}/v1/page/news (get In the News content) is CRITICAL: Test get In the News content returned the unexpected status 504 (expecting: 200): /{domain
+• (15:36:34) icinga-wm: ay/{type}/{month}/{day} (retrieve all events on January 15) is CRITICAL: Test retrieve all events on January 15 returned the unexpected status 504 (expecting: 200): /{domain}/v1/page/references/{title}{/revision}{/tid} (Get references of a test page) is CRITICAL: Test Get references of a test page returned the unexpected status 504 (expecting: 200) https://wikitech.wikimedia.org/wiki/Mobileapps_%28service%29
+• 15:30 mobrovac@deploy1001: Started deploy [restbase/deploy@022cb98]: Temporarily copy from old tables to new ones if the data is not found - T215956
+• 15:39 mobrovac@deploy1001: Started deploy [restbase/deploy@cf00120]: Revert Temporarily copy from old tables to new ones if the data is not found
+• Pchelolo and mobrovac investigate, conclude that the issue are faulty writes to Cassandra done by RESTBase that cannot be decoded back
+• 16:26 some checks recover, but not all
+• 16:35 mobrovac re-issues the truncation commands, everything is back to normal
+
+What weaknesses did we learn about and how can we address them?
+
+The following sub-sections should have a couple brief bullet points each.
+
+What went well?
+• Automated monitoring alerted us of problems after the first two nodes (one in eqiad, one in codfw) were running the new code
+• Because of the above, only a very small portion of pages that needed to be re-rendered were corrupt
+• The same deployment on beta did not present any problems
+
+Where did we get lucky?
+• Automated monitoring checks detected it straightaway because some of the pages used for testing were corrupted in that brief time span
+
+Explicit next steps to prevent this from happening again as much as possible, with Phabricator tasks linked for every step.
+
+NOTE: Please add the #wikimedia-incident Phabricator project to these follow-up tasks and move them to the "follow-up/actionable" column.
+• mobrovac did not receive any email alerts from icinga about any of this

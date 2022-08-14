@@ -1,0 +1,235 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+August 02, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/18032)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #18032
+
+BigQuery Disabled for Projected
+
+Incident began at **2017-07-26 14:06** and ended at **2017-07-26 16:16** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 02, 2017 | 08:12 |
+
+ISSUE SUMMARY
+
+On 2017-07-26, BigQuery delivered error messages for 7% of queries and 15% of
+exports for a duration of two hours and one minute. It also experienced
+elevated failures for streaming inserts for one hour and 40 minutes. If your
+service or application was affected, we apologize – this is not the level of
+quality and reliability we strive to offer you, and we are taking immediate
+steps to improve BigQuery’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On 2017-07-26 from 13:45 to 15:45 US/PDT, BigQuery jobs experienced elevated
+failures at a rate of 7% to 15%, depending on the operation attempted. Overall
+7% of queries, 15% of exports, and 9% of streaming inserts failed during this
+event. These failures occurred in 12% of customer projects The errors for
+affected projects varied from 2% to 69% of exports, over 50% for queries, and
+up to 28.5% for streaming inserts. Customers affected saw an error message
+stating that their project has “not enabled BigQuery”.
+
+ROOT CAUSE
+
+Prior to executing a BigQuery job, Google’s Service Manager validates that the
+project requesting the job has BigQuery enabled for the project. The Service
+Manager consists of several components, including a redundant data store for
+project configurations, and a permissions module which inspects
+configurations. The project configuration data is being migrated to a new
+format and new version of the data store, and as part of that migration, the
+permissions module is being updated to use the new format. As is normal
+production best practices, this migration is being performed in stages
+separated by time.
+
+The root cause of this event was that, during one stage of the rollout,
+configuration data for two GCP datacenters was migrated before the
+corresponding permissions module for BigQuery was updated. As a result, the
+permissions module in those datacenters began erroneously reporting that
+projects running there no longer had BigQuery enabled. Thus, while both
+BigQuery and the underlying data stores were unchanged, requests to BigQuery
+from affected projects received an error message indicating that they had not
+enabled BigQuery.
+
+REMEDIATION AND PREVENTION
+
+Google’s BigQuery on-call engineering team was alerted by automated monitoring
+within 15 minutes of the beginning of the event at 13:59. Subsequent
+investigation determined at 14:17 that multiple projects were experiencing
+BigQuery validation failures, and the cause of the errors was identified at
+14:46 as being changed permissions.
+
+Once the root cause of the errors was understood, Google engineers focused on
+mitigating the user impact by configuring BigQuery in affected locations to
+skip the erroneous permissions check. This change was first tested in a
+portion of the affected projects beginning at 15:04, and confirmed to be
+effective at 15:29. That mitigation was then rolled out to all affected
+projects, and was complete by 15:44. Finally, with mitigations in place, the
+Google engineering team worked to safely roll back the data migration; this
+work completed at 23:33 and the permissions check mitigation was removed,
+closing the incident.
+
+Google engineering has created 26 high priority action items to prevent a
+recurrence of this condition and to better detect and more quickly mitigate
+similar classes of issues in the future. These action items include increasing
+the auditing of BigQuery’s use of Google’s Service Manager, improving the
+detection and alerting of the conditions that caused this event, and improving
+the response of Google engineers to similar events. In addition, the core
+issue that affected the BigQuery backend has already been fixed.
+
+Google is committed to quickly and continually improving our technology and
+operations to prevent service disruptions. We appreciate your patience and
+apologize again for the impact to your organization.  
+  
+|
+
+ISSUE SUMMARY
+
+On 2017-07-26, BigQuery delivered error messages for 7% of queries and 15% of
+exports for a duration of two hours and one minute. It also experienced
+elevated failures for streaming inserts for one hour and 40 minutes. If your
+service or application was affected, we apologize – this is not the level of
+quality and reliability we strive to offer you, and we are taking immediate
+steps to improve BigQuery’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT
+
+On 2017-07-26 from 13:45 to 15:45 US/PDT, BigQuery jobs experienced elevated
+failures at a rate of 7% to 15%, depending on the operation attempted. Overall
+7% of queries, 15% of exports, and 9% of streaming inserts failed during this
+event. These failures occurred in 12% of customer projects The errors for
+affected projects varied from 2% to 69% of exports, over 50% for queries, and
+up to 28.5% for streaming inserts. Customers affected saw an error message
+stating that their project has “not enabled BigQuery”.
+
+ROOT CAUSE
+
+Prior to executing a BigQuery job, Google’s Service Manager validates that the
+project requesting the job has BigQuery enabled for the project. The Service
+Manager consists of several components, including a redundant data store for
+project configurations, and a permissions module which inspects
+configurations. The project configuration data is being migrated to a new
+format and new version of the data store, and as part of that migration, the
+permissions module is being updated to use the new format. As is normal
+production best practices, this migration is being performed in stages
+separated by time.
+
+The root cause of this event was that, during one stage of the rollout,
+configuration data for two GCP datacenters was migrated before the
+corresponding permissions module for BigQuery was updated. As a result, the
+permissions module in those datacenters began erroneously reporting that
+projects running there no longer had BigQuery enabled. Thus, while both
+BigQuery and the underlying data stores were unchanged, requests to BigQuery
+from affected projects received an error message indicating that they had not
+enabled BigQuery.
+
+REMEDIATION AND PREVENTION
+
+Google’s BigQuery on-call engineering team was alerted by automated monitoring
+within 15 minutes of the beginning of the event at 13:59. Subsequent
+investigation determined at 14:17 that multiple projects were experiencing
+BigQuery validation failures, and the cause of the errors was identified at
+14:46 as being changed permissions.
+
+Once the root cause of the errors was understood, Google engineers focused on
+mitigating the user impact by configuring BigQuery in affected locations to
+skip the erroneous permissions check. This change was first tested in a
+portion of the affected projects beginning at 15:04, and confirmed to be
+effective at 15:29. That mitigation was then rolled out to all affected
+projects, and was complete by 15:44. Finally, with mitigations in place, the
+Google engineering team worked to safely roll back the data migration; this
+work completed at 23:33 and the permissions check mitigation was removed,
+closing the incident.
+
+Google engineering has created 26 high priority action items to prevent a
+recurrence of this condition and to better detect and more quickly mitigate
+similar classes of issues in the future. These action items include increasing
+the auditing of BigQuery’s use of Google’s Service Manager, improving the
+detection and alerting of the conditions that caused this event, and improving
+the response of Google engineers to similar events. In addition, the core
+issue that affected the BigQuery backend has already been fixed.
+
+Google is committed to quickly and continually improving our technology and
+operations to prevent service disruptions. We appreciate your patience and
+apologize again for the impact to your organization.  
+  
+| Jul 26, 2017 | 16:16 |
+
+The issue with BigQuery access errors has been resolved for all affected
+projects as of 16:15 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence.  
+  
+|
+
+The issue with BigQuery access errors has been resolved for all affected
+projects as of 16:15 US/Pacific. We will conduct an internal investigation of
+this issue and make appropriate improvements to our systems to help prevent or
+minimize future recurrence.  
+  
+| Jul 26, 2017 | 15:59 |
+
+The issue with BigQuery errors should be resolved for the majority of projects
+and we expect a full resolution in the near future. We will provide another
+status update by 16:30 US/Pacific with current details.  
+  
+|
+
+The issue with BigQuery errors should be resolved for the majority of projects
+and we expect a full resolution in the near future. We will provide another
+status update by 16:30 US/Pacific with current details.  
+  
+| Jul 26, 2017 | 15:24 |
+
+The BigQuery engineers have identified a possible workaround to the issue
+affecting the platform and are deploying it now. Next update at 16:00PDT  
+  
+|
+
+The BigQuery engineers have identified a possible workaround to the issue
+affecting the platform and are deploying it now. Next update at 16:00PDT  
+  
+| Jul 26, 2017 | 15:00 |
+
+At this time BigQuery is experiencing a partial outage, reporting that the
+service is not available for the project. Engineers are currently
+investigating the issue.  
+  
+|
+
+At this time BigQuery is experiencing a partial outage, reporting that the
+service is not available for the project. Engineers are currently
+investigating the issue.  
+  
+| Jul 26, 2017 | 14:58 |
+
+We are investigating an issue with BigQuery. We will provide more information
+by 15:30 US/Pacific.  
+  
+|
+
+We are investigating an issue with BigQuery. We will provide more information
+by 15:30 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

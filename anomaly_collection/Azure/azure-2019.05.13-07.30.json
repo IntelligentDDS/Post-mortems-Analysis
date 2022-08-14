@@ -1,0 +1,587 @@
+{
+    "azure-20190513-1": {
+        "title": "RCA - Network Connectivity - Increased Latency",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.05.13-07.30.pdf"
+        ],
+        "time": "05/13/2019",
+        "summary": "Between 09:05 and 15:33 UTC on 13 May 2019, a subset of customers in North America and Europe may have experienced intermittent connectivity issues when accessing some Azure services.",
+        "details": "Root cause and mitigation: The impact was the result of inconsistent data replication in a networking infrastructure service. This resulted in unexpected throttling of network traffic to our name resolution servers. Once the issue was detected, engineers mitigated it by updating the configuration of the affected network infrastructure service to override the effect of this data inconsistency. Simultaneously, engineers performed operations to repair the data inconsistency. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Improve our monitoring to detect data inconsistencies similar to the one that caused this issue. Improvements in the system to help ensure such inconsistencies do not occur in the future. Provide feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/7CC-HXG",
+        "service_name": [
+            "Azure services"
+        ],
+        "impact symptom": [
+            "availability",
+            "consistency"
+        ],
+        "duration": 388,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "intermittent connectivity issues"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes"
+                }
+            ],
+            "details": "The impact was the result of inconsistent data replication in a networking infrastructure service. This resulted in unexpected throttling of network traffic to our name resolution servers"
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "update configuration",
+                "repair data inconsistency"
+            ],
+            "details": "Once the issue was detected, engineers mitigated it by updating the configuration of the affected network infrastructure service to override the effect of this data inconsistency. Simultaneously, engineers performed operations to repair the data inconsistency.",
+            "troubleshooting": {
+                "1": "Once the issue was detected, engineers mitigated it by updating the configuration of the affected network infrastructure service to override the effect of this data inconsistency.",
+                "2": "Simultaneously, engineers performed operations to repair the data inconsistency."
+            }
+        },
+        "propagation pass": {
+            "1": "networking infrastructure service",
+            "2": "name resolution server",
+            "3": "azure services"
+        },
+        "refined path": {
+            "1": "network infrastructure",
+            "2": "network devices",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190522-1": {
+        "title": "RCA - Service Management Operations - West Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.05.13-07.30.pdf"
+        ],
+        "time": "05/22/2019",
+        "summary": "Between 15:10 and 21:00 UTC on 22 May 2019, a subset of customers in West Europe experienced intermittent service management delays or failures for resources hosted in this region. Impacted services included Azure Databricks, Azure Backup, Cloud Shell, HDInsight, and Virtual Machines. Between 23:20 and 23:50 UTC on 22 May 2019, during the deployment of the permanent fix, a small subset of customers using Virtual Machines and Azure Databricks experienced increased latency or timeout failures when attempting service management operations in West Europe.",
+        "details": "Root Cause: The issue was attributed to performance degradation in the Regional Network Manager (RNM) component of Azure software stack. The RNM component, called the partition manager, is a stateful service and has multiple replicas. This component saw an increase in latency due to a build up of replicas being created for the service. Prolonged operational delays triggered a RNM bug which caused the primary replica to re-build on two occasions. This caused service management operations to fail while one of the other replicas was taking on the primary role. Mitigation: Engineers identified the RNM bug and applied a hotfix to the region which helped resolve network operation failures. During the outage, an security validation process on RNM nodes was performing scans which slowed the replica buildout for impacted nodes. Engineers terminated the scans to improve performance. The network operation job queues began to drain and latency returned to normal. We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Develop and roll out dedicated partition for large customers (in progress) Implement automatic throttling to balance load (in progress) Root cause and fix the cause for high commit latency (in progress) Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/XKB-5FZ",
+        "service_name": [
+            "Azure Databricks",
+            "Azure Backup",
+            "Cloud Shell",
+            "HDInsight",
+            "Virtual Machines"
+        ],
+        "impact symptom": [
+            "availability",
+            "consistency"
+        ],
+        "duration": 380,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "error rate",
+                    "increase latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "The issue was attributed to performance degradation in the Regional Network Manager (RNM) component of Azure software stack. The RNM component, called the partition manager, is a stateful service and has multiple replicas. This component saw an increase in latency due to a build up of replicas being created for the service. Prolonged operational delays triggered a RNM bug which caused the primary replica to re-build on two occasions. This caused service management operations to fail while one of the other replicas was taking on the primary role."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "apply a hotfix"
+            ],
+            "details": "Engineers identified the RNM bug and applied a hotfix to the region which helped resolve network operation failures. During the outage, an security validation process on RNM nodes was performing scans which slowed the replica buildout for impacted nodes. Engineers terminated the scans to improve performance. The network operation job queues began to drain and latency returned to normal. We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Develop and roll out dedicated partition for large customers (in progress) Implement automatic throttling to balance load (in progress) Root cause and fix the cause for high commit latency (in progress)",
+            "troubleshooting": {
+                "1": "Engineers identified the RNM bug and applied a hotfix to the region which helped resolve network operation failures.",
+                "2": "During the outage, an security validation process on RNM nodes was performing scans which slowed the replica buildout for impacted nodes. Engineers terminated the scans to improve performance. The network operation job queues began to drain and latency returned to normal."
+            }
+        },
+        "propagation pass": {
+            "1": "Regional Network Manager (RNM)",
+            "2": "services"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190614-1": {
+        "title": "RCA - Virtual Machines and Virtual Networks (Management) - North Europe",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.05.13-07.30.pdf"
+        ],
+        "time": "06/14/2019",
+        "summary": "Between 15:45 and 20:58 UTC on 14 Jun 2019, a subset of customers using Virtual Machines, Virtual Machine Scale Sets, and/or Virtual Networks in the North Europe region may have experienced failures when attempting service management operations including create, update, delete, and scale. Azure Cloud Shell customers may have seen the error message 'Failed to provision a Cloud Shell.'",
+        "details": "Root cause: The Fabric Controllers are the services that control the allocation of resources in an Azure scale unit. The Fabric Controllers are reached via a Virtual IP Address (VIP) implemented by a Software Loading Balancing (SLB) system. In order to function properly, the Software Load Balancing servers must be configured with the identities of the network switches to which they are attached so that they can create connections to the network switches and send the switches information on how to reach the VIPs. During a configuration change to decommission old equipment in one Availability Zone, the switches attached to the active SLB servers were incorrectly marked as no longer part of their active scale unit, and the SLBs ceased to connect with the network switches as designed. This resulted in loss of connectivity to the Fabric Controllers in that Availability Zone, which blocked the ability to allocate, deallocate, or change resources in that Availability Zone. There was no impact to VIPs or Load Balancing services for Azure tenants during this incident, as the SLB system that provides connectivity to the Fabric Controller VIPs is separate from the one that provides VIPs and Load Balancing to Azure tenants. The rollout of the bad configuration information to the SLB servers was not automatically stopped and rolled back by the Azure Deployment system as the SLB monitoring and alerting components did not determine this was an incorrect and undesirable configuration. Mitigation: Azure Engineers identified and rolled back the incorrect configuration. It should be noted that resilience options existed that would have made this issue non-impactful for customers. Specifically, this issue affected one Availability Zone in the region. Services that leverage multiple Availability Zones as part of their service availability design would have been unaffected during this incident. Customers interested in learning more regarding resilience options should visit: https://azure.microsoft.com/en-us/features/resiliency/ Next steps: We apologize for the impact this incident may have caused you and your services. Among the repair actions being taken to prevent recurrence are the following: Verify that no other changes have been made to network metadata that incorrectly removed a switch from an active scale unit. Improve the resilience of the VIP in front of the Fabric Controllers by distributing responsibility for it across multiple SLB instances. Improvement to the SLB system monitoring components so that any configuration that causes SLB components to no longer connect to network switches is considered an error and rolled back. Implement validations on the network-metadata so that switches cannot be removed from membership in an active scale unit without additional review and approval steps. Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/F5_P-TVG",
+        "service_name": [
+            "Virtual Machines",
+            "Virtual Machine Scale Sets",
+            "Virtual Networks"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 313,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            },
+            {
+                "system kpi": [
+                    "connectivity loss"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "The Fabric Controllers are the services that control the allocation of resources in an Azure scale unit. The Fabric Controllers are reached via a Virtual IP Address (VIP) implemented by a Software Loading Balancing (SLB) system. In order to function properly, the Software Load Balancing servers must be configured with the identities of the network switches to which they are attached so that they can create connections to the network switches and send the switches information on how to reach the VIPs. During a configuration change to decommission old equipment in one Availability Zone, the switches attached to the active SLB servers were incorrectly marked as no longer part of their active scale unit, and the SLBs ceased to connect with the network switches as designed. This resulted in loss of connectivity to the Fabric Controllers in that Availability Zone, which blocked the ability to allocate, deallocate, or change resources in that Availability Zone. There was no impact to VIPs or Load Balancing services for Azure tenants during this incident, as the SLB system that provides connectivity to the Fabric Controller VIPs is separate from the one that provides VIPs and Load Balancing to Azure tenants. The rollout of the bad configuration information to the SLB servers was not automatically stopped and rolled back by the Azure Deployment system as the SLB monitoring and alerting components did not determine this was an incorrect and undesirable configuration."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back the incorrect configuration"
+            ],
+            "details": "Azure Engineers identified and rolled back the incorrect configuration. It should be noted that resilience options existed that would have made this issue non-impactful for customers. Specifically, this issue affected one Availability Zone in the region. Services that leverage multiple Availability Zones as part of their service availability design would have been unaffected during this incident. Customers interested in learning more regarding resilience options should visit:",
+            "troubleshooting": {
+                "1": "Azure Engineers identified and rolled back the incorrect configuration."
+            }
+        },
+        "propagation pass": {
+            "1": "software load balancing server",
+            "2": "fabric controller",
+            "3": "Virtual Machines and Virtual Networks"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "3": "middleware",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190702-1": {
+        "title": "Azure Services - Intermittent Service Availability Issues",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.05.13-07.30.pdf"
+        ],
+        "time": "07/02/2019",
+        "summary": "Between 19:20 and 22:20 UTC on 02 Jul 2019, a subset of customers using Microsoft Azure Services may have intermittently experienced degraded performance, latency, network drops or time outs when accessing Azure resources due to a network event. This impact would have potentially spanned multiple Azure services. During the impact window, traffic peering through San Jose route would have been impacted.",
+        "details": "Root Cause: One of the network devices in San Jose had a hardware grey failure at 19:20 UTC, causing traffic going to one of Microsoft peer networks to experience intermittent failures. This partial failure caused intermittent connectivity issues to services peered through San Jose for a subset of customers connecting through this faulty peer. Mitigation: Engineering localized and isolated the faulty router and took the device out of service at 20:15 UTC. The traffic engineering systems immediately redirected the traffic and services started to recover. The additional load caused by the redirection out of the device was spread across multiple devices to ensure optimal latency and throughput to customers after the failure. At 22:20 UTC all traffic optimizations were completed by the automation systems, mitigating the impact. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes: Replaced the faulty route. [COMPLETED] Enhanced monitoring and alerting to detect hardware grey failure. [COMPLETED] Improve auto-mitigation logic to quickly redirect traffic across multiple devices to avoid future instances of issue. [COMPLETED] Continuing the investigation into the network router with the vendor.",
+        "service_name": [
+            "Microsoft Azure Services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 180,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "degraded performance",
+                    "increased latency",
+                    "network drop",
+                    "time outs"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures"
+                }
+            ],
+            "details": "One of the network devices in San Jose had a hardware grey failure at 19:20 UTC, causing traffic going to one of Microsoft peer networks to experience intermittent failures. This partial failure caused intermittent connectivity issues to services peered through San Jose for a subset of customers connecting through this faulty peer."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "isolate faulty router",
+                "redirect traffic"
+            ],
+            "details": "Engineering localized and isolated the faulty router and took the device out of service at 20:15 UTC. The traffic engineering systems immediately redirected the traffic and services started to recover. The additional load caused by the redirection out of the device was spread across multiple devices to ensure optimal latency and throughput to customers after the failure. At 22:20 UTC all traffic optimizations were completed by the automation systems, mitigating the impact.",
+            "troubleshooting": {
+                "1": "Engineering localized and isolated the faulty router and took the device out of service at 20:15 UTC. The traffic engineering systems immediately redirected the traffic and services started to recover.",
+                "2": "At 22:20 UTC all traffic optimizations were completed by the automation systems, mitigating the impact."
+            }
+        },
+        "propagation pass": {
+            "1": "router",
+            "2": "services"
+        },
+        "refined path": {
+            "1": "router",
+            "2": "app"
+        },
+        "detection time": 55,
+        "fix time": 125,
+        "identification time": 0,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190703-1": {
+        "title": "Azure Monitoring (Diagnostic logs, Autoscale, Classic Alerts (v2))",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.05.13-07.30.pdf"
+        ],
+        "time": "07/03/2019",
+        "summary": "Between 02:00 and 08:00 UTC on 03 Jul 2019, a subset of Azure monitor customers may have received failure errors while performing service management operations - such as create, update, delete - for Autoscale settings, Classic alerts and Diagnostics settings. Existing autoscale, classic alerts & diagnostics were not impacted.",
+        "details": "Root cause: As part of service engineering improvements, a configuration change was incorrectly applied to the underlying KeyVault resources which are used by Azure Monitor's management services (Autoscale, Classic Alerts, Diagnostic Settings) during start up. Subsequently when the management services recycled, the services were not able to correctly access the KeyVault resources due to the misconfiguration and hence could not startup correctly. Mitigation: Engineers performed a roll back of misconfiguration to mitigate the issue. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes: Review and improve configuration change, testing & rollout process to prevent a reoccurrence. ",
+        "service_name": [
+            "Azure resource management"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 360,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            },
+            {
+                "system kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "As part of service engineering improvements, a configuration change was incorrectly applied to the underlying KeyVault resources which are used by Azure Monitor's management services (Autoscale, Classic Alerts, Diagnostic Settings) during start up. Subsequently when the management services recycled, the services were not able to correctly access the KeyVault resources due to the misconfiguration and hence could not startup correctly."
+        },
+        "operation": [
+            "improvement"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back configuration"
+            ],
+            "details": "Engineers performed a roll back of misconfiguration to mitigate the issue.",
+            "troubleshooting": {
+                "1": "Engineers performed a roll back of misconfiguration to mitigate the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "KeyVault resources",
+            "2": "Azure Monitor's management services"
+        },
+        "refined path": {
+            "1": "app",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190704-1": {
+        "title": "RCA - Connectivity Issues - UK South",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.05.13-07.30.pdf"
+        ],
+        "time": "07/04/2019",
+        "summary": "Between 06:18 UTC and 16:25 UTC on 04 July 2019, a subset of customers leveraging Storage in UK South may have experienced service availability issues. In addition, resources with dependencies on Storage may also have experienced downstream impact in the form of availability issues. These impacted services include App Services, Virtual Machines, Backup, KeyVault, App Insights, Logic Apps, and Azure Data Factory v2. ",
+        "details": "Root cause: During the last two weeks of June, the customer traffic on a single storage scale unit in the UK south region had increased more quickly than normal, and the automatic load balancing system had responded by beginning to shift load to other scale units. However, on 06:18 UTC on July 4th, 2019, the increased levels of resource utilization pushed the scale unit above its natural operating limits, which resulted in higher latency and failures. Services dependent on the storage scale unit experienced a high number of failures and latency which manifested in availability issues. Mitigation: To recover the scale unit to healthy state, engineers applied following mitigation steps to reduce the resource utilization levels: Load balancing configuration changes Reducing internal background processes in the scale unit Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Enhance existing load balancing and monitoring mechanism to maintain sustainable resource utilization at the storage scale unit level Improve service response to high resource utilization levels Improve automatic load balancing efficiency to respond more quickly to an unusual increase in traffic Provide feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/HMD0-LP0",
+        "service_name": [
+            "Storage",
+            "App Services",
+            "Virtual Machines",
+            "Backup",
+            "KeyVault",
+            "App Insights",
+            "Logic Apps",
+            "Azure Data Factory v2"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 607,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "high latency"
+                ]
+            },
+            {
+                "system kpi": [
+                    "resource utilization"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource"
+                }
+            ],
+            "details": "During the last two weeks of June, the customer traffic on a single storage scale unit in the UK south region had increased more quickly than normal, and the automatic load balancing system had responded by beginning to shift load to other scale units. However, on 06:18 UTC on July 4th, 2019, the increased levels of resource utilization pushed the scale unit above its natural operating limits, which resulted in higher latency and failures. Services dependent on the storage scale unit experienced a high number of failures and latency which manifested in availability issues."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "change load balancing configuration",
+                "Reduce internal background processes in the scale unit"
+            ],
+            "details": "To recover the scale unit to healthy state, engineers applied following mitigation steps to reduce the resource utilization levels: Load balancing configuration changes Reducing internal background processes in the scale unit",
+            "troubleshooting": {
+                "1": "Load balancing configuration changes ",
+                "2": "Reducing internal background processes in the scale unit"
+            }
+        },
+        "propagation pass": {
+            "1": "storage scale unit",
+            "2": "load balancing system",
+            "3": "services"
+        },
+        "refined path": {
+            "1": "storage scale unit",
+            "2": "load balancer",
+            "3": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190708-1": {
+        "title": "RCA - Azure Active Directory - Password Changes",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.05.13-07.30.pdf"
+        ],
+        "time": "07/08/2019",
+        "summary": "Between 18:09 and 22:32 UTC on 08 Jul 2019, a subset of customers using Azure Active Directory may have experienced password change issues. For hybrid customers, passwords would have appeared to have changed successfully on-prem, but the sync with the backend AAD would have failed. For cloud only customers, password changes with AAD would have resulted in failures. In either case, customers may not have been able to log into AAD or the Azure portal. The following link was a workaround to reset passwords: https://passwordreset.microsoftonline.com",
+        "details": "Root cause: Engineers determined that a recent deployment of a certificate caused backend instances responsible for password change functionality to reject the password change operation. The certificate deployment happened according to a schedule, however due to a bug, backend instances were not able to load the new certificate. In addition, the certificate rotation had an unrelated bug that increased the exposure of the issue to a larger number of customers than intended. Mitigation: Engineers rolled back the recent deployment task and restarted associated frontend instances to mitigate the issue. Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): - Improved automation and test coverage for rotation of the particular type of certificate to prevent re-occurrence of the same issue - Verification of all certificate rotation procedures in AAD to eliminate exposure control issues",
+        "service_name": [
+            "Azure Active Directory"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 263,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Engineers determined that a recent deployment of a certificate caused backend instances responsible for password change functionality to reject the password change operation. The certificate deployment happened according to a schedule, however due to a bug, backend instances were not able to load the new certificate. In addition, the certificate rotation had an unrelated bug that increased the exposure of the issue to a larger number of customers than intended."
+        },
+        "operation": [
+            "deployment"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back deployment",
+                "restarted associated frontend instances"
+            ],
+            "details": "Engineers rolled back the recent deployment task and restarted associated frontend instances to mitigate the issue.",
+            "troubleshooting": {
+                "1": "Engineers determined that a recent deployment of a certificate caused backend instances responsible for password change functionality to reject the password change operation.",
+                "2": "Engineers rolled back the recent deployment task and restarted associated frontend instances to mitigate the issue."
+            }
+        },
+        "propagation pass": {
+            "1": "backend instances",
+            "2": "Azure Active Directory"
+        },
+        "refined path": {
+            "1": "backend instances",
+            "2": "backend services",
+            "3": "middleware"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    },
+    "azure-20190730-1": {
+        "title": "RCA - Issues logging in to the Azure Portal with a Microsoft Account",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.05.13-07.30.pdf"
+        ],
+        "time": "07/30/2019",
+        "summary": "Between 21:00 UTC and 22:24 UTC on 30 Jul 2019, a subset of customers may have experienced intermittent error messages and failures when logging in to the Azure Portal with a Microsoft account. This issue affected a subset of MSA users who could not authenticate or manage their accounts. Retries may have been successful.",
+        "details": "Root Cause: Engineers were performing standard maintenance on a standby module when the active module became unstable. It was determined that combination of factors including a device mismatch and code bug, resulted in the active device becoming unstable. Mitigation: Engineers routed the user traffic to other redundant paths to recover the service, which restored Microsoft Account services for customers. Next Steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to): Updates to processes around manageability of all devices. Improve and increase the redundancy of the supporting infrastructure, including the manageability of failed devices. Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/HVZ7-JP8",
+        "service_name": [
+            "Azure Portal",
+            "Microsoft Account services"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 84,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "intermittent error messages"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "mismatch"
+                }
+            ],
+            "details": "Engineers were performing standard maintenance on a standby module when the active module became unstable. It was determined that combination of factors including a device mismatch and code bug, resulted in the active device becoming unstable. "
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "route user traffic"
+            ],
+            "details": "Engineers routed the user traffic to other redundant paths to recover the service, which restored Microsoft Account services for customers.",
+            "troubleshooting": {
+                "1": "The incident was determined that combination of factors including a device mismatch and code bug, resulted in the active device becoming unstable.",
+                "2": "Engineers routed the user traffic to other redundant paths to recover the service, which restored Microsoft Account services for customers."
+            }
+        },
+        "propagation pass": {
+            "1": "device",
+            "2": "services"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "app"
+        },
+        "detection time": null,
+        "fix time": null,
+        "identification time": null,
+        "verification": "lixy, yugb"
+    }
+}

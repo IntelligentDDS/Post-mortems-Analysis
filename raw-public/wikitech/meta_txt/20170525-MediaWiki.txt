@@ -1,0 +1,23 @@
+MediaWiki took > 5 seconds to render Main_Page for 1 hour and 5 minutes — between 19:20–20:25
+• 19:30:07 bd808 I think the codfw dbs may be causing that alert storm. Seeing a lot of maxlag warnings in logstash
+• 19:33:11 volans AFAIK there was an alter table on codfw DBs on s4 today, and is the only shard lagging in codfw T166206
+• 19:43:26 thcipriani@tin Synchronized wmf-config/CommonSettings.php: revert SWAT: Add Code of Conduct footer links to wikitech and mw.o
+• 19:43:37 bd808 one of the redis servers is OOM in codfw
+• 19:51:29 paladox Hmm wikipedia is taking a long time for me to load
+• 19:54:40 chasemp Sagan: I'm not sure what's up or if things are resolved so better to not, thcipriani any thoughts on current storm? seems like it matched up with a deploy but idk, volans all I've done so far is restart redis on rdb2003 which may or may not have had an effect
+• 19:55:42 thcipriani chasemp: I don't have much access to these machines to be able to see what's happening there. It did match up with the deploy, but I've since reverted and deployed the revert to no avail.
+• 19:58:07 thcipriani fatalmonitor is just full of stuff like: at runtime/ext_mysql: slow query: SELECT MASTER_GTID_WAIT
+• 20:10:09 volans and the queries on s1 master went to very low levels starting from 19:48
+• 20:10:19 chasemp best clue is rashes of slow query errors thrown by hhvm, unsure if symptom or cause honestly
+
+20:10:30 marostegui mmmm, it could have been the pt-table-checksum
+• 20:16:28 _joe_ is the problem still ongoing?
+• 20:16:57 chasemp _joe_: well we thought maybe not but it seems possibly and we are nto entirely sure, rashes of hhvm failures and recoveries for about an hour
+• 20:23:35 thcipriani yes. I am going to roll the train back for the time being to eliminate that as a cause
+• _joe_ no, it's the train, pretty clearly
+• 20:45:28 _joe_ where I searched for pages on enwiki that took more than 5 s to render [...] I found that it was basically just the main page
+• Should have rolled back train to eliminate as a cause earlier in the debugging process
+• The first touch after InitialiseSettings after a train deployment is meaningful for the success of a train deployment
+• Investigate the impact of the subsequent InitialiseSettings.php sync
+• Curious why the subsequent sync of InitialiseSettings.php really triggered the slow down and why InitialiseSettings.php is not touched as part of a version promotion
+• Done Make it a policy to always roll back the train if there are problems within an hour of a train promotion (see Heterogeneous_deployment/Train_deploys#Breakage)

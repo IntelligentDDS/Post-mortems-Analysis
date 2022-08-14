@@ -1,0 +1,18 @@
+TL;DR VipsScaler extension converted to extension registration, which meant scaling configuration was merged, not overridden by WMF config. This meant Vips was being used to scale jpg etc, when it should have just been doing large tiff and png.
+• Conversion of VipsScaler extension to extension registration [1] was merged a few days before the .14 branch cut
+• 19:30Z/19:34Z .14 was rolled out to majority of wikis (including Commons, where fault were clearly noticeable)
+• Various IRC reports of thumbnailing issues in the few hours that followed and phab:T142638 was filed 21:09Z
+• Some initial confusion as to where the problem lay, due to imagescaler changes/reinstalls the same day
+• Comments on IRC suggested it started "a few hours ago" pointing at .14 changeover
+• All wikis rolled back to .13 at 23:17Z, purging some thumbnails proved issue was resolved.
+• Image scalers ruled out at this point
+• Group discussion and looking at changelog identified a few Media related changes to core. Nothing seem directly relevant, but change of VipsScaler to extension registration seemed likely candidate
+• eval.php on .14 wiki showed $wgVipsOptions had incorrect WMF config, as it had been merged with the the default config in the extension. This meant Vips was incorrectly being used to create thumbnails for jpeg files
+• Gilles pointed out it was stupid for the extension to have a seemingly broken default config. So was all removed in https://gerrit.wikimedia.org/r/#/c/304137/ cherry picked and deployed, easiest possible fix
+• Thumbnails tested on .14 after cherry picking the fix, most wikis had .14 reinstated at 23:46Z (reverting the earlier revert), and fix was confirmed on commons on various files
+• Aaron tweaked and ran a cleanup script to re-thumbnail images affected during the time window. Which can't work for images that have been manually purged during this timeframe, which we can't easily account for. Users will have to manually purge when they encounter these images.
+• From 19:30Z to 23:17Z jpeg images were wrongly thumbnailed using Vips resulting in horizontal grey lines on them.
+• Default VipsScaler configuration is broken, resulting in grey lines across jpeg. As the fix, because they were wrong, the default configuration was removed from the extension in https://gerrit.wikimedia.org/r/#/c/304140/ and cherry picked to .14
+• Method of unconditionally overwriting extension config, rather than merging config arrays needed for extension registration. Filed as phab:T142663
+• Minor improvements needed to purgeChangedFiles.php maintenance script to purge old versions too, done in https://gerrit.wikimedia.org/r/#/c/304137/
+• Method of identifying other "changed" thumbnails (not just uploads or new versions) to be purged in case of thumbnailing errors is needed phab:T142638#2542591. No tracking apparently done, at least in MediaWiki. Can this information be obtained from swift?

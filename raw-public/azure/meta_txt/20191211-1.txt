@@ -1,0 +1,6 @@
+Azure CDN and Azure Kubernetes Service - Service Availability Issue (Tracking ID LTPP-R98)
+Summary of impact: Between approximately 17:00 and 18:49 UTC on 11 Dec 2019, a subset of customers using Azure CDN may have encountered 5XX errors with their CDN endpoints. Additionally, a subset of customers Azure Kubernetes Service (AKS) may have encountered error messages when connecting to their Kubernetes resources.
+Preliminary root cause: Engineers believe that an issue with a third-party CDN provider was resulting in downstream impact to the Azure platform. As AKS leverages Azure CDN, AKS customers would have seen further impact as a result of this issue.
+Mitigation: This issue was mitigated as the third-party provider took steps to resolve this issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences. Stay informed about Azure service issues by creating custom service
+health alerts: https://aka.ms/ash-videos for video tutorials and https://aka.ms/ash-alerts for how-to documentation.

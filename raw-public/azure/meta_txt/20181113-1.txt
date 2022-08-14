@@ -1,0 +1,5 @@
+App Service and Function Apps
+Summary of impact: Between 11:10 and 12:25 UTC on 13 Nov 2018, you were identified as a customer using App Service and/or Function Apps who may have received intermittent HTTP 500-level response codes, have experienced timeouts or high latency when accessing App Service (Web, Mobile and API Apps) deployments hosted in these regions. Impacted customers may have also seen issues with their Azure App Service Scaling settings.
+Preliminary root cause: Engineers determined that unhealthy instances of a backend application caused a subset of servers to become unstable, preventing requests from completing.
+Mitigation: Engineers performed a hotfix to patch these servers, in order to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

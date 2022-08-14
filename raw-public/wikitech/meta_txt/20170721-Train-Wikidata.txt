@@ -1,0 +1,24 @@
+Several bugs in wikidata (which began with the MediaWiki Train deployment for 1.30.0-wmf.10) resulted in holding back wikidatawiki deployments for multiple weeks. This remained unresolved until 1.30.0-wmf.14 on 2017-08-16.
+• 1st: phab:T164173: jobs causing db replag lag
+• First reported on April 30th and after some investigation it was eventually closed with the assumption that it was a one-time fluke caused by an api user's activity. This appears to have been a reasonable assumption given the limited information available at the time.
+• jcrespo reopened on May 19 saying "This just happened again on s4."
+• Krinkle spotted this again on July 21 "This caused an error spike in Logstash: https://logstash.wikimedia.org/goto/709280746172b68115f62db346b06201"
+• https://phabricator.wikimedia.org/T164173: Cache invalidations coming from the JobQueue are causing lag on several wikis
+• 2nd: attempt to fix 1 causing phab:T171370
+• July 21 Krinkle filed a related task, saying "Started with wmf.10. Presumably caused by https://gerrit.wikimedia.org/r/364094/"
+• https://phabricator.wikimedia.org/T171370: ERROR: "LBFactory::getEmptyTransactionTicket: WikiPageUpdater::injectRCRecords does not have outer scope"
+• 3rd: attempt to fix 2 causing phab:T172320
+• August 2 - mmodell discovered a new error during routine monitoring of the wmf.12 train deployment.
+• https://phabricator.wikimedia.org/T172320: Error in Wikibase/client/includes/Changes/InjectRCRecordsJob.php line 120: Bad value for parameter $params: $params['change'] not set.
+• August 3 - A hot fix was written and deployed, but apparently did not work (unclear, maybe Aude knows) https://gerrit.wikimedia.org/r/#/c/369847/
+• A full fix was written and merged into Wikibase master https://gerrit.wikimedia.org/r/#/c/369881/
+• As an additional complication, the Wikidata Build had been broken, so changes merged into Wikibase master would not be deployed. See phab:T172616 for one reason the build was delayed.
+• The Wikidata build was fixed on August 15 (or so - ask Aude), a wikidata wmf.14 branch was cut including the fix, and got deployed with core wmf.14. This seems to have fixed the issue.
+• Wikimedia Release Engineering lacks visibility and understanding necessary for a swift response to release-critical issues in Wikidata.
+• For future reference, see How to determine the deployed Wikidata version and How to deploy Wikidata code.
+• Wikidata's build process is complex & opaque.
+• This adds complexity and delays the deployment of hot-fixes.
+• The Wikidata release cadence is out of sync with the MediaWiki Train.
+• Compatibility of the Wikidata build with MediaWiki core is ensured only on a snaptshot-by-snapshot basis. There is no way to know whether a wmf6 build of Wikidata is compatible with the wmf5 or wmf7 branch of core.
+• This leads to uncertainty and confusion when branching and more importantly, when rolling back a deployment due to errors.
+• Make sure we notice errors in the logs of the beta cluster; for this case specifically, errors related to the Wikidata change notification mechanism.

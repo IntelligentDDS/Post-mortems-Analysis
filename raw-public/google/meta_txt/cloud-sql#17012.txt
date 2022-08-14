@@ -1,0 +1,173 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+October 31, 2017  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud SQL](/incident/cloud-sql/17012)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud SQL Incident #17012
+
+Issue With Second Generation Cloud SQL Instance Creation
+
+Incident began at **2016-10-31 13:11** and ended at **2016-10-31 15:15** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Nov 03, 2016 | 21:43 |
+
+SUMMARY:
+
+On Monday, 31 October 2016, 73% of requests to create new subscriptions for
+Google Cloud Pub/Sub failed for a duration of 124 minutes. Creation of new
+Cloud SQL Second Generation instances also failed during this incident.
+
+If your service or application was affected, we apologize. We have conducted a
+detailed review of the causes of this incident and are ensuring that we apply
+the appropriate fixes so that it will not recur.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Monday, 31 October 2016 from 13:11 to 15:15 PDT, 73% of requests to create
+new subscriptions for Google Cloud Pub/Sub failed.
+
+0.1% of pull requests experienced latencies of up to 4 minutes for end-to-end
+message delivery.
+
+Creation of all new Cloud SQL Second Generation instances also failed during
+this incident. Existing instances were not affected.
+
+ROOT CAUSE:
+
+At 13:08, a system in the Cloud Pub/Sub control plane experienced a
+connectivity issue to its persistent storage layer for a duration of 83
+seconds. This caused a queue of storage requests to build up. When the storage
+layer re-connected, the queued requests were executed, which exceeded the
+available processing quota for the storage system. The system entered a
+feedback loop in which storage requests continued to queue up leading to
+further latency increases and more queued requests. The system was unable to
+exit from this state until additional capacity was added.
+
+Creation of a new Cloud SQL Second Generation instance requires a new Cloud
+Pub/Sub subscription.
+
+REMEDIATION AND PREVENTION:
+
+Our monitoring systems detected the outage and paged oncall engineers at
+13:19. We determined root cause at 14:05 and acquired additional storage
+capacity for the Pub/Sub control plane at 14:42. The outage ended at 15:15
+when this capacity became available.
+
+To prevent this issue from recurring, we have already increased the storage
+capacity for the Cloud Pub/Sub control plane. We will change the retry
+behavior of the control plane to prevent a feedback loop if storage quota is
+temporarily exceeded. We will also improve our monitoring to ensure we can
+determine root cause for this type of failure more quickly in future.
+
+We apologize for the inconvenience this issue caused our customers.  
+  
+|
+
+SUMMARY:
+
+On Monday, 31 October 2016, 73% of requests to create new subscriptions for
+Google Cloud Pub/Sub failed for a duration of 124 minutes. Creation of new
+Cloud SQL Second Generation instances also failed during this incident.
+
+If your service or application was affected, we apologize. We have conducted a
+detailed review of the causes of this incident and are ensuring that we apply
+the appropriate fixes so that it will not recur.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Monday, 31 October 2016 from 13:11 to 15:15 PDT, 73% of requests to create
+new subscriptions for Google Cloud Pub/Sub failed.
+
+0.1% of pull requests experienced latencies of up to 4 minutes for end-to-end
+message delivery.
+
+Creation of all new Cloud SQL Second Generation instances also failed during
+this incident. Existing instances were not affected.
+
+ROOT CAUSE:
+
+At 13:08, a system in the Cloud Pub/Sub control plane experienced a
+connectivity issue to its persistent storage layer for a duration of 83
+seconds. This caused a queue of storage requests to build up. When the storage
+layer re-connected, the queued requests were executed, which exceeded the
+available processing quota for the storage system. The system entered a
+feedback loop in which storage requests continued to queue up leading to
+further latency increases and more queued requests. The system was unable to
+exit from this state until additional capacity was added.
+
+Creation of a new Cloud SQL Second Generation instance requires a new Cloud
+Pub/Sub subscription.
+
+REMEDIATION AND PREVENTION:
+
+Our monitoring systems detected the outage and paged oncall engineers at
+13:19. We determined root cause at 14:05 and acquired additional storage
+capacity for the Pub/Sub control plane at 14:42. The outage ended at 15:15
+when this capacity became available.
+
+To prevent this issue from recurring, we have already increased the storage
+capacity for the Cloud Pub/Sub control plane. We will change the retry
+behavior of the control plane to prevent a feedback loop if storage quota is
+temporarily exceeded. We will also improve our monitoring to ensure we can
+determine root cause for this type of failure more quickly in future.
+
+We apologize for the inconvenience this issue caused our customers.  
+  
+| Oct 31, 2016 | 15:39 |
+
+The issue with second generation Cloud SQL instance creation should be
+resolved for all affected projects as of 15:15 PDT. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to prevent or minimize future recurrence.  
+  
+|
+
+The issue with second generation Cloud SQL instance creation should be
+resolved for all affected projects as of 15:15 PDT. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to prevent or minimize future recurrence.  
+  
+| Oct 31, 2016 | 15:01 |
+
+We are continuing to investigate an issue with second generation Cloud SQL
+instance creation. We will provide another update at 16:00 PDT.  
+  
+|
+
+We are continuing to investigate an issue with second generation Cloud SQL
+instance creation. We will provide another update at 16:00 PDT.  
+  
+| Oct 31, 2016 | 14:26 |
+
+We are currently investigating an issue with second generation Cloud SQL
+instance creation. We will provide an update with more information at 15:00
+PDT.  
+  
+|
+
+We are currently investigating an issue with second generation Cloud SQL
+instance creation. We will provide an update with more information at 15:00
+PDT.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

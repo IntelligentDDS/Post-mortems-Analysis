@@ -1,0 +1,1409 @@
+{
+  "gcnet-17002": {
+    "title": "Google Cloud Networking Incident #17002",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/17002"
+    ],
+    "time": "08/29/2017",
+    "summary": "For portions of Tuesday 29 August and Wednesday 30 August 2017, some Google Compute Engine instances which were live migrated from one server to another stopped receiving network traffic from Google Cloud Network Load Balancers and Internal Load balancers.On average, less than 1% of GCE instances were affected by this behavior over the duration of the incident, and at its peak, 2% of instances were affected. For the 2% of instances which were ultimately affected, the mean duration of the impact was 9 hours and the maximum duration was 30 hours and 22 minutes. We apologize for the impact this had on your services. We are particularly cognizant of the unusual duration of the incident. We have completed an extensive postmortem to learn from the issue and improve Google Cloud Platform.",
+    "details": "Any GCE instance that was live-migrated between 13:56 PDT on Tuesday 29 August 2017 and 08:32 on Wednesday 30 August 2017 became unreachable via Google Cloud Network or Internal Load Balancing until between 08:56 and 14:18 (for regions other than us-central1) or 20:16 (for us-central1) on Wednesday. See https://goo.gl/NjqQ31 for a visual representation of the cumulative number of instances live-migrated over time.Our internal investigation shows that, at peak, 2% of GCE instances were affected by the issue.Instances which were not live-migrated during this period were not affected. In addition, instances that do not use Network Load Balancing or Internal Load Balancing were not affected. Related capabilities such as Google Cloud HTTP(S) Load Balancing, TCP and SSL Proxy Load Balancing and direct connectivity on instance internal and external IP addresses were unaffected.",
+    "service_name": [
+      "Cloud Network Load Balancers"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 1822,
+    "detection": {
+      "method": null,
+      "tool": null
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "system kpi": [
+          "network delay"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "Live-migration transfers a running VM from one host machine to another host machine within the same zone. All VM properties and attributes remain unchanged, including internal and external IP addresses, instance metadata, block storage data and volumes, OS and application state, network settings, network connections, and so on.In this case, a change in the internal representation of networking information in VM instances caused inconsistency between two values, both of which were supposed to hold the external and internal virtual IP addresses of load balancers. When an affected instance was live-migrated, the instance was deprogrammed from the load balancer because of the inconsistency. This made it impossible for load balancers that used the instance as backend to look up the destination IP address of the instance following its migration, so traffic destined for that instance was not forwarded from the load balancer."
+    },
+    "operation": [
+      "live-migration"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "rolled back change",
+        "fix mismatched network information"
+      ],
+      "details": "At 08:32 Google engineers rolled back the triggering change, at which point no new live-migration would cause the issue. At 08:56 they then started a process which fixed all mismatched network information; this process completed at 14:18 except for us-central1 which took until 20:18.",
+      "troubleshooting": {
+        "1": "Google engineers rolled back the triggering change",
+        "2": "they then started a process which fixed all mismatched network information "
+      }
+    },
+    "propagation pass": {
+      "1": "Google Cloud Engine VM instance",
+      "2": "Google Cloud Network",
+      "3": "Internal Load Balancing"
+    },
+    "refined path": {
+      "1": "VM",
+      "2": "load balancer"
+    },
+    "identification time": null,
+    "detection time": null,
+    "fix time": 706,
+    "verification": "lixy"
+  },
+  "gcnet-18003": {
+    "title": "Google Cloud Networking Incident #18003",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/18003"
+    ],
+    "time": "01/18/2018",
+    "summary": "On Sunday 18 January 2018, Google Compute Engine networking experienced a network programming failure. The two impacts of this incident included the autoscaler not scaling instance groups, as well as migrated and newly-created VMs not communicating with VMs in other zones for a duration of up to 93 minutes. We apologize for the impact this event had on your applications and projects, and we will carefully investigate the causes and implement measures to prevent recurrences.",
+    "details": "On Sunday 18 January 2018, Google Compute Engine network provisioning updates failed in the following zones: europe-west3-a for 34 minutes (09:52 AM to 10:21 AM PT) us-central1-b for 79 minutes (09:57 AM to 11:16 AM PT) asia-northeast1-a for 93 minutes (09:53 AM to 11:26 AM PT) Propagation of Google Compute Engine networking configuration for newly created and migrated VMs is handled by two components. The first is responsible for providing a complete list of VM’s, networks, firewall rules, and scaling decisions. The second component provides a stream of updates for the components in a specific zone.During the affected period, the first component failed to return data. VMs in the affected zones were unable to communicate with newly-created or migrated VMs in another zone in the same private GCE network. VMs in the same zone were unaffected because they are updated by the streaming component.The autoscaler service also relies upon data from the failed first component to scale instance groups; without updates from that component, it could not make scaling decisions for the affected zones.",
+    "service_name": [
+      "Google Compute Engine"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 94,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": []
+      },
+      {
+        "system kpi": [
+          "long-running process"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "exception handling"
+        }
+      ],
+      "details": "A stuck process failed to provide updates to the Compute Engine control plane. Automatic failover was unable to force-stop the process, and required manual failover to restore normal operation. "
+    },
+    "operation": [
+      "update"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "manually failover"
+      ],
+      "details": "The engineering team was alerted when the propagation of network configuration information stalled. They manually failed over to the replacement task to restore normal operation of the data persistence layer.",
+      "troubleshooting": {
+        "1": "The engineering team was alerted when the propagation of network configuration information stalled. ",
+        "2": "They manually failed over to the replacement task to restore normal operation of the data persistence layer. "
+      }
+    },
+    "propagation pass": {
+      "1": "Google Compute Engine control plane",
+      "2": "VM network information manager",
+      "3": "autoscaler service"
+    },
+    "refined path": {
+      "1": "network control plane",
+      "2": "VM",
+      "3": "app"
+    },
+    "identification time": null,
+    "detection time": null,
+    "fix time": 94,
+    "verification": "lixy"
+  },
+  "gcnet-18007": {
+    "title": "Google Cloud Networking Incident #18007",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/18007"
+    ],
+    "time": "05/02/2018",
+    "summary": "On Wednesday 2 May, 2018 Google Cloud Networking experienced increased packet loss to the internet as well as other Google regions from the us-central1 region for a duration of 21 minutes. We understand that the network is a critical component that binds all services together. We have conducted an internal investigation and are taking steps to improve our service.",
+    "details": "On Wednesday 2 May, 2018 from 13:47 to 14:08 PDT, traffic between all zones in the us-central1 region and all destinations experienced 12% packet loss. Traffic between us-central1 zones experienced 22% packet loss. Customers may have seen requests succeed to services hosted in us-central1 as loss was not evenly distributed, some connections did not experience any loss while others experienced 100% packet loss.",
+    "service_name": [
+      "Google Cloud Networking"
+    ],
+    "impact symptom": [
+      "performance"
+    ],
+    "duration": 17,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "system kpi": [
+          "increased packet loss"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "A control plane is used to manage configuration changes to the network fabric connecting zones in us-central1 to each other as well as the Internet. On Wednesday 2 May, 2018 Google Cloud Network engineering began deploying a configuration change using the control plane as part of planned maintenance work. During the deployment, a bad configuration was generated that blackholed a portion of the traffic flowing over the fabric.The control plane had a bug in it, which caused it to produce an incorrect configuration. New configurations deployed to the network fabric are evaluated for correctness, and regenerated if an error is found. In this case, the configuration error appeared after the configuration was evaluated, which resulted in deploying the erroneous configuration to the network fabric."
+    },
+    "operation": [
+      "maintenance"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "change configuration",
+        "route traffic",
+        "isolate the root cause"
+      ],
+      "details": "Automated monitoring alerted engineering teams 2 minutes after the loss started. Google engineers correlated the alerts to the configuration push and routed traffic away from the affected part of the fabric. Mitigation completed 21 minutes after loss began, ending impact to customers. After isolating the root cause, engineers then audited all configuration changes that were generated by the control plane and replaced them with known-good configurations.To prevent this from recurring, we will correct the control plane defect that generated the incorrect configuration and are adding additional validation at the fabric layer in order to more robustly detect configuration errors.",
+      "troubleshooting": {
+        "1": "Automated monitoring alerted engineering teams 2 minutes after the loss started. ",
+        "2": "Google engineers correlated the alerts to the configuration push and routed traffic away from the affected part of the fabric. "
+      }
+    },
+    "propagation pass": {
+      "1": "network control plane",
+      "2": "network fabric"
+    },
+    "refined path": {
+      "1": "network control plane",
+      "2": "network fabric"
+    },
+    "identification time": null,
+    "detection time": 2,
+    "fix time": 22,
+    "verification": "lixy"
+  },
+  "gcnet-18009": {
+    "title": "Google Cloud Networking Incident #18009",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/18009"
+    ],
+    "time": "05/16/2018",
+    "summary": "On Wednesday 16 May 2018, Google Cloud Networking experienced loss of connectivity to external IP addresses located in us-east4 for a duration of 58 minutes.",
+    "details": "On Wednesday 16 May 2018 from 18:43 to 19:41 PDT, Google Compute Engine, Google Cloud VPN, and Google Cloud Network Load Balancers hosted in the us-east4 region experienced 100% packet loss from the internet and other GCP regions. Google Dedicated Interconnect Attachments located in us-east4 also experienced loss of connectivity.",
+    "service_name": [
+      "Google Cloud Network Load Balancers",
+      "Google Compute Engine",
+      "Google CLoud VPN"
+    ],
+    "impact symptom": [
+      "performance"
+    ],
+    "duration": 53,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "system kpi": [
+          "increased packet loss"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "resource race"
+        }
+      ],
+      "details": "Every zone in Google Cloud Platform advertises several sets of IP addresses to the Internet via BGP. Some of these IP addresses are global and are advertised from every zone, others are regional and advertised only from zones in the region. The software that controls the advertisement of these IP addresses contained a race condition during application startup that would cause regional IP addresses to be filtered out and withdrawn from a zone. During a routine binary rollout of this software, the race condition was triggered in each of the three zones in the us-east4 region. Traffic continued to be routed until the last zone received the rollout and stopped advertising regional prefixes. Once the last zone stopped advertising the regional IP addresses, external regional traffic stopped entering us-east4."
+    },
+    "operation": [
+      "routine binary rollout"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "rollback rollout"
+      ],
+      "details": "Google engineers were alerted to the problem within one minute and as soon as investigation pointed to a problem with the BGP advertisements, a rollback of the binary in the us-east4 region was created to mitigate the issue. Once the rollback proved effective, the original rollout was paused globally to prevent any further issues.We are taking the following steps to prevent the issue from happening again. We are adding additional monitoring which will provide better context in future alerts to allow us to diagnose issues faster. We also plan on improving the debuggability of the software that controls the BGP advertisements. Additionally, we will be reviewing the rollout policy for these types of software changes so we can detect issues before they impact an entire region.",
+      "troubleshooting": {
+        "1": "Google engineers were alerted to the problem within one minute, and investigation pointed to a problem with the BGP advertisements",
+        "2": "a rollback of the binary in the us-east4 region was created to mitigate the issue.",
+        "3": "Once the rollback proved effective, the original rollout was paused globally to prevent any further issues. "
+      }
+    },
+    "propagation pass": {
+      "1": "IP advertisements controlled software",
+      "2": "Google Compute Engine, Google Cloud VPN, Google Cloud Network Load Balancers"
+    },
+    "refined path": {
+      "1": "network OS",
+      "2": "app"
+    },
+    "identification time": null,
+    "detection time": 1,
+    "fix time": 52,
+    "verification": "lixy"
+  },
+  "gcnet-18012": {
+    "title": "Google Cloud Networking Incident #18012",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/18012"
+    ],
+    "time": "07/17/2018",
+    "summary": "On Tuesday, 17 July 2018, customers using Google Cloud App Engine, Google HTTP(S) Load Balancer, or TCP/SSL Proxy Load Balancers experienced elevated error rates ranging between 33% and 87% for a duration of 32 minutes. Customers observed errors consisting of either 502 return codes, or connection resets. We apologize to our customers whose services or businesses were impacted during this incident, and we are taking immediate steps to improve the platform’s performance and availability. We will be providing customers with a SLA credit for the affected timeframe that impacted the Google Cloud HTTP(S) Load Balancer, TCP/SSL Proxy Load Balancer and Google App Engine products.",
+    "details": "On Tuesday, 17 July 2018, from 12:17 to 12:49 PDT, Google Cloud HTTP(S) Load Balancers returned 502s for some requests they received. The proportion of 502 return codes varied from 33% to 87% during the period. Automated monitoring alerted Google’s engineering team to the event at 12:19, and at 12:44 the team had identified the probable root cause and deployed a fix. At 12:49 the fix became effective and the rate of 502s rapidly returned to a normal level. Services experienced degraded latency for several minutes longer as traffic returned and caches warmed. Serving fully recovered by 12:55. Connections to Cloud TCP/SSL Proxy Load Balancers would have been reset after connections to backends failed. Cloud services depending upon Cloud HTTP Load Balancing, such as Google App Engine application serving, Google Cloud Functions, Stackdriver's web UI, Dialogflow and the Cloud Support Portal/API, were affected for the duration of the incident.Cloud CDN cache hits dropped 70% due to decreased references to Cloud CDN URLs from services behind Cloud HTTP(S) Load balancers and an inability to validate stale cache entries or insert new content on cache misses. Services running on Google Kubernetes Engine and using the Ingress resource would have served 502 return codes as mentioned above. Google Cloud Storage traffic served via Cloud Load Balancers was also impacted.Other Google Cloud Platform services were not impacted. For example, applications and services that use direct VM access, or Network Load Balancing, were not affected.",
+    "service_name": [
+      "Google Cloud Global Loadbalancers",
+      "Google Cloud App Engine",
+      "TCP/SSL Proxy Load Balancers"
+    ],
+    "impact symptom": [
+      "performance",
+      "availability"
+    ],
+    "duration": 38,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "Automated monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "degraded latency",
+          "HTTP 502 error code"
+        ]
+      },
+      {
+        "system kpi": [
+          "Network delay",
+          "cache miss rate"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "logic"
+        },
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "Google’s Global Load Balancers are based on a two-tiered architecture of Google Front Ends (GFE). The first tier of GFEs answer requests as close to the user as possible to maximize performance during connection setup. These GFEs route requests to a second layer of GFEs located close to the service which the request makes use of. This type of architecture allows clients to have low latency connections anywhere in the world, while taking advantage of Google’s global network to serve requests to backends, regardless of in which region they are located.The GFE development team was in the process of adding features to GFE to improve security and performance. These features had been introduced into the second layer GFE code base but not yet put into service. One of the features contained a bug which would cause the GFE to restart; this bug had not been detected in either of testing and initial rollout. At the beginning of the event, a configuration change in the production environment triggered the bug intermittently, which caused affected GFEs to repeatedly restart. Since restarts are not instantaneous, the available second layer GFE capacity was reduced. While some requests were correctly answered, other requests were interrupted (leading to connection resets) or denied due to a temporary lack of capacity while the GFEs were coming back online."
+    },
+    "operation": [
+      "upgrade"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "revert configuration change",
+        "fix issue"
+      ],
+      "details": "Google engineers were alerted to the issue within 3 minutes and began immediately investigating. At 12:44 PDT, the team discovered the root cause, the configuration change was promptly reverted, and the affected GFEs ceased their restarts. As all GFEs returned to service, traffic resumed its normal levels and behavior.In addition to fixing the underlying cause, we will be implementing changes to both prevent and reduce the impact of this type of failure in several ways:1. We are adding additional safeguards to disable features not yet in service.2. We plan to increase hardening of the GFE testing stack to reduce the risk of having a latent bug in production binaries that may cause a task to restart.3. We will also be pursuing additional isolation between different shards of GFE pools in order to reduce the scope of failures.4. Finally, to speed diagnosis in the future, we plan to create a consolidated dashboard of all configuration changes for GFE pools, allowing engineers to more easily and quickly observe, correlate, and identify problematic changes to the system.",
+      "troubleshooting": {
+        "1": "alerted to the issue within 3 minutes and began immediately investigating. ",
+        "2": "the team discovered the root cause",
+        "3": "the configuration change was promptly reverted, and the affected GFEs ceased their restarts. "
+      }
+    },
+    "propagation pass": {
+      "1": "Google Front Ends",
+      "2": "Google's Global Load Balancers",
+      "3": "Cloud TCP/SSL Proxy Load Balancers",
+      "4": "Cloud Load Balancers",
+      "5": "Cloud services depending upon Cloud HTTP Load Balancing"
+    },
+    "refined path": {
+      "1": "frontend",
+      "2": "load balancer",
+      "3": "app"
+    },
+    "detection time": 3,
+    "identification time": 24,
+    "fix time": 35,
+    "verification": "lixy"
+  },
+  "gcnet-18013": {
+    "title": "Google Cloud Networking Incident #18013",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/18013"
+    ],
+    "time": "07/27/2018",
+    "summary": "On Friday 27 July 2018, for a duration of 1 hour 4 minutes, Google Compute Engine (GCE) instances and Cloud VPN tunnels in europe-west4 experienced loss of connectivity to the Internet. The incident affected all new or recently live migrated GCE instances. VPN tunnels created during the incident were also impacted. We apologize to our customers whose services or businesses were impacted during this incident, and we are taking immediate steps to avoid a recurrence.",
+    "details": "All Google Compute Engine (GCE) instances in europe-west4 created on Friday 27 July 2018 from 18:27 to 19:31 PDT lost connectivity to the Internet and other instances via their public IP addresses. Additionally any instances that live migrated during the outage period would have lost connectivity for approximately 30 minutes after the live migration completed. All Cloud VPN tunnels created during the impact period, and less than 1% of existing tunnels in europe-west4 also lost external connectivity. All other instances and VPN tunnels continued to serve traffic. Inter-instance traffic via private IP addresses remained unaffected.",
+    "service_name": [
+      "Google Compute Engine"
+    ],
+    "impact symptom": [
+      "performance"
+    ],
+    "duration": 64,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "Automated monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "system kpi": [
+          "loss of connectivity"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "Google's datacenters utilize software load balancers known as Maglevs [1] to efficiently load balance network traffic [2] across service backends. The issue was caused by an unintended side effect of a configuration change made to jobs that are critical in coordinating the availability of Maglevs. The change unintentionally lowered the priority of these jobs in europe-west4. The issue was subsequently triggered when a datacenter maintenance event required load shedding of low priority jobs. This resulted in failure of a portion of the Maglev load balancers. However, a safeguard in the network control plane ensured that some Maglev capacity remained available. This layer of our typical defense-in-depth allowed connectivity to extant cloud resources to remain up, and restricted the disruption to new or migrated GCE instances and Cloud VPN tunnels."
+    },
+    "operation": [
+      "maintenance"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "revert configuration change"
+      ],
+      "details": "Automated monitoring alerted Google’s engineering team to the event within 5 minutes and they immediately began investigating at 18:36. At 19:25 the team discovered the root cause and started reverting the configuration change. The issue was mitigated at 19:31 when the fix was rolled out. At this point, connectivity was restored immediately.In addition to addressing the root cause, we will be implementing changes to both prevent and reduce the impact of this type of failure by improving our alerting when too many Maglevs become unavailable, and adding a check for configuration changes to detect priority reductions on critical dependencies.",
+      "troubleshooting": {
+        "1": "alerted Google’s engineering team to the event within 5 minutes and they immediately began investigating at 18:36. ",
+        "2": "the team discovered the root cause and started reverting the configuration change",
+        "3": "The issue was mitigated at 19:31 when the fix was rolled out. "
+      }
+    },
+    "propagation pass": {
+      "1": "load balancer",
+      "2": "google compute engine"
+    },
+    "refined path": {
+      "1": "load balancer",
+      "2": "app"
+    },
+    "detection time": 5,
+    "identification time": 49,
+    "fix time": 55,
+    "verification": "lixy"
+  },
+  "gcnet-18016": {
+    "title": "Google Cloud Networking Incident #18016",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/18016"
+    ],
+    "time": "10/11/2018",
+    "summary": "On Thursday 11 October 2018, a section of Google's network that includes part of us-central1-c lost connectivity to the Google network backbone that connects to the public internet for a duration of 41 minutes.We apologize if your service or application was impacted by this incident. We are following our postmortem process to ensure we fully understand what caused this incident and to determine the exact steps we can take to prevent incidents of this type from recurring. Our engineering team is committed to prioritizing fixes for the most critical findings that result from our postmortem.",
+    "details": "On Thursday 11 October 2018 from 16:13 to 16:54 PDT, a section of Google's network that includes part of us-central1-c lost connectivity to the Google network backbone that connects to the public internet.The us-central1-c zone is composed of two separate physical clusters. 61% of the VMs in us-central1-c were in the cluster impacted by this incident. Projects that create VMs in this zone have all of their VMs assigned to a single cluster. Customers with VMs in the zone were either impacted for all of their VMs in a project or for none.Impacted VMs could not communicate with VMs outside us-central1 during the incident. VM-to-VM traffic using an internal IP address within us-central1 was not affected.Traffic through the network load balancer was not able to reach impacted VMs in us-central1-c, but customers with VMs spread between multiple zones experienced the network load balancer shifting traffic to unaffected zones.Traffic through the HTTP(S), SSL Proxy, and TCP proxy load balancers was not significantly impacted by this incident.Other Google Cloud Platform services that experienced significant impact include the following:30% of Cloud Bigtable clusters located in us-central1-c became unreachable.10% of Cloud SQL instances in us-central lost external connectivity.",
+    "service_name": [
+      "Bigtable",
+      "Cloud SQL",
+      "VM"
+    ],
+    "impact symptom": [
+      "performance"
+    ],
+    "duration": 41,
+    "detection": {
+      "method": null,
+      "tool": null
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "system kpi": [
+          "loss connectivity"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "The incident occurred while Google's network operations team was replacing the routers that link us-central1-c to Google's backbone that connects to the public internet. Google engineers paused the router replacement process after determining that additional cabling would be required to complete the process and decided to start a rollback operation. The rollout and rollback operations utilized a version of workflow that was only compatible with the newer routers. Specifically, rollback was not supported on the older routers. When a configuration change was pushed to the older routers during the rollback, it deleted the Border Gateway Protocol (BGP) control plane sessions connecting the datacenter routers to the backbone routers resulting in a loss of external connectivity."
+    },
+    "operation": [
+      "rollout",
+      "rollback"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "rollback configuration change"
+      ],
+      "details": "The BGP sessions were deleted in two tranches. The first deletion was at 15:43 and caused traffic to failover to other routers. The second set of BGP sessions were deleted at 16:13. The first alert for Google engineers fired at 16:16. We identified that the BGP sessions had been deleted at 16:41 and rolled back the configuration change at 16:52, ending the incident shortly thereafter.The preventative action items identified so far include the following:Fix the automated workflows for router replacements to ensure the correct version of workflows are utilized for both types of routers.Alert when BGP sessions are deleted and traffic fails off, so that we can detect and mitigate problems before they impact customers.",
+      "troubleshooting": {
+        "1": "The first alert for Google engineers fired at 16:16.",
+        "2": "identified root cause and rolled back the configuration change, ending the incident shortly thereafter"
+      }
+    },
+    "propagation pass": {
+      "1": "router",
+      "2": "BGP control plane",
+      "3": "network load balancer",
+      "4": "VM"
+    },
+    "refined path": {
+      "1": "router",
+      "2": "network control plane",
+      "3": "load balancer",
+      "4": "VM"
+    },
+    "detection time": 33,
+    "identification time": 25,
+    "fix time": 36,
+    "verification": "lixy"
+  },
+  "gcnet-18019": {
+    "title": "Google Cloud Networking Incident #18019",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/18019"
+    ],
+    "time": "12/19/2018",
+    "summary": "On Wednesday 19 December 2018 multiple GCP services in europe-west1-b experienced a disruption for a duration of 34 minutes. Several GCP services were impacted: GCE, Monitoring, Cloud Console, GAE Admin API, Task Queues, Cloud Spanner, Cloud SQL, GKE, Cloud Bigtable, and Redis. GCP services in all other zones remained unaffected.This service disruption was caused by an erroneous trigger leading to a switch re-installation during upgrades to two control plane network (CPN) switches impacting a portion of europe-west1-b. Most impacted GCP services in the zone recovered within a few minutes after the issue was mitigated.We understand that these services are critical to our customers and sincerely apologize for the disruption caused by this incident. To prevent the issue from recurring we are fixing our repair workflows to catch such errors before serving traffic.",
+    "details": "On Wednesday 19 December 2018 from 05:53 to 06:27 US/Pacific, multiple GCP services in europe-west1-b experienced disruption due to a network outage in one of Google’s data centers.The following Google Cloud Services in europe-west1-b were impacted: GCE instance creation, GCE networking, Cloud VPN, Cloud Interconnect, Stackdriver Monitoring API, Cloud Console, App Engine Admin API, App Engine Task Queues, Cloud Spanner, Cloud SQL, GKE, Cloud Bigtable, and Cloud Memorystore for Redis. Most of these services suffered a brief disruption during the duration of the incident and recovered when the issue was mitigated.Stackdriver: Around 1% of customers accessing Stackdriver Monitoring API directly received 5xx errors.Cloud Console: Affected customers may not have been able to view graphs and API usage statistics. Impacted dashboards include: /apis/dashboard, /home/dashboard, /google/maps-api/api list.Redis: After the network outage ended, ~50 standard Redis instances in europe-west1 remained unavailable until 07:55 US/Pacific due to a failover bug triggered by the outage.",
+    "service_name": [
+      "Google Cloud Networking",
+      "GCE",
+      "Monitoring",
+      "Cloud Console",
+      "GAE Admin API",
+      "Task Queues",
+      "Cloud Spanner",
+      "Cloud SQL",
+      "GKE",
+      "Cloud Bigtable",
+      "Redis"
+    ],
+    "impact symptom": [
+      "availability",
+      "performance"
+    ],
+    "duration": 39,
+    "detection": {
+      "method": null,
+      "tool": null
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "error rate",
+          "HTTP 5xx error code"
+        ]
+      },
+      {
+        "system kpi": []
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "code change"
+        }
+      ],
+      "details": "As part of a program to upgrade network switches in control plane networks across Google’s data center, two control plane network (CPN) switches supporting a single CPN were scheduled to undergo upgrades. On December 17, the first switch was upgraded and was back online the same day. The issue triggered on December 19 when the second switch was due to be upgraded. During the upgrade of the second switch, a reinstallation was erroneously triggered on the first switch, causing it to go offline for a short period of time. Having both switches down partitioned the network supporting a portion of europe-west1-b. Due to this isolation, the zone was left partially functional."
+    },
+    "operation": [
+      "upgrade"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "no operation"
+      ],
+      "details": "The issue was mitigated at 06:27 US/Pacific when reinstallation of the first switch in the CPN completed.To prevent the issue from recurring we are changing the switch upgrade workflow to prevent erroneous triggers. The trigger inadvertently caused the switch to re-install before any CPN switch is deemed healthy to serve traffic. We are also adding additional checks to make sure upgraded devices are in full functional state before they are deemed healthy to start serving. We will also be improving our automation to catch offline peer devices sooner and help prevent related issues.",
+      "troubleshooting": {
+        "1": "The issue was mitigated at 06:27 US/Pacific when reinstallation of the first switch in the CPN completed. "
+      }
+    },
+    "propagation pass": {
+      "1": "control plane network switches",
+      "2": "Google Cloud services in europe-west1-b"
+    },
+    "refined path": {
+      "1": "network control plane",
+      "2": "switch",
+      "3": "app"
+    },
+    "detection time": null,
+    "identification time": null,
+    "fix time": 39,
+    "verification": "lixy"
+  },
+  "gcnet-19005": {
+    "title": "Google Cloud Networking Incident #19005",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/19005"
+    ],
+    "time": "03/06/2019",
+    "summary": "On Wednesday 6 March 2019, Google Cloud Router and Cloud Interconnect experienced a service disruption in the us-east4 region for a duration of 8 hours and 34 minutes. Cloud VPN configurations with dynamic routes via Cloud Router were impacted during this time. We apologize to our customers who were impacted by this outage.",
+    "details": "On Wednesday 6 March 2019 from 20:17 to Thursday 7 March 04:51 US/Pacific, Cloud Router and Cloud Interconnect experienced a service disruption in us-east4. Customers utilizing us-east4 were unable to advertise routes to their Google Compute Engine (GCE) instances or learn routes from GCE.Cloud VPN traffic with dynamic routes over Cloud Router and Cloud Interconnect in us-east4 was impacted by this service disruption. Cloud VPN traffic over pre-configured static routes was unaffected and continued to function without disruption during this time.",
+    "service_name": [
+      "Google Cloud Router",
+      "Cloud Interconnect",
+      "Google CLoud VPN"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 539,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      "service unavailable"
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "unknown"
+        }
+      ],
+      "details": "The Cloud Router control plane service assigns Cloud Router tasks to individual customers and creates routes between those tasks and customer VPCs. Individual Cloud Router tasks establish external BGP sessions and propagate routes to and from the control plane service.A disruption occurred during the rollout of a new version of the control plane service in us-east4. This required the control plane to restart from a “cold” state requiring it to validate all assignments of the Cloud Router tasks. The control plane service did not successfully initialize and it was unable to assign individual Cloud Router tasks in order to propagate routes between those tasks and customer VPCs. Cloud Router tasks became temporarily disassociated with customers and BGP sessions were terminated. As a result, Cloud VPN and Cloud Interconnect configurations that were dependent on Cloud Router in us-east4 were unavailable during this time."
+    },
+    "operation": [
+      "rollout"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "fix bug"
+      ],
+      "details": "Google engineers were automatically alerted at 20:30 PST on 6 March 2019 and immediately began an investigation. A fix for the control plane service was tested, integrated, and rolled out on 7 March 2019 at 04:33 US/Pacific. The control plane service fully recovered by 05:16 US/Pacific.",
+      "troubleshooting": {
+        "1": "alerted at 20:30 PST on 6 March 2019 and immediately began an investigation. ",
+        "2": "A fix for the control plane service was tested, integrated, and rolled out on 7 March 2019 at 04:33 US/Pacific. "
+      }
+    },
+    "propagation pass": {
+      "1": "Cloud Router control plane service",
+      "2": "Cloud Routers",
+      "3": "Cloud VPN",
+      "4": "Cloud Interconnect",
+      "5": "Google Compute Engine instances"
+    },
+    "refined path": {
+      "1": "network control plane",
+      "2": "router",
+      "3": "VPN",
+      "4": "app"
+    },
+    "detection time": 13,
+    "identification time": null,
+    "fix time": 526,
+    "verification": "lixy"
+  },
+  "gcnet-19007": {
+    "title": "Google Cloud Networking Incident #19007",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/19007"
+    ],
+    "time": "04/04/2019",
+    "summary": "On Thursday 4 April 2019, Cloud VPN configurations with dynamic routes via Cloud Router, Cloud Dedicated Interconnect attachments, and Cloud Partner Interconnect attachments in us-central1 experienced a service disruption for a duration of 70 minutes. We apologize to all our customers who were impacted by the incident.",
+    "details": "On Thursday 4 April 2019, from 15:40 to 16:50 US/Pacific, Google Cloud Routers and Cloud Interconnect experienced a service disruption in us-central1. Cloud Routers for Cloud Interconnect and Cloud VPN were unable to route traffic in us-central1 for the duration of the incident. This impacted Cloud Private Interconnect attachments and Cloud VPN tunnels using dynamic routing. Global routing and Cloud VPN tunnels utilizing static routes were not affected during the incident.",
+    "service_name": [
+      "Google Cloud Router",
+      "Cloud Interconnect",
+      "Cloud VPN"
+    ],
+    "impact symptom": [
+      "availability",
+      "performance"
+    ],
+    "duration": 70,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      "service unavailable"
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs"
+        }
+      ],
+      "details": "The Cloud Router control plane service assigns Cloud Router tasks to individual customers and creates routes between those tasks and customer VPCs. Individual Cloud Router tasks connected to the control plane service are responsible for establishing external BGP sessions and propagating routes to and from the service.The disruption was caused by a rollout to the Cloud Router control plane service. One part of the control plane rollout process changed the version of the service which cloud router tasks connect to, performed through a leader election process. When the new version was elected leader, cloud router tasks encountered an issue while disassociating with the previous leader. This issue caused tasks to stay connected to the previous leader for an extended duration. The delay resulted in individual cloud router tasks losing state, requiring the system to be initialized from a “cold” state.Changes in the new version allowed the system to complete initialization without any intervention. During initialization, cloud router tasks were reassigned to customers and started to re-establish sessions. Until all customers’ tasks were reassigned, routes learned from these Cloud Routers were not propagated and services dependent on Cloud Routers remained impacted in us-central1."
+    },
+    "operation": [
+      "rollout"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "pause rollout",
+        "cancel task",
+        "restart leader task"
+      ],
+      "details": "Google engineers were alerted to the disruption at 15:41 US/Pacific on 4 April 2019 and began to investigate immediately. Once the root cause was determined, the rollout was paused and control plane tasks running the previous version were canceled to ensure that the previous version would not be elected leader. The leader task was then restarted to ensure that all cloud router tasks connected to the service running the new version. The service then recovered.",
+      "troubleshooting": {
+        "1": "alerted to the disruption at 15:41 US/Pacific on 4 April 2019 and began to investigate immediately.",
+        "2": "Once the root cause was determined, the rollout was paused and control plane tasks running the previous version were canceled to ensure that the previous version would not be elected leader. ",
+        "3": "The leader task was then restarted to ensure that all cloud router tasks connected to the service running the new version."
+      }
+    },
+    "propagation pass": {
+      "1": "Cloud Router control plane service",
+      "2": "Cloud Interconnect",
+      "3": "Cloud VPN"
+    },
+    "refined path": {
+      "1": "network control plane",
+      "2": "router",
+      "3": "VPN"
+    },
+    "detection time": 1,
+    "identification time": null,
+    "fix time": 69,
+    "verification": "lixy"
+  },
+  "gcnet-19009": {
+    "title": "Google Cloud Networking Incident #19009",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/19009"
+    ],
+    "time": "06/02/2019",
+    "summary": "On Sunday 2 June, 2019, Google Cloud projects running services in multiple US regions experienced elevated packet loss as a result of network congestion for a duration of between 3 hours 19 minutes, and 4 hours 25 minutes. The duration and degree of packet loss varied considerably from region to region and is explained in detail below.",
+    "details": "Other Google Cloud services which depend on Google's US network were also impacted, as were several non-Cloud Google services which could not fully redirect users to unaffected regions. Customers may have experienced increased latency, intermittent errors, and connectivity loss to instances in us-central1, us-east1, us-east4, us-west2, northamerica-northeast1, and southamerica-east1. Google Cloud instances in us-west1, and all European regions and Asian regions, did not experience regional network congestion.Google Cloud Platform services were affected until mitigation completed for each region, including: Google Compute Engine, App Engine, Cloud Endpoints, Cloud Interconnect, Cloud VPN, Cloud Console, Stackdriver Metrics, Cloud Pub/Sub, Bigquery, regional Cloud Spanner instances, and Cloud Storage regional buckets. G Suite services in these regions were also affected.",
+    "service_name": [
+      "Google Compute Engine",
+      "App Engine",
+      "Cloud Endpoints",
+      "Cloud Interconnect",
+      "Cloud VPN",
+      "Cloud Console",
+      "Stackdriver Metrics",
+      "Cloud Pub/Sub",
+      "Bigquery",
+      "regional Cloud Spanner instances",
+      "Cloud Storage regional buckets"
+    ],
+    "impact symptom": [
+      "performance",
+      "availability"
+    ],
+    "duration": 295,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "elevated packet loss"
+        ]
+      },
+      {
+        "system kpi": [
+          "network congestion"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        },
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        },
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs"
+        }
+      ],
+      "details": "Within any single physical datacenter location, Google's machines are segregated into multiple logical clusters which have their own dedicated cluster management software, providing resilience to failure of any individual cluster manager. Google's network control plane runs under the control of different instances of the same cluster management software; in any single location, again, multiple instances of that cluster management software are used, so that failure of any individual instance has no impact on network capacity.Google's cluster management software plays a significant role in automating datacenter maintenance events, like power infrastructure changes or network augmentation. Google's scale means that maintenance events are globally common, although rare in any single location. Jobs run by the cluster management software are labelled with an indication of how they should behave in the face of such an event: typically jobs are either moved to a machine which is not under maintenance, or stopped and rescheduled after the event.Two normally-benign misconfigurations, and a specific software bug, combined to initiate the outage: firstly, network control plane jobs and their supporting infrastructure in the impacted regions were configured to be stopped in the face of a maintenance event. Secondly, the multiple instances of cluster management software running the network control plane were marked as eligible for inclusion in a particular, relatively rare maintenance event type. Thirdly, the software initiating maintenance events had a specific bug, allowing it to deschedule multiple independent software clusters at once, crucially even if those clusters were in different physical locations."
+    },
+    "operation": [
+      "maintenance"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "halt the automation software",
+        "re-enabling the network control plane",
+        "rollout configuration",
+        "direct traffic",
+        "re-enabling supporting infrastructure"
+      ],
+      "details": "Google engineers were alerted to the failure two minutes after it began, and rapidly engaged the incident management protocols used for the most significant of production incidents. Debugging the problem was significantly hampered by failure of tools competing over use of the now-congested network. The defense in depth philosophy means we have robust backup plans for handling failure of such tools, but use of these backup plans (including engineers travelling to secure facilities designed to withstand the most catastrophic failures, and a reduction in priority of less critical network traffic classes to reduce congestion) added to the time spent debugging. Furthermore, the scope and scale of the outage, and collateral damage to tooling as a result of network congestion, made it initially difficult to precisely identify impact and communicate accurately with customers.As of 13:01 US/Pacific, the incident had been root-caused, and engineers halted the automation software responsible for the maintenance event. We then set about re-enabling the network control plane and its supporting infrastructure. Additional problems once again extended the recovery time: with all instances of the network control plane descheduled in several locations, configuration data had been lost and needed to be rebuilt and redistributed. Doing this during such a significant network configuration event, for multiple locations, proved to be time-consuming. The new configuration began to roll out at 14:03.",
+      "troubleshooting": {
+        "1": "Google engineers were alerted to the failure two minutes after it began, and rapidly engaged the incident management protocols used for the most significant of production incidents. ",
+        "2": "As of 13:01 US/Pacific, the incident had been root-caused, and engineers halted the automation software responsible for the maintenance event. ",
+        "3": "We then set about re-enabling the network control plane and its supporting infrastructure.",
+        "4": "configuration data had been lost and needed to be rebuilt and redistributed",
+        "5": "The new configuration began to roll out ",
+        "6": "directing traffic away from the affected regions to allow continued serving from elsewhere.",
+        "7": "the relevant configuration was recreated and distributed, network capacity began to come back online.",
+        "8": "Recovery of network capacity started at 15:19, and full service was resumed at 16:10 US/Pacific time. "
+      }
+    },
+    "propagation pass": {
+      "1": "network control plane",
+      "2": "BGP routing",
+      "3": "Google Cloud Platform services and G Suite services"
+    },
+    "refined path": {
+      "1": "network control plane",
+      "2": "router",
+      "3": "app"
+    },
+    "detection time": 2,
+    "identification time": 72,
+    "fix time": 263,
+    "verification": "lixy"
+  },
+  "gcnet-19020": {
+    "title": "Google Cloud Networking Incident #19020",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/19020"
+    ],
+    "time": "10/22/2019",
+    "summary": "On Tuesday 22 October, 2019, Google Compute Engine experienced 100% packet loss to and from ~20% of instances in us-west1-b for a duration of 2 hours, 31 minutes. Additionally, 20% of Cloud Routers, and 6% of Cloud VPN gateways experienced equivalent packet loss in us-west1. Specific service impact is outlined in detail below. We apologize to our customers whose services or businesses were impacted during this incident, and we are taking immediate steps to improve the platform’s performance and availability.",
+    "details": "On Tuesday 22 October, 2019 from 16:20 to 18:51 US/Pacific, the Google Cloud Networking control plane in us-west1-b experienced failures in programming Google Cloud's virtualized networking stack. This means that new or migrated instances would have been unable to obtain network addresses and routes, making them unavailable Existing instances should have seen no impact; however, an additional software bug, triggered by the programming failure, caused 100% packet loss to 20% of existing instances in this zone.",
+    "service_name": [
+      "Google Compute Engine",
+      "Google Cloud VPN",
+      "Google Cloud Router",
+      "Google Cloud Memorystore",
+      "Google Kubernetes Engine",
+      "Google Cloud Bigtable",
+      "Google Cloud SQL"
+    ],
+    "impact symptom": [
+      "performance",
+      "availability"
+    ],
+    "duration": 151,
+    "detection": {
+      "method": null,
+      "tool": null
+    },
+    "manifestation": [
+      {
+        "system kpi": [
+          "100% packet loss"
+        ]
+      },
+      "service unavailable",
+      {
+        "business kPI": [
+          "high error rate",
+          "increased latency"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "resource race"
+        },
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "Google Cloud Networking consists of a software stack which is made up of two components, a control plane and data plane. The data plane is where packets are processed and routed based on the configuration set up by the control plane. Each zone has its own control plane service, and each control plane service is sharded such that network programming is spread across multiple shards. Additionally, each shard is made up of several leader elected [1] processes.During this incident, a failure in the underlying leader election system (Chubby [2]) resulted in components in the control plane losing and gaining leadership in short succession. These frequent leadership changes halted network programming, preventing VM instances from being created or modified.Google’s standard defense-in-depth philosophy means that existing network routes should continue to work normally when programming fails. The impact to existing instances was a result of this defense-in-depth failing: a race condition in the code which handles leadership changes caused programming updates to contain invalid configurations, resulting in packet loss for impacted instances. "
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "fix bug",
+        "rate limit",
+        "forcing leader election",
+        "redirection of traffic"
+      ],
+      "details": "Google engineers were alerted to the problem at 16:30 US/Pacific and immediately began investigating. Mitigation efforts began at 17:20 which involved a combination of actions including rate limits, forcing leader election, and redirection of traffic. These efforts gradually reduced the rate of packet loss, which eventually led to a full recovery of the networking control plane by 18:51.",
+      "troubleshooting": {
+        "1": "alerted to the problem at 16:30 US/Pacific and immediately began investigating. ",
+        "2": "Mitigation efforts began at 17:20 which involved a combination of actions including rate limits, forcing leader election, and redirection of traffic. "
+      }
+    },
+    "propagation pass": {
+      "1": "Google Cloud networking control plane",
+      "2": "Google Compute Engine,  Google Cloud VPN, Google Cloud Router, Google Cloud Memorystore, Google Kubernetes Engine, Google Cloud Bigtable, Google Cloud SQL"
+    },
+    "refined path": {
+      "1": "network control plane",
+      "2": "app"
+    },
+    "detection time": 10,
+    "identification time": null,
+    "fix time": 141,
+    "verification": "lixy"
+  },
+  "gcnet-20001": {
+    "title": "Google Cloud Networking Incident #20001",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/20001"
+    ],
+    "time": "12/28/2019",
+    "summary": "On Wednesday, 18 December, 2019, a part of Google’s production network experienced a temporary reduction in capacity, due to multiple fiber cuts in optical links interconnecting Sofia, Bulgaria with other points-of-presence. This resulted in severe congestion on remaining links to Sofia for a duration of 1 hour and 1 minute.Access to Google Cloud products and services through Internet Service Providers (ISPs) in Bulgaria, Turkey, Northern Macedonia, Azerbaijan, Greece, Cyprus, Kosovo, Serbia and Iraq, which rely heavily on the Google point-of-presence in Sofia, Bulgaria was degraded. Users outside the affected countries were not impacted by this issue.",
+    "details": "On Wednesday, 18 December, 2019, from 23:43 to Thursday, 19 December, 2019 at 00:44 US/Pacific, access to Google products and services (including Google Cloud Platform) through ISPs in Bulgaria, Turkey, Northern Macedonia, Azerbaijan, Greece, Cyprus, Bosnia, Kosovo, Serbia and Iraq, which rely heavily on the Google point-of-presence in Sofia, Bulgaria, experienced severe congestion for a duration of 1 hour and 1 minute.End users, who use ISPs which rely heavily on the Google peering links in Sofia to access Google Cloud services, were affected by the severe congestion between the Sofia point-of-presence and Cloud Regions across the globe. Cloud traffic to/from the region dropped by 60% during the one hour window with degraded connectivity. End-users in Turkey, who generated the bulk of the Cloud traffic to/from the region, experienced up to a 77% drop in traffic during the incident window.",
+    "service_name": [
+      "Google’s production network"
+    ],
+    "impact symptom": [
+      "performance",
+      "availability"
+    ],
+    "duration": 61,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "traffic drop",
+          "packet loss"
+        ]
+      },
+      {
+        "system kpi": [
+          "network congestion"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "external causes",
+          "layer-2": "hardware failures",
+          "layer-3": "network"
+        }
+      ],
+      "details": "Google maintains a network point-of-presence (PoP) with caching and peering infrastructure in Sofia, Bulgaria. The Sofia PoP provides network peering to many providers in Eastern Europe. These network providers in turn enable access to Google services to users in Bulgaria, Turkey, Northern Macedonia, Azerbaijan, Greece, Cyprus, Bosnia, Kosovo, Serbia and Iraq. Sofia is connected to the rest of Google’s production network through multiple independent optical pathways located throughout Europe.This incident was triggered by dual, unrelated (yet overlapping), faults on high-capacity optical network links in both Bucharest, Romania and Munich, Germany that significantly reduced the network capacity of the interconnect between Sofia and the Google production network.Prior to the outage there was a fiber cut in Bucharest/Romania severing the connectivity between Frankfurt/Germany and Sofia/Bulgaria.A second fiber cut in Munich/Germany impacted two separate optical paths:-- Circuits between Frankfurt/Germany and Sofia/Bulgaria were rendered inoperable.-- Circuits between Munich/Germany and Sofia/Bulgaria were left with less than 10% of its normal capacity.Once these links were disrupted, the small amount of remaining capacity between the Sofia and Munich metros continued to attract traffic while unable to fully support it. This brief period of reduced capacity resulted in severe congestion for customers of ISPs heavily reliant on the peering links in Sofia, Bulgaria for accessing Google products and services. Once all traffic that was being sent through peering links in Sofia was redirected through alternative, operational points of presence, the incident was fully mitigated."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "redirect traffic"
+      ],
+      "details": "Google Engineers were automatically alerted to packet loss between the Munich and Sofia metros on 2019-12-18 at 23:47 US/Pacific and immediately began investigating. On 2019-12-19 at 00:24 Google Engineers identified the root cause of the packet loss and took decisive mitigation action to redirect traffic away from the peering links in Sofia, Bulgaria. By 00:44 all impacted traffic was successfully redirected to adjacent functional network links, fully mitigating the impact to Google Cloud customers.",
+      "troubleshooting": {
+        "1": "automatically alerted to packet loss and immediately began investigating. ",
+        "2": "Google Engineers identified the root cause of the packet loss ",
+        "3": "took decisive mitigation action to redirect traffic away from the peering links in Sofia, Bulgaria. ",
+        "4": "By 00:44 all impacted traffic was successfully redirected to adjacent functional network links, fully mitigating the impact to Google Cloud customers. "
+      }
+    },
+    "propagation pass": {
+      "1": "fiber cut",
+      "2": "Google point-of-presence",
+      "3": "Google Platform services"
+    },
+    "refined path": {
+      "1": "hardware",
+      "2": "app"
+    },
+    "detection time": 4,
+    "identification time": 37,
+    "fix time": 57,
+    "verification": "lixy"
+  },
+  "gcnet-210504": {
+    "title": "Google Cloud Networking Incident #210504",
+    "link": [
+      "https://status.cloud.google.com/incidents/eCPQKkKcFy6NYXExnPXL"
+    ],
+    "time": "05/04/2021",
+    "summary": "Following is the Incident Report for the networking outage occurred on May 4th 2021. (All Times US/Pacific) Incident Start: 2021-05-04 15:35 Incident End: 2021-05-04 21:08 Duration:. 5 hours, 33 minutes Affected Services: Google Cloud Networking, Google Compute Engine (GCE), Google Cloud VMWare Engine, Cloud SQL and Google Kubernetes Engine (GKE) Features: Cloud VPN, Cloud Interconnect, Google Private Access Regions/Zones: us-west2 Description: Google Cloud Platform experienced an outage affecting network traffic in region us-west2 for a duration of 5 hours and 33 minutes. This impacted Internet and Cloud Interconnect connectivity to/from us-west2, including traffic between GCE VMs in the region and Internet endpoints, VM-to-VM traffic over Public IPs, External Network Load Balancing, Cloud VPN Classic (non-HA), and Cloud Interconnect. Cloud VPN HA was not impacted.",
+    "details": "Root cause and mitigation:The root cause was a rollout that changed some internal network settings on machines which handle internet routing to Cloud Services. Machines which received the change were unable to receive network programming information. The change caused new TCP connections to establish successfully, but dropped some packets sent between the Control and Data plane (Maglev[1]). Maglevs route traffic from public IPs and interconnects to various endpoints such as Cloud VPN tasks, individual instances, and groups of instances. When a Maglev task first starts, it must be programmed in order to start routing traffic. As independent Maglev Control and Dataplane rollouts restarted tasks, their long-standing TCP connections were reset, and the newly established connections were unable to exchange programming messages. This was mitigated by rolling back the configuration change once the root cause was identified. [1]",
+    "service_name": [
+      "Google Cloud Networking",
+      "Google Compute Engine (GCE)",
+      "Google Cloud VMWare Engine",
+      "Cloud SQL and Google Kubernetes Engine (GKE)"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 333,
+    "detection": {
+      "method": null,
+      "tool": null
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "error rate"
+        ]
+      },
+      {
+        "system kpi": [
+          "network unconnection",
+          "tcp packets drop"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "The root cause was a rollout that changed some internal network settings on machines which handle internet routing to Cloud Services. Machines which received the change were unable to receive network programming information. The change caused new TCP connections to establish successfully, but dropped some packets sent between the Control and Data plane (Maglev[1]). Maglevs route traffic from public IPs and interconnects to various endpoints such as Cloud VPN tasks, individual instances, and groups of instances. When a Maglev task first starts, it must be programmed in order to start routing traffic. As independent Maglev Control and Dataplane rollouts restarted tasks, their long-standing TCP connections were reset, and the newly established connections were unable to exchange programming messages. This was mitigated by rolling back the configuration change once the root cause was identified."
+    },
+    "operation": [
+      "change"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "rolling back the configuration change"
+      ],
+      "details": "This was mitigated by rolling back the configuration change once the root cause was identified.",
+      "troubleshooting": {
+        "1": "Google Engineers rolling back the configuration change"
+      }
+    },
+    "propagation pass": {
+      "1": "network devices",
+      "2": "Google services"
+    },
+    "refined path": {
+      "1": "network devices",
+      "2": "app"
+    },
+    "detection time": null,
+    "identification time": null,
+    "fix time": null,
+    "verification": "lixy, yugb"
+  },
+  "gcnet-211116": {
+    "title": "Google Cloud Networking Incident #211116",
+    "link": [
+      "https://status.cloud.google.com/incidents/6PM5mNd43NbMqjCZ5REh"
+    ],
+    "time": "11/16/2021",
+    "summary": "On Tuesday, 16 November 2021 at 09:35 PT, Google Cloud Networking experienced issues with the Google External Proxy Load Balancing (GCLB) service. Affected customers received Google 404 errors in response to HTTP/S requests. Google engineers were alerted to the issue via automated alerting at 09:50 PT, which aligned with incoming customer support requests, and we immediately started to mitigate the issue by rolling back to the last known good configuration. Between 09:35 and 10:08 PT, customers affected by the outage may have encountered 404 errors when accessing any web page (URL) served by Google External Proxy Load Balancing. A rollback to the last known good configuration completed at 10:08 PT, which resolved the 404 errors. To avoid the risk of a recurrence, our engineers suspended customer-initiated configuration changes in GCLB. As a result, GCLB service customers were unable to make changes to their load balancing configuration between 10:04 and 11:28 PT. During the change suspension period, we validated the fix to safeguard against recurrence and deployed additional proctoring and monitoring to ensure safe resumption of service. By 11:28 PT, customer configuration pushes resumed, and normal service was restored. The total duration of impact was 1 hour and 53 minutes.",
+    "details": "Root Cause This incident was caused by a bug in the configuration pipeline that propagates customer configuration rules to GCLB. The bug was introduced 6 months ago and allowed a race condition (when behavior depends on the timing of data accesses) that would, in very rare cases, push a corrupted configuration file to GCLB. The GCLB update pipeline contains extensive validation checks to prevent corrupt configurations, but the race condition was one that could corrupt the file near the end of the pipeline. A Google engineer discovered this bug on 12 November, which caused us to declare an internal high-priority incident because of the latent risk to production systems. After analyzing the bug, we froze a part of our configuration system to make the likelihood of the race condition even lower. Since the race condition had existed in the fleet for several months already, the team believed that this extra step made the risk even lower. Thus the team believed the lowest-risk path, especially given the proximity to BFCM, was to roll out fixes in a controlled manner as opposed to a same-day emergency patch. We developed two mitigations: patch A closed the race condition itself; and patch B added additional input validation to the binary receiving the configuration to prevent it from accepting the new configuration, even if the race condition occurred. Both patches were ready and verified to fix the problem by 13 November. Gradual rollouts of both patches started on Monday, 15 November, and patch B completed rollout by that evening. On Tuesday, 16 November, as the patch A rollout was within 30 minutes of completing, the race condition did manifest in an unpatched cluster, and the outage started. Additionally, even though patch B did protect against the kind of input errors observed during testing, the actual race condition produced a different form of error in the configuration, which the completed rollout of patch B did not prevent from being accepted. Once the root cause was identified, our engineers mitigated the issue by restoring a known-good configuration, and completed and verified the fix, which eliminates the risk of recurrence. Service(s) Affected: Google Cloud Networking: Customer HTTP/S endpoints served 404 error pages. During partial recovery, traffic was served, but customers were unable to make changes to their load balancer configurations. GCLB can be used to load balance traffic to a number of other Google Cloud services, which lost traffic because of the outage. Customers who use serverless network endpoint groups on GCLB as a frontend to Google Cloud Run, Google App Engine, Google App Engine Flex, or Google Cloud Functions received 404 errors when attempting to access their service. Customers using Apigee, Firebase, or Google App Engine Flex received 404 errors when attempting to access their service. Zone(s) Affected: Global How Customers Experienced the Issue: Between 09:35 and 10:08 PT, most endpoints served by global GCLB load balancers returned a 404 error. For an additional 1 hour and 20 minutes, customers were unable to make changes to their load balancing configuration. Workaround(s): None. Service was restored on 16 November 2021 at 11:28 PT, and the Google Cloud Status Dashboard was updated by 12:08 PT to reflect this. Remediation and Prevention We have fixed the underlying bug and are taking the following actions to prevent recurrence: We immediately added additional alerting, which will notify us to similar issues significantly faster going forward. We are adding safeguards to prevent similar issues from occurring in the future. These safeguards provide strengthened automated correctness-checking to configurations before they are applied. We are accelerating planned architectural changes that will improve how we isolate and resolve such issues in the future.",
+    "service_name": [
+      "Google Cloud Networking",
+      "Google services"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 113,
+    "detection": {
+      "method": "automated",
+      "tool": "automated alerting"
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "error rate",
+          "404 error page"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "This incident was caused by a bug in the configuration pipeline that propagates customer configuration rules to GCLB. The bug was introduced 6 months ago and allowed a race condition (when behavior depends on the timing of data accesses) that would, in very rare cases, push a corrupted configuration file to GCLB. The GCLB update pipeline contains extensive validation checks to prevent corrupt configurations, but the race condition was one that could corrupt the file near the end of the pipeline. A Google engineer discovered this bug on 12 November, which caused us to declare an internal high-priority incident because of the latent risk to production systems. After analyzing the bug, we froze a part of our configuration system to make the likelihood of the race condition even lower. Since the race condition had existed in the fleet for several months already, the team believed that this extra step made the risk even lower. Thus the team believed the lowest-risk path, especially given the proximity to BFCM, was to roll out fixes in a controlled manner as opposed to a same-day emergency patch. We developed two mitigations: patch A closed the race condition itself; and patch B added additional input validation to the binary receiving the configuration to prevent it from accepting the new configuration, even if the race condition occurred. Both patches were ready and verified to fix the problem by 13 November. Gradual rollouts of both patches started on Monday, 15 November, and patch B completed rollout by that evening. On Tuesday, 16 November, as the patch A rollout was within 30 minutes of completing, the race condition did manifest in an unpatched cluster, and the outage started. Additionally, even though patch B did protect against the kind of input errors observed during testing, the actual race condition produced a different form of error in the configuration, which the completed rollout of patch B did not prevent from being accepted. Once the root cause was identified, our engineers mitigated the issue by restoring a known-good configuration, and completed and verified the fix, which eliminates the risk of recurrence."
+    },
+    "operation": [
+      "change"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "restoring a known-good configuration"
+      ],
+      "details": "Once the root cause was identified, our engineers mitigated the issue by restoring a known-good configuration, and completed and verified the fix, which eliminates the risk of recurrence.",
+      "troubleshooting": {
+        "1": "Google Engineers mitigated the issue by restoring a known-good configuration"
+      }
+    },
+    "propagation pass": {
+      "1": "Google External Proxy Load Balancing",
+      "2": "Google Services"
+    },
+    "refined path": {
+      "1": "load balancer",
+      "2": "app"
+    },
+    "detection time": 15,
+    "identification time": null,
+    "fix time": 80,
+    "verification": "lixy, yugb"
+  },
+  "gcnet-20005": {
+    "title": "Google Cloud Networking Incident #20005",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/20005"
+    ],
+    "time": "06/29/2020",
+    "summary": "On 2020-06-29 07:47 US/Pacific, Google Cloud experienced unavailability for some services hosted from our us-east1-c and us-east1-d zones. The unavailability primarily impacted us-east1-c but did have a short impact on us-east1-d. For approximately 1 hour and 30 minutes, 22.5% of Google Compute Engine (GCE) instances in us-east1-c, were unavailable. For approximately 7 minutes, 1.8% of GCE instances in us-east1-d, were unavailable. In addition, 0.0267% Persistent Disk (PD) devices hosted in us-east1-c were unavailable for up to 28 hours and the us-east1 region as a whole experienced 5% packet loss between 07:55 and 08:05 for Public IP and Network LB Traffic.We sincerely apologize and are taking steps detailed below to ensure this doesn’t happen again.",
+    "details": "BACKGROUND Google Cloud Platform is built on various layers of abstraction in order to provide scale and distinct failure domains. One of those abstractions is Zones and clusters [ 1 ]. Zonal services such as Google Compute Engine (GCE) assign projects to one cluster to handle the majority of the compute needs when a project requests resources in a cloud zone. If a cluster backing a zone becomes degraded, services in that zone have resilience built in to handle some level of machine failures. Regional services, depending on the architecture, may see a short degradation before automatically recovering, or see no impact at all. Regional services with tasks in a degraded cluster are generally migrated to other functional clusters in the same region to reduce overall impact. In the Detailed Impact section below, the impact is only to projects and services mapped to the affected clusters, unless otherwise noted. Datacenter power delivery is architected in three tiers. The primary tier of power delivery is utility power, with multiple grid feeds and robust substations. Backing up utility power are generators, each generator powers a different part of each cluster, and additional backup generators and fuel are available if required in the event that a part of this backup power system fails.The fuel supply system for the generators is broken into two parts, storage tanks which store fuel in bulk, and a system which pumps that fuel to generators for consumption. The final tier of power delivery are batteries which provide power conditioning and a short run times when power from the other two tiers is interrupted. [ 1 ] https: //cloud.google.com/compute/docs/regions-zones#zones_and_clusters ROOT CAUSE During planned substation maintenance by the site’s electrical utility provider, two clusters supporting the us-east1 region were transferred to backup generator power for the duration of the maintenance, which was scheduled as a four hour window. Three hours into the maintenance window, 17% of the operating generators began to run out of fuel due to fuel delivery system failures even though there was adequate fuel available in the storage tanks. Multiple redundancies built into the backup power system were automatically activated as primary generators began to run out of fuel, however, as more primary generators ran out of fuel the part of the cluster they were supporting shutdown. REMEDIATION AND PREVENTION Google engineers were alerted to the power issue impacting us-east1-c and us-east1-d at 2020-06-29 07: 50 US/Pacific and immediately started an investigation. Impact to us-east1-d was resolved automatically by cluster level services. Other than some Persistent Disk devices, service impact in us-east1-d ended by 08:24. Onsite datacenter operators identified a fuel supply issue as the root cause of the power loss and quickly established a mitigation plan. Once a workaround for the fuel supply issue was deployed, the operators began restoring the affected generators to active service at 08:49. Almost at the same time, at 08: 55, the planned substation maintenance had concluded and utility power returned to service. Between the restored utility power and recovered generators, power was fully restored to both clusters by 08:59. In a datacenter recovery scenario there is a sequential process that must be followed for downstream service recovery to succeed. By 2020-06-29 09: 34, most GCE instances had recovered as the necessary upstream services were restored. All services had recovered by 10: 50 except for a small percentage of Persistent Disk impacted instances. A more detailed timeline of individual service impact is included below in the “DETAILED DESCRIPTION OF IMPACT” section below. In the days following this incident the same system was put under load. There was an unplanned utility power outage for the same location on 2020-06-30 (the next day) due to a lightning strike near a substation transformer. The system was again tested on 2020-07-02 when a final maintenance operation was conducted on the site substation. We are committed to preventing this situation from happening again and are implementing the following actions: Resolving the issues identified with the fuel supply system which led to this incident. An audit of sites which have a similar fuel system has been conducted and onsite personnel have been provided updated procedures and training for dealing with this situation should it occur again.",
+    "service_name": [
+      "Google Compute Engine",
+      "Google services"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 319,
+    "detection": {
+      "method": "automated",
+      "tool": "automated alerting"
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "error rate",
+          "404 error page"
+        ]
+      },
+      {
+        "system kpi": [
+          "packet loss"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "external causes",
+          "layer-2": "hardware failures",
+          "layer-3": "power"
+        }
+      ],
+      "details": "During planned substation maintenance by the site’s electrical utility provider, two clusters supporting the us-east1 region were transferred to backup generator power for the duration of the maintenance, which was scheduled as a four hour window. Three hours into the maintenance window, 17% of the operating generators began to run out of fuel due to fuel delivery system failures even though there was adequate fuel available in the storage tanks. Multiple redundancies built into the backup power system were automatically activated as primary generators began to run out of fuel, however, as more primary generators ran out of fuel the part of the cluster they were supporting shutdown."
+    },
+    "operation": [
+      "maintenance"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "us-east1-d was resolved automatically by cluster level services",
+        "restoring the affected generators to active service"
+      ],
+      "details": "Google engineers were alerted to the power issue impacting us-east1-c and us-east1-d at 2020-06-29 07:50 US/Pacific and immediately started an investigation. Impact to us-east1-d was resolved automatically by cluster level services. Other than some Persistent Disk devices, service impact in us-east1-d ended by 08:24. Onsite datacenter operators identified a fuel supply issue as the root cause of the power loss and quickly established a mitigation plan. Once a workaround for the fuel supply issue was deployed, the operators began restoring the affected generators to active service at 08:49. Almost at the same time, at 08:55, the planned substation maintenance had concluded and utility power returned to service. Between the restored utility power and recovered generators, power was fully restored to both clusters by 08:59. In a datacenter recovery scenario there is a sequential process that must be followed for downstream service recovery to succeed. By 2020-06-29 09:34, most GCE instances had recovered as the necessary upstream services were restored. All services had recovered by 10:50 except for a small percentage of Persistent Disk impacted instances. A more detailed timeline of individual service impact is included below in the “DETAILED DESCRIPTION OF IMPACT” section below. In the days following this incident the same system was put under load. There was an unplanned utility power outage for the same location on 2020-06-30 (the next day) due to a lightning strike near a substation transformer. The system was again tested on 2020-07-02 when a final maintenance operation was conducted on the site substation. We are committed to preventing this situation from happening again and are implementing the following actions: Resolving the issues identified with the fuel supply system which led to this incident. An audit of sites which have a similar fuel system has been conducted and onsite personnel have been provided updated procedures and training for dealing with this situation should it occur again.",
+      "troubleshooting": {
+        "1": "Impact to us-east1-d was resolved automatically by cluster level services.",
+        "2": "Operators began restoring the affected generators to active service"
+      }
+    },
+    "propagation pass": {
+      "1": "fuel supply system",
+      "2": "data center",
+      "3": "Google services"
+    },
+    "refined path": {
+      "1": "hardware",
+      "2": "data center",
+      "3": "app"
+    },
+    "detection time": 3,
+    "identification time": 59,
+    "fix time": 10,
+    "verification": "lixy, yugb"
+  },
+  "gcnet-21002": {
+    "title": "Google Cloud Networking Incident #21002",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/21002"
+    ],
+    "time": "02/12/2021",
+    "summary": "On Friday, 12 February 2021, Google Cloud Networking experienced elevated packet loss for newly created, updated, deleted or migrated virtual machines (VMs) and network endpoints for a duration of 4 hours, 4 minutes. Network programming for VMs and network endpoints was also affected for the duration. To our customers whose businesses were impacted during this service disruption, we sincerely apologize – this is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability.",
+    "details": "ISSUE SUMMARY On Friday, 12 February 2021, Google Cloud Networking experienced elevated packet loss for newly created, updated, deleted or migrated virtual machines (VMs) and network endpoints for a duration of 4 hours, 4 minutes. Network programming for VMs and network endpoints was also affected for the duration. To our customers whose businesses were impacted during this service disruption, we sincerely apologize – this is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability. ROOT CAUSE Google Cloud's networking control plane has global components that are responsible for fanning-out network configurations that can affect an entire Virtual Private Cloud (VPC) network to downstream (regional/zonal) networking controllers. Work has been ongoing to better isolate global networking control plane components to limit scope of impact for issues that affect these global components. Cloud Networking also relies on a suite of automation tools to manage and enforce the quota of resources allocated to VPC networks. Some quotas are enforced with logic that will automatically remove resources when the quota is decreased, and reprocess previous resource operations when quota is increased. The circumstances that led to this was a latent issue in the control plane quota enforcement logic. During routine handling of peering quota change requests, previous operations that were rejected due to a lack of available quota were being re-evaluated and re-processed by the networking control plane. While doing this re-evaluation, the networking control plane encountered the latent issue and could not process other incoming network programming operations, triggering timeouts for those requests. As VPC resources are multi-regional in nature, this also meant that newly created, updated, deleted or migrated VM resources in regions that required programming on the network control plane were not able to establish connectivity, resulting in elevated packet loss. REMEDIATION AND PREVENTION Once the nature and scope of the issue became clear, Google engineers paused VM migrations globally to prevent existing instances from being impacted. Networking quota changes were also paused to prevent a recurrence until a fix had been rolled out. The issue trigger was isolated to update operations, not initial load operations, so a rolling restart of the networking control plane was triggered to mitigate the issue. Teams worked through the weekend to ensure that recurrence was not possible by rolling out a fix globally. In addition to fixing the underlying cause, we will be implementing changes to prevent and reduce the impact of this type of failure in several ways: 1. Add health checks and automated restarts when the networking control plane responsible for peering operations becomes unresponsive 2. Continue work to regionalize network control plane components to reduce scope of impact for future issues of this type 3. Automatically pause VM migrations when high numbers of VMs are exhibiting networking issues 4. Improve monitoring of network control plane operations to decrease time to mitigation for issues of this type 5. Improve networking data plane resilience when the networking control plane is unresponsive",
+    "service_name": [
+      "Google Cloud Networking",
+      "Google services"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 244,
+    "detection": {
+      "method": null,
+      "tool": null
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "error rate",
+          "request time out"
+        ]
+      },
+      {
+        "system kpi": [
+          "elevated packet loss",
+          "network unconnection"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "others"
+        }
+      ],
+      "details": "Google Cloud's networking control plane has global components that are responsible for fanning-out network configurations that can affect an entire Virtual Private Cloud (VPC) network to downstream (regional/zonal) networking controllers. Work has been ongoing to better isolate global networking control plane components to limit scope of impact for issues that affect these global components. Cloud Networking also relies on a suite of automation tools to manage and enforce the quota of resources allocated to VPC networks. Some quotas are enforced with logic that will automatically remove resources when the quota is decreased, and reprocess previous resource operations when quota is increased.The circumstances that led to this was a latent issue in the control plane quota enforcement logic. During routine handling of peering quota change requests, previous operations that were rejected due to a lack of available quota were being re-evaluated and re-processed by the networking control plane. While doing this re-evaluation, the networking control plane encountered the latent issue and could not process other incoming network programming operations, triggering timeouts for those requests. As VPC resources are multi-regional in nature, this also meant that newly created, updated, deleted or migrated VM resources in regions that required programming on the network control plane were not able to establish connectivity, resulting in elevated packet loss."
+    },
+    "operation": [
+      "normal"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "paused VM migrations globally",
+        "paused to prevent a recurrence until a fix",
+        "rolling out a fix"
+      ],
+      "details": "Once the nature and scope of the issue became clear, Google engineers paused VM migrations globally to prevent existing instances from being impacted. Networking quota changes were also paused to prevent a recurrence until a fix had been rolled out. The issue trigger was isolated to update operations, not initial load operations, so a rolling restart of the networking control plane was triggered to mitigate the issue. Teams worked through the weekend to ensure that recurrence was not possible by rolling out a fix globally. In addition to fixing the underlying cause, we will be implementing changes to prevent and reduce the impact of this type of failure in several ways: 1. Add health checks and automated restarts when the networking control plane responsible for peering operations becomes unresponsive 2. Continue work to regionalize network control plane components to reduce scope of impact for future issues of this type 3. Automatically pause VM migrations when high numbers of VMs are exhibiting networking issues 4. Improve monitoring of network control plane operations to decrease time to mitigation for issues of this type 5. Improve networking data plane resilience when the networking control plane is unresponsive",
+      "troubleshooting": {
+        "1": "Engineers paused VM migrations globally",
+        "2": "Engineers paused to prevent a recurrence until a fix",
+        "3": "Engineers rolled restart of the networking control plane"
+      }
+    },
+    "propagation pass": {
+      "1": "Google Cloud's networking control plane",
+      "2": "VM",
+      "3": "Google Services"
+    },
+    "refined path": {
+      "1": "network",
+      "2": "VM",
+      "3": "app"
+    },
+    "detection time": null,
+    "identification time": null,
+    "fix time": null,
+    "verification": "lixy, yugb"
+  },
+  "gcnet-21006": {
+    "title": "Google Cloud Networking Incident #21006",
+    "link": [
+      "https://status.cloud.google.com/incident/cloud-networking/21006"
+    ],
+    "time": "03/17/2021",
+    "summary": "On Wednesday 17 March 2021, Google Cloud Networking and Cloud Services that depend on Google's backbone network experienced a service disruption that resulted in increased latency, packet loss, and service unavailable errors for some services for a duration of 3 hours, 39 minutes. Cloud Interconnect had an extended impact duration of 4 hours, 30 minutes. We understand that this issue has impacted our valued customers and users, and we apologize to those who were affected.",
+    "details": "ROOT CAUSE Google Cloud datacenters connect to Google’s global Backbone network through a datacenter edge networking stack that uses routers to bridge a region’s network with the global Backbone network. There are multiple roles that routers in Google networks have; some routers are dedicated to providing connectivity to the Google Backbone network, others are dedicated to providing aggregation for customer and peering routes. Google utilizes routers from multiple vendors to provide defense in depth in order to reduce impact for issues that affect a specific router vendor. The trigger for this service disruption was a new set of routers being connected to Google’s backbone network as part of the normal router build process. The routers were part of a new network topology, this topology changed routes that some router roles received. This change in topology inadvertently caused the associated routes to be communicated to routers responsible for providing connectivity to the Google backbone, as well as aggregation routers. This triggered a defect in routers of a specific model, causing their routing process to fail. We previously communicated this defect was unknown; this is incorrect, as after further investigation we found that this defect was previously known, however it was not known to affect routers in these roles. During a routing failure these routers are configured to automatically redirect traffic away to minimize congestion and traffic loss, however, this results in some packet loss while the network reconverges onto new paths. This behavior worked as intended to reduce the potential impact of the issue, as repeated widespread routing process failures have the potential to create cascade failures in the backbone network. REMEDIATION AND PREVENTION Once the nature and scope of the problem became clear, Google engineers isolated the new set of routers from the network to prevent invalid routes being sent to the backbone routers. Once it was confirmed that affected routers were healthy and no longer had invalid routes, and impact for most services had ended, engineers began work to return traffic back to the routers that had rebooted. During this mitigation work to return traffic to a large number of routers, congestion caused a temporary period of increased loss and latency. Once the rebooted routers were back in the traffic path and the network had reconverged, the incident was considered mitigated. In addition to fixing the underlying cause that resulted in invalid routes to trigger routing process failures on specific routers and repairing the bug in the vendor OS, we will be implementing changes to prevent and reduce the impact of this type of failure in several ways: 1. Improve internal tooling for redirecting traffic from routers to reduce time to mitigation for issues with widespread network impact. 2. Improve testing and release process of new router builds to ensure that topology changes for router roles are identified prior to being connected to the backbone network. In addition to these changes, we are also working on long term architectural changes to help prevent issues of this type in the future. These changes will create well defined functional domains in the backbone network to allow for more consistent enforcement of route policies, limiting the scale of potential impact. These policies would provide better systematic protection against routes propagated through the network.",
+    "service_name": [
+      "Google Cloud Networking",
+      "Google Services"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 270,
+    "detection": {
+      "method": null,
+      "tool": null
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "error rate",
+          "increased latency",
+          "packet loss"
+        ]
+      },
+      {
+        "system kpi": [
+          "elevated packet loss",
+          "network unconnection"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "others"
+        }
+      ],
+      "details": "Google Cloud datacenters connect to Google’s global Backbone network through a datacenter edge networking stack that uses routers to bridge a region’s network with the global Backbone network. There are multiple roles that routers in Google networks have; some routers are dedicated to providing connectivity to the Google Backbone network, others are dedicated to providing aggregation for customer and peering routes. Google utilizes routers from multiple vendors to provide defense in depth in order to reduce impact for issues that affect a specific router vendor.The trigger for this service disruption was a new set of routers being connected to Google’s backbone network as part of the normal router build process. The routers were part of a new network topology, this topology changed routes that some router roles received. This change in topology inadvertently caused the associated routes to be communicated to routers responsible for providing connectivity to the Google backbone, as well as aggregation routers. This triggered a defect in routers of a specific model, causing their routing process to fail. We previously communicated this defect was unknown; this is incorrect, as after further investigation we found that this defect was previously known, however it was not known to affect routers in these roles. During a routing failure these routers are configured to automatically redirect traffic away to minimize congestion and traffic loss, however, this results in some packet loss while the network reconverges onto new paths. This behavior worked as intended to reduce the potential impact of the issue, as repeated widespread routing process failures have the potential to create cascade failures in the backbone network."
+    },
+    "operation": [
+      "change"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "isolated the new set of routers",
+        "return traffic back to the routers",
+        "fixing the underlying cause",
+        "repairing the bug in the vendor OS"
+      ],
+      "details": "Once the nature and scope of the problem became clear, Google engineers isolated the new set of routers from the network to prevent invalid routes being sent to the backbone routers. Once it was confirmed that affected routers were healthy and no longer had invalid routes, and impact for most services had ended, engineers began work to return traffic back to the routers that had rebooted. During this mitigation work to return traffic to a large number of routers, congestion caused a temporary period of increased loss and latency. Once the rebooted routers were back in the traffic path and the network had reconverged, the incident was considered mitigated. In addition to fixing the underlying cause that resulted in invalid routes to trigger routing process failures on specific routers and repairing the bug in the vendor OS, we will be implementing changes to prevent and reduce the impact of this type of failure in several ways: 1. Improve internal tooling for redirecting traffic from routers to reduce time to mitigation for issues with widespread network impact. 2. Improve testing and release process of new router builds to ensure that topology changes for router roles are identified prior to being connected to the backbone network. In addition to these changes, we are also working on long term architectural changes to help prevent issues of this type in the future. These changes will create well defined functional domains in the backbone network to allow for more consistent enforcement of route policies, limiting the scale of potential impact. These policies would provide better systematic protection against routes propagated through the network.",
+      "troubleshooting": {
+        "1": "Engineers isolated the new set of routers",
+        "2": "Engineers returned traffic back to the routers",
+        "3": "Engineers fixed the underlying cause that resulted in invalid routes to trigger routing process failures on specific routers",
+        "4": "Engineers repaired the bug in the vendor OS"
+      }
+    },
+    "propagation pass": {
+      "1": "router",
+      "2": "backbone network",
+      "3": "Google Services"
+    },
+    "refined path": {
+      "1": "router",
+      "2": "network",
+      "3": "app"
+    },
+    "detection time": null,
+    "identification time": null,
+    "fix time": null,
+    "verification": "lixy, yugb"
+  }
+}

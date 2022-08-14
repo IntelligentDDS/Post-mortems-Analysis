@@ -1,0 +1,7 @@
+While pushing and pulling were briefly offline (and for that we’re sorry!), the first phase of the migration worked. The problem was we didn’t know it worked – the tools we were using failed to report success (or anything, really). As a result we weren’t able to start phase two, which left some repositories unaccessible via the web interface.
+
+What should have been a few minutes of interrupted service for some users turned into a huge pain. But I don’t want to blame our tools – the real problem is our maintenance strategy. Any amount of interrupted service is unacceptable at this point.
+
+With that in mind, we’re going to re-think the way we do maintenance. Zero downtime and uninterrupted service is the goal. GitHub should be there when you need it.
+
+When we have a solution we’ll post about it here (like we always do). Sorry for the outage – we really don’t want it to happen again.

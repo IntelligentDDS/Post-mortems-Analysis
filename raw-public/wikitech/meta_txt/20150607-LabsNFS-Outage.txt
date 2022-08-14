@@ -1,0 +1,20 @@
+The Labs NFS server (labstore1001) suffered a 4-hour outage beginning at 01:00 on June 7th. The original cause of the outage is unknown but the duration was greatly increased due to errors on the switch. That issue has been patched over but may need further attention. The original cause of the problem may have been a side-effect of network congestion, or may have also be related to the switch failure; more investigation is needed.
+• [01:00] First sign of trouble. Labstore1001 ganglia graphs get ugly, syslog starts saying "peername failed (err 107)"
+• [02:00] Alex Monk texts Andrew Bogott with concerns about labs failures. Andrew is buying groceries.
+• [02:15] Andrew joins IRC and investigates. Labstore1001 is running 100% IO, high CPU, but low-to-normal network usage. top/iotop only indicate cryptic 'nfsd' and 'kworker' processes as hogging IO.
+• [03:00] Ori joins in. Andrew finally looks at dmesg and notes "peername failed (err 107)" which suggests a file descripter shortage. Andrew tries various ways to restart or flush NFS[1], to no avail, leading to...
+• [03:10] Andrew reboots labcontrol1001. When it comes back up, it has no network connectivity at all.
+• [03:20] Andrew reboots labcontrol1001 again, and rubs eyes in disbelief.
+• [03:30] Icinga starts throwing puppet failures for multiple hosts. Puppet is refreshing geoip for hosts (and, in some cases, failing) Ori concludes that there is a more wide-reaching network issue.
+• [04:00] Andrew texts Brandon and Alex as well
+• [04:05] Andrew gets wise and /calls/ Faidon who appears almost immediately
+• [04:10] Faidon logs into the associated switch and discovers a host of errors like
+• [04:20] Faidon disables ge-3/0/5, ge-3/0/11, ae3 and waits to see if errors stop (they did)
+• [04:35] Faidon dismantles labstore1001's bond0, sets up everything over eth0 again. Also reconfigures the switch accordingly (ae3 was deleted, ge-3/0/5 was enabled). A series of non-recurring switch error messages appear. labstore1001's connectivity is restored.
+• [04:37] Faidon disables eth0 and tries eth1 / ge-3/0/11 instead, errors appear again.
+• [04:42] Faidon re-reverts, disables eth1 but enables eth0. Another similar non-recurring flood of error messages are logged. labstore1001's connectivity is restored again.
+• [05:11] After 13mins of waiting for /srv/project recovery (suggesting an unclean shutdown), the mount ultimately fails with:
+• [05:11] Faidon attempts to remount /srv/project without running e2fsck and succeeds.
+• [05:18] NFS is made available again, service is restored.
+
+[1] Running nfs-start on labstore1001 was scary because that script says not to do this unless labstore1002 is off and labstore1002 is /not/ off. That message needs to be fixed, or labstore1002 needs to be turned off, or I've done something horrible. My guess is it's the first thing. At any rate I verified that labstore1002 didn't have anything in /srv/projects so I take it to not be attached to the disks, or something.

@@ -1,0 +1,34 @@
+A bug in Echo caused account auto-creations to fail, leaving users in an inconsistent state where CentralAuth believed they had an account on a particular wiki, but they actually didn't. Due to PasswordPoliciesForUser, the user is blocked from logging into other wikis, not just the one with inconsistent state. See 298416 ("Don't block logins if CentralAuthUser::queryAttached() fails")
+
+See Incident documentation/20160712-EchoCentralAuth/Retrospective for a retrospective from 20-July-2016.
+• 2015-11-26 phab:T119736 ("Can't log in ("Exception encountered, of type "Exception""), later "Could not find local user data for {Username}@{wiki}" is first filed - This is used as a recurring bug to track issues with users not being able to log in, due to inconsistent state between CentralAuth and local wikis (specifically the local user table row missing in the latter). However, there are known to be multiple causes, and this incident report only addresses the Echo cause. (There are other fixes, such as , that may be relevant to other causes.)
+• 2016-07-05 ~20:22 ("Enable Echo transition flags on group 0 wikis") is deployed as part of the train at Matt Flaschen's request. - A side effect of this is that any notification count update temporarily (while these flags are enabled) triggers internal API requests to other wikis to get accurate notification counts. These requests use CentralAuth. Because the AuthManager calls saveSettings during the CentralAuth auto-creation flow, that triggers the internal requests. However, CentralAuth is not usable at that stage, so attempting to get a CentralAuth token triggers "Can only obtain a centralauthtoken when using CentralAuth sessions".
+• 2016-07-06 Reports start coming in on phab:T119736 that may be caused by the Echo bug.
+• 2016-07-06 ~15:24 ("Enable Echo transition flags everywhere") deployed in SWAT at Matt's request.
+• 2016-07-11 - Legoktm does a grep with counts (phab:P3370) of the "Could not find local user data for" error over time. Among other things, this shows that it starts to spike on 2016-07-06, and by 2016-07-07, it's in the thousands. This is interpreted as meaning that wmf9 caused the problem, though actually the Echo part of this was caused by the config changes enabling the flags.
+• 2016-07-12 04:33 - Bryan Davis discovers that Echo is causing some of the errors, and posts a trace.
+• 2016-07-12 04:37 Ori: Reverted all wikis to wmf8 due to tenfold increase in phab:T119736
+• 2016-07-12 06:31 - "logmsgbot: legoktm@tin Synchronized wmf-config/CommonSettings.php: Don't block logins if CentralAuthUser::queryAttached() fails - T119736 (duration: 00m 27s)". This mitigates the issue by not blocking login to other wikis.
+• 2016-07-12 07:13-16 - Roan notifies the rest of the Collaboration team of the incident, and that wmf8 has been rolled back, and asks for review of . He also sends a followup email at 08:00 with more detailed information directly to Matt.
+• 2016-07-12 07:29 - Roan's patch ("ForeignWikiRequest: Bail early for non-global users") is merged. This works by checking if they have a central ID, and if not, not attempting cross-wiki requests.
+• 2016-07-12 13:54 - Matt Flaschen first sees the bug (in chat and them email). After going online a short while later, he starts investigating and catching up, but initially misunderstands: He thinks that it is not actively happening anymore due to the revert to wmf.8.
+• 2016-07-12 16:25 - After Matt is informed that it is still happening on wmf.8, Matt deploys the patch to wmf.8.
+• 2016-07-12 17:46 - After discussion about who is going to run the checkLocalUser.php script, Matt starts it, and logs this to the task and notes in IRC, but forgets to log it to the Server Admin Log. Legoktm later re-runs it, first by accident not seeing it was running, then intentionally after his suggestion that we would run it once now as a first pass to fix some users, and then again after it was fixed.
+• 2016-07-12 18:06 - Matt sees that there are still failures and realize Roan's patch is not a complete solution. He also kills the CentralAuth script, realizing there will be new cases, and planning to re-run it after Echo is actually fixed.
+• 2016-07-12 19:30 - Matt writes and deploys ("Troubleshoot why Echo is still triggering CA failures"), after he, Stephane Bisson, and Legoktm investigate whether there is a simpler solution involving dropping the problematic notification count recalculation. In addition to helping investigate, this also catches and logs the exception instead of letting it bubble up. The alternative simpler solution does not turn out to be workable.
+• 2016-07-12 19:47 - After confirming from the logs from that patch that having a central ID does not guarantee CentralAuth is safe to use, Matt consults with Brad Jorsch on how to determine this.
+• 2016-07-12 21:24 - After an update in response to discussion and code review, Matt deploys ("CentralAuth: Bail if not fully initialized"). This fixes the problem, except that checkLocalUser.php needs a full run to fix users that are already in an inconsistent state (it is running).
+
+Although it is a reasonable hypothesis that a new branch caused a problem, that is not the only possibility. Check the Server Admin Log for all deployments (including config) that might be related.
+
+We need better communication. Originally, one person from the Collaboration team (the team responsible for Echo), who was on vacation, was notified in a private IRC channel. No one emailed out right away that all wikis had been put back to wmf8. As soon as Echo was implicated in a trace, the bug should have at least been tagged Notifications (Echo redirects to this), and preferably the Collaboration team should explicitly have been notified.
+
+We may have gone too far to the approach of "fix this particular case" on this bug (due to the unclear cause(s) and prevalence), and not taken the appropriate time to figure out underlying causes. Track recurring bugs to see if there are new causes. If so, file a subtask.
+
+There is remaining work to do to track down all of the possible causes of this broader bug (phab:T119736), since although Echo caused a spike, it is not the only cause.
+
+We should consider community-wide communication about Unbreak Now bugs, and how to better prioritize and assign resources to fix them.
+
+Thanks to everyone who helped solve this bug, including Roan Kattouw, Brad Jorsch, Ori Livneh, Kunal Mehta, Bryan Davis, and Stephane Bisson.
+• In progress phab:T140207 - Consider alternative processes for Unbreak Now bugs, especially those which cross-cut components
+• In progress phab:T141066 - Identify "responsible parties" for "all" "components" deployed on Wikimedia servers

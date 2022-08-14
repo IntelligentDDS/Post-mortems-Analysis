@@ -1,0 +1,207 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/16015)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #16015
+
+Networking issue with Google Compute Engine services
+
+Incident began at **2016-08-05 00:54** and ended at **2016-08-05 02:40** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 09, 2016 | 07:21 |
+
+SUMMARY:
+
+On Friday 5 August 2016, some Google Cloud Platform customers experienced
+increased network latency and packet loss to Google Compute Engine (GCE),
+Cloud VPN, Cloud Router and Cloud SQL, for a duration of 99 minutes. If you
+were affected by this issue, we apologize. We intend to provide a higher level
+reliability than this, and we are working to learn from this issue to make
+that a reality.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Friday 5th August 2016 from 00:55 to 02:34 PDT a number of services were
+disrupted:
+
+Some Google Compute Engine TCP and UDP traffic had elevated latency. Most
+ICMP, ESP, AH and SCTP traffic inbound from outside the Google network was
+silently dropped, resulting in existing connections being dropped and new
+connections timing out on connect.
+
+Most Google Cloud SQL first generation connections from sources external to
+Google failed with a connection timeout. Cloud SQL second generation
+connections may have seen higher latency but not failure.
+
+Google Cloud VPN tunnels remained connected, however there was complete packet
+loss for data through the majority of tunnels. As Cloud Router BGP sessions
+traverse Cloud VPN, all sessions were dropped.
+
+All other traffic was unaffected, including internal connections between
+Google services and services provided via HTTP APIs.
+
+ROOT CAUSE:
+
+While removing a faulty router from service, a new procedure for diverting
+traffic from the router was used. This procedure applied a new configuration
+that resulted in announcing some Google Cloud Platform IP addresses from a
+single point of presence in the southwestern US. As these announcements were
+highly specific they took precedence over the normal routes to Google's
+network and caused a substantial proportion of traffic for the affected
+network ranges to be directed to this one point of presence. This misrouting
+directly caused the additional latency some customers experienced.
+
+Additionally this misconfiguration sent affected traffic to next-generation
+infrastructure that was undergoing testing. This new infrastructure was not
+yet configured to handle Cloud Platform traffic and applied an overly-
+restrictive packet filter. This blocked traffic on the affected IP addresses
+that was routed through the affected point of presence to Cloud VPN, Cloud
+Router, Cloud SQL first generation and GCE on protocols other than TCP and
+UDP.
+
+REMEDIATION AND PREVENTION:
+
+Mitigation began at 02:04 PDT when Google engineers reverted the network
+infrastructure change that caused this issue, and all traffic routing was back
+to normal by 02:34. The system involved was made safe against recurrences by
+fixing the erroneous configuration. This includes changes to BGP filtering to
+prevent this class of incorrect announcements.
+
+We are implementing additional integration tests for our routing policies to
+ensure configuration changes behave as expected before being deployed to
+production. Furthermore, we are improving our production telemetry external to
+the Google network to better detect peering issues that slip past our tests.
+
+We apologize again for the impact this issue has had on our customers.  
+  
+|
+
+SUMMARY:
+
+On Friday 5 August 2016, some Google Cloud Platform customers experienced
+increased network latency and packet loss to Google Compute Engine (GCE),
+Cloud VPN, Cloud Router and Cloud SQL, for a duration of 99 minutes. If you
+were affected by this issue, we apologize. We intend to provide a higher level
+reliability than this, and we are working to learn from this issue to make
+that a reality.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Friday 5th August 2016 from 00:55 to 02:34 PDT a number of services were
+disrupted:
+
+Some Google Compute Engine TCP and UDP traffic had elevated latency. Most
+ICMP, ESP, AH and SCTP traffic inbound from outside the Google network was
+silently dropped, resulting in existing connections being dropped and new
+connections timing out on connect.
+
+Most Google Cloud SQL first generation connections from sources external to
+Google failed with a connection timeout. Cloud SQL second generation
+connections may have seen higher latency but not failure.
+
+Google Cloud VPN tunnels remained connected, however there was complete packet
+loss for data through the majority of tunnels. As Cloud Router BGP sessions
+traverse Cloud VPN, all sessions were dropped.
+
+All other traffic was unaffected, including internal connections between
+Google services and services provided via HTTP APIs.
+
+ROOT CAUSE:
+
+While removing a faulty router from service, a new procedure for diverting
+traffic from the router was used. This procedure applied a new configuration
+that resulted in announcing some Google Cloud Platform IP addresses from a
+single point of presence in the southwestern US. As these announcements were
+highly specific they took precedence over the normal routes to Google's
+network and caused a substantial proportion of traffic for the affected
+network ranges to be directed to this one point of presence. This misrouting
+directly caused the additional latency some customers experienced.
+
+Additionally this misconfiguration sent affected traffic to next-generation
+infrastructure that was undergoing testing. This new infrastructure was not
+yet configured to handle Cloud Platform traffic and applied an overly-
+restrictive packet filter. This blocked traffic on the affected IP addresses
+that was routed through the affected point of presence to Cloud VPN, Cloud
+Router, Cloud SQL first generation and GCE on protocols other than TCP and
+UDP.
+
+REMEDIATION AND PREVENTION:
+
+Mitigation began at 02:04 PDT when Google engineers reverted the network
+infrastructure change that caused this issue, and all traffic routing was back
+to normal by 02:34. The system involved was made safe against recurrences by
+fixing the erroneous configuration. This includes changes to BGP filtering to
+prevent this class of incorrect announcements.
+
+We are implementing additional integration tests for our routing policies to
+ensure configuration changes behave as expected before being deployed to
+production. Furthermore, we are improving our production telemetry external to
+the Google network to better detect peering issues that slip past our tests.
+
+We apologize again for the impact this issue has had on our customers.  
+  
+| Aug 05, 2016 | 03:01 |
+
+The issue with Google Cloud networking should have been resolved for all
+affected users as of 02:40 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+|
+
+The issue with Google Cloud networking should have been resolved for all
+affected users as of 02:40 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+| Aug 05, 2016 | 02:29 |
+
+We are still investigating the issue with Google Compute Engine networking.
+Current data also indicates impact on other GCP products including Cloud SQL.
+
+We will provide another status update by 03:30 US/Pacific with current
+details.  
+  
+|
+
+We are still investigating the issue with Google Compute Engine networking.
+Current data also indicates impact on other GCP products including Cloud SQL.
+
+We will provide another status update by 03:30 US/Pacific with current
+details.  
+  
+| Aug 05, 2016 | 01:44 |
+
+We are investigating a networking issue with Google Compute Engine. We will
+provide more information by 02:30 US/Pacific.  
+  
+|
+
+We are investigating a networking issue with Google Compute Engine. We will
+provide more information by 02:30 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

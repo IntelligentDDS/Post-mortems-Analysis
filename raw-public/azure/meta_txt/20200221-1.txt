@@ -1,0 +1,9 @@
+RCA - Networking - Intermittent Connectivity (Tracking ID CTH0-HZ8)
+Summary of Impact: Between 22:17 UTC on 21 Feb 2020 and 00:53 UTC on 22 Feb 2020 Azure customers may have experienced network connection failures for IPv4 traffic. During this time:
+Network connections that originated from or were destined to West Europe (Amsterdam) or Southeast Asia (Singapore) regions may have resulted in a connection failure. Two-thirds of the new connection attempts would have been impacted; previously established connections between these two regions were unaffected.
+Any traffic going to or from the Internet was not impacted. IPv6 traffic was not impacted.
+Root Cause: The incident was caused by a configuration error pushed to routers in Microsoft Wide Area Network (WAN), in Singapore and Amsterdam. The configuration change sent all SYN packets (used to initiate a connection) to the router CPU for inspection, which caused the router’s built-in denial of service protection to drop a subset of packets to protect the router CPU.
+Mitigation: Engineers mitigated the incorrect configuration by deploying an update to the configuration changes of the two impacted network routers. As the deployment progressed through the routers, partial recovery started at approximately 20:40 UTC, followed by full recovery at 00:53 UTC on 22 Feb 2020.
+Next Steps: We sincerely apologize for the impact to the affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and to our processes to help ensure such incidents do not occur in the future. In this case, this included (but was not limited to):
+Improving the network router configuration testing process in the lab for its efficacy at large traffic scales. Improving the alerting to more quickly detect configuration errors.
+Provide Feedback: Please help us improve the Azure customer communications experience by taking our survey https://aka.ms/CTH0-HZ8

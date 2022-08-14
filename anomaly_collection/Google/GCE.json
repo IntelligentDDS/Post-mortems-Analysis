@@ -1,0 +1,1723 @@
+{
+    "google-GCE-#15055": {
+        "title": "Google Compute Engine Incident #15055",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315055.pdf"
+        ],
+        "time": "08/04/2015",
+        "summary": "On Tuesday 4 August 2015, incoming network traffic to Google Compute Engine (GCE) was interrupted for 5 minutes.",
+        "details": "DETAILED DESCRIPTION OF IMPACT: On Tuesday 4 August 2015 from 08:56 to 09:01 PDT, all incoming network packets from the Internet to GCE public IP addresses were dropped. The incident affected network load balancers and Google Cloud VPNs as well as the external IP addresses of GCE instances.",
+        "service_name": [
+            "Google Compute Engine",
+            "network load balancers",
+            "Google Cloud VPNs",
+            "external IP addresses of GCE instances"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 8,
+        "detection": {
+            "method": "automate",
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "response rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "GCE's external network connectivity is provided by a Google core networking component that supports many of Google's public services. A software deployment for this system introduced a bug which failed to handle a specic property of the configuration for GCE IP addresses. This led to the removal of all inward-bound routes for GCE."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back the software deployment"
+            ],
+            "details": "The impact on GCE networking triggered immediate alerts, and Google engineers restored service by rolling back the software deployment.",
+            "troubleshooting": {
+                "1": "trigger immediate alerts",
+                "2": "Google engineers restored service by rolling back the software deployment"
+            }
+        },
+        "propagation pass": {
+            "1": "GCE public IP addressses",
+            "2": "Network load balancer",
+            "3": "Google Cloud VPNs",
+            "4": "GCE instances"
+        },
+        "refined path": {
+            "1": "network component",
+            "2": "load balancer",
+            "3": "VPN",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": 8,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "google-GCE-#15056": {
+        "title": "Google Compute Engine Incident #15056",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315056.pdf"
+        ],
+        "time": "08/13/2015",
+        "summary": "From Thursday 13 August 2015 to Monday 17 August 2015, errors occurred on a small proportion of Google Compute Engine persistent disks in the europe-west1-b zone.",
+        "details": "DETAILED DESCRIPTION OF IMPACT: From 09:19 PDT on Thursday 13 August 2015, to Monday 17 August 2015, some Standard Persistent Disks in the europe-west1-b zone began to return sporadic I/O errors to their connected GCE instances. In total, approximately 5% of the Standard Persistent Disks in the zone experienced at least one I/O read or write failure during the course of the incident. Some management operations on the affected disks also failed, such as disk snapshot creation",
+        "service_name": [
+            "Google Compute Engine",
+            "Standard Persistent Disks",
+            "I/O"
+        ],
+        "impact symptom": [
+            "availability",
+            "durability"
+        ],
+        "duration": 4321,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service non-president",
+            {
+                "business kpi": [
+                    "sporadical I/O errors"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "power outage"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "disk"
+                }
+            ],
+            "details": "At 09:19 PDT on Thursday 13 August 2015, four successive lightning strikes on the local utilities grid that powers our European datacenter caused a brief loss of power to storage systems which host disk capacity for GCE instances in the europe-west1-b zone. "
+        },
+        "operation": [
+            "normal"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "automatic auxiliary systems restored power",
+                "battery backup",
+                "manual intervention"
+            ],
+            "details": "Although automatic auxiliary systems restored power quickly, and the storage systems are designed with battery backup,some recently written data was located on storage systems which were more susceptible to power failure from extended orrepeated battery drain. ",
+            "troubleshooting": {
+                "1": "automatic auxiliary systems restored power quickly, and the storage systems are designed with battery backup",
+                "2": "In almost all cases the data was successfully committed to stable storage, although manual intervention was required in order to restore the systems to their normal serving state.",
+                "3": "However, in a very few cases, recent writes wereunrecoverable, leading to permanent data loss on the Persistent Disk"
+            }
+        },
+        "propagation pass": {
+            "1": "persistent disks",
+            "2": "google datacenter",
+            "3": "GCE instances"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "data center",
+            "3": "app"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 4321,
+        "verification": "lixy"
+    },
+    "google-GCE-#15057": {
+        "title": "Google Compute Engine Incident #15057",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315057.pdf"
+        ],
+        "time": "10/27/2015",
+        "summary": "On Tuesday 27 October 2015, Google Compute Engine instances created within a 90 minute period in us-central1 and asia-east1 regions took longer than usual to obtain external network connectivity.",
+        "details": "DETAILED DESCRIPTION OF IMPACT: On Tuesday 27 October 2015 GCE instances created between 21:44 and 23:13 PDT in the us-central1 and asia-east1 regions took over 5 minutes before they started to receive traffc via their external IP address or network load balancer. Existing instances continued to operate without any issue, and there was no effect on internal networking for any instance",
+        "service_name": [
+            "Google Compute Engine",
+            "Google Compute Engine instances"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 70,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "high latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "network"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "This issue was triggered by rapid changes in external traffic patterns. The networking infrastructure automatically reconfigured itself to adapt to the changes, but the reconfiguration involved processing a substantial queue of modifications. The network registration of new GCE instances was required to wait on events in this queue, leading to delays in registration."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "automatically process",
+                "decouple"
+            ],
+            "details": "This issue was resolved as the backlog of network configuration changes was automatically processed. Google engineers will decouple the GCE networking operations and management systems that were involved in the issue such that a backlog in one system does not affect the other.Although the issue was detected promptly.",
+            "troubleshooting": {
+                "1": "This issue was resolved as the backlog of network configuration changes was automatically processed. Google engineers will decouple the GCE networking operations and management systems that were involved in the issue such that a backlog in one system does not affect the other."
+            }
+        },
+        "propagation pass": {
+            "1": "network infrastructure",
+            "2": "GCE instances"
+        },
+        "refined path": {
+            "1": "network infrastructure",
+            "2": "app"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 70,
+        "verification": "lixy"
+    },
+    "google-GCE-#15058": {
+        "title": "Google Compute Engine Incident #15058",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315058.pdf"
+        ],
+        "time": "10/31/2015",
+        "summary": "Between Saturday 31 October 2015 and Sunday 1 November 2015, Google Compute Engine networking in the us-central1-b zone was impaired on 3 occasions for an aggregate total of 4 hours 10 minutes.",
+        "details": "Outage timeframes for Saturday 31 October 2015: 05:52 to 07:05 for 73 minutes. Outage timeframes for Sunday 1 November 2015: 14:10 to 15:30 for 80 minutes, 19:03 to 22:40 for 97 minutes. During the affected timeframes, up to 14% of the VMs in us-central1-b experienced up to 100% packet loss communicating with other VMs in the same project. The issue impacted both in-zone and intra-zone communications.",
+        "service_name": [
+            "Google Compute Engine networking"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 250,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "system kpi": [
+                    "high packet loss"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "resource race"
+                }
+            ],
+            "details": "Google network control fabrics are designed to permit simultaneous failure of one or more components. When such failures occur, redundant components on the network may assume new roles within the control fabric. A race condition in one of these role transitions resulted in the loss of flow information for a subset of the VMs controlled by the fabric."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll out a change"
+            ],
+            "details": "Google engineers began rolling out a change to eliminate this race condition at 18:03 PST on Monday November 2 2015. The rollout completed on at 11:13 PST on Wednesday November 4 2015.",
+            "troubleshooting": {
+                "1": "Google engineers began rolling out a change to eliminate this race condition at 18:03 PST on Monday November 2 2015.",
+                "2": "The rollout completed on at 11:13 PST on Wednesday November 4 2015. "
+            }
+        },
+        "propagation pass": {
+            "1": "network component",
+            "2": "VM"
+        },
+        "refined path": {
+            "1": "network component",
+            "2": "VM"
+        },
+        "detection time": 91,
+        "identification time": null,
+        "fix time": 5970,
+        "verification": "lixy"
+    },
+    "google-GCE-#15059": {
+        "title": "Google Compute Engine Incident #15059",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315059.pdf"
+        ],
+        "time": "10/31/2019",
+        "summary": "On Saturday 31 October 2015, Google Compute Engine (GCE) management operations experienced high latency for a durationof 181 minutes.",
+        "details": "On Saturday 31 October 2015 from 18:04 to 21:05 PDT, all Google Compute Engine management operations were slow or timed out in the Google Developers Console, the gcloud tool or the Google Compute Engine API.",
+        "service_name": [
+            "Google Compute Engine management operations"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 181,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "high response latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "payload flood"
+                }
+            ],
+            "details": "An issue in the handling of Google Compute Engine management operations caused requests to not complete in a timely manner, due to older operations retrying excessively and preventing newer operations from succeeding"
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "reduce the number of retrying operations"
+            ],
+            "details": "Once discovered, remediation steps were taken by Google Engineers to reduce the number of retrying operations, enabling recovery from the operation backlog. The incident was resolved at 21:05 PDT when all backlogged operations were processed by the Google Compute Engine management backend and latency and error rates returned to typical values",
+            "troubleshooting": {
+                "1": "Once discovered, remediation steps were taken by Google Engineers to reduce the number of retrying operations, enabling recovery from the operation backlog.",
+                "2": "The incident was resolved at 21:05 PDT when all backlogged operations were processed by the Google Compute Engine management backend and latency and error rates returned to typical values",
+                "3": "the GCE Engineering team is implementing additional automated monitoring to detect high numbers of queued management operations and limiting the number of operation retries."
+            }
+        },
+        "propagation pass": {
+            "1": "Google Compute Engine management"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 181,
+        "verification": "lixy"
+    },
+    "google-GCE-#15062": {
+        "title": "Google Compute Engine Incident #15062",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315062.pdf"
+        ],
+        "time": "11/10/2015",
+        "summary": "On Tuesday, 10 November 2015, outbound traffic going through one of our European routers from both Google Compute Engine and Google App Engine experienced high latency for a duration of 6h43m minutes",
+        "details": "On Tuesday, 10 November 2015 from 06:30 - 13:13 PST, a subset of outbound traffic from Google Compute Engine VMs and Google App Engine instances experienced high latency. The disruption to service was limited to outbound traffic through one of our European routers, and caused at peak 40% of all traffic being routed through this device to be dropped. This accounted for 1% of all Google Compute Engine traffic being routed from EMEA and <0.05% of all traffic for Google App Engine.",
+        "service_name": [
+            "Google Compute Engine",
+            "Google App Engine"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 403,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "system kpi": [
+                    "high latency",
+                    "traffic drop"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "A network component failure in one of our European routers temporarily reduced network capacity in the region causing network congestion for traffic traversing this route. Although the issue was mitigated by changing the traffic priority, the problem was only fully resolved when the affected hardware was replaced."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "diverted traffic",
+                "made a change in traffic priority",
+                "replacement of the faulty hardware"
+            ],
+            "details": "As soon as significant traffic congestion in the network path was detected, at 09:10 PST, Google Engineers diverted a subset of traffic away from the affected path. As this only slightly decreased the congestion, Google Engineers made a change in traffic priority which fully mitigated the problem by 13:13 PST time. The replacement of the faulty hardware resolved the problem.",
+            "troubleshooting": {
+                "1": "As soon as significant traffic congestion in the network path was detected, at 09:10 PST, Google Engineers diverted a subset of traffic away from the affected path. ",
+                "2": "As this only slightly decreased the congestion, Google Engineers made a change in traffic priority which fully mitigated the problem by 13:13 PST time. ",
+                "3": "The replacement of the faulty hardware resolved the problem."
+            }
+        },
+        "propagation pass": {
+            "1": "A network component",
+            "2": "router",
+            "3": "Google Compute Engine VMs",
+            "4": "Google App Engine instances"
+        },
+        "refined path": {
+            "1": "hardware",
+            "2": "router",
+            "3": "VM",
+            "4": "app"
+        },
+        "detection time": null,
+        "fix time": 313,
+        "identification time": null,
+        "verification": "lixy"
+    },
+    "google-GCE-#15064": {
+        "title": "Google Compute Engine Incident #15064",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315064.pdf"
+        ],
+        "time": "11/23/2015",
+        "summary": "On Monday 23 November 2015, for a duration of 70 minutes, a subset of Internet destinations was unreachable from the Google Compute Engine europe-west1 region.",
+        "details": "On Monday 23 November 2015 from 11:55 to 13:05 PST, a number of Internet regions (Autonomous Systems) became unreachable from Google Compute Engine's europe1-west region. The region's traffic volume decreased by 13% during the incident. The majority of affected destination addresses were located in eastern Europe and the Middle East.",
+        "service_name": [
+            "Google Compute Engine",
+            "network link"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 70,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "traffic congestion"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource",
+                    "layer-3": "network"
+                }
+            ],
+            "details": "At 11:51 on Monday 23 November, Google networking engineers activated an additional link in Europe to a network carrier withwhom Google already shares many peering links globally. On this link, the peer's network signalled that it could route traffic to many more destinations than Google engineers had anticipated, and more than the link had capacity for. Google's network responded accordingly by routing a large volume of traffic to the link. At 11:55, the link saturated and began dropping the majority of its traffic. In normal operation, peering links are activated by automation whose safety checks would have detected and rectified thiscondition. In this case, the automation was not operational due to an unrelated failure, and the link was brought onlinemanually, so the automation's safety checks did not occur."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "direct traffic"
+            ],
+            "details": "Automated alerts fired at 12:56. At 13:02, Google network engineers directed traffic away from the new link and traffic flows returned to normal by 13:05.",
+            "troubleshooting": {
+                "1": "Automated alerts fired at 12:56",
+                "2": "At 13:02, Google network engineers directed traffic away from the new link and traffic flows returned to normal by 13:05."
+            }
+        },
+        "propagation pass": {
+            "1": "network carrier",
+            "2": "Google network"
+        },
+        "refined path": {
+            "1": "network infrastructure"
+        },
+        "detection time": 42,
+        "identification time": null,
+        "fix time": 50,
+        "verification": "lixy"
+    },
+    "google-GCE-#15065": {
+        "title": "Google Compute Engine Incident #15065",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315065.pdf"
+        ],
+        "time": "12/08/2015",
+        "summary": "On Monday 7 December 2015, Google Container Engine customers could not create external load balancers for their services for a duration of 21 hours and 38 minutes.",
+        "details": "From Monday 7 December 2015 15:00 PST to Tuesday 8 December 2015 12:38 PST, Google Container Engine customers could not create external load balancers for their services. Affected customers saw HTTP 400 “invalid argument” errors when creating load balancers in their Container Engine clusters. 6.7% of clusters experienced API errors due to this issue.The issue also affected customers who deployed Kubernetes clusters in the Google Compute Engine environment",
+        "service_name": [
+            "Google Compute Engine",
+            "Google Container Engine",
+            "Kubernetes"
+        ],
+        "impact symptom": [
+            "performance",
+            "availability"
+        ],
+        "duration": 542,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": []
+            },
+            {
+                "business kpi": [
+                    "HTTP 400 error",
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "incompatibility"
+                }
+            ],
+            "details": "Google Container Engine uses the Google Compute Engine API to manage computational resources. At about 15:00 PST on Monday 7 December, a minor update to the Compute Engine API inadvertently changed the case-sensitivity of the “sessionAffinity” enum variable in the target pool definition, and this variation was not covered by testing. Google Container Engine was not aware of this change and sent requests with incompatible case, causing the Compute Engine API to return anerror status."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back",
+                "commit a fix"
+            ],
+            "details": "Google engineers re-enabled load balancer creation by rolling back the Google Compute Engine API to its previous version. This was complete by 8 December 2015 12:38 PST.At 8 December 2015 10:00 PST, Google engineers committed a fix to the Kubernetes public open source repository.",
+            "troubleshooting": {
+                "1": "Google engineers re-enabled load balancer creation by rolling back the Google Compute Engine API to its previous version. This was complete by 8 December 2015 12:38 PST",
+                "2": "At 8 December 2015 10:00 PST, Google engineers committed a fix to the Kubernetes public open source repository."
+            }
+        },
+        "propagation pass": {
+            "1": "Google Compute Engine"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 163,
+        "verification": "lixy"
+    },
+    "google-GCE-#16002": {
+        "title": "Google Compute Engine Incident #16002",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316002.pdf"
+        ],
+        "time": "02/03/2016",
+        "summary": "On Wednesday 3 February 2016, one third of network connections from external sources to Google Compute Engine instances and network load balancers in the asia-east1 region experienced high rates of network packet loss for 89 minutes. ",
+        "details": "On Wednesday 3 February 2016, from 00:40 PST to 02:09 PST, one third of network connections from external sources to Google Compute Engine instances and network load balancers in the asia-east1 region experienced high rates of network packet loss.Traffic between instances within the region was not affected.",
+        "service_name": [
+            "Google Compute Engine",
+            "network load balancers"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 89,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "Google's monitoring system"
+            ]
+        },
+        "manifestation": [
+            {
+                "system kpi": [
+                    "high rates of network packet loss"
+                ]
+            },
+            {
+                "business kpi": []
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Google Compute Engine maintains a pool of systems that encapsulate incoming packets and forward them to the appropriate instance. During a regular system update, a master failover triggered a latent configuration error in two internal packetprocessing servers. This configuration rendered the affected packet forwarders unable to properly encapsulate external packets destined to instances."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "change configuration",
+                "divert traffic"
+            ],
+            "details": "Google's monitoring system detected the problem within two minutes of the configuration change. Additional alerts issued by the monitoring system for the asia-east1 region negatively affected total time required to root cause and resolve the issue. At 02:09 PST, Google engineers applied a temporary configuration change to divert incoming network traffic away from the affected packet encapsulation systems and fully restore network connectivity. In parallel, the incorrect configuration has been rectifiedand pushed to the affected systems.",
+            "troubleshooting": {
+                "1": "Google's monitoring system detected the problem within two minutes of the configuration change.",
+                "2": "At 02:09 PST, Google engineers applied a temporary configuration change to divert incoming network traffic away from the affected packet encapsulation systems and fully restore network connectivity.",
+                "3": "In parallel, the incorrect configuration has been rectified and pushed to the affected systems. "
+            }
+        },
+        "propagation pass": {
+            "1": "internal packet processing servers",
+            "2": "Google Compute Engine instances"
+        },
+        "refined path": {
+            "1": "backend servers",
+            "2": "app"
+        },
+        "detection time": 2,
+        "identification time": null,
+        "fix time": 89,
+        "verification": "lixy"
+    },
+    "google-GCE-#16003": {
+        "title": "Google Compute Engine Incident #16003",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316003.pdf"
+        ],
+        "time": "02/23/2016",
+        "summary": "On Tuesday 23 February 2016, for a duration of 10 hours and 6 minutes, 7.8% of Google Compute Engine projects had reduced quotas. ",
+        "details": "On Tuesday 23 February 2016 from 06:06 to 16:12 PST, 7.8% of Google Compute Engine projects had quotas reduced. This impacted all quotas, including number of cores, IP addresses and disk size. If reduced quota was applied to your project andy our usage reached this reduced quota you would have been unable to create new resources during this incident. Any such attempt would have resulted in a QUOTA_EXCEEDED error code with message \"Quota 'XX_XX' exceeded. Limit: N\". Any resources that were already created were unaffected by this issue.",
+        "service_name": [
+            "Google Compute Engine"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 606,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "resources quotas reduce"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "In order to maximize ease of use for Google Compute Engine customers, in some cases we automatically raise resource quotas.We then provide exclusions to ensure that no quotas previously raised are reduced. We occasionally tune the algorithm to determine which quotas can be safely raised. This incident occurred when one such change was made but a bug in the aforementioned exclusion process allowed some projects to have their quotas reduced."
+        },
+        "operation": [
+            "normal operation"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "roll back change",
+                "fix bug"
+            ],
+            "details": "As soon as Google engineers identified the cause of the issue the initiating change was rolled back and quota changes were reverted.",
+            "troubleshooting": {
+                "1": "As soon as Google engineers identified the cause of the issue the initiating change was rolled back and quota changes were reverted."
+            }
+        },
+        "propagation pass": {
+            "1": "Google Compute Engine"
+        },
+        "refined path": {
+            "1": "app"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 606,
+        "verification": "lixy"
+    },
+    "google-GCE-#16004": {
+        "title": "Google Compute Engine Incident #16004",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316004.pdf"
+        ],
+        "time": "02/23/2016",
+        "summary": "On Tuesday 23 February 2015, Google Compute Engine instances in the us-central1-f zone experienced intermittent packet loss for 46 minutes.",
+        "details": "On 23 February 2015 from 19:56 to 20:42 PST, Google Compute Engine instances in the us-central1-f zone experienced partialloss of network traffic. The disruption had a 25% chance of affecting any given network flow (e.g. a TCP connection or a UDP exchange) which entered or exited the us-central1-f zone. Affected flows were blocked completely. All other flows experienced no disruption. Systems that experienced a blocked TCP connection were often able to establish connectivity by retrying.Connections between endpoints within the us-central1-f zone were unaffected.",
+        "service_name": [
+            "Google Compute Engine"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 46,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "Google's monitoring system"
+            ]
+        },
+        "manifestation": [
+            {
+                "system kpi": [
+                    "intermittent packet loss",
+                    "blocked TCP connection"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "Google follows a gradual rollout process for all new releases. As part of this process, Google network engineers modified a configuration setting on a group of network switches within the us-central1-f zone. The update was applied correctly to one group of switches, but, due to human error, it was also applied to some switches which were outside the target group and of a different type. The configuration was not correct for them and caused them to drop part of their traffic."
+        },
+        "operation": [
+            "rollout"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "stop misconfiguration",
+                "isolating the misconfigured switches"
+            ],
+            "details": "The network engineers restorednormal service by isolating the misconfigured switches",
+            "troubleshooting": {
+                "1": "The traffic loss was detected by automated monitoring, which stopped the misconfiguration from propagating further, and alerted Google network engineers. ",
+                "2": "The network engineers restorednormal service by isolating the misconfigured switches"
+            }
+        },
+        "propagation pass": {
+            "1": "network switch",
+            "2": "Google Compute Engine instances"
+        },
+        "refined path": {
+            "1": "switch",
+            "2": "app"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 46,
+        "verification": "lixy"
+    },
+    "google-GCE-#16005": {
+        "title": "Google Compute Engine Incident #16005",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316005.pdf"
+        ],
+        "time": "02/24/2016",
+        "summary": "On Wednesday 24 February 2016, some Google Compute Engine instances in the europe-west1-c zone experienced network connectivity loss for a duration of 62 minutes. ",
+        "details": "On 24 February 2016 from 11:43 to 12:45 PST, up to 17% of Google Compute Engine instances in the europe-west1-c zoneexperienced a loss of network connectivity. Affected instances lost connectivity to both internal and external destinations.",
+        "service_name": [
+            "Google Compute Engine",
+            "network"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 62,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "connectivity"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "resource race"
+                }
+            ],
+            "details": "Several hours before the incident on 24th February 2016, Google engineers modified the Google Compute Engine control planein the europe-west1-c zone, migrating the management of network fire wall rules from an older system to the modern integration layer. This was a well-understood change that had been carried out several times in other zones without incident. As on previous occasions, the migration was completed without issues. On this occasion, however, the migrated networking configuration included a small ratio (approximately 0.002%) of invalid rules.The GCP network programming layer is hardened against invalid or inconsistent configuration information, and continued to operate correctly in the presence of these invalid rules. Twenty minutes before the incident, however, a remastering event occurred in the network programming layer in the europe-west1-c zone. Events of this kind are routine but, in this case, the presence of the invalid rules in the configuration coupled with a race condition in the way the new master loads its configuration caused the new master to load its network configurationin correctly. The consequence, at 11: 43 PST, was a loss of network programming configuration for a subset of Compute Engineinstances in the zone, effectively removing their network connectivity until the configuration could be re-propagated from thecentral repository."
+        },
+        "operation": [
+            "migration"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restore configuration"
+            ],
+            "details": "Google engineers restored service by forcing another remastering of the network programming layer, restoring a correct network configuration.",
+            "troubleshooting": {
+                "1": "Google engineers restored service by forcing another remastering of the network programming layer, restoring a correct network configuration.",
+                "2": "To prevent recurrence, Google engineers are fixing both the race condition which led to an incorrect configuration during mastership change, and adding alerting for the presence of invalid rules in the network configuration so that they will be detected promptly upon introduction. "
+            }
+        },
+        "propagation pass": {
+            "1": "Google Compute Engine control plane",
+            "2": "GCP network programming layer",
+            "3": "Google Compute Engine instances"
+        },
+        "refined path": {
+            "1": "network control plane",
+            "2": "network data plane",
+            "3": "app"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 62,
+        "verification": "lixy"
+    },
+    "google-GCE-#16011": {
+        "title": "Google Compute Engine Incident #16011",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316011.pdf"
+        ],
+        "time": "06/28/2016",
+        "summary": "On Tuesday, 28 June 2016 Google Compute Engine SSD Persistent Disks experienced elevated write latency and errors in one zone for a duration of 211 minutes. ",
+        "details": "On Tuesday, 28 June 2016 from 18:15 to 21:46 PDT SSD Persistent Disks (PD) in zone us-central1-a experienced elevated latency and errors for most writes. Instances using SSD as their root partition were likely unresponsive. For instances using SSD as a secondary disk, IO latency and errors were visible to applications. Standard (i.e. non-SSD) PD in us-central1-a suffered slightly elevated latency and errors.",
+        "service_name": [
+            "Google Compute Engine",
+            "SSD Persistent Disks"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 211,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "system kpi": [
+                    "SSD Persistent Disks write latency",
+                    "write error"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "space"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "Two concurrent routine maintenance events triggered a rebalancing of data by the distributed storage system underlying Persistent Disk. This rebalancing is designed to make maintenance events invisible to the user, by redistributing data evenly around unavailable storage devices and machines. A previously unseen software bug, triggered by the two concurrent maintenance events, meant that disk blocks which became unused as a result of the rebalance were not freed up for subsequent reuse, depleting the available SSD space in the zone until writes were rejected."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "revert events",
+                "fix issue"
+            ],
+            "details": "The issue was resolved when Google engineers reverted one of the maintenance events that triggered the issue. A fix for the underlying issue is already being tested in non-production zones.",
+            "troubleshooting": {
+                "1": "The issue was resolved when Google engineers reverted one of the maintenance events that triggered the issue.",
+                "2": "A fix for the underlying issue is already being tested in non-production zones."
+            }
+        },
+        "propagation pass": {
+            "1": "Google Compute Engine SSD Persistent Disks",
+            "2": "instances using SSD"
+        },
+        "refined path": {
+            "1": "OS",
+            "2": "app instances"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 119,
+        "verification": "lixy"
+    },
+    "google-GCE-#16012": {
+        "title": "Google Compute Engine Incident #16012",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316012.pdf"
+        ],
+        "time": "06/29/2016",
+        "summary": "On Wednesday 29 June 2016, newly created Google Compute Engine instances and newly created network load balancers in all zones were partially unreachable for a duration of 106 minutes. ",
+        "details": "On Wednesday 29 June 2016, from 11:58 PST until 13:44 US/Pacific, new Google Compute Engine instances and new network load balancers were partially unreachable via the network. In addition, changes to existing network load balancers were only partially applied. The level of unreachability depended on traffic path rather than instance or load balancer location. Overall, the average impact on new instances was 50% of traffic in the US and around 90% in Asia and Europe.",
+        "service_name": [
+            "Google Compute Engine instances",
+            "network load balancers"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 106,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "network partially unreachable"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "On 11:58 PST, a scheduled upgrade to Google’s network control system started, introducing an additional access control check for network configuration changes. This inadvertently removed the access of GCE’s management system to network load balancers in this environment. Only a fraction of Google's network locations require this access as an older design has an intermediate component doing access updates. As a result these locations did not receive updates for new and change dinstances or load balancers. The change was only tested at network locations that did not require the direct access, which resulted in the issue not being detected during testing and canarying and being deployed globally."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "modify access control"
+            ],
+            "details": "After identifying the root cause, the access control check was modified to allow access by GCE’s management system. The issue was resolved when this modification was fully deployed.",
+            "troubleshooting": {
+                "1": "After identifying the root cause, the access control check was modified to allow access by GCE’s management system. The issue was resolved when this modification was fully deployed."
+            }
+        },
+        "propagation pass": {
+            "1": "load balancer",
+            "2": "Google compute engine management system",
+            "3": "Google Compute Engine instances"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "2": "OS",
+            "3": "app instances"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 74,
+        "verification": "lixy"
+    },
+    "google-GCE-#16015": {
+        "title": "Google Compute Engine Incident #16015",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316015.pdf"
+        ],
+        "time": "08/05/2016",
+        "summary": "On Friday 5 August 2016, some Google Cloud Platform customers experienced increased network latency and packet loss to Google Compute Engine (GCE), Cloud VPN, Cloud Router and Cloud SQL, for a duration of 99 minutes.",
+        "details": "On Friday 5th August 2016 from 00:55 to 02:34 PDT a number of services were disrupted: Some Google Compute Engine TCP and UDP traffic had elevated latency. Most ICMP, ESP, AH and SCTP traffic inbound from outside the Google network was silently dropped, resulting in existing connections being dropped and new connections timing out on connect. Most Google Cloud SQL first generation connections from sources external to Google failed with a connection timeout. Cloud SQL second generation connections may have seen higher latency but not failure. Google Cloud VPN tunnels remained connected, however there was complete packet loss for data through the majority of tunnels. As Cloud Router BGP sessions traverse Cloud VPN, all sessions were dropped. All other traffic was unaffected, including internal connections between Google services and services provided via HTTP APIs.",
+        "service_name": [
+            "Google Compute Engine",
+            "Cloud VPN",
+            "Cloud Router",
+            "Cloud SQL"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 99,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "system kpi": [
+                    "increased network latency",
+                    "packet loss"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "While removing a faulty router from service, a new procedure for diverting traffic from the router was used. This procedure applied a new configuration that resulted in announcing some Google Cloud Platform IP addresses from a single point of presence in the southwestern US. As these announcements were highly specific they took precedence over the normal routes to Google's network and caused a substantial proportion of traffic for the affected network ranges to be directed to this one pointof presence. This misrouting directly caused the additional latency some customers experienced."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "revert change",
+                "fix the erroneous configuration"
+            ],
+            "details": "Mitigation began at 02:04 PDT when Google engineers reverted the network infrastructure change that caused this issue, and all traffic routing was back to normal by 02:34. The system involved was made safe against recurrences by fixing the erroneous configuration. This includes changes to BGP filtering to prevent this class of incorrect announcements",
+            "troubleshooting": {
+                "1": "Mitigation began at 02:04 PDT when Google engineers reverted the network infrastructure change that caused this issue, and all traffic routing was back to normal by 02:34. The system involved was made safe against recurrences by fixing the erroneous configuration."
+            }
+        },
+        "propagation pass": {
+            "1": "faulty router",
+            "2": "Google network",
+            "3": "next-generation infrastructure",
+            "4": "Google Cloud Platform traffic"
+        },
+        "refined path": {
+            "1": "router",
+            "2": "network",
+            "3": "next-generation infrastructure",
+            "4": "app"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 56,
+        "verification": "lixy"
+    },
+    "google-GCE-#16017": {
+        "title": "Google Compute Engine Incident #16017",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316017.pdf"
+        ],
+        "time": "08/22/2016",
+        "summary": "On Monday 22 August 2016, the Google Cloud US-CENTRAL1-F zone lost network connectivity to services outside that zone for a duration of 25 minutes.",
+        "details": "On Monday 22 August 2016, the Google Cloud US-CENTRAL1-F zone lost network connectivity to services outside that zone for a duration of 25 minutes. All network traffic within the zone was also unaffected.",
+        "service_name": [
+            "Google Cloud App Engine",
+            "Google Cloud Console",
+            "Google Dataflow",
+            "Google Cloud SQL",
+            "Google Compute Engine",
+            "Google Container Engine",
+            "Google Stackdriver Logging",
+            "Google Stackdriver Monitoring"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 25,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "elevated error rates",
+                    "service delay"
+                ]
+            },
+            {
+                "system kpi": [
+                    "connectivity"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "hardware failures",
+                    "layer-3": "power outage"
+                }
+            ],
+            "details": "On 18 July, Google carried out a planned maintenance event to inspect and test the UPS on a power feed in one zone in the US-CENTRAL1 region. That maintenance disrupted one of the two power feeds to network devices that control routes into and out of the US-CENTRAL1-F zone. Although this did not cause any disruption in service, these devices unexpectedly and silently disabled the affected power supply modules - a previously unseen behavior. Because our monitoring systems did not notify our network engineers of this problem the power supply modules were not re-enabled after the maintenance event. The service disruption was triggered on Monday 22 August, when our engineers carried out another planned maintenance event that removed power to the second power feed of these devices, causing them to disable the other power supply module as well, and thus completely shut down. Following our standard procedure when carrying out maintenance events, we made a detailed line walk of all critical equipmentprior to, and after, making any changes. However, in this case we did not detect the disabled power supply modules. Loss of these network devices meant that machines in US-CENTRAL1-F did not have routes into and out of the zone but could still communicate to other machines within the same zone."
+        },
+        "operation": [
+            "maintenance"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restore power"
+            ],
+            "details": "Our network engineers received an alert at 07:14, nine minutes after the incident started. We restored power to the devices at 07:30. The network returned to service without further intervention after power was restored.",
+            "troubleshooting": {
+                "1": "Our network engineers received an alert at 07:14, nine minutes after the incident started.",
+                "2": "We restored power to the devices at 07:30. The network returned to service without further intervention after power was restored."
+            }
+        },
+        "propagation pass": {
+            "1": "power feed",
+            "2": "network devices"
+        },
+        "refined path": {
+            "1": "power",
+            "2": "hardware"
+        },
+        "detection time": 9,
+        "identification time": 0,
+        "fix time": 16,
+        "verification": "lixy"
+    },
+    "google-GCE-#16020": {
+        "title": "Google Compute Engine Incident #16020",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316020.pdf"
+        ],
+        "time": "10/13/2016",
+        "summary": "On Thursday 13 October 2016, approximately one-third of requests sent to the Google Compute Engine HTTP(S) Load Balancers between 15:07 and 17:25 PDT received an HTTP 502 error rather than the expected response. ",
+        "details": "Starting at 15:07 PDT on Thursday 13 October 2016, Google Compute Engine HTTP(S) Load Balancers started to return elevated rates of HTTP 502 (Bad Gateway) responses. The error rate rose progressively from 2% to a peak of 45% of all requests at 16:09 and remained there until 17:03. From 17:03 to 17:15, the error rate declined rapidly from 45% to 2%. By 17:25 requests wer erouting as expected and the incident was over. During the incident, the error rate seen by applications using GCLB varied depending on the network routing of their requests to Google.",
+        "service_name": [
+            "Google Compute Engine HTTP(S) Load Balancers"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 138,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "high rate of HTTP error",
+                    "error rate"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs"
+                }
+            ],
+            "details": "The Google Compute Engine HTTP(S) Load Balancer system is a global, geographically-distributed multi-tiered software stack which receives incoming HTTP(S) requests via many points in Google's global network, and dispatches them to appropriate Google Compute Engine instances. On 13 October 2016, a configuration change was rolled out to one of these layers with wide spread distribution beginning at 15:07. This change triggered a software bug which decoupled second-tier load balancersfrom a number of first-tier load balancers. The affected first-tier load balancers therefore had no forwarding path for incoming requests and returned the HTTP 502 code to indicate this."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "revert rollout",
+                "restore configuration",
+                "restart instances"
+            ],
+            "details": "Once the nature and scope of the issue became clear, Google engineers first quickly halted and reverted the rollout. This prevented a larger fraction of GCLB instances from being affected. Google engineers then set about restoring function to the GCLB instances which had been exposed to the configuration. They verified that restarting affected GCLB instances restored the pre-rollout configuration, and then rapidly restarted all affected GCLB instances, ending the event.",
+            "troubleshooting": {
+                "1": "Once the nature and scope of the issue became clear, Google engineers first quickly halted and reverted the rollout. This prevented a larger fraction of GCLB instances from being affected.",
+                "2": "Google engineers then set about restoring function to the GCLB instances which had been exposed to the configuration. They verified that restarting affected GCLB instances restored the pre-rollout configuration, and then rapidly restarted all affected GCLB instances, ending the event."
+            }
+        },
+        "propagation pass": {
+            "1": "Google Compute Engine HTTP(S) Load Balancer",
+            "2": "Google's networking systems",
+            "3": "Google Compute Engine instances"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "2": "network system",
+            "3": "app instances"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 98,
+        "verification": "lixy"
+    },
+    "google-GCE-#17003": {
+        "title": "Google Compute Engine Incident #17003",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2317003.pdf"
+        ],
+        "time": "01/30/2017",
+        "summary": "On Monday 30 January 2017, newly created Google Compute Engine instances, Cloud VPNs and network load balancers were unavailable for a duration of 2 hours 8 minutes.",
+        "details": "Any GCE instances, Cloud VPN tunnels or GCE network load balancers created or live migrated on Monday 30 January 2017 between 10:36 and 12:42 PDT were unavailable via their public IP addresses until the end of that period. This also prevented outbound traffic from affected instances and load balancing health checks from succeeding. Previously created VPN tunnels,load balancers and instances that did not experience a live migration were unaffected.",
+        "service_name": [
+            "Google Compute Engine instances",
+            "Cloud VPN",
+            "network load balancers"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 128,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable"
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "All inbound networking for GCE instances, load balancers and VPN tunnels enter via shared layer 2 load balancers. These load balancers are configured with changes to IP addresses for these resources, then automatically tested in a canary deployment, before changes are globally propagated. The issue was triggered by a large set of updates which were applied to a rarely used load balancing configuration. The application of updates to this configuration exposed an inefficient code path which resulted in the canary timing out. From this point all changes of public addressing were queued behind these changes that could not proceed past the testing phase."
+        },
+        "operation": [
+            "live migration"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "restart job"
+            ],
+            "details": "To resolve the issue, Google engineers restarted the jobs responsible for programming changes to the network load balancers. After restarting, the problematic changes were processed in a batch, which no longer reached the inefficient code path. From this point updates could be processed and normal traffic resumed. This fix was applied zone by zone between 11:36 and 12:42.",
+            "troubleshooting": {
+                "1": "To resolve the issue, Google engineers restarted the jobs responsible for programming changes to the network load balancers.",
+                "2": "After restarting, the problematic changes were processed in a batch, which no longer reached the inefficient code path. From this point updates could be processed and normal traffic resumed. This fix was applied zone by zone between 11:36 and 12:42."
+            }
+        },
+        "propagation pass": {
+            "1": "network load balancers",
+            "2": "Google Compute Engine instances"
+        },
+        "refined path": {
+            "1": "load balancer",
+            "2": "app"
+        },
+        "detection time": null,
+        "identification time": null,
+        "fix time": 97,
+        "verification": "lixy"
+    },
+    "google-GCE-#17007": {
+        "title": "Google Compute Engine Incident #17007",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2317007.pdf"
+        ],
+        "time": "04/05/2017",
+        "summary": "On Wednesday 5 April 2017, requests to the Google Cloud HTTP(S) Load Balancer experienced a 25% error rate for a duration of 22 minutes.",
+        "details": "On Wednesday 5 April 2017 from 01:13 to 01:35 PDT, requests to the Google Cloud HTTP(S) Load Balancer experienced a 25% error rate for a duration of 22 minutes. Clients received 502 errors for failed requests. Some HTTP(S) Load Balancers that were recently modified experienced error rates of 100%.Google paused all configuration changes to the HTTP(S) Load Balancer for three hours and 41 minutes after the incident, until our engineers had understood the root cause. This caused deployments of App Engine Flexible apps to fail during that period.",
+        "service_name": [
+            "Google Compute Engine HTTP(S) Load Balancers"
+        ],
+        "impact symptom": [
+            "availability",
+            "inconsistency"
+        ],
+        "duration": 22,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "error rate",
+                    "HTTP 502 error"
+                ]
+            },
+            {
+                "system kpi": [
+                    "cpu usage"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "external causes",
+                    "layer-2": "insufficient resource",
+                    "layer-3": "cpu"
+                }
+            ],
+            "details": "A bug in the HTTP(S) Load Balancer configuration update process caused it to revert to a configuration that was substantially out of date. The configuration update process is controlled by a master server. In this case, one of the replicas of the master servers lost access to Google's distributed file system and was unable to read recent configuration files. Mastership then passed to the server that could not access Google's distributed file system. When the mastership changes, it begins the next configuration push as normal by testing on a subset of HTTP(S) Load Balancers. If this test succeeds, the configuration is pushed globally to all HTTP(S) Load Balancers. If the test fails (as it did in this case), the new master will revert all HTTP(S) Load Balancers to the last \"known good\" configuration. The combination of a mastership change, lack of access to more recent updates, and the initial test failure for the latest config caused the HTTP(S) Load Balancers to revert to the latest configuration that the master could read, which was substantially out-of-date. In addition, the update with the out-of-date configuration triggered a garbage collection process on the Google Frontend servers to free up memory used by the deleted configurations. The high number of deleted configurations caused the Google Frontend servers to spend a large proportion of CPU cycles on garbage collection which lead to failed health checks and eventual restart ofthe affected Google Frontend server. Any client requests served by a restarting server received 502 errors."
+        },
+        "operation": [
+            "upgrade"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "switch server"
+            ],
+            "details": "Google engineers were paged at 01:22 PDT. They switched the configuration update process to use a diffierent master server at 01:34 which mitigated the issue for most services within one minute. Our engineers then paused the configuration updates tothe HTTP(S) Load Balancer until 05:16 while the root cause was confirmed.",
+            "troubleshooting": {
+                "1": "They switched the configuration update process to use a diffierent master server at 01:34 which mitigated the issue for most services within one minute.",
+                "2": " Our engineers then paused the configuration updates tothe HTTP(S) Load Balancer until 05:16 while the root cause was confirmed."
+            }
+        },
+        "propagation pass": {
+            "1": "master server",
+            "2": "Google Cloud HTTP(S) Load Balancer"
+        },
+        "refined path": {
+            "1": "storage server",
+            "2": "load balancer"
+        },
+        "identification time": null,
+        "detection time": 9,
+        "fix time": 12,
+        "verification": "lixy"
+    },
+    "google-GCE-#17008": {
+        "title": "Google Compute Engine Incident #17008",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2317008.pdf"
+        ],
+        "time": "06/08/2017",
+        "summary": "On Thursday 8 June 2017, from 08:24 to 09:26 US/Pacific Time, datacenters in the asia-northeast1 region experienced a loss ofnetwork connectivity for a total of 62 minutes.",
+        "details": "On Thursday 8 June 2017, from 08:24 to 09:26 US/Pacific Time, network connectivity to and from Google Cloud services running in the asia-northeast1 region was unavailable for 62 minutes. This issue affected all Google Cloud Platform services in that region, including Compute Engine, App Engine, Cloud SQL, Cloud Datastore, and Cloud Storage. All external connectivity to the region was affected during this time frame, while internal connectivity within the region was not affected. In addition, inbound requests from external customers originating near Google’s Tokyo point of presence intended for Compute or Container Engine HTTP Load Balancing were lost for the initial 12 minutes of the outage. Separately, Internal Load Balancing within asia-northeast1 remained degraded until 10:23.",
+        "service_name": [
+            "Google Compute Engine",
+            "Google Cloud App Engine",
+            "Google Cloud SQL",
+            "Google Cloud Datasotre",
+            "Google Cloud Storage"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 62,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated monitoring"
+            ]
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "system kpi": [
+                    "connectivity"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "config"
+                }
+            ],
+            "details": "At the time of incident, Google engineers were upgrading the network topology and capacity of the region; a configuration error caused the existing links to be decommissioned before the replacement links could provide connectivity, resulting in a loss of connectivity for the asia-northeast1 region. Although the replacement links were already commissioned and appeared to be ready to serve, a network-routing protocol misconfiguration meant that the routes through those links were not able to carry traffic."
+        },
+        "operation": [
+            "upgrade",
+            "monitor"
+        ],
+        "human error": true,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "reconnect network path",
+                "revert configuration"
+            ],
+            "details": "Google engineers were paged by automated monitoring within one minute of the start of the outage, at 08:24 PDT. They began troubleshooting and declared an emergency incident 8 minutes later at 08:32. The issue was resolved when engineers reconnected the network path and reverted the configuration back to the last known working state at 09:22. Our monitoring systems worked as expected and alerted us to the outage promptly.",
+            "troubleshooting": {
+                "1": "Google engineers were paged by automated monitoring within one minute of the start of the outage, at 08:24 PDT. ",
+                "2": "They began troubleshooting and declared an emergency incident 8 minutes later at 08:32.",
+                "3": "The issue was resolved when engineers reconnected the network path and reverted the configuration back to the last known working state at 09:22. "
+            }
+        },
+        "propagation pass": {
+            "1": "router",
+            "2": "HTTP Load Balancer",
+            "3": "Google platform services"
+        },
+        "refined path": {
+            "1": "router",
+            "2": "load balancer",
+            "3": "app"
+        },
+        "identification time": 8,
+        "detection time": 1,
+        "fix time": 58,
+        "verification": "lixy"
+    },
+    "google-GCE-#18012": {
+        "title": "Google Compute Engine Incident #18012",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2318012.pdf"
+        ],
+        "time": "11/05/2018",
+        "summary": "On Wednesday 5 November 2018, Google Compute Engine (GCE) experienced new instance creation failures or elevated instance creation latency in us-central1-a for a duration of 5 hours. ",
+        "details": "50% of new Google Compute Engine (GCE) instances failed to or were slow to create in us-central1-a on Wednesday 5 November 2018 from 04:58 - 09:46 PST. This also affected Google Kubernetes Engine (GKE) cluster creation, and instances used by Google Cloud SQL, Google Cloud Dataproc, and Google Cloud Shell in the same region. Additionally, instances that were live migrated or had operations that were mutated by gcloud or from the Cloud Console during this period may have gotten into a bad state. This would have manifested as an instance being stuck and not being restartable.",
+        "service_name": [
+            "Google Cloud Engine",
+            "Google Kubernetes Engine",
+            "Google Cloud SQL",
+            "Google Cloud Dataproc",
+            "Google Cloud Shell",
+            "Google Cloud Console"
+        ],
+        "impact symptom": [
+            "performance"
+        ],
+        "duration": 300,
+        "detection": {
+            "method": "automate",
+            "tool": [
+                "automated alerts"
+            ]
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "instance creation failures",
+                    "instance creation latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                },
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "exception handling"
+                }
+            ],
+            "details": "Google’s datacenters rely on sharded Access Control Lists (ACL) stored in a highly available lock service called Chubby to perform operations in the data plane. The root cause was a standard ACL update, when a job crashed mid-write, leaving the ACLstored in Chubby in a corrupted state. After an automatic restart, faulty recovery logic was triggered which prevented the corrupted ACL from being correctly rewritten.This caused any operations that attempted to read the ACL to fail. As a result, the permissions of affected instances were not verifiable and the requested control plane operation eventually timed out, causingthe instance creation failure, or crash-looping of instances that were being live migrated to other hosts."
+        },
+        "operation": [
+            "update"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "fix bug"
+            ],
+            "details": "Automated alerts notified Google’s engineering team to the event approximately 12 minutes after impact started, and they immediately began investigating. Multiple Google engineering teams were engaged, and the root cause was eventually discovered at 08:11. For mitigation, engineering took steps to ensure a thorough fix and to prevent a recurrence. By 09:46 the missing ACL had been re-written and operations immediately recovered.",
+            "troubleshooting": {
+                "1": "For mitigation, engineering took steps to ensure a thorough fix and to prevent a recurrence. ",
+                "2": "By 09:46 the missing ACL had been re-written and operations immediately recovered."
+            }
+        },
+        "propagation pass": {
+            "1": "Access Control Lists",
+            "2": "Google datacenters",
+            "3": "Google Compute Engine instances"
+        },
+        "refined path": {
+            "1": "middleware",
+            "2": "data center",
+            "3": "app"
+        },
+        "identification time": 181,
+        "detection time": 12,
+        "fix time": 288,
+        "verification": "lixy"
+    },
+    "google-GCE-#19008": {
+        "title": "Google Compute Engine Incident #19008",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2319008.pdf"
+        ],
+        "time": "10/31/2019",
+        "summary": "On Thursday 31 October, 2019, network administration operations on Google Compute Engine (GCE), such as creating/deleting firewall rules, routes, global load balancers, subnets, or new VPCs, were subject to elevated latency and errors. ",
+        "details": "On Thursday 31 October, 2019 from 16:30 to 18:00 US/Paci!c and again from 20:24 to 23:08 Google Compute Engineers experienced elevated latency and errors applying certain network administration operations. At 23:08, the issue was mitigatedfully, and as a result, administrative operations began to succeed for most projects. However, projects which saw networkadministration operations fail during the incident were left stuck in a state where new operations could not be applied. Thecleanup process for these stuck projects took until 2019-11-02 14:00.",
+        "service_name": [
+            "Google Compute Engine",
+            "Google Kubernetes Engine",
+            "Google App Engine Flexible",
+            "Google Cloud Filestore",
+            "Google Cloud Machine Learning Engine",
+            "Google Cloud Memoeystore",
+            "Google Cloud Composer",
+            "Google Cloud Data Fusion"
+        ],
+        "impact symptom": [
+            "availability",
+            "performance"
+        ],
+        "duration": 2370,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            "service unavailable",
+            {
+                "business kpi": [
+                    "elevated error rates",
+                    "elevated latency"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "payload flood"
+                }
+            ],
+            "details": "Google Compute Engine’s networking stack consists of software which is made up of two components, a control plane and dataplane. The data plane is where packets are processed and routed based on the configuration set up by the control plane. GCE’s networking control plane has global components that are responsible for fanning-out network configurations that can affect an entire VPC network to downstream (regional/zonal) networking controllers. Each region and zone has their own control plane service, and each control plane service is sharded such that network programming is spread across multiple shards. A performance regression introduced in a recent release of the networking control software caused the service to begin accumulating a backlog of requests. The backlog eventually became significant enough that requests timed out, leaving some projects stuck in a state where further administrative operations could not be applied. The backlog was further exacerbated by the retry policy in the system sending the requests, which increased load still further. Manual intervention was required to clear the stuck projects, prolonging the incident."
+        },
+        "operation": [
+            "rollout"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "automatic failover",
+                "allot additional resources to the overloaded components",
+                "introduce a rate limit",
+                "restart service",
+                "process stuck operations"
+            ],
+            "details": "Google engineers were alerted to the problem on 2019-10-31 at 17:10 US/Pacific and immediately began investigating. From 17:10 to 18:00, engineers ruled out potential sources of the outage without finding a definitive root cause. The networking control plane performed an automatic failover at 17:57, dropping the error rate. This greatly reduced the number of stuck operations in the system and significantly mitigated user impact. However, after 18:59, the overload condition returned and error rates again increased. After further investigation from multiple teams, additional mitigation efforts began at 19:52, when Google engineers allotted additional resources to the overloaded components. At 22:16, as a further mitigation, Google engineers introduced a rate limit designed to throttle requests to the network programming distribution service. At 22:28, this service was restarted, allowing it to drop any pending requests from its queue. The rate limit coupled with the restart mitigatedthe issue of new operations becoming stuck, allowing the team to begin focusing on the cleanup of stuck projects. Resolving the stuck projects required manual intervention, which was unique to each failed operation type. Engineers worked round the clock to address each operation type in turn; as each was processed, further operations of the same type (from thesame project) also began to be processed. 80% of the stuck operations were processed by 2019-11-01 16:00, and all operations were fully processed by 2019-11-02 14:00.",
+            "troubleshooting": {
+                "1": "Google engineers were alerted to the problem on 2019-10-31 at 17:10 US/Pacific and immediately began investigating. From17:10 to 18:00, engineers ruled out potential sources of the outage without finding a definitive root cause.",
+                "2": "The networking control plane performed an automatic failover at 17:57, dropping the error rate. This greatly reduced the number of stuck operations in the system and significantly mitigated user impact.",
+                "3": "However, after 18:59, the overload condition returned and error rates again increased. After further investigation from multiple teams, additional mitigation efforts began at 19:52, when Google engineers allotted additional resources to the overloaded components.",
+                "4": "At 22:16, as a further mitigation, Google engineers introduced a rate limit designed to throttle requests to the network programming distribution service.",
+                "5": "Engineers worked round the clock to address each operation type in turn; as each was processed, further operations of the same type (from thesame project) also began to be processed. 80% of the stuck operations were processed by 2019-11-01 16:00, and all operations were fully processed by 2019-11-02 14:00."
+            }
+        },
+        "propagation pass": {
+            "1": "Google Compute Engine networking control plane",
+            "2": "network"
+        },
+        "refined path": {
+            "1": "network control plane",
+            "2": "network"
+        },
+        "identification time": null,
+        "detection time": 40,
+        "fix time": 2370,
+        "verification": "lixy"
+    },
+    "google-GCE-#210922": {
+        "title": "Google Compute Engine Incident #210922",
+        "link": [
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/google/meta_pdf/new/gce-2.pdf"
+        ],
+        "time": "09/22/2021",
+        "summary": "Incident began at 2021-09-27 10:17 and ended at 2021-09-29 06:52 (all times are US/Pacific). Google Kubernetes Engine, Google Compute Engine, and Google Cloud build experienced connection failures in Docker workloads to Google Cloud Load Balancers (GCLB) and destinations hosted behind content distribution networks (CDN’s) with a specific network configuration, such as debian.org and github.com.",
+        "details": "Description: Google Kubernetes Engine, Google Compute Engine, and Google Cloud build experienced connection failures in Docker workloads to Google Cloud Load Balancers (GCLB) and destinations hosted behind content distribution networks (CDN’s) with a specific network configuration, such as debian.org and github.com. From preliminary analysis, the root cause of the issue was a rollout to the network virtualization stack, which inadvertently broke mechanisms to tolerate Maximum Transmission Unit (MTU) mismatches. This change, in conjunction with with a mismatch for the MTU between nested Docker containers and Virtual Machines (VM’s), in combination with how the GCP networking subsystem handles large packets, resulted in packet drops leading to timeouts and connection errors for Docker workloads. Customer Impact: Google Kubernetes Engine: Increased timeout and “Connection Failed” errors when connecting to GCLB or destinations hosted behind content distribution networks (CDN’s) with a specific network configuration. Google Compute Engine: Increased timeout and “Connection Failed” errors when connecting to GCLB or destinations hosted behind content distribution networks (CDN’s) with a specific network configuration for Docker workloads running on GCE. Google Cloud Build: Increased build failures for builds which fetch sources from repositories hosted behind content distribution networks (CDN’s) with a specific network configuration.",
+        "service_name": [
+            "Google Kubernetes Engine (GKE)",
+            "Google Compute Engine (GCE)",
+            "Google Cloud Build (GCB)"
+        ],
+        "impact symptom": [
+            "availability"
+        ],
+        "duration": 10420,
+        "detection": {
+            "method": null,
+            "tool": null
+        },
+        "manifestation": [
+            {
+                "business kpi": [
+                    "connection errors",
+                    "request timeout"
+                ]
+            },
+            {
+                "system kpi": [
+                    "packet drops"
+                ]
+            }
+        ],
+        "root cause": {
+            "label": [
+                {
+                    "layer-1": "internal causes",
+                    "layer-2": "software bugs",
+                    "layer-3": "code change"
+                }
+            ],
+            "details": "From preliminary analysis, the root cause of the issue was a rollout to the network virtualization stack, which inadvertently broke mechanisms to tolerate Maximum Transmission Unit (MTU) mismatches. This change, in conjunction with with a mismatch for the MTU between nested Docker containers and Virtual Machines (VM’s), in combination with how the GCP networking subsystem handles large packets, resulted in packet drops leading to timeouts and connection errors for Docker workloads"
+        },
+        "operation": [
+            "rollout"
+        ],
+        "human error": false,
+        "reproduction": {
+            "label": false,
+            "details": ""
+        },
+        "mitigation": {
+            "label": [
+                "rollback"
+            ],
+            "details": "Mitigation work is still underway by our engineering team. The rollback in in progress and on final stages of completion.",
+            "troubleshooting": {
+                "1": "Engineer rollbacked the update"
+            }
+        },
+        "propagation pass": {
+            "1": "network virtualization stack",
+            "2": "GKE, GCE, GCB"
+        },
+        "refined path": {
+            "1": "network",
+            "2": "app"
+        },
+        "identification time": null,
+        "detection time": null,
+        "fix time": null,
+        "verification": "lixy, yugb"
+    }
+}

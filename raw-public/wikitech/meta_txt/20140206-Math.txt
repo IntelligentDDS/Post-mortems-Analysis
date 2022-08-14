@@ -1,0 +1,10 @@
+https://gerrit.wikimedia.org/r/#/c/104991/ changed the parser cache keys for pages with <math> in them, causing a spike in cache misses and thus the cluster fell over.
+
+This has been slowly rolling out on small wikis, mostly unnoticed since math isn't widely used there. Rolling out today to larger wikis (dewiki, etc) caused the cache stampede to be more obvious and cause downtime. Reverting the change didn't work because of incompatibilities between core + the extension, but was ok because we had mostly gotten through the invalidation before the roll back.
+
+This would've been a problem if we weren't having fatals, we would've started invalidating to the old version again. We got lucky. Going back to new version caused a little more invalidations, but seems reasonable and should level off soon probably.
+• We really need to process through the backlog of Math extension changesets from physikerwelt who's done great work on the extension but is lacking review.
+• Automated browser testing in beta labs by QA identified two problems, one with new dependencies for Math and the other with failure to update ParserOptions for the new changes to Math, either one of which would have caused an outage in production. In hindsight, these test failures should have triggered closer review for changes not discernable in the UI in beta labs, such as the issue that actually did cause the outage. (These bugs are marked as duplicate but they are reporting two separate issues with changes to Math https://bugzilla.wikimedia.org/show_bug.cgi?id=60486 https://bugzilla.wikimedia.org/show_bug.cgi?id=60546)
+• Status: Done - wrap Math stuff in PoolCounter so it doesn't kill apaches so easily. More review on recent changes to Math. Be careful in rolling this release out further.
+• Status: Declined - Let's get better at reviewing the Math extension
+• Status: Declined - implement true code deployment pipleine (so that all code spends a comparable amount of time in testing/beta cluster before hitting production)

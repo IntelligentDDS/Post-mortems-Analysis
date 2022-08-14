@@ -1,0 +1,18 @@
+DB shard column added to MediaWiki monolog SPI entries in logging.php with invalid processor callback return value.
+• 23:11 aaron@tin: Synchronized wmf-config/logging.php: Include DB shard as a logstash column (duration: 00m 41s)
+• This is the root of the problem: the change was deployed 2 minutes after merge without either A) testing in Beta Cluster nor B) testing on mwdebug*, either of which would have (and did in the case of Beta Cluster) caught the issue.
+• The "currently experiencing technical difficulties" notice appears for essentially all wiki page access; a local fix was never committed to the existing patch set (possibly due to push failure) and the bug was not noticed in review
+• Error: Catchable fatal error: Argument 1 passed to __invoke() must be an instance of array, string given in /srv/mediawiki/wmf-config/logging.php on line 89
+• Error spike as seen from Kibana
+• 23:14 Aaron notices the error browsing VP/T after sync, others from IRC and SMS pages
+• 23:14 Roan starts reverting, locally on deployment host only, and notices some scap errors (which turned out to be irrelevant)
+• 23:15 catrope@tin Synchronized wmf-config/logging.php: revert (duration: 00m 41s); outage state is over
+• Stashbot did not log this to the Server admin log wiki page
+• 23:22 Aaron notices his local mediawiki-config repo is corrupt and unusable for git commands, starts local re-clone.
+• 00:00 !log aaron@tin Synchronized wmf-config/logging.php: No-op sync of 7e103f21a3555fc0b8f7fdea4fd8df4cb7cb939e (duration: 00m 42s); deployment host and gerrit repos are back in sync again
+• Root cause: A configuration change was not tested on mwdebug* or beta prior to it going out, which would have trivially caught this failure
+• Automatically catch in the future: The scap canary check does not currently catch large HHVM fatal spikes due to those being unreliable/noisy. The scap canary check does check exceptions, however.
+• Noisy scap import errors can be confusing, especially during something urgent.
+• Configuration changes should be tested on mwdebug* as well as Beta Cluster (when possible) prior to syncing to production--this did not happen
+• Account for fatals in scap canary check? This probably will need some kind of filtering to avoid common noise cases. - Task T154646
+• Make sure SAL logging works during outages? Both Roan's revert of this change, as well as Tyler's revert of the group1 train about 3 hours prior to this incident were not logged there.

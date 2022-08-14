@@ -1,0 +1,13 @@
+After the deploy of HHVM to the general public, some users reported OAuth issues. Those were linked to the failure of apache_request_headers() to get the correct OAuth headers when apache uses mod_proxy_fcgi. A few defines in the general apache config solved the problem.
+• since 2014-11-21 a significant portion of the API traffic (~ 25%) was being served by HHVM.
+• Around 16:00Z on 2014-11-25 the HHVM and the Zend appserver pools have been merged, and from that moment, one third of the requests to the backend were served by HHVM
+• Users complained on IRC and bug https://phabricator.wikimedia.org/T75968 was filled at 05:24Z on 2014-11-26
+• The culprit was identified in the fact that the Authorization header was not available to HHVM via apache_request_headers(). Further research showed that this is not HHVM's fault, but rather an apache mod_proxy_fcgi bug.
+• Consequently, a patch was created to re-inject the header (https://gerrit.wikimedia.org/r/#/c/175952/); this was merged at 7:14Z, it propagated to the whole cluster in the next 20 minutes, which made oauth login in phabricator unbroken; The ticket was thus closed
+• Around 10:20Z an editor reported a malfunction still persisting in flickr2commons due to OAuth failures
+• After some further debug data was available, an inspection of the code showed another missing header that was later used by the oauth library, Content-Type. This was fixed with patch https://gerrit.wikimedia.org/r/#/c/175975/ which was merged at 11:40Z, and was propagated to the whole cluster in 20 minutes.
+• No further report of errors from users, and the "Hello world" OAuth app magically got unbroken (I guess it was broken since we moved testwiki to HHVM some months back)
+
+Apache mod_proxy_fcgi is not the best part of the webserver, but the problem we encountered was in fact sneaky enough. One thing we might want to look at is why we didn't have any report of OAuth failures in beta, where the problem should've showed up earlier.
+
+No real actionable for this item

@@ -1,0 +1,6 @@
+While syncing files to backport a logging enhancement to MediaWiki 1.27.0-wmf.13, changes were propagated in the wrong order. This resulted in HHVM fatal errors of
+
+for all requests to all wikis until the updated version of php-1.27.0-wmf.13/includes/session/SessionManager.php was synced to the cluster. The outage lasted approximately 2.5 minutes between 2016-02-12T19:13 to 2016-02-12T19:16.
+• Entirely operator error. The deployer should have understood how the changes were interrelated and performed the sync of SessionManager.php before Setup.php.
+• Having the statements prepared ahead of time in a text document allowed quick action to sync the missing file.
+• Use a less risky deployment process. Except for emergencies, always deploy to a canary first, followed by a rolling deploy. Ideally, have a mechanism to automatically detect errors & abort an ongoing deploy. phab:T121597

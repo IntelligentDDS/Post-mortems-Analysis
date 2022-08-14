@@ -1,0 +1,504 @@
+{
+  "gcs-16027": {
+    "title": "Google Cloud Storage Incident #16027",
+    "link": [
+      "https://status.cloud.google.com/incident/storage/16027"
+    ],
+    "time": "08/08/2015",
+    "summary": "On Saturday 8 August 2015, Google Cloud Storage served an elevated error rate for a duration of 139 minutes. If your service or application was affected, we apologize. We have taken an initial set of actions to prevent recurrence of the problem, and have a larger set of changes which will provide defense in depth currently under review by the engineering teams.",
+    "service_name": [
+      "Google Cloud Storage"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 139,
+    "detection": {
+      "method": "automate",
+      "tool": [
+        "automated monitoring alert"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "elevated error rate"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "external causes",
+          "layer-2": "excessive flow"
+        }
+      ],
+      "details": "The elevated GCS error rate was induced by a large increase in traffic compared to normal levels. The traffic surge was exacerbated by retries from software clients receiving errors. The GCS errors were principally served to the sources which were generating the unusual traffic levels, but a fraction of the errors were served to other users as well."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "increase capacity",
+        "reduce unexpected traffic"
+      ],
+      "details": "Google engineers were alerted to the elevated error rate by automated monitoring, and took steps to both reduce the impact and to increase capacity to mitigate the duration and severity of the incident for GCS users. In parallel, Google’s support team contacted the system owners which were generating the bulk of unexpected traffic, and helped them reduce their demand. The combination of these two actions resolved the incident.",
+      "troubleshooting": {
+        "1": "Google engineers were alerted to the elevated error rate",
+        "2": "reduce the impact and to increase capacity",
+        "3": "Google’s support team contacted the system owners which were generating the bulk of unexpected traffic, and helped them reduce their demand."
+      }
+    },
+    "propagation pass": {
+      "1": "Google Cloud Storage"
+    },
+    "refined path": {
+      "1": "database"
+    },
+    "identification time": null,
+    "detection time": null,
+    "fix time": 139,
+    "verification": "lixy"
+  },
+  "gcs-16029": {
+    "title": "Google Cloud Storage Incident #16029",
+    "link": [
+      "https://status.cloud.google.com/incident/storage/16029"
+    ],
+    "time": "08/26/2015",
+    "summary": "On Wednesday 26 August 2015, requests to Signed URLs [1] on Google Cloud Storage (GCS) returned errors for an extended period of time, affecting approximately 18% of projects using the Signed URLs feature. We apologize to our customers who were affected by this issue. We have identified and fixed the root causes of the incident, and we are putting measures in place to keep similar issues from occurring in future.",
+    "service_name": [
+      "Google Cloud Storage"
+    ],
+    "impact symptom": [
+      "security",
+      "availability"
+    ],
+    "duration": 238,
+    "detection": {
+      "method": "automated",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "return error"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "GCS Signed URLs are cryptographically signed by the owner of the stored data, using the private key of a Google Cloud Platform service account. The private key is known only to the owner, but the corresponding public key is retained by Google and used to verify the URL signatures.\nWithin Google, similar service accounts are used for many internal authentication purposes. (For example, these accounts include the default service account which internally represents the customer's Cloud Platform project.) For these service accounts, Google retains both the public and the private key. These keypairs have a short lifetime and are frequently regenerated.\nAll keys are managed in a central, strongly hardened security module. As part of an effort to simplify the key management system, prior to the incident, a configuration change was pushed which mistakenly caused the security module to consider customers' service accounts as candidates for automatic keypair management. This change was later rolled back, removing the service accounts from automatic management, but some customers' service accounts had already received new keypairs with finite lifetimes. Accounts with heavy Signed URL usage were more likely to be affected.\nOn 07:25 PDT on Wednesday 26 August, the lifetimes of the temporary keypairs for affected accounts began to expire. Since the expired keypairs were not automatically removed as the service account were no longer under automatic management, it's presence was treated as an error by the Signed URL verification process, causing all Signed URL requests for the service account to fail.\nAt no time during this incident were any keys at risk and they remain safe and secure. No action is required by customers."
+    },
+    "operation": [
+      "simplify the key management system"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "rollback change",
+        "remove the expired keys"
+      ],
+      "details": "Automated monitoring signalled the issue at 07:33. Google engineers identified the need to remove the expired keys, which required manual access to the security module. This is protected by multiple security procedures, by design, so it required several escalations to get the correct people. Access was gained at 10:34 PDT, and thereafter service was progressively restored as each service account was reactivated by removing its expired keys.",
+      "troubleshooting": {
+        "1": "Automated monitoring signalled the issue at 07:33",
+        "2": "Google engineers identified the need to remove the expired keys, which required manual access to the security module. ",
+        "3": "service was progressively restored as each service account was reactivated by removing its expired keys. "
+      }
+    },
+    "propagation pass": {
+      "1": "Google Cloud Storage",
+      "2": "Google Cloud Platform services"
+    },
+    "refined path": {
+      "1": "database",
+      "2": "app"
+    },
+    "identification time": null,
+    "detection time": 7,
+    "fix time": 231,
+    "verification": "lixy"
+  },
+  "gcs-17002": {
+    "title": "Google Cloud Storage Incident #17002",
+    "link": [
+      "https://status.cloud.google.com/incident/storage/17002"
+    ],
+    "time": "07/06/2017",
+    "summary": "On Thursday, 6 July 2017, requests to Google Cloud Storage (GCS) JSON API experienced elevated error rates for a period of 3 hours and 15 minutes. The GCS XML API was not affected.\nRequests to www.googleapis.com that used OAuth2 credentials experienced elevated error rates for 29 minutes, which directly caused higher failure rates for other products, including Firebase and Google Cloud Functions.\nIf your service or application’s was affected by this issue, we sincerely apologize. We understand the importance of reliable APIs and are currently taking steps to prevent future recurrences of this issue.",
+    "service_name": [
+      "Google Cloud Storage"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 194,
+    "detection": {
+      "method": "automated",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      "service unavailable",
+      {
+        "business kpi": [
+          "elevated error rate"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "payload flood"
+        }
+      ],
+      "details": "A low-level software defect in an internal API service that handles GCS JSON requests caused infrequent memory-related process terminations. These process terminations increased as a result of a large volume in requests to the GCS Transfer Service, which uses the same internal API service as the GCS JSON API. This caused an increased rate of 503 responses for GCS JSON API requests for 3.25 hours.\nWhile attempting to fix the latency, the traffic for GCS JSON requests was isolated from other API traffic. After the traffic was isolated, attempts to mitigate the problem caused the error rate to increase to 97%. The problem was finally fixed when a further configuration change fixed the process terminations."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "change configuration",
+        "isolate traffic"
+      ],
+      "details": "Google engineers were paged by automated monitoring, and began troubleshooting before the issue symptoms were visible to customers at 15:15. Initially a configuration issue caused traffic to be moved away from dedicated clusters that were available to isolate the root cause. However, engineers immediately detected the high error rate and moved traffic to the dedicated clusters. This decreased the error rates experienced by customers. A follow-on configuration change pushed by Google engineers stopped new process terminations, which allowed the backends to heal, and normal service was restored.",
+      "troubleshooting": {
+        "1": "Google engineers were paged by automated monitoring, and began troubleshooting before the issue symptoms were visible to customers at 15:15 ",
+        "2": "a configuration issue caused traffic to be moved away from dedicated clusters that were available to isolate the root cause. ",
+        "3": "Mitigation work is currently underway by our Engineering Team. Current data indicates that a small percentage of requests in the US region only are affected. Further updates will be provided by Tuesday, 2018-09-04 08:45 US/Pacific.",
+        "4": "A follow-on configuration change pushed by Google engineers stopped new process terminations, which allowed the backends to heal, and normal service was restored. "
+      }
+    },
+    "propagation pass": {
+      "1": "internal API service",
+      "2": "Google cloud storage transfer service and other services"
+    },
+    "refined path": {
+      "1": "middleware",
+      "2": "app"
+    },
+    "identification time": null,
+    "detection time": 0,
+    "fix time": 194,
+    "verification": "lixy"
+  },
+  "gcs-17005": {
+    "title": "Google Cloud Storage Incident #17005",
+    "link": [
+      "https://status.cloud.google.com/incident/storage/17005"
+    ],
+    "time": "10/12/2017",
+    "summary": "Starting Thursday 12 October 2017, Google Cloud Storage clients located in the Northeast of North America experienced up to a 10% error rate for a duration of 21 hours and 35 minutes when fetching objects stored in multi-regional buckets in the US.\nWe apologize for the impact of this incident on your application or service. The reliability of our service is a top priority and we understand that we need to do better to ensure that incidents of this type do not recur.",
+    "service_name": [
+      "Google Cloud Storage"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 1285,
+    "detection": {
+      "method": null,
+      "tool": null
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "elevated error rate",
+          "elevated latency"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "others"
+        }
+      ],
+      "details": "Google ensures balanced use of its internal networks by throttling outbound traffic at the source host in the event of congestion. This incident was caused by a bug in an earlier version of the job that reads Cloud Storage objects from disk and streams data to clients. Under high traffic conditions, the bug caused these jobs to incorrectly throttle outbound network traffic even though the network was not congested.\nGoogle had previously identified this bug and was in the process of rolling out a fix to all Google datacenters. At the time of the incident, Cloud Storage jobs in a datacenter in Northeast North America that serves requests to some Canadian and US clients had not yet received the fix. This datacenter is not a location for customer buckets (https://cloud.google.com/storage/docs/bucket-locations), but objects in multi-regional buckets can be served from instances running in this datacenter in order to optimize latency for clients."
+    },
+    "operation": [
+      "normal operation"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "redirect traffic",
+        "fix bug"
+      ],
+      "details": "The incident was first reported by a customer to Google on Thursday 12 October 14:59 PDT. Google engineers determined root cause on Friday 13 October 09:47 PDT. We redirected Cloud Storage traffic away from the impacted region at 10:08 and the incident was resolved at 10:12.\nWe have now rolled out the bug fix to all regions. We will also add external monitoring probes for all regional points of presence so that we can more quickly detect issues of this type.",
+      "troubleshooting": {
+        "1": "The incident was first reported by a customer to Google on Thursday 12 October 14:59 PDT.",
+        "2": "Google engineers determined root cause on Friday 13 October 09:47 PDT.",
+        "3": "We redirected Cloud Storage traffic away from the impacted region at 10:08 and the incident was resolved at 10:12."
+      }
+    },
+    "propagation pass": {
+      "1": "Google Cloud Storage"
+    },
+    "refined path": {
+      "1": "database"
+    },
+    "identification time": null,
+    "detection time": 132,
+    "fix time": 1008,
+    "verification": "lixy"
+  },
+  "gcs-18003": {
+    "title": "Google Cloud Storage Incident #18003",
+    "link": [
+      "https://status.cloud.google.com/incident/storage/18003"
+    ],
+    "time": "09/04/2018",
+    "summary": "On Tuesday 4 September 2018, Google Cloud Storage experienced 1.1% error rates and increased 99th percentile latency for US multiregion buckets for a duration of 5 hours 38 minutes. After that time some customers experienced 0.1% error rates which returned to normal progressively over the subsequent 4 hours. To our Google Cloud Storage customers whose businesses were impacted during this incident, we sincerely apologize; this is not the level of tail-end latency and reliability we strive to offer you. We are taking immediate steps to improve the platform’s performance and availability.",
+    "service_name": [
+      "Google Cloud Storage"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 595,
+    "detection": {
+      "method": "automated",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "elevated error rate",
+          "increased latency"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "payload flood"
+        },
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "code change"
+        }
+      ],
+      "details": "At the beginning of August, Google Cloud Storage deployed a new feature which among other things prefetched and cached the location of some internal metadata. On Monday 3rd September 18:45 PDT, a change in the underlying metadata storage system resulted in increased load to that subsystem, which eventually invalidated some cached metadata for US multiregion buckets. This meant that requests for that metadata experienced increased latency, or returned an error if the backend RPC timed out. This additional load on metadata lookups led to elevated error rates and latency as described above."
+    },
+    "operation": [
+      "system change"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "isolate suffered keyspace",
+        "pursue the load source"
+      ],
+      "details": "Google Cloud Storage SREs were alerted automatically once error rates had risen materially above nominal levels. Additional SRE teams were involved as soon as the metadata storage system was identified as a likely root cause of the incident. In order to mitigate the incident, the keyspace that was suffering degraded performance needed to be identified and isolated so that it could be given additional resources. This work completed by the 4th September 08:33 PDT. In parallel, Google Cloud Storage SREs pursued the source of additional load on the metadata storage system and traced it to cache invalidations.",
+      "troubleshooting": {
+        "1": "alerted automatically once error rates had risen materially above nominal levels.",
+        "2": "Additional SRE teams were involved as soon as the metadata storage system was identified as a likely root cause of the incident.",
+        "3": "identify and isolate the keyspace",
+        "4": "give additional resources",
+        "5": "SRE pursued the source of additional load on the metadata storage system and traced it to cache invalidations"
+      }
+    },
+    "propagation pass": {
+      "1": "metadata storage system",
+      "2": "customer with buckets"
+    },
+    "refined path": {
+      "1": "database",
+      "2": "app"
+    },
+    "identification time": null,
+    "detection time": null,
+    "fix time": 595,
+    "verification": "lixy"
+  },
+  "gcs-18005": {
+    "title": "Google Cloud Storage Incident #18005",
+    "link": [
+      "https://status.cloud.google.com/incident/storage/18005"
+    ],
+    "time": "12/21/2018",
+    "summary": "On Friday 21 December 2018, customers deploying App Engine apps, deploying in Cloud Functions, reading from Google Cloud Storage (GCS), or using Cloud Build experienced increased latency and elevated error rates ranging from 1.6% to 18% for a period of 3 hours, 41 minutes.\nWe understand that these services are critical to our customers and sincerely apologize for the disruption caused by this incident; this is not the level of quality and reliability that we strive to offer you. We have several engineering efforts now under way to prevent a recurrence of this sort of problem; they are described in detail below.",
+    "service_name": [
+      "Google Cloud Storage"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 221,
+    "detection": {
+      "method": "automated",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "elevated deployment errors",
+          "increased latency"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "payload flood"
+        }
+      ],
+      "details": "Impact began when increased load on one of GCS's metadata stores resulted in request queuing, which in turn created an uneven distribution of service load.\nThe additional load was created by a partially-deployed new feature. A routine maintenance operation in combination with this new feature resulted in an unexpected increase in the load on the metadata store. This increase in load affected read workloads due to increased request latency to the metadata store.\nIn some cases, this latency exceeded the timeout threshold, causing an average of 0.6% of requests to fail in the US multi-region for the duration of the incident."
+    },
+    "operation": [
+      "deploy new feautre",
+      "routine maintenance"
+    ],
+    "human error": false,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "rollback new features"
+      ],
+      "details": "Google engineers were automatically alerted to the increased error rate at 08:22 PST. Since the issue involved multiple backend systems, multiple teams at Google were involved in the investigation and narrowed down the issue to the newly-deployed feature. The latency and error rate began to subside as Google Engineers initiated the rollback of the new feature. The issue was fully mitigated at 11:43 PST when the rollback finished, at which point the impacted GCP services recovered completely.",
+      "troubleshooting": {
+        "1": "alerted to the increased error rate",
+        "2": "narrowed down the issue to the newly-deployed feature.",
+        "3": "Google Engineers initiated the rollback of the new feature.",
+        "4": "The issue was fully mitigated at 11:43 PST when the rollback finished, at which point the impacted GCP services recovered completely. "
+      }
+    },
+    "propagation pass": {
+      "1": "metadata store",
+      "2": "Google Cloud storage Read, App Engine deployments, Cloud Functions deployments, Cloud Build"
+    },
+    "refined path": {
+      "1": "database",
+      "2": "app"
+    },
+    "identification time": null,
+    "detection time": 21,
+    "fix time": 191,
+    "verification": "lixy"
+  },
+  "gcs-19002": {
+    "title": "Google Cloud Storage Incident #19002",
+    "link": [
+      "https://status.cloud.google.com/incident/storage/19002"
+    ],
+    "time": "03/12/2019",
+    "summary": "On Tuesday 12 March 2019, Google's internal blob storage service experienced a service disruption for a duration of 4 hours and 10 minutes. We apologize to customers whose service or application was impacted by this incident. We know that our customers depend on Google Cloud Platform services and we are taking immediate steps to improve our availability and prevent outages of this type from recurring.",
+    "service_name": [
+      "Google Cloud Storage"
+    ],
+    "impact symptom": [
+      "availability"
+    ],
+    "duration": 250,
+    "detection": {
+      "method": "automated",
+      "tool": [
+        "automated monitoring"
+      ]
+    },
+    "manifestation": [
+      {
+        "business kpi": [
+          "elevated error rates",
+          "elevated long tail latency"
+        ]
+      },
+      {
+        "system kpi": [
+          "increase storage resources"
+        ]
+      }
+    ],
+    "root cause": {
+      "label": [
+        {
+          "layer-1": "internal causes",
+          "layer-2": "software bugs",
+          "layer-3": "config"
+        }
+      ],
+      "details": "On Monday 11 March 2019, Google SREs were alerted to a significant increase in storage resources for metadata used by the internal blob service. On Tuesday 12 March, to reduce resource usage, SREs made a configuration change which had a side effect of overloading a key part of the system for looking up the location of blob data. The increased load eventually lead to a cascading failure."
+    },
+    "operation": [
+      "maintenance"
+    ],
+    "human error": true,
+    "reproduction": {
+      "label": false,
+      "details": ""
+    },
+    "mitigation": {
+      "label": [
+        "stop configuration change",
+        "reduce traffic level to the blob service"
+      ],
+      "details": "SREs were alerted to the service disruption at 18:56 PDT and immediately stopped the job that was making configuration changes. In order to recover from the cascading failure, SREs manually reduced traffic levels to the blob service to allow tasks to start up without crashing due to high load.",
+      "troubleshooting": {
+        "1": "Google SREs were alerted to a significant increase in storage resources for metadata used by the internal blob service.",
+        "2": "SREs manually reduced traffic levels to the blob service to allow tasks to start up without crashing due to high load. "
+      }
+    },
+    "propagation pass": {
+      "1": "internal blob storage service",
+      "2": "Google services including Gmail, Photos, and Google Drive"
+    },
+    "refined path": {
+      "1": "database",
+      "2": "app"
+    },
+    "identification time": null,
+    "detection time": 16,
+    "fix time": 234,
+    "verification": "lixy"
+  }
+}

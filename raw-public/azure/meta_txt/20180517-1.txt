@@ -1,0 +1,5 @@
+Japan East - service management operations issues with Virtual Machines
+Summary of impact: Between 23:06 UTC on 17 May 2018 and 01:30 UTC on 18 May 2018, a subset of customers using Virtual Machines in Japan East may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in this region.
+Preliminary root cause: Engineers determined that instances of a backend service (Azure Software Load balancer) responsible for processing service management requests became unhealthy, preventing requests from completing.
+Mitigation: Engineers took the faulty Azure Software Load balancer out of rotation and rerouted network traffic to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

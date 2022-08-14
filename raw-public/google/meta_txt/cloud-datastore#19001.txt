@@ -1,0 +1,80 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 14, 2020  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Datastore](/incident/cloud-datastore/19001)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Datastore Incident #19001
+
+We investigated an issue with Google Cloud Datastore
+
+Incident began at **2018-12-19 00:00** and ended at **2019-01-19 00:00** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Feb 14, 2019 | 14:00 |
+
+# ISSUE SUMMARY
+
+Cloud Datastore experienced a low rate of errors associated with a small
+subset of high write-rate databases. We have separately notified the customers
+who may have been potentially impacted by these errors.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+Beginning Wednesday December 19, 2018 and ending January 19 2019, Cloud
+Datastore experienced a low rate of errors associated with a small subset of
+high write-rate databases. Less than 0.1% of databases may have experienced
+these errors when called from the us-central1 region. We have separately
+notified the customers who may have been potentially impacted by these errors.
+
+# REMEDIATION AND PREVENTION
+
+We have identified and remediated the issue. As part of the remediation, we
+reverted to an earlier rollout ending the event. After verifying the issue was
+resolved, Google is taking steps to improve our existing testing scenarios to
+help prevent future recurrence.  
+  
+|
+
+# ISSUE SUMMARY
+
+Cloud Datastore experienced a low rate of errors associated with a small
+subset of high write-rate databases. We have separately notified the customers
+who may have been potentially impacted by these errors.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+Beginning Wednesday December 19, 2018 and ending January 19 2019, Cloud
+Datastore experienced a low rate of errors associated with a small subset of
+high write-rate databases. Less than 0.1% of databases may have experienced
+these errors when called from the us-central1 region. We have separately
+notified the customers who may have been potentially impacted by these errors.
+
+# REMEDIATION AND PREVENTION
+
+We have identified and remediated the issue. As part of the remediation, we
+reverted to an earlier rollout ending the event. After verifying the issue was
+resolved, Google is taking steps to improve our existing testing scenarios to
+help prevent future recurrence.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

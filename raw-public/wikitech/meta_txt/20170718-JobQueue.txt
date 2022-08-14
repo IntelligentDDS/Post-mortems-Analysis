@@ -1,0 +1,61 @@
+Deploying a change to the Jobrunner service using Scap3 resulted in the wrongful starting of job runners in Codfw. This is a problem given Jobrunner is not (yet) an active-active service, and Codfw is currently the passive/read-only DC.
+
+Jobrunners in Codfw were active for approximately 30 minutes.
+• 21:40 Krinkle attempts to deploy a change to mediawiki/services/jobrunner using Trebuchet from .
+• 21:54 Krinkle attemts to deploy the change with Scap3 instead. Also from .
+• 21:57 Command failed. Sync and restart succeeded for jobrunner-canaries (mw1299.eqiad.wmnet, mw2247.codfw.wmnet), group1, and group2. But restart failed for a server in group3 (mw1260.eqiad.wmnet). There are 9 groups in total. Deployment paused at this point.
+• 22:00 It seems this server was disabled intentionally.
+• 21:02 Krinkle notices some of the servers where restart reportedly succeeded in group1 and group2, are in Codfw. Krinkle aborts deployment.
+• 22:34 Krinkle starts rollback to ensure cluster is in a consistent state (re-deploy of previous version, with restarts disabled)
+• 22:58 thcipriani manually re-restarts Eqiad jobrunners that were previously updated with the new code
+• 21:44 <hashar> Krinkle: jobrunner should be cleaned from the deployment server. It is no more deployed by Trebuchet but using scap
+• 21:44 Krinkle assumed Trebuchet because Jobrunner documents it, and T129148 (Deploy jobrunner with scap3) was still open and has an unresolved subtask.
+• 21:46 <Krinkle> thcipriani: What did (if anything) 'sync' do just now?
+• 21:47 <thcipriani> I think it probably didn't do anything but I'm checking...
+• 21:52 <thcipriani> Krinkle: it seems like nothing has changed, I don't see any new tags on any of the servers I spot-checked. It doesn't look like it fetched anything afaict.
+• 21:51 <Krinkle> thcipriani: Walk me through the new workflow and I'll document it on Wikitech? (I still want to deploy this change)
+• 21:53 <thcipriani> so the new process is: get the repo on tin the way it should look in , and then run
+• 21:57 <Krinkle> third group failed to restart one server: 21:57:00 ['/usr/bin/scap', 'deploy-local', '-v', '--repo', 'jobrunner/jobrunner', '-g', 'default', 'promote', '--refresh-config'] on mw1260.eqiad.wmnet returned [70]: Failed to restart jobrunner.service: Unit jobrunner.service is masked.
+• 21:58 <RainbowSprinkles> It was set to masked on purpose, iirc
+• 21:59 <mutante> masked would survive reboots, so really disabled
+• 22:01 <thcipriani> IIRC there was something about how we didn't want to start one of the jobrunner services on a particular node...something like that.
+• 22:02 <Krinkle> OK. I won't rollback in that case.
+• 22:03 <Krinkle> Does this mean I just started jobrunners on the codfw servers?
+• 22:05 <Krinkle> It looks like JobRunner is active on mw2161.codfw.wmnet (random spot check using ).
+• 22:05 <Krinkle> No jobchron though, maybe that's fine?
+• 22:05 <icinga-wm> PROBLEM - Check systemd state on mw2153 is CRITICAL: CRITICAL - degraded: The system is operational but one or more units failed.
+• 22:06 <Krinkle> thcipriani: Can we find out if jobrunner was already active on those codfw nodes?
+• 22:07 <Krinkle> jobrunner error count in Grafana just went from 1K to 7K.
+
+Image: https://phabricator.wikimedia.org/F8795232.
+
+Dashboard: https://grafana.wikimedia.org/dashboard/db/job-queue-health?refresh=1m&orgId=1&from=1500412247458&to=1500420052382
+• 22:09 <thcipriani> Krinkle: I just spot-checked mw2159 and it looks like it's still running the old version of the code...so what happens with scap is it'll stop deploying once it hits the failure limit (which is, I suppose, 1 in this instance) I think we need to redeploy with a higher failure limit to account for the service masking. This would explain why you only hit 1 server that had the problem: it was just the first one you hit. I think you've deployed 17 of 36 servers so far.
+• 22:10 <Krinkle> Yes, it reached server 3 of group default3 and stopped when the 4th one in that group failed. But group default1 has 3 codfw servers and also 1 codfw server in group default2
+• 22:12 <icinga-wm> PROBLEM - Check systemd state on mw2247 is CRITICAL: CRITICAL - degraded: The system is operational but one or more units failed.
+• 22:11 <Krinkle> Did these codfw wrongly start a jobrunner where previously they were not?
+• 22:15 <thcipriani> well for mw2243 it seems that it was started 18 mins ago. "active (running) since Tue 2017-07-18 21:56:30 UTC;" 18min ago
+• 22:18 [private message] <thcipriani> I think you could probably stop them with dsh using keyholder
+• 22:25 [#mediawiki_security] <thcipriani> Krinkle: I think I got it
+• 22:25 [#mediawiki_security] <thcipriani> seems to have done the trick:
+• 22:28 <thcipriani> Krinkle: if you want to move forward with the deploy, you can remove service_name from the scap.cfg and it will not try to restart any services.
+• 22:28 <Krinkle> thcipriani: I'd prefer to revert for now.
+• 22:32 <thcipriani> lemme try something first...
+• 22:33 <thcipriani> Krinkle: yes, all looks correct in the current state
+• 22:34 <Krinkle> restart_service is mentioned but not running, or..
+• 22:44 <thcipriani> Krinkle: ok, do we need to restart jobrunner on the machines in eqiad that were restarted previously?
+• 22:54 <Krinkle> Let's do the restarts first.
+• 22:58 <thcipriani> ^ Krinkle should be done
+
+What weakness did we learn about and how can we address them?
+• Trebuchet was not cleared out for Jobrunner.
+• git deploy doesn't check to see if a repo has ever been deployed with scap/should be deployed with scap
+• Documentation was outdated for jobrunner, dsh, and salt
+• Jobrunner should have been reverted back to Trebuchet, or at least not Scap3 left enabled without known issue T167104 resolved.
+• None Salt no longer exists (since when?) with no documented alternative.
+• DSH
+• Command on the Dsh page worked, but needed some tweaking. Actual command was
+• the user does, thankfully, have permissions to restart jobrunner: sudo -l User mwdeploy may run the following commands on mw2153:
+• Important Disable restart command for Jobrunner Scap3 deployments and document how to manually restart eqiad job runners.
+• Figure out how to make Scap3 safely restart Jobrunner.
+• scap: Don't log when no restart was issued.

@@ -1,0 +1,157 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google BigQuery](/incident/bigquery/18018)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google BigQuery Incident #18018
+
+Streaming API issues with BigQuery
+
+Incident began at **2016-07-25 17:03** and ended at **2016-07-25 18:14** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jul 27, 2016 | 16:06 |
+
+SUMMARY:
+
+On Monday 25 July 2016, the Google BigQuery Streaming API experienced elevated
+error rates for a duration of 71 minutes. We apologize if your service or
+application was affected by this and we are taking immediate steps to improve
+the platform’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Monday 25 July 2016 between 17:03 and 18:14 PDT, the BigQuery Streaming API
+returned HTTP 500 or 503 errors for 35% of streaming insert requests, with a
+peak error rate of 49% at 17:40. Customers who retried on error were able to
+mitigate the impact.
+
+Calls to the BigQuery jobs API showed an error rate of 3% during the incident
+but could generally be executed reliably with normal retry behaviour. Other
+BigQuery API calls were not affected.
+
+ROOT CAUSE:
+
+An internal Google service sent an unexpectedly high amount of traffic to the
+BigQuery Streaming API service. The internal service used a different entry
+point that was not subject to quota limits. Google's internal load balancers
+drop requests that exceed the capacity limits of a service. In this case, the
+capacity limit for the Streaming API service had been configured higher than
+its true capacity. As a result, the internal Google service was able to send
+too many requests to the Streaming API, causing it to fail for a percentage of
+responses.
+
+The Streaming API service sends requests to BigQuery's Metadata service in
+order to handle incoming Streaming requests. This elevated volume of requests
+exceeded the capacity of the Metadata service which resulted in errors for
+BigQuery jobs API calls.
+
+REMEDIATION AND PREVENTION:
+
+The incident started at 17:03. Our monitoring detected the issue at 17:20 as
+error rates started to increase. Our engineers blocked traffic from the
+internal Google client causing the overload shortly thereafter which
+immediately started to mitigate the impact of the incident. Error rates
+dropped to normal by 18:14.
+
+In order to prevent a recurrence of this type of incident we will enforce
+quotas for internal Google clients on requests to the Streaming service in
+order to prevent a single client sending too much traffic. We will also set
+the correct capacity limits for the Streaming API service based on improved
+load tests in order to ensure that internal clients cannot exceed the
+service's capacity.
+
+We apologize again to customers impacted by this incident.  
+  
+|
+
+SUMMARY:
+
+On Monday 25 July 2016, the Google BigQuery Streaming API experienced elevated
+error rates for a duration of 71 minutes. We apologize if your service or
+application was affected by this and we are taking immediate steps to improve
+the platform’s performance and availability.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On Monday 25 July 2016 between 17:03 and 18:14 PDT, the BigQuery Streaming API
+returned HTTP 500 or 503 errors for 35% of streaming insert requests, with a
+peak error rate of 49% at 17:40. Customers who retried on error were able to
+mitigate the impact.
+
+Calls to the BigQuery jobs API showed an error rate of 3% during the incident
+but could generally be executed reliably with normal retry behaviour. Other
+BigQuery API calls were not affected.
+
+ROOT CAUSE:
+
+An internal Google service sent an unexpectedly high amount of traffic to the
+BigQuery Streaming API service. The internal service used a different entry
+point that was not subject to quota limits. Google's internal load balancers
+drop requests that exceed the capacity limits of a service. In this case, the
+capacity limit for the Streaming API service had been configured higher than
+its true capacity. As a result, the internal Google service was able to send
+too many requests to the Streaming API, causing it to fail for a percentage of
+responses.
+
+The Streaming API service sends requests to BigQuery's Metadata service in
+order to handle incoming Streaming requests. This elevated volume of requests
+exceeded the capacity of the Metadata service which resulted in errors for
+BigQuery jobs API calls.
+
+REMEDIATION AND PREVENTION:
+
+The incident started at 17:03. Our monitoring detected the issue at 17:20 as
+error rates started to increase. Our engineers blocked traffic from the
+internal Google client causing the overload shortly thereafter which
+immediately started to mitigate the impact of the incident. Error rates
+dropped to normal by 18:14.
+
+In order to prevent a recurrence of this type of incident we will enforce
+quotas for internal Google clients on requests to the Streaming service in
+order to prevent a single client sending too much traffic. We will also set
+the correct capacity limits for the Streaming API service based on improved
+load tests in order to ensure that internal clients cannot exceed the
+service's capacity.
+
+We apologize again to customers impacted by this incident.  
+  
+| Jul 25, 2016 | 19:18 |
+
+We experienced an issue with BigQuery streaming API returning 500/503
+responses that has been resolved for all affected customers as of 18:11
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+|
+
+We experienced an issue with BigQuery streaming API returning 500/503
+responses that has been resolved for all affected customers as of 18:11
+US/Pacific. We will conduct an internal investigation of this issue and make
+appropriate improvements to our systems to prevent or minimize future
+recurrence. We will provide a more detailed analysis of this incident once we
+have completed our internal investigation.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

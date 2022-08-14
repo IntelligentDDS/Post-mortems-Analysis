@@ -1,0 +1,6 @@
+RCA - Network Connectivity - Increased Latency
+Summary of impact: Between 09:05 and 15:33 UTC on 13 May 2019, a subset of customers in North America and Europe may have experienced intermittent connectivity issues when accessing some Azure services.
+Root cause and mitigation: The impact was the result of inconsistent data replication in a networking infrastructure service. This resulted in unexpected throttling of network traffic to our name resolution servers. Once the issue was detected, engineers mitigated it by updating the configuration of the affected network infrastructure service to override the effect of this data inconsistency. Simultaneously, engineers performed operations to repair the data inconsistency.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform and our processes to help ensure such incidents do not occur in the future. In this case, this includes (but is not limited to):
+Improve our monitoring to detect data inconsistencies similar to the one that caused this issue. Improvements in the system to help ensure such inconsistencies do not occur in the future.
+Provide feedback: Please help us improve the Azure customer communications experience by taking our survey: https://aka.ms/7CC-HXG

@@ -1,0 +1,292 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+September 08, 2019  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Storage](/incident/storage/18003)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Storage Incident #18003
+
+Increased error rate for Google Cloud Storage
+
+Incident began at **2018-09-04 02:55** and ended at **2018-09-04 12:50** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Sep 07, 2018 | 20:00 |
+
+# ISSUE SUMMARY
+
+On Tuesday 4 September 2018, Google Cloud Storage experienced 1.1% error rates
+and increased 99th percentile latency for US multiregion buckets for a
+duration of 5 hours 38 minutes. After that time some customers experienced
+0.1% error rates which returned to normal progressively over the subsequent 4
+hours. To our Google Cloud Storage customers whose businesses were impacted
+during this incident, we sincerely apologize; this is not the level of tail-
+end latency and reliability we strive to offer you. We are taking immediate
+steps to improve the platform’s performance and availability.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday 4 September 2018 from 02:55 to 08:33 PDT, customers with buckets
+located in the US multiregion experienced a 1.066% error rate and 4.9x
+increased 99th percentile latency, with the peak effect occurring between
+05:00 PDT and 07:30 PDT for write-heavy workloads. At 08:33 PDT 99th
+percentile latency decreased to 1.4x normal levels and error rates decreased,
+initially to 0.146% and then subsequently to nominal levels by 12:50 PDT.
+
+# ROOT CAUSE
+
+At the beginning of August, Google Cloud Storage deployed a new feature which
+among other things prefetched and cached the location of some internal
+metadata. On Monday 3rd September 18:45 PDT, a change in the underlying
+metadata storage system resulted in increased load to that subsystem, which
+eventually invalidated some cached metadata for US multiregion buckets. This
+meant that requests for that metadata experienced increased latency, or
+returned an error if the backend RPC timed out. This additional load on
+metadata lookups led to elevated error rates and latency as described above.
+
+# REMEDIATION AND PREVENTION
+
+Google Cloud Storage SREs were alerted automatically once error rates had
+risen materially above nominal levels. Additional SRE teams were involved as
+soon as the metadata storage system was identified as a likely root cause of
+the incident. In order to mitigate the incident, the keyspace that was
+suffering degraded performance needed to be identified and isolated so that it
+could be given additional resources. This work completed by the 4th September
+08:33 PDT. In parallel, Google Cloud Storage SREs pursued the source of
+additional load on the metadata storage system and traced it to cache
+invalidations.
+
+In order to prevent this type of incident from occurring again in the future,
+we will expand our load testing to ensure that performance degradations are
+detected prior to reaching production. We will improve our monitoring
+diagnostics to ensure that we more rapidly pinpoint the source of performance
+degradation. The metadata prefetching algorithm will be changed to introduce
+randomness and further reduce the chance of creating excessive load on the
+underlying storage system. Finally, we plan to enhance the storage system to
+reduce the time needed to identify, isolate, and mitigate load concentration
+such as that resulting from cache invalidations.  
+  
+|
+
+# ISSUE SUMMARY
+
+On Tuesday 4 September 2018, Google Cloud Storage experienced 1.1% error rates
+and increased 99th percentile latency for US multiregion buckets for a
+duration of 5 hours 38 minutes. After that time some customers experienced
+0.1% error rates which returned to normal progressively over the subsequent 4
+hours. To our Google Cloud Storage customers whose businesses were impacted
+during this incident, we sincerely apologize; this is not the level of tail-
+end latency and reliability we strive to offer you. We are taking immediate
+steps to improve the platform’s performance and availability.
+
+# DETAILED DESCRIPTION OF IMPACT
+
+On Tuesday 4 September 2018 from 02:55 to 08:33 PDT, customers with buckets
+located in the US multiregion experienced a 1.066% error rate and 4.9x
+increased 99th percentile latency, with the peak effect occurring between
+05:00 PDT and 07:30 PDT for write-heavy workloads. At 08:33 PDT 99th
+percentile latency decreased to 1.4x normal levels and error rates decreased,
+initially to 0.146% and then subsequently to nominal levels by 12:50 PDT.
+
+# ROOT CAUSE
+
+At the beginning of August, Google Cloud Storage deployed a new feature which
+among other things prefetched and cached the location of some internal
+metadata. On Monday 3rd September 18:45 PDT, a change in the underlying
+metadata storage system resulted in increased load to that subsystem, which
+eventually invalidated some cached metadata for US multiregion buckets. This
+meant that requests for that metadata experienced increased latency, or
+returned an error if the backend RPC timed out. This additional load on
+metadata lookups led to elevated error rates and latency as described above.
+
+# REMEDIATION AND PREVENTION
+
+Google Cloud Storage SREs were alerted automatically once error rates had
+risen materially above nominal levels. Additional SRE teams were involved as
+soon as the metadata storage system was identified as a likely root cause of
+the incident. In order to mitigate the incident, the keyspace that was
+suffering degraded performance needed to be identified and isolated so that it
+could be given additional resources. This work completed by the 4th September
+08:33 PDT. In parallel, Google Cloud Storage SREs pursued the source of
+additional load on the metadata storage system and traced it to cache
+invalidations.
+
+In order to prevent this type of incident from occurring again in the future,
+we will expand our load testing to ensure that performance degradations are
+detected prior to reaching production. We will improve our monitoring
+diagnostics to ensure that we more rapidly pinpoint the source of performance
+degradation. The metadata prefetching algorithm will be changed to introduce
+randomness and further reduce the chance of creating excessive load on the
+underlying storage system. Finally, we plan to enhance the storage system to
+reduce the time needed to identify, isolate, and mitigate load concentration
+such as that resulting from cache invalidations.  
+  
+| Sep 04, 2018 | 15:56 |
+
+The issue with Google Cloud Storage errors on requests to US multiregional
+buckets has been resolved for all affected users as of Tuesday, 2018-09-04
+12:52 US/Pacific. We will conduct an internal investigation of this issue and
+make appropriate improvements to our systems to help prevent or minimize
+future recurrence. We will provide a more detailed analysis of this incident
+once we have completed our internal investigation.  
+  
+|
+
+The issue with Google Cloud Storage errors on requests to US multiregional
+buckets has been resolved for all affected users as of Tuesday, 2018-09-04
+12:52 US/Pacific. We will conduct an internal investigation of this issue and
+make appropriate improvements to our systems to help prevent or minimize
+future recurrence. We will provide a more detailed analysis of this incident
+once we have completed our internal investigation.  
+  
+| Sep 04, 2018 | 15:14 |
+
+The mitigation efforts have further decreased the error rates to less than 1%
+of requests. We are still seeing intermittent spikes but these are less
+frequent. We expect a full resolution in the near future. We will provide
+another status update by Tuesday, 2018-09-04 16:15 US/Pacific with current
+details.  
+  
+|
+
+The mitigation efforts have further decreased the error rates to less than 1%
+of requests. We are still seeing intermittent spikes but these are less
+frequent. We expect a full resolution in the near future. We will provide
+another status update by Tuesday, 2018-09-04 16:15 US/Pacific with current
+details.  
+  
+| Sep 04, 2018 | 13:56 |
+
+We are rolling out a potential fix to mitigate this issue. Impact is
+intermittent but limited to US Multiregional Cloud Storage Buckets buckets. We
+will provide another status update by Tuesday, 2018-09-04 15:30 US/Pacific
+with current details.  
+  
+|
+
+We are rolling out a potential fix to mitigate this issue. Impact is
+intermittent but limited to US Multiregional Cloud Storage Buckets buckets. We
+will provide another status update by Tuesday, 2018-09-04 15:30 US/Pacific
+with current details.  
+  
+| Sep 04, 2018 | 12:54 |
+
+Mitigation is still ongoing but the error rates are decreasing. Latency in the
+90th percentile have returned to normal levels but for the 99th percentile <1%
+of requests are still seeing increased latency. We will provide another status
+update by Tuesday, 2018-09-04 14:00 US/Pacific with current details.  
+  
+|
+
+Mitigation is still ongoing but the error rates are decreasing. Latency in the
+90th percentile have returned to normal levels but for the 99th percentile <1%
+of requests are still seeing increased latency. We will provide another status
+update by Tuesday, 2018-09-04 14:00 US/Pacific with current details.  
+  
+| Sep 04, 2018 | 11:07 |
+
+We are still seeing intermittent errors and latency on some requests. Our
+Engineering Team is investigating the root cause and pursuing additional
+mitigation. We will provide another status update by Tuesday, 2018-09-04 12:45
+US/Pacific with current details.  
+  
+|
+
+We are still seeing intermittent errors and latency on some requests. Our
+Engineering Team is investigating the root cause and pursuing additional
+mitigation. We will provide another status update by Tuesday, 2018-09-04 12:45
+US/Pacific with current details.  
+  
+| Sep 04, 2018 | 09:49 |
+
+Temporary mitigation efforts have significantly reduced the error rate but we
+are still seeing intermittent errors or latency on requests. Full resolution
+efforts are still ongoing. We will provide another status update by Tuesday,
+2018-09-04 11:15 US/Pacific with current details.  
+  
+|
+
+Temporary mitigation efforts have significantly reduced the error rate but we
+are still seeing intermittent errors or latency on requests. Full resolution
+efforts are still ongoing. We will provide another status update by Tuesday,
+2018-09-04 11:15 US/Pacific with current details.  
+  
+| Sep 04, 2018 | 08:44 |
+
+Mitigation efforts are starting to become effective and the rate of errors is
+decreasing, we are continuing to monitor and apply mitigation where necessary.
+Current data indicates that a small percentage of requests in the US region
+only are affected. Further updates will be provided by Tuesday, 2018-09-04
+10:00 US/Pacific.  
+  
+|
+
+Mitigation efforts are starting to become effective and the rate of errors is
+decreasing, we are continuing to monitor and apply mitigation where necessary.
+Current data indicates that a small percentage of requests in the US region
+only are affected. Further updates will be provided by Tuesday, 2018-09-04
+10:00 US/Pacific.  
+  
+| Sep 04, 2018 | 08:01 |
+
+Mitigation work is currently underway by our Engineering Team. Current data
+indicates that a small percentage of requests in the US region only are
+affected. Further updates will be provided by Tuesday, 2018-09-04 08:45
+US/Pacific.  
+  
+|
+
+Mitigation work is currently underway by our Engineering Team. Current data
+indicates that a small percentage of requests in the US region only are
+affected. Further updates will be provided by Tuesday, 2018-09-04 08:45
+US/Pacific.  
+  
+| Sep 04, 2018 | 07:00 |
+
+We are still seeing intermittent errors for requests to Google Cloud Storage
+in the US region. Our Engineering Team is continuing mitigation work. We will
+provide another status update by Tuesday, 2018-09-04 08:00 US/Pacific with
+current details.  
+  
+|
+
+We are still seeing intermittent errors for requests to Google Cloud Storage
+in the US region. Our Engineering Team is continuing mitigation work. We will
+provide another status update by Tuesday, 2018-09-04 08:00 US/Pacific with
+current details.  
+  
+| Sep 04, 2018 | 06:38 |
+
+We are seeing intermittent errors for requests to Google Cloud Storage in the
+US region. Our Engineering Team is continuing mitigation work. We will provide
+another status update by Tuesday, 2018-09-04 07:00 US/Pacific with current
+details.  
+  
+|
+
+We are seeing intermittent errors for requests to Google Cloud Storage in the
+US region. Our Engineering Team is continuing mitigation work. We will provide
+another status update by Tuesday, 2018-09-04 07:00 US/Pacific with current
+details.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

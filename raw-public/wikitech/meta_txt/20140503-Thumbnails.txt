@@ -1,0 +1,45 @@
+To long, not willing to read: our MediaWiki configuration did not trust X-Forwarded-For headers sent by the media server and ended up throttling them instead of the end users.
+
+Saturday May 3rd 15:00 UTC community member Yann Forget reopened bugzilla:64622 (although unrelated) mentioning that thumbnails rendering fails with the error message:
+
+
+
+ Nemo Bis confirmed a few hours after that the error is widespread and impacts commons as well. That is not surprising since the thumbnails rendering infrastructure is shared among wiki projects.
+
+On Sunday May 4th, Nemo mentions some rate limiting configuration has been added for the "renderfile-nonstandard" throttle and deployed on April 21st ( https://gerrit.wikimedia.org/r/#/c/127643/ )
+• Tuesday May 5th 3:00 UTC Greg emits an email to the MediaWiki-core list escalating the bug report.
+• Around 8:00 UTC I read the email and do some preliminary investigation. Since Nemo mentioned the 'renderfile-nonstandard' throttle I grep our limiter.log file to find out what is hitting the limit:
+
+The IP are the media server frontends ms-fe1001 to ms-fe1004 which relay thumbnails generation requests on behalf of users. We want to throttle per end user client IP or username, NOT the proxies.
+
+My assumption is that the media servers do not relay the end user X-Forwarded-For header which contains the end user IP.
+
+I look at the Swift proxy rewrite.py script and find out that X-Forwarded-For seems to be handled in there. I ping Faidon and he immediately confirmed X-Forwaded-For header is properly handled by the Swift proxies via rewrite.py and suggest that the media servers are not listed in MediaWiki configuration as trusted proxies.
+
+On May 5th 9:00 UTC we add the media servers to the list of trusted proxies: https://gerrit.wikimedia.org/r/#/c/131670/2/wmf-config/squid.php,unified
+
+Additionally add a comment in Puppet configuration to remember folks to update the trusted proxy list whenever a new proxy is added:
+
+The first occurrence of a media server being tripped by renderfile-nonstandard occurs on 2014-04-29 18:04:05
+
+Nemo detected the throttle configuration has been added to mediawiki-config on April 21st and deployed that day: https://gerrit.wikimedia.org/r/#/c/127643/
+
+The throttle has been merged in mediawiki/core master branch on April 21st as well https://gerrit.wikimedia.org/r/126052 sha1: 4f2324fc
+
+The 1.24wmf2 deployed the change on April 30st 18:03:
+
+
+
+ "Instantly" causing the media server to be throttled.
+
+What can be improved
+
+The throttling is handled by User->pingLimiter() which has a profile in entry point. Hence it generates a count metric in graphite as MediaWiki.User.pingLimiter.count
+
+I have generated a graph from January 1st 2014 till today and uploaded it on wikitech:
+
+It shows an increase on March 26th which is unrelated and second increase on April 30th.
+• Status: Done - we might want to generate finer metrics by adding the pingLimiter() action to the wfProfileIn() call.
+• bugzilla:65477 User::pingLimiter should have per action profiling
+• Status: Declined - a graph in gdash and a monitoring alarm could be added whenever the rate change significantly.
+• Status: on-going - it took us too long (3 days) to get informed about that outage though as soon as the proper folks have been made aware of it it got promptly solved.

@@ -1,0 +1,4 @@
+Azure App Service and Functions App - Mitigated
+Summary of impact: Between 22:48 UTC on 08 Nov 2018 and 13:30 UTC on 09 Nov 2018, a subset of customers using App Services may have experienced errors
+when accessing the Azure Functions blade, or experienced issues when accessing app settings in the portal https://portal.azure.com . Preliminary root cause: Engineers identified a recent deployment to a specific regional instance of the Functions portal was the root cause. Mitigation: Engineers deployed a platform hotfix to mitigate the issue.
+Next steps: Engineers will continue to investigate to establish the full root cause and prevent future occurrences.

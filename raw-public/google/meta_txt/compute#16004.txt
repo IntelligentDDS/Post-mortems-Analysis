@@ -1,0 +1,141 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Compute Engine](/incident/compute/16004)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Compute Engine Incident #16004
+
+Network connectivity issue in us-central1-f
+
+Incident began at **2016-02-23 19:55** and ended at **2016-02-23 20:45** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Feb 29, 2016 | 13:35 |
+
+SUMMARY:
+
+On Tuesday 23 February 2015, Google Compute Engine instances in the us-
+central1-f zone experienced intermittent packet loss for 46 minutes. If your
+service or application was affected by these network issues, we sincerely
+apologize. A reliable network is one of our top priorities. We have taken
+immediate steps to remedy the issue and we are working through a detailed plan
+to prevent any recurrence.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On 23 February 2015 from 19:56 to 20:42 PST, Google Compute Engine instances
+in the us-central1-f zone experienced partial loss of network traffic. The
+disruption had a 25% chance of affecting any given network flow (e.g. a TCP
+connection or a UDP exchange) which entered or exited the us-central1-f zone.
+Affected flows were blocked completely. All other flows experienced no
+disruption. Systems that experienced a blocked TCP connection were often able
+to establish connectivity by retrying. Connections between endpoints within
+the us-central1-f zone were unaffected.
+
+ROOT CAUSE:
+
+Google follows a gradual rollout process for all new releases. As part of this
+process, Google network engineers modified a configuration setting on a group
+of network switches within the us-central1-f zone. The update was applied
+correctly to one group of switches, but, due to human error, it was also
+applied to some switches which were outside the target group and of a
+different type. The configuration was not correct for them and caused them to
+drop part of their traffic.
+
+REMEDIATION AND PREVENTION:
+
+The traffic loss was detected by automated monitoring, which stopped the
+misconfiguration from propagating further, and alerted Google network
+engineers. Conflicting signals from our monitoring infrastructure caused some
+initial delay in correctly diagnosing the affected switches. This caused the
+incident to last longer than it should have. The network engineers restored
+normal service by isolating the misconfigured switches.
+
+To prevent recurrence of this issue, Google network engineers are refining
+configuration management policies to enforce isolated changes which are
+specific to the various switch types in the network. We are also reviewing and
+adjusting our monitoring signals in order to lower our response times.  
+  
+|
+
+SUMMARY:
+
+On Tuesday 23 February 2015, Google Compute Engine instances in the us-
+central1-f zone experienced intermittent packet loss for 46 minutes. If your
+service or application was affected by these network issues, we sincerely
+apologize. A reliable network is one of our top priorities. We have taken
+immediate steps to remedy the issue and we are working through a detailed plan
+to prevent any recurrence.
+
+DETAILED DESCRIPTION OF IMPACT:
+
+On 23 February 2015 from 19:56 to 20:42 PST, Google Compute Engine instances
+in the us-central1-f zone experienced partial loss of network traffic. The
+disruption had a 25% chance of affecting any given network flow (e.g. a TCP
+connection or a UDP exchange) which entered or exited the us-central1-f zone.
+Affected flows were blocked completely. All other flows experienced no
+disruption. Systems that experienced a blocked TCP connection were often able
+to establish connectivity by retrying. Connections between endpoints within
+the us-central1-f zone were unaffected.
+
+ROOT CAUSE:
+
+Google follows a gradual rollout process for all new releases. As part of this
+process, Google network engineers modified a configuration setting on a group
+of network switches within the us-central1-f zone. The update was applied
+correctly to one group of switches, but, due to human error, it was also
+applied to some switches which were outside the target group and of a
+different type. The configuration was not correct for them and caused them to
+drop part of their traffic.
+
+REMEDIATION AND PREVENTION:
+
+The traffic loss was detected by automated monitoring, which stopped the
+misconfiguration from propagating further, and alerted Google network
+engineers. Conflicting signals from our monitoring infrastructure caused some
+initial delay in correctly diagnosing the affected switches. This caused the
+incident to last longer than it should have. The network engineers restored
+normal service by isolating the misconfigured switches.
+
+To prevent recurrence of this issue, Google network engineers are refining
+configuration management policies to enforce isolated changes which are
+specific to the various switch types in the network. We are also reviewing and
+adjusting our monitoring signals in order to lower our response times.  
+  
+| Feb 23, 2016 | 21:53 |
+
+The network connectivity issue in us-central1-f should have been resolved for
+all affected projects as of 20:45 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+|
+
+The network connectivity issue in us-central1-f should have been resolved for
+all affected projects as of 20:45 US/Pacific. We will conduct an internal
+investigation of this issue and make appropriate improvements to our systems
+to prevent or minimize future recurrence. We will provide a more detailed
+analysis of this incident once we have completed our internal investigation.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

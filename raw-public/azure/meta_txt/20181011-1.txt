@@ -1,0 +1,8 @@
+App Service - East Asia
+Summary of impact: Between 09:32 and 09:58 UTC on 11 Oct 2018, a subset of customers using App Service in East Asia may have received HTTP 500-level response
+codes and experienced timeouts or high latency when accessing App Service (Web, Mobile and API Apps) deployments hosted in this region.
+Root cause: The Microsoft Azure team identified the issue was due to a dependency that the Web App service takes on Azure Storage. The application site content is hosted within Web App platform are backed by Azure Storage in a durable manner. The application accesses the site contents as file shares (this model maximizes application compatibility). Additionally, the Web App platform employs a feature to improve the impact to customers when the platform detects latency issues within the hosted primary storage volume. This is accomplished by making use of read-only (R/O) replicas (standby volumes) hosted on Azure storage. Web App Engineers collaborated with the Storage team and discovered a previously unknown issue due to regional load balancing of the storage cluster the Web App primary and secondary R/O replicas that application was hosted on.
+Mitigation: This issue was detected and automatically resolved by the Azure platform's self-healing process.
+Next steps: We sincerely apologize for the impact to affected customers. We are continuously taking steps to improve the Microsoft Azure Platform to help ensure
+such incidents do not occur in the future. In this case it includes, but is not limited to:
+• Fine tuning the self-heal mechanism to pro-actively identify changes due to load balancing and heal faster. [in progress]

@@ -1,0 +1,4 @@
+ORES stopped serving requests for 3 hours because Redis ran out of disk space and the Workers could no longer function.
+• Our monitoring does not catch when the webservers are up but the workers are down. We need to implement monitoring for the worker nodes.
+• Our LRU policy for redis did not account for the additional disk space that would be required when using the AOF (append) persistence strategy. Switch to using RDB (snapshots)
+• Phab:T121658 -- Switch from AOF to RDB persistence strategy for ORES redis

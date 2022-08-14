@@ -1,0 +1,16 @@
+Wikidata Query Service public SPARQL endpoint has been overloaded and started to timeout to LVS probes. Updates lagged for some time.
+• 15:27 icinga-wm: PROBLEM - LVS HTTP IPv4 on wdqs.svc.eqiad.wmnet is CRITICAL: CRITICAL - Socket timeout after 10 seconds
+• 15:28 icinga-wm: RECOVERY - LVS HTTP IPv4 on wdqs.svc.eqiad.wmnet is OK: HTTP OK: HTTP/1.1 200 OK - 434 bytes in 0.018 second response time
+• 16:31 icinga-wm: PROBLEM - LVS HTTP IPv4 on wdqs.svc.eqiad.wmnet is CRITICAL: CRITICAL - Socket timeout * after 10 seconds
+• 16:32 icinga-wm: RECOVERY - LVS HTTP IPv4 on wdqs.svc.eqiad.wmnet is OK: HTTP OK: HTTP/1.1 200 OK - 434 * bytes in 0.056 second response time
+• 07:46 gehel: depooling wdqs1005 to allow it to catch up on updates - T198042
+• 12:00 gehel: repooling wdqs1005 it has catched up on updates - T198042
+
+Our public WDQS endpoint is fragile (nothing new here). Investigating thread dumps, it looked like a lot of threads were stuck in logging. Blazegraph uses an unbounded executor service, having threads stuck in logging makes the situation worse. Logging asynchronously (Task T198051) and dropping log messages when under too much load would help, reducing the amount of logs would help as well. There is a deeper issue of expensive queries, but that one is hard to address directly.
+
+During investigation we also realized that our banning mechanism was throwing HTTP 500 errors instead of HTTP 403 (Task T198055) due to a bug in throttling logging, which may have contributed to logging volume increase.
+
+A "runbook" page has been created for WDQS and explains the actions taken during this incident.
+• banned users should be notified with HTTP 403, not with HTTP 500 (phab:T198055)
+• If the server is severely backed up, it is hard for it to catch up and serve traffic at the same time. We need to look into the issue and see if we need to adjust cluster capability or find some other solution.
+• WDQS logs are overly verbose, which both makes them hard to read and contributes to clogging the log pipeline. We should adjust them to be less verbose. (phab:T197645, phab:T198046)

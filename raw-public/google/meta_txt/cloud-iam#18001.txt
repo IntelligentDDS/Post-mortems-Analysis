@@ -1,0 +1,192 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+July 02, 2019  Google Cloud Networking reporting issues
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Identity and Access Management](/incident/cloud-iam/18001)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Identity and Access Management Incident #18001
+
+Issue affecting the ability to list projects and organizations
+
+Incident began at **2018-06-27 14:21** and ended at **2018-06-27 15:11** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Jul 02, 2018 | 09:20 |
+
+ISSUE SUMMARY
+
+On Wednesday 27 June 2018, Google Cloud Console and Google Cloud Resource
+Manager API experienced a significant performance degradation for a duration
+of 51 minutes. Although, this did not affect user resources running on the
+Google Cloud Platform, we understand that our customers rely heavily on Google
+Cloud Console to manage their resources and we sincerely apologize to everyone
+who was affected by the incident.
+
+DETAILED DESCRIPTION OF IMPACT
+
+From 14:21 to 15:11 PDT, users were unable to manage their folders, projects
+and organizations using Google Cloud Console, Google Cloud Resource Manager
+API and gcloud command line. The following APIs were affected:
+
+Google Cloud Console: Impacted users were unable to list their projects,
+search for projects, folders and organizations or view their bill. Search box
+failed to return the above too. Google Cloud Resource Manager API: Impacted
+users were unable to list their projects, folders and organizations BigQuery:
+Impacted users were unable to list their bigquery projects using the API.
+
+ROOT CAUSE
+
+The incident was triggered by a configuration change in the search
+infrastructure powering Cloud resource metadata search. The search
+infrastructure sends ACL checks to a central ACL server to make sure the end
+user has access to the Cloud resource metadata it plans to return. The
+configuration change introduced a new field in the ACL check request, while
+the central ACL server had not whitelisted the search infrastructure to send
+that field, causing an outage in Cloud resource metadata search.
+
+REMEDIATION AND PREVENTION
+
+At 12:26 PDT, Google Engineers rolled out the configuration change. Our
+automated release validation system rejected the change due to a high rate of
+errors. Around 14:16 PDT, an unrelated change was made to the same search
+infrastructure which triggered a bug that disabled its automated release
+validation system. This change also inadvertently picked up the prior
+configuration change and due to the lack of automated release validation, the
+change was successfully propagated to production. Within a span of few
+minutes, several engineering teams were automatically alerted to the situation
+and began the mitigation process.
+
+The issue was fully mitigated at 15:11 PDT when the configuration change was
+rolled back.
+
+We apologize again for the inconvenience caused. We are taking immediate steps
+to prevent recurrence and improve reliability in the future, including:
+
+Fixing the bug that inadvertently disabled the canary analysis system.
+Improving process around pushing changes that involve several dependencies.
+Improving testing and staging alerts to catch issues of this nature before
+they reach production.  
+  
+|
+
+ISSUE SUMMARY
+
+On Wednesday 27 June 2018, Google Cloud Console and Google Cloud Resource
+Manager API experienced a significant performance degradation for a duration
+of 51 minutes. Although, this did not affect user resources running on the
+Google Cloud Platform, we understand that our customers rely heavily on Google
+Cloud Console to manage their resources and we sincerely apologize to everyone
+who was affected by the incident.
+
+DETAILED DESCRIPTION OF IMPACT
+
+From 14:21 to 15:11 PDT, users were unable to manage their folders, projects
+and organizations using Google Cloud Console, Google Cloud Resource Manager
+API and gcloud command line. The following APIs were affected:
+
+Google Cloud Console: Impacted users were unable to list their projects,
+search for projects, folders and organizations or view their bill. Search box
+failed to return the above too. Google Cloud Resource Manager API: Impacted
+users were unable to list their projects, folders and organizations BigQuery:
+Impacted users were unable to list their bigquery projects using the API.
+
+ROOT CAUSE
+
+The incident was triggered by a configuration change in the search
+infrastructure powering Cloud resource metadata search. The search
+infrastructure sends ACL checks to a central ACL server to make sure the end
+user has access to the Cloud resource metadata it plans to return. The
+configuration change introduced a new field in the ACL check request, while
+the central ACL server had not whitelisted the search infrastructure to send
+that field, causing an outage in Cloud resource metadata search.
+
+REMEDIATION AND PREVENTION
+
+At 12:26 PDT, Google Engineers rolled out the configuration change. Our
+automated release validation system rejected the change due to a high rate of
+errors. Around 14:16 PDT, an unrelated change was made to the same search
+infrastructure which triggered a bug that disabled its automated release
+validation system. This change also inadvertently picked up the prior
+configuration change and due to the lack of automated release validation, the
+change was successfully propagated to production. Within a span of few
+minutes, several engineering teams were automatically alerted to the situation
+and began the mitigation process.
+
+The issue was fully mitigated at 15:11 PDT when the configuration change was
+rolled back.
+
+We apologize again for the inconvenience caused. We are taking immediate steps
+to prevent recurrence and improve reliability in the future, including:
+
+Fixing the bug that inadvertently disabled the canary analysis system.
+Improving process around pushing changes that involve several dependencies.
+Improving testing and staging alerts to catch issues of this nature before
+they reach production.  
+  
+| Jun 27, 2018 | 15:23 |
+
+The issue impacting the ability to list projects and organizations has been
+resolved for all affected users as of 15:16 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+|
+
+The issue impacting the ability to list projects and organizations has been
+resolved for all affected users as of 15:16 US/Pacific. We will conduct an
+internal investigation of this issue and make appropriate improvements to our
+systems to help prevent or minimize future recurrence. We will provide a more
+detailed analysis of this incident once we have completed our internal
+investigation.  
+  
+| Jun 27, 2018 | 15:13 |
+
+We are experiencing an issue impacting the ability of customers to list
+projects and organzations beginning at Wednesday, 2018-06-27 14:34 US/Pacific.
+Current data indicate(s) that approximately 75% of all GCP customers are
+affected by this issue. For everyone who is affected, we apologize for the
+disruption. We will provide an update by Wednesday, 2018-06-27 16:13
+US/Pacific with current details.  
+  
+|
+
+We are experiencing an issue impacting the ability of customers to list
+projects and organzations beginning at Wednesday, 2018-06-27 14:34 US/Pacific.
+Current data indicate(s) that approximately 75% of all GCP customers are
+affected by this issue. For everyone who is affected, we apologize for the
+disruption. We will provide an update by Wednesday, 2018-06-27 16:13
+US/Pacific with current details.  
+  
+| Jun 27, 2018 | 14:45 |
+
+We are investigating an issue with Identity & Access Management. We will
+provide more information by Wednesday, 2018-06-27 15:00 US/Pacific.  
+  
+|
+
+We are investigating an issue with Identity & Access Management. We will
+provide more information by Wednesday, 2018-06-27 15:00 US/Pacific.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+  * [About](https://cloud.google.com/support/docs/dashboard)
+
+  *  
+

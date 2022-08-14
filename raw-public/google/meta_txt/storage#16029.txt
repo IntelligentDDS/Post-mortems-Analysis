@@ -1,0 +1,371 @@
+# [![Google Cloud Platform](//cloud.google.com/_static/images/new-gcp-
+logo.png)](//cloud.google.com)
+
+February 03, 2018  All services available
+
+  * [Google Cloud Status Dashboard](/)
+  * [Incidents](/summary)
+  * [Google Cloud Storage](/incident/storage/16029)
+
+# [Google Cloud Status Dashboard](/)
+
+This page provides status information on the services that are part of Google
+Cloud Platform. Check back here to view the current status of the services
+listed below. If you are experiencing an issue not listed here, please
+[contact Support](//cloud.google.com/support/). Learn more about what's posted
+on the dashboard in [ this FAQ](//cloud.google.com/support/docs/dashboard).
+For additional information on these services, please visit
+[cloud.google.com](//cloud.google.com).
+
+# Google Cloud Storage Incident #16029
+
+Problem with Google Cloud Storage XML API signed URLs
+
+Incident began at **2015-08-26 07:27** and ended at **2015-08-26 11:25** (all
+times are **US/Pacific** ).
+
+| Date | Time | Description  
+---|---|---|---  
+| Aug 28, 2015 | 15:30 |
+
+SUMMARY
+
+On Wednesday 26 August 2015, requests to Signed URLs [1] on Google Cloud
+Storage (GCS) returned errors for an extended period of time, affecting
+approximately 18% of projects using the Signed URLs feature. We apologize to
+our customers who were affected by this issue. We have identified and fixed
+the root causes of the incident, and we are putting measures in place to keep
+similar issues from occurring in future.
+
+[1] <https://cloud.google.com/storage/docs/access-control#Signed-URLs>
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday August 26th 2015 at 07:26 PDT, approximately 18% of projects
+sending requests to GCS Signed URLs started receiving HTTP 500 and 503
+responses. The majority of the errors occurred from 07:25 to 10:34 PDT. From
+10:34 the number of affected projects decreased, and by 11:25 PDT fewer than
+2% of Signed URL requests were receiving errors. A small number of projects
+encountered continued errors until remediation was completed at 20:38.
+
+There was no disruption to any GCS functionality that did not involve Signed
+URLs.
+
+ROOT CAUSE
+
+GCS Signed URLs are cryptographically signed by the owner of the stored data,
+using the private key of a Google Cloud Platform service account. The private
+key is known only to the owner, but the corresponding public key is retained
+by Google and used to verify the URL signatures.
+
+Within Google, similar service accounts are used for many internal
+authentication purposes. (For example, these accounts include the default
+service account which internally represents the customer's Cloud Platform
+project.) For these service accounts, Google retains both the public and the
+private key. These keypairs have a short lifetime and are frequently
+regenerated.
+
+All keys are managed in a central, strongly hardened security module. As part
+of an effort to simplify the key management system, prior to the incident, a
+configuration change was pushed which mistakenly caused the security module to
+consider customers' service accounts as candidates for automatic keypair
+management. This change was later rolled back, removing the service accounts
+from automatic management, but some customers' service accounts had already
+received new keypairs with finite lifetimes. Accounts with heavy Signed URL
+usage were more likely to be affected.
+
+On 07:25 PDT on Wednesday 26 August, the lifetimes of the temporary keypairs
+for affected accounts began to expire. Since the expired keypairs were not
+automatically removed as the service account were no longer under automatic
+management, it's presence was treated as an error by the Signed URL
+verification process, causing all Signed URL requests for the service account
+to fail.
+
+At no time during this incident were any keys at risk and they remain safe and
+secure. No action is required by customers.
+
+REMEDIATION AND PREVENTION
+
+Automated monitoring signalled the issue at 07:33. Google engineers identified
+the need to remove the expired keys, which required manual access to the
+security module. This is protected by multiple security procedures, by design,
+so it required several escalations to get the correct people. Access was
+gained at 10:34 PDT, and thereafter service was progressively restored as each
+service account was reactivated by removing its expired keys.
+
+To eliminate the immediate cause of the issue, Google engineers are modifying
+the URL signature verifier to be more robust when it encounters expired keys.
+
+To avoid various related classes of errors, Google engineers are increasing
+the testing performed on configuration changes for the security system, both
+to strengthen consistency and to ensure that configuration changes do not
+induce unexpected side effects.
+
+In case of other future issues with the security module, Google engineers are
+streamlining internal escalation procedures to improve response times, and
+upgrading tools for more efficient key administration.  
+  
+|
+
+SUMMARY
+
+On Wednesday 26 August 2015, requests to Signed URLs [1] on Google Cloud
+Storage (GCS) returned errors for an extended period of time, affecting
+approximately 18% of projects using the Signed URLs feature. We apologize to
+our customers who were affected by this issue. We have identified and fixed
+the root causes of the incident, and we are putting measures in place to keep
+similar issues from occurring in future.
+
+[1] <https://cloud.google.com/storage/docs/access-control#Signed-URLs>
+
+DETAILED DESCRIPTION OF IMPACT
+
+On Wednesday August 26th 2015 at 07:26 PDT, approximately 18% of projects
+sending requests to GCS Signed URLs started receiving HTTP 500 and 503
+responses. The majority of the errors occurred from 07:25 to 10:34 PDT. From
+10:34 the number of affected projects decreased, and by 11:25 PDT fewer than
+2% of Signed URL requests were receiving errors. A small number of projects
+encountered continued errors until remediation was completed at 20:38.
+
+There was no disruption to any GCS functionality that did not involve Signed
+URLs.
+
+ROOT CAUSE
+
+GCS Signed URLs are cryptographically signed by the owner of the stored data,
+using the private key of a Google Cloud Platform service account. The private
+key is known only to the owner, but the corresponding public key is retained
+by Google and used to verify the URL signatures.
+
+Within Google, similar service accounts are used for many internal
+authentication purposes. (For example, these accounts include the default
+service account which internally represents the customer's Cloud Platform
+project.) For these service accounts, Google retains both the public and the
+private key. These keypairs have a short lifetime and are frequently
+regenerated.
+
+All keys are managed in a central, strongly hardened security module. As part
+of an effort to simplify the key management system, prior to the incident, a
+configuration change was pushed which mistakenly caused the security module to
+consider customers' service accounts as candidates for automatic keypair
+management. This change was later rolled back, removing the service accounts
+from automatic management, but some customers' service accounts had already
+received new keypairs with finite lifetimes. Accounts with heavy Signed URL
+usage were more likely to be affected.
+
+On 07:25 PDT on Wednesday 26 August, the lifetimes of the temporary keypairs
+for affected accounts began to expire. Since the expired keypairs were not
+automatically removed as the service account were no longer under automatic
+management, it's presence was treated as an error by the Signed URL
+verification process, causing all Signed URL requests for the service account
+to fail.
+
+At no time during this incident were any keys at risk and they remain safe and
+secure. No action is required by customers.
+
+REMEDIATION AND PREVENTION
+
+Automated monitoring signalled the issue at 07:33. Google engineers identified
+the need to remove the expired keys, which required manual access to the
+security module. This is protected by multiple security procedures, by design,
+so it required several escalations to get the correct people. Access was
+gained at 10:34 PDT, and thereafter service was progressively restored as each
+service account was reactivated by removing its expired keys.
+
+To eliminate the immediate cause of the issue, Google engineers are modifying
+the URL signature verifier to be more robust when it encounters expired keys.
+
+To avoid various related classes of errors, Google engineers are increasing
+the testing performed on configuration changes for the security system, both
+to strengthen consistency and to ensure that configuration changes do not
+induce unexpected side effects.
+
+In case of other future issues with the security module, Google engineers are
+streamlining internal escalation procedures to improve response times, and
+upgrading tools for more efficient key administration.  
+  
+| Aug 26, 2015 | 17:59 |
+
+The issue with GCS XML signed URLs should be resolved for vast majority of
+projects and traffic as of 11:25 US/Pacific and we are working to fix the
+issue for the 0.02% remaining traffic. We will provide provide a written
+Incident Report within 24 hours.  
+  
+|
+
+The issue with GCS XML signed URLs should be resolved for vast majority of
+projects and traffic as of 11:25 US/Pacific and we are working to fix the
+issue for the 0.02% remaining traffic. We will provide provide a written
+Incident Report within 24 hours.  
+  
+| Aug 26, 2015 | 15:50 |
+
+We are still actively working on fully resolving the issue with GCS XML signed
+URLs returning HTTP 500 errors. Current data indicates that less than 0.009%
+of requests using XML signed URLs are still affected by this issue. We will
+provide another status update by 17:00 US/Pacific with current details.  
+  
+|
+
+We are still actively working on fully resolving the issue with GCS XML signed
+URLs returning HTTP 500 errors. Current data indicates that less than 0.009%
+of requests using XML signed URLs are still affected by this issue. We will
+provide another status update by 17:00 US/Pacific with current details.  
+  
+| Aug 26, 2015 | 14:22 |
+
+We are still working on fully resolving the issue with GCS XML signed URLs
+returning HTTP 500 errors and expecting for a full resolution in the near
+future. Current data indicates that less than 0.1% of requests using XML
+signed URLs are affected by this issue. We will provide another status update
+by 15:15 US/Pacific with current details.  
+  
+|
+
+We are still working on fully resolving the issue with GCS XML signed URLs
+returning HTTP 500 errors and expecting for a full resolution in the near
+future. Current data indicates that less than 0.1% of requests using XML
+signed URLs are affected by this issue. We will provide another status update
+by 15:15 US/Pacific with current details.  
+  
+| Aug 26, 2015 | 13:19 |
+
+We are still working on fully resolving the issue with GCS XML signed URLs
+returning HTTP 500 errors. Current data indicates that less than 0.2% of
+requests using XML signed URLs are affected by this issue. We will provide
+another status update by 14:15 US/Pacific with current details.  
+  
+|
+
+We are still working on fully resolving the issue with GCS XML signed URLs
+returning HTTP 500 errors. Current data indicates that less than 0.2% of
+requests using XML signed URLs are affected by this issue. We will provide
+another status update by 14:15 US/Pacific with current details.  
+  
+| Aug 26, 2015 | 12:16 |
+
+The issue with GCS XML signed URLs returning HTTP 500 errors should be
+resolved for the majority of projects and we expect a full resolution in the
+near future. Current data indicates that less than 0.2% of requests are
+affected by this issue. We will provide another status update by 13:15
+US/Pacific with current details.  
+  
+|
+
+The issue with GCS XML signed URLs returning HTTP 500 errors should be
+resolved for the majority of projects and we expect a full resolution in the
+near future. Current data indicates that less than 0.2% of requests are
+affected by this issue. We will provide another status update by 13:15
+US/Pacific with current details.  
+  
+| Aug 26, 2015 | 11:32 |
+
+Error rates for GCS XML signed URL requests have fallen to 1%. We are working
+to resolve the issue for the remaining impacted customers. We will provide
+another status update by 12:15 US/Pacific with current details.  
+  
+|
+
+Error rates for GCS XML signed URL requests have fallen to 1%. We are working
+to resolve the issue for the remaining impacted customers. We will provide
+another status update by 12:15 US/Pacific with current details.  
+  
+| Aug 26, 2015 | 10:45 |
+
+Our engineers have determined the cause of the GCS XML API signed URL issue
+and are applying a fix. Current data indicates that 5% of XML API requests
+remain affected by this issue. We will provide another status update by 11:30
+US/Pacific with further details.  
+  
+|
+
+Our engineers have determined the cause of the GCS XML API signed URL issue
+and are applying a fix. Current data indicates that 5% of XML API requests
+remain affected by this issue. We will provide another status update by 11:30
+US/Pacific with further details.  
+  
+| Aug 26, 2015 | 10:11 |
+
+We have identified that the Google Cloud Storage XML API errors are limited to
+requests authorized by signed URLs [1]. We are continuing to investigate and
+will provide another status update by 10:45 US/Pacific with current details.
+
+[1] <https://cloud.google.com/storage/docs/access-control?hl=en#Signed-URLs>  
+  
+|
+
+We have identified that the Google Cloud Storage XML API errors are limited to
+requests authorized by signed URLs [1]. We are continuing to investigate and
+will provide another status update by 10:45 US/Pacific with current details.
+
+[1] <https://cloud.google.com/storage/docs/access-control?hl=en#Signed-URLs>  
+  
+| Aug 26, 2015 | 09:36 |
+
+Errors on the Google Cloud Storage XML API are continuing; current data
+indicates that between 30% and 35% of XML API requests are affected by this
+issue. We are continuing to investigate and will provide another status update
+by 10:00 US/Pacific with current details.  
+  
+|
+
+Errors on the Google Cloud Storage XML API are continuing; current data
+indicates that between 30% and 35% of XML API requests are affected by this
+issue. We are continuing to investigate and will provide another status update
+by 10:00 US/Pacific with current details.  
+  
+| Aug 26, 2015 | 08:50 |
+
+The issue with errors on the Google Cloud Storage XML API should be resolved
+for the majority of users and we expect a full resolution in the near future.
+We will provide another status update by 09:30 US/Pacific with current
+details.  
+  
+|
+
+The issue with errors on the Google Cloud Storage XML API should be resolved
+for the majority of users and we expect a full resolution in the near future.
+We will provide another status update by 09:30 US/Pacific with current
+details.  
+  
+| Aug 26, 2015 | 08:30 |
+
+We are still investigating the issue with requests to the Google Cloud Storage
+XML API. We will provide another status update by 09:00 US/Pacific time.  
+  
+|
+
+We are still investigating the issue with requests to the Google Cloud Storage
+XML API. We will provide another status update by 09:00 US/Pacific time.  
+  
+| Aug 26, 2015 | 08:09 |
+
+There is an elevated error rate on the XML API to Google Cloud Storage.
+Affected users observe HTTP 500 or other 50x responses to XML API requests.
+
+We will provide a further update by 08:30 US/Pacific time.  
+  
+|
+
+There is an elevated error rate on the XML API to Google Cloud Storage.
+Affected users observe HTTP 500 or other 50x responses to XML API requests.
+
+We will provide a further update by 08:30 US/Pacific time.  
+  
+| Aug 26, 2015 | 08:00 |
+
+We are experiencing an issue with the XML API to Google Cloud Storage. The
+issue started at 07:27 US/Pacific time. We will provide a further update by
+08:00.  
+  
+|
+
+We are experiencing an issue with the XML API to Google Cloud Storage. The
+issue started at 07:27 US/Pacific time. We will provide a further update by
+08:00.  
+  
+  * All times are US/Pacific
+  * [Send Feedback]()
+
+  *  
+

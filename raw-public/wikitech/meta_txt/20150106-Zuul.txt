@@ -1,0 +1,36 @@
+On Jan 6th 2015 slightly after midnight, Zuul ended up stalled completely. The Zuul status page had a single change with all jobs completed and the events queue was filling not being processed. The reason was a ssh connection stalled while reporting a change result which is a blocking operation with no timeout. Restarting Gerrit at 8:35am UTC killed the stalled connection and unleashed Zuul. It dropped all events and resumed operations.
+
+00:06:46 UTC Zuul attempted to report results for https://gerrit.wikimedia.org/r/#/c/182962/ and the ssh gerrit connection stalled for some reason
+
+01:13 UTC Aude reports on ops and qa mailling list that Zuul / Jenkins are broken
+
+01:30 UTC Chris McMahon and others restarted the Jenkins Gearman connection based on the "Gearman deadlock" known issue and described at https://www.mediawiki.org/wiki/Continuous_integration/Zuul#Known_issues
+
+08:10 UTC Antoine notices a +2ed patch did not get merged in
+
+08:38 UTC Andrew Bogott restart Gerrit killing the stalled TCP connection. Zuul drop its whole event queue and resume work
+
+10:30 UTC Gerrit started to spurts out errors about not being to reach the ReviewDB database. That caused Zuul to be stuck in exactly the same way. A restart of Zuul fixed it.
+
+Diagnostic done by Antoine on gallium.wikimedia.org
+
+The Zuul Gearman embedded daemon had all jobs properly registered with available workers ( ).
+
+Some jobs were listed has being completed ( ).
+
+The debug log ( ) had little activity beside receiving events from Gerrit.
+
+I requested Zuul to dump a stacktrace by sending SIGUSR2 to the main server process (https://www.mediawiki.org/wiki/Continuous_integration/Zuul#Debugging). The interesting thread trace is:
+
+That shows Zuul scheduler waiting for reporter/gerrit.py report() to reply, itself does a ssh connection to Gerrit to add a comment and votes on the change. That connection is stalled which is blocking the main scheduling thread. Killing that connection would unblock Zuul.
+
+When restarting Gerrit, Zuul ended up not being able to process any event since it could not fetches informations from Gerrit. That caused Zuul to drop roughly 280 events from its queue. Users thus have to retrigger their patches (by commenting 'recheck') or re gate them (by removing themselves as a reviewer and re voting +2).
+
+When Gerrit is not reachable, Zuul drops them with a ssh exception when it should probably queue them and wait for Gerrit to resume.
+
+The issue could have been fixed by restarting the Zuul service on gallium.
+
+The lost of the events queue seems to be addressed by upstream patch Process event multiple times.
+• Ask on ops list whether anyone thought about restarting Zuul
+• Train other people to be able to investigate Zuul issue
+• Filled about the error "Gerrit Cannot open ReviewDb"
