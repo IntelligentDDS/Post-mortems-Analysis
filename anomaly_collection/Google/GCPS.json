@@ -2,7 +2,7 @@
   "google-gcps-16003": {
     "title": "Google Cloud Pub/Sub Incident #16003",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/qqmeta_pdf/CSQL/Google%20Cloud%20SQL%20Incident%20%2316003.pdf"
+      "https://status.cloud.google.com/incident/cloud-pubsub/16003"
     ],
     "time": "10/31/2016",
     "summary": "On Monday, 31 October 2016, 73% of requests to create new subscriptions for Google Cloud Pub/Sub failed for a duration of 124 minutes. Creation of new Cloud SQL Second Generation instances also failed during this incident.",
@@ -81,7 +81,7 @@
   "google-gcps-17001": {
     "title": "Google Cloud Pub/Sub Incident #17001",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCPS/Google%20Cloud%20Pub:Sub%20Incident%20%2317001.pdf"
+      "https://status.cloud.google.com/incident/cloud-pubsub/17001"
     ],
     "time": "03/21/2017",
     "summary": "On Tuesday 21 March 2017, new connections to Cloud Pub/Sub experienced high latency leading to timeouts and elevated error rates for a duration of 95 minutes. Connections established before the start of this issue were not affected. If your service or application was affected, we apologize – this is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability.",
@@ -163,7 +163,7 @@
   "google-gcps-19001": {
     "title": "Google Cloud Pub/Sub Incident #19001",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCPS/Google%20Cloud%20Pub:Sub%20Incident%20%2319001.pdf"
+      "https://status.cloud.google.com/incident/cloud-pubsub/19001"
     ],
     "time": "05/20/2019",
     "summary": "On Monday 20 May, 2019, Google Cloud Pub/Sub experienced publish error rates of 1.2%, increased publish latency by 1.7ms at the 50th percentile, and 8.3s increase at the 99th percentile for a duration of 3 hours, 30 minutes. Publish and Subscribe admin operations saw average error rates of 8.3% and 3.2% respectively for the same period. We apologize to our customers who were impacted by this service degradation.",

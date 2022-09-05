@@ -2,7 +2,7 @@
     "google-GAE-#15020": {
         "title": "Google App Engine Incident #15020",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2315020.pdf"
+            "https://status.cloud.google.com/incident/appengine/15020"
         ],
         "time": "08/12/2015",
         "summary": "On Wednesday, 12 August 2015, the Search API for Google App Engine experienced increased latency and errors for 40 minutes.",
@@ -74,7 +74,7 @@
     "google-GAE-#15021": {
         "title": "Google App Engine Incident #15021",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2315021.pdf"
+            "https://status.cloud.google.com/incident/appengine/15020"
         ],
         "time": "09/19/2015",
         "summary": "On Thursday 17 September 2015, Google App Engine experienced increased latency and HTTP errors for 1 hour 28 minutes.",
@@ -147,7 +147,7 @@
     "google-GAE-#15023": {
         "title": "Google App Engine Incident #15023",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2315023.pdf"
+            "https://status.cloud.google.com/incident/appengine/15023"
         ],
         "time": "11/13/2015",
         "summary": "On Tuesday, 10 November 2015, outbound traffic going through one of our European routers from both Google Compute Engine and Google App Engine experienced high latency for a duration of 6h43m minutes.",
@@ -222,7 +222,7 @@
     "google-GAE-#15025": {
         "title": "Google App Engine Incident #15025",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2315025.pdf"
+            "https://status.cloud.google.com/incident/appengine/15025"
         ],
         "time": "12/07/2015",
         "summary": "On Monday 7 December 2015, 1.29% of Google App Engine applications received errors when issuing authenticated calls to Google APIs over a period of 17 hours and 3 minutes. During a 45-minute period, authenticated calls to Google APIs from outside of App Engine also received errors, with the error rate peaking at 12%. We apologise for the impact of this issue on you and your",
@@ -296,7 +296,7 @@
     "google-GAE-#16002": {
         "title": "Google App Engine Incident #16002",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2316002.pdf"
+            "https://status.cloud.google.com/incident/appengine/16002"
         ],
         "time": "02/03/2016",
         "summary": "On Wednesday 3 February 2016, some App Engine applications running on Java7, Go and Python runtimes served errors with HTTP response 500 for a duration of 18 minutes.",
@@ -369,7 +369,7 @@
     "google-GAE-#16003": {
         "title": "Google App Engine Incident #16003",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%2316003.pdf"
+            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%2316003"
         ],
         "time": "04/25/2016",
         "summary": "On Tuesday 19th April 2016, 1.1% of all requests to obtain new Google OAuth 2.0 tokens failed for a period of 70 minutes. Users of affected applications experienced authentication errors. This incident affected all Google services that use OAuth.",
@@ -452,7 +452,7 @@
     "google-GAE-#16008": {
         "title": "Google App Engine Incident #16008",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2316008.pdf"
+            "https://status.cloud.google.com/incident/appengine/16008"
         ],
         "time": "08/23/2016",
         "summary": "On Thursday 11 August 2016, 21% of Google App Engine applications hosted in the US-CENTRAL region experienced error rates in excess of 10% and elevated latency between 13:13 and 15:00 PDT. An additional 16% of applications hosted on the same GAE instance observed lower rates of errors and latency during the same period.",
@@ -533,7 +533,7 @@
     "google-GAE-#16009": {
         "title": "Google App Engine Incident #16009",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2316009.pdf"
+            "https://status.cloud.google.com/incident/appengine/16009"
         ],
         "time": "08/22/2016",
         "summary": "On Monday 22 August 2016, the Google Cloud US-CENTRAL1-F zone lost network connectivity to services outside that zone for a duration of 25 minutes.",
@@ -614,7 +614,7 @@
     "google-GAE-#17005": {
         "title": "Google App Engine Incident #17005",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2317005.pdf"
+            "https://status.cloud.google.com/incident/appengine/17005"
         ],
         "time": "06/07/2017",
         "summary": "On Wednesday 7 June 2017, Google App Engine experienced highly elevated serving latency and timeouts for a duration of 138 minutes.",
@@ -690,7 +690,7 @@
     "google-GAE-#17006": {
         "title": "Google App Engine Incident #17006",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2317006.pdf"
+            "https://status.cloud.google.com/incident/appengine/17006"
         ],
         "time": "06/08/2017",
         "summary": "On Thursday 8 June 2017, from 08:24 to 09:26 US/Pacific Time, datacenters in the asia-northeast1 region experienced a loss ofnetwork connectivity for a total of 62 minutes.",
@@ -767,7 +767,7 @@
     "google-GAE-#17007": {
         "title": "Google App Engine Incident #17007",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2317007.pdf"
+            "https://status.cloud.google.com/incident/appengine/17007"
         ],
         "time": "11/06/2017",
         "summary": "On Monday 6 November 2017, the App Engine Memcache service experienced unavailability for applications in all regions for 1 hour and 50 minutes.",
@@ -847,7 +847,7 @@
     "google-GAE-#18003": {
         "title": "Google App Engine Incident #18003",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2318003.pdf"
+            "https://status.cloud.google.com/incident/appengine/18003"
         ],
         "time": "02/15/2018",
         "summary": "On Thursday 15 February 2018, specific Google Cloud Platform services experienced elevated errors and latency for a period of 62 minutes from 11:42 to 12:44 PST. ",
@@ -900,7 +900,7 @@
     "google-GAE-#19001": {
         "title": "Google App Engine Incident #19001",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2319001.pdf"
+            "https://status.cloud.google.com/incident/appengine/19001"
         ],
         "time": "01/07/2019",
         "summary": "On Wednesday 2 January, 2019, application creation in Google App Engine (App Engine), first-time deployment of Google Cloud Functions (Cloud Functions) per region, and project creation & API management in Cloud Console experienced elevated error rates ranging from 71% to 100% for a duration of 3 hours, 40 minutes starting at 14:40 PST. Workloads already running on App Engine and Cloud Functions, including deployment of new versions of applications and functions, as well as ongoing use of existing projects and activated APIs, were not impacted.",
@@ -974,7 +974,7 @@
     "google-GAE-#19007": {
         "title": "Google App Engine Incident #19007",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GAE/Google%20App%20Engine%20Incident%20%2319007.pdf"
+            "https://status.cloud.google.com/incident/appengine/19007"
         ],
         "time": "03/12/2019",
         "summary": "On Tuesday 12 March 2019, Google's internal blob storage service experienced a service disruption for a duration of 4 hours and 10 minutes.",

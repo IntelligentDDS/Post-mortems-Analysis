@@ -1,7 +1,7 @@
 {
     "gcd-17002": { 
       "title": "Google Cloud Datastore Incident #17002",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCD/Google%20Cloud%20Datastore%20Incident%20%2317002.pdf"],
+      "link": ["https://status.cloud.google.com/incident/cloud-datastore/17002"],
       "time": "02/14/2017",
       "summary": " On Tuesday 14 February 2017, some applications using Google Cloud Datastore in Western Europe or the App Engine Search API in Western Europe experienced 2%-4% error rates and elevated latency for three periods with an aggregate duration of three hours and 36 minutes. We apologize for the disruption this caused to your service. We have already taken several measures to prevent incidents of this type from recurring and to improve the reliability of these services.",
       "service_name": ["Google Cloud Datastore"],
@@ -67,7 +67,7 @@
     },
     "gcd-19001": { 
       "title": "Google Cloud Datastore Incident #19001",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCD/Google%20Cloud%20Datastore%20Incident%20%2319001.pdf"],
+      "link": ["https://status.cloud.google.com/incident/cloud-datastore/19001"],
       "time": "12/19/2018",
       "summary": " Cloud Datastore experienced a low rate of errors associated with a small subset of high write-rate databases. We have separately notified the customers who may have been potentially impacted by these errors.",
       "service_name": ["Google Cloud Datastore"],
@@ -113,7 +113,7 @@
     },
     "gcd-19006": { 
       "title": "Google Cloud Datastore Incident #19006",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCD/Google%20Cloud%20Datastore%20Incident%20%2319006.pdf"],
+      "link": ["https://status.cloud.google.com/incident/cloud-datastore/19006"],
       "time": "11/11/2019",
       "summary": " On Monday 11 November, 2019, Google's internal key management system (KMS), suffered a failure which began to cause user facing impact in the us-east1, us-east4, and southamerica-east1 regions at 02:39 US/Pacific and recovered by 03:27. Some services took longer to fully recover and continued to experience issues outside of this period. Google's commitment to user privacy and data security means that KMS is a common dependency across many infrastructure components. Specific service impact is outlined below.",
       "service_name": ["Google's internal key management system (KMS)"],

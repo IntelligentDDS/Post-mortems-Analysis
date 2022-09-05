@@ -2,7 +2,7 @@
     "azure-20170904-1": {
         "title": "RCA - ExpressRoute \\ ExpressRoute Circuits - Washington DC",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
         ],
         "time": "09/04/2017",
         "summary": "Between approximately 09:07 and 14:56 UTC on 04 Sep 2017, a subset of customers using ExpressRoute Services with circuits terminating in the Washington DC region may have experienced difficulties connecting to Microsoft Azure resources, Dynamics 365 services or Office 365 services. Customers with backup Express Route Service circuits in other regions or with internet failover paths should not have been impacted. Customers using Azure Virtual Network\nservices were not impacted during this time.",
@@ -69,7 +69,7 @@
     "azure-20170915-1": {
         "title": "App Service - North Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
         ],
         "time": "09/15/2017",
         "summary": "Between 19:30 and 20:15 UTC on 15 Sep 2017, a subset of customers using App Service in North Europe may have received HTTP 500-level response codes, have experienced timeouts or high latency when accessing App Service deployments hosted in this region",
@@ -134,7 +134,7 @@
     "azure-20170921-1": {
         "title": "Unable to Access Azure Management Portal",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
         ],
         "time": "09/21/2017",
         "summary": "Between approximately 12:45 and 16:15 UTC on 21 Sep 2017, a subset of customers may have received intermittent HTTP 503 errors or seen a blue error screen when loading the Azure Management Portal page (https://portal.azure.com).",
@@ -197,7 +197,7 @@
     "azure-20170922-1": {
         "title": "App Service / Web Apps - North Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
         ],
         "time": "09/22/2017",
         "summary": "Between 10:00 and 12:09 UTC on 22 Sep 2017, a subset of customers using App Service \\ Web Apps in North Europe may have received HTTP 500-level response codes, or experienced timeouts or high latency when accessing Web Apps deployments hosted in this region.",
@@ -259,7 +259,7 @@
     "azure-20170924-1": {
         "title": "App Service - South Central US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
         ],
         "time": "09/24/2017",
         "summary": "Between 23:18 and 23:37 UTC on 23 Sep 2017, a subset of customers using App Service in South Central US may have experienced intermittent latency, timeouts, or HTTP 500-level response codes while performing service management operations such as site create, delete, and move resources on their App Service applications.",
@@ -328,7 +328,7 @@
     "azure-20170929-1": {
         "title": "RCA - Storage Related Incident - North Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
         ],
         "time": "09/29/2017",
         "summary": "Between 13:27 and 20:15 UTC on 29 Sep 2017, a subset of customers in North Europe may have experienced difficulties connecting to or managing resources hosted in this region due to availability loss of a storage scale unit. Services that depend on the impacted storage resources in this region that may have seen impact are Virtual Machines, Cloud Services, Azure Backup, App Services\\Web Apps, Azure Cache, Azure Monitor, Azure Functions, Time Series\nInsights, Stream Analytics, HDInsight, Data Factory and Azure Scheduler, Azure Site Recovery.",
@@ -405,7 +405,7 @@
     "azure-20171004-1": {
         "title": "Azure Cloud Shell - Authentication Issues",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
         ],
         "time": "10/04/2017",
         "summary": "Between 02:30 and 08:30 UTC on 04 Oct 2017, a subset of customers using Cloud Shell may have experienced the following authentication error when running Azure CLI command: \"A Cloud Shell credential problem occurred. When you report the issue with the error below, please mention the\nhostname 'host-name'. Could not retrieve token from local cache.",
@@ -473,7 +473,7 @@
     "azure-20171007-1": {
         "title": "Infrastructure issue impacting multiple Azure services - Australia East",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
         ],
         "time": "10/07/2017",
         "summary": "Between 22:19 and 22:46 UTC on 6 October 2017, a subset of customer resources and services were impacted by network availability loss in a portion of the Australia East region. Facility engineers were quickly aware, took steps to remediate the issue, and network availability was restored by 22:39 UTC.\nAzure infrastructure and customer resources largely recovered in the few minutes following.",
@@ -541,7 +541,7 @@
     "azure-20171009-1": {
         "title": "Backup and Site Recovery - UK South",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
         ],
         "time": "10/09/2017",
         "summary": "Starting at 06:10 UTC on 09 Oct 2017, engineers identified that a subset of customers using Backup and Site Recovery in UK South may have received failure notifications when performing service management operations via Powershell or the Azure Management Portal (https://portal.azure.com), for resources hosted in this region.",
@@ -605,7 +605,7 @@
     "azure-20171010-1": {
         "title": "Visual Studio Team Services - Portal Access Issues",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.09.4-10.11.pdf"
         ],
         "time": "10/10/2017",
         "summary": "Between 08:16 and 15:00 UTC on 10 Oct 2017, customers using Visual Studio Team Services may have experienced difficulties connecting to resources hosted by VisualStudio.com.",

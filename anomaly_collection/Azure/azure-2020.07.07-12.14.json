@@ -144,7 +144,7 @@
     "azure-20200814-1": {
         "title": "RCA - Azure DNS - Connectivity issues (Tracking ID TTPY-3P0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.08.14-10.27.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "08/14/2020",
         "summary": "Summary of Impact: Between approximately 02:20 UTC to 03:30 UTC and 04:07 UTC to 04:52 UTC on 14 Aug 2020, a subset of customers connecting through one of Microsoft's edge- nodes (https://aka.ms/MSGlobalNetwork) in the Southeast United States (US) may have experienced intermittent periods of degraded connectivity when attempting to connect to Azure, Microsoft 365, and Xbox resources.",
@@ -218,7 +218,7 @@
     "azure-20200821-1": {
         "title": "Content Delivery Network (CDN) - Service Degradation - Mitigated (Tracking ID DLYY-ND8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.08.14-10.27.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "08/21/2020",
         "summary": "Summary of Impact: Between 18:05 and 19:55 UTC on 21 Aug 2020, a subset of customers using Azure CDN from Verizon may have experienced service degradation.",
@@ -285,7 +285,7 @@
     "azure-20200903-1": {
         "title": "RCA - Network Latency Issue – West Europe (Tracking ID 8KLC-1T8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.08.14-10.27.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "09/03/2020",
         "summary": "Between 09:21 and 17:32 UTC on 03 Sep 2020, a subset of customers may have experienced intermittent latency or issues connecting to resources hosted in West Europe. Retries may have worked during this timeframe.",
@@ -358,7 +358,7 @@
     "azure-20200914-1": {
         "title": "RCA - Connectivity Issues - UK South (Tracking ID CSDC-3Z8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.08.14-10.27.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "09/14/2020",
         "summary": "Between 13:30 UTC on 14 Sep and 00:41 UTC on 15 Sep 2020, a subset of customers in the UK South may have encountered issues connecting to Azure services hosted in this region. Customers leveraging Availability Zones and configured for zone redundancy would not have experienced a loss in service availability. In some instances, the ability to perform service management would have been impacted. Zone Redundant Storage (ZRS) remained available throughout the incident.",
@@ -432,7 +432,7 @@
     "azure-20200918-1": {
         "title": "RCA - Azure Storage Premium File Shares - East US (Tracking ID SMSC-FS0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.08.14-10.27.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "09/18/2020",
         "summary": "Between 11:30 UTC and 19:51 UTC on 18 Sep 2020, a subset of customers using Azure Storage Premium File Shares in East US may have experienced issues accessing services. Other downstream services may have seen impact or experienced service degradation.",
@@ -501,7 +501,7 @@
     "azure-20200928-1": {
         "title": "RCA - Authentication errors across multiple Microsoft services and Azure Active Directory integrated applications (Tracking ID SM79-F88)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.08.14-10.27.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "09/28/2020",
         "summary": "Between approximately 21:25 UTC on September 28, 2020 and 00:23 UTC on September 29, 2020, customers may have encountered errors performing authentication operations for all Microsoft and third-party applications and services that depend on Azure Active Directory (Azure AD) for authentication. Applications using Azure AD B2C for authentication were also impacted. Users who were not already authenticated to cloud services using Azure AD were more likely to experience issues and may have seen multiple authentication request failures corresponding to the average availability numbers shown below. These have been aggregated across different customers and workloads. Europe: 81% success rate for the duration of the incident. Americas: 17% success rate for the duration of the incident, improving to 37% just before mitigation. Asia: 72% success rate in the first 120 minutes of the incident. As business-hours peak traffic started, availability dropped to 32% at its lowest. Australia: 37% success rate for the duration of the incident. Service was restored to normal operational availability for the majority of customers by 00:23 UTC on September 29, 2020, however, we observed infrequent authentication request failures which may have impacted customers until 02:25 UTC. Users who had authenticated prior to the impact start time were less likely to experience issues depending on the applications or services they were accessing. Resilience measures in place protected Managed Identities services for Virtual Machines, Virtual Machine Scale Sets, and Azure Kubernetes Services with an average availability of 99.8% throughout the duration of the incident.",
@@ -577,7 +577,7 @@
     "azure-20201006-1": {
         "title": "Azure Front Door - Mitigated (Tracking ID 8KND-JP8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.08.14-10.27.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "10/06/2020",
         "summary": "Between 17:00 and 21:19 UTC on 06 Oct 2020, a subset of customers may have experienced traffic routing to unhealthy backends.",
@@ -641,7 +641,7 @@
     "azure-20201007-1": {
         "title": "RCA - Issues accessing Microsoft and Azure services (Tracking ID 8TY8-HT0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.08.14-10.27.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "10/07/2020",
         "summary": "Between 18:20 UTC and 18:42 UTC on 07 Oct 2020, a subset of customers may have encountered increased latency, packet loss, failed connections and authentication failures across multiple Azure services. Retries may have succeeded during this time and users who had authenticated prior to the impact start time were less likely to experience authentication issues.Network resources were restored at 18:42 UTC; Azure services began auto-mitigation. While other services had to undergo manual intervention to recover this could have led to varying times of recovery for Azure services. By 21:30 UTC it was confirmed that all Azure services had recovered.",
@@ -717,7 +717,7 @@
     "azure-20201019-1": {
         "title": "RCA - Azure Resource Manager - Issues accessing Azure resources via ARM (Tracking ID ZLXD-HT8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.08.14-10.27.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "10/19/2020",
         "summary": "Between 19:07 UTC and 22:20 UTC on 19 Oct 2020, a subset of customers using resources that leverage Azure Resource Manager (ARM) may have received intermittent errors while accessing or performing service management operations - such as create, update, delete - for multiple resources from the Azure portal or when using CLI.",
@@ -791,7 +791,7 @@
     "azure-20201027-1": {
         "title": "RCA - Azure Active Directory B2C - North Europe / West Europe (Tracking ID 8SHB-PD0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.08.14-10.27.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "10/27/2020",
         "summary": "Between 08:40 UTC and 11:10 UTC on 27 Oct 2020, a subset of customers using Azure Active Directory B2C (AAD B2C) in North Europe/West Europe may have experienced errors when connecting to the service. Customers may have received an HTTP status code 502 (Bad Gateway) or HTTP status code 504 (Gateway Timeout).",

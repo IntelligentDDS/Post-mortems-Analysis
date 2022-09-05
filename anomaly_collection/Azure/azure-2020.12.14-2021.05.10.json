@@ -2,7 +2,7 @@
     "azure-20210115-1": {
         "title": "Azure Network Infrastructure service availability issues for customers located in Argentina - Mitigated (Tracking ID DM7S-VC8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.09.14-2021.02.12.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "01/15/2021",
         "summary": "Between 17:30 and 20:15 UTC on 15 Jan 2021, customers located in Argentina attempting to access the Azure Portal and/or Azure Resources may have experienced degraded performance, network drops, or timeouts. Customers may also have experienced downstream impact to dependent Azure services due to an underlying networking event.",
@@ -84,7 +84,7 @@
     "azure-20210212-1": {
         "title": "RCA - Azure Cosmos DB connectivity issues affecting downstream services in West US region (Tracking ID CVTV-R80)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.09.14-2021.02.12.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "02/12/2021",
         "summary": "Between February 11, 23:23 UTC and February 12, 04:30 UTC, a subset of customers using Azure Cosmos DB in West US may have experienced issues connecting to resources. Additionally, other Azure services that leverage Azure Cosmos DB may have also seen downstream impact during this time. The Cosmos DB outage affected user application requests to West US. A small subset of customers using Cosmos DB in other regions saw an impact on their replication traffic into West US. Customer impact for Azure Cosmos DB accounts was dependent on the Geo-Replication configurations in place: Accounts with no Geo-Replication: Read and write requests failed for West US Accounts with Geo-Replicated Single-Write + Multiple-Read regions: Read and write requests failed for West US. The Cosmos DB client SDK automatically redirected read requests to a healthy region – an increased latency may have been observed due to longer geographic distances Accounts with Geo-Replicated Multiple Write + Read regions: Read and write requests may have failed in West US. The Cosmos DB client SDK automatically redirected read and write requests to a healthy region – an increased latency may have been observed due to longer geographic distances",

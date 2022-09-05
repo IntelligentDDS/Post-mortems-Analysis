@@ -2,7 +2,7 @@
     "azure20180613-1": {
         "title": "RCA - Multiple Azure Services availability issues and Service Management issues for a subset of Classic Azure resources - South Central US ",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "06/13/2018",
         "summary": "Between 15:57 UTC and 19:00 UTC on 13 Jun 2018 a subset of customers in South Central US may have experienced difficulties connecting to resources hosted in this region. Engineers have determined that this was caused by an underlying Storage availability issue. Other services that leverage Storage in this region may also be experienced impact related to this. These services may include: Virtual Machines, App Service, Visual Studio Team Services, Logic Apps, Azure Backup, Application Insights, Service Bus, Event Hub, Site Recovery, Azure Search, and Media Services. In addition, customers may have experienced failures when performing Service Management operations on their resources. Communications for Service Management operations issue is published to the Azure Portal.",
@@ -84,7 +84,7 @@
     "azure20180614-1": {
         "title": "Azure Bot Services - Mitigated",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "06/14/2018",
         "summary": "Between 07:15 and 10:06 UTC on 14 Jun 2018, a subset of customers using Azure Bot Service may have experienced difficulties while trying to connect to bot resources. ",
@@ -150,7 +150,7 @@
     "azure20180619-1": {
         "title": "RCA - Service Availability Issue in North Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "06/19/2018",
         "summary": "Summary of impact: From 17:44 on 19 Jun 2018 to 04:30 UTC on 20 Jun 2018, customers using Azure services in North Europe may have experienced connection failures when attempting to access resources hosted in the region. Customers leveraging a subset of Azure services may have experienced residual impact for a sustained period post-mitigation of the underlying issue. ",
@@ -225,7 +225,7 @@
     "azure20180620-1": {
         "title": "RCA - Azure Data Factory Services - Multiple Regions ",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "06/14/2018",
         "summary": " Between 12:25 and 15:00 UTC on 20 Jun 2018, customers using Data Factory V1, Data Factory V2, Data Movement, SSIS Integration Runtime, and Data Movement & Dispatch may have experienced errors, including, but not limited to, pipeline execution errors, copy activity and store procedure activity errors, manual and scheduled SSIS activity failures, and data movement and dispatch failures. As a workaround, customers had to manually restart their self-hosted Integration Runtime environments. ",
@@ -298,7 +298,7 @@
     "azure20180625-1": {
         "title": "RCA - Multiple Services - South Central US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "06/25/2018",
         "summary": "Between 19:40 and 20:52 UTC on 25 Jun 2018, a subset of customers in South Central US may have experienced difficulties connecting to resources and/or 500-level errors hosted in this region. Virtual Machines may have rebooted unexpectedly. Impacted services included: Storage, Virtual Machines, Key Vault, Site Recovery, Machine Learning, Cloud Shell, Logic Apps, Redis Cache, Visual Studio Team Services, Service Bus, ExpressRoute, Application Insights, Backup, Networking, API Management, App Service (Linux) and App Service. ",
@@ -387,7 +387,7 @@
     "azure20180627-1": {
         "title": "RCA - App Service - West Europe ",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "06/27/2018",
         "summary": "Between 16:00 UTC on 27 Jun 2018 and 13:00 UTC on 28 Jun 2018, a subset of customers using App Service in West Europe may have received HTTP 500-level response codes, timeouts or high latency when accessing App Service (Web, Mobile and API Apps) deployments hosted in this region. ",
@@ -459,7 +459,7 @@
     "azure20180701-1": {
         "title": "RCA - IoT Hub - Connectivity Issues",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "07/01/2018",
         "summary": "Between 01:30 UTC on 01 Jul 2018 and 18:00 UTC on 02 Jul 2018, a subset of customers using Azure IoT Hub in West Europe, North Europe, East US, and West US may have experienced difficulties connecting to resources hosted in these regions.",
@@ -521,7 +521,7 @@
     "azure20180711-1": {
         "title": "RCA - SQL Database - Intermittent Database Login Failures - South Central US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "07/11/2018",
         "summary": "Between 18:38 on 11 Jul 2018 and 01:13 UTC on 12 Jul 2018, a subset of customers using SQL Database in South Central US may have experienced intermittent issues accessing services. New connections to existing databases in this region may have resulted in an error or timeout, and existing connections may have been terminated. Engineers determined that the initial issue was mitigated at 20:54 UTC but login failure recurred again at 22:25 UTC. The overall impact to the region would have been less than 10% of traffic being served to SQL Databases, however the impact to customers in the region should have been substantially lower as retries",
@@ -597,7 +597,7 @@
     "azure-20180713-1": {
         "title": "RCA - Virtual Machines - UK South",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "07/13/2018",
         "summary": "Between 22:13 UTC on 12 July 2018 and 16:20 UTC on 13 July 2018, a subset of customers using Virtual Machines in UK South may have experienced difficulties connecting to some of their resources hosted in the region. Customers may have been unable to establish RDP or SSH session into their resources. This issue impacted customers with resources hosted on one of the compute scale units hosted in the region.",
@@ -670,7 +670,7 @@
     "azure-20180716-1": {
         "title": "RCA - Networking - Service Availability",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "07/16/2018",
         "summary": "Between 14:55 and 16:15 UTC on 16 July 2018, a subset of Azure customers in West US, West Central US, India South, India Central, and Australia East may have experienced difficulties connecting to Azure endpoints, which in-turn may have caused errors when accessing Microsoft Services in the impacted regions.",
@@ -739,7 +739,7 @@
     "azure-20180723-1": {
         "title": "Error notifications in Microsoft Azure Portal",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "07/23/2018",
         "summary": "Between approximately 20:00 and 22:56 UTC on 23 Jul 2018, a subset of customers may have received timeout errors or failure notifications when attempting to load multiple blades in the Microsoft Azure Portal. Customers may also have experienced slowness or difficulties logging into the Portal.",
@@ -811,7 +811,7 @@
     "azure-20180724-1": {
         "title": "Delays in ARM generated Activity Logs",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "07/24/2018",
         "summary": "Between 23:00 UTC on 24 Jul 2018 and 07:00 UTC on 27 Jul 2018, customers may have not received activity logs for ARM resources. All service management operations for ARM resources would have been successful, however the corresponding activity logs would not have been generated. As a result, any dependent actions or workflows that are dependent on ARM generated activity logs would have not been initiated. Engineers have confirmed that customers can receive ARM generated activity logs as of 07:00 on the 27 July 2018. However, at this time customers may not able to access the activity logs that were generated during this impact time frame.",
@@ -880,7 +880,7 @@
     "azure-20180726-1": {
         "title": "RCA - Azure Service Management Failures",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "07/26/2018",
         "summary": "Between 22:15 on 26 Jul 2018 and 06:20 UTC on 27 Jul 2018, a subset of customers may have experienced timeouts or failures when attempting to perform service management operations for Azure Resources dependent on management.core.windows.net, this is Azure’s v1 API endpoint. In addition, some customers may have experienced intermittent latency and connection failures to the Azure Management Portal. Some services with a reliance on triggers from service management calls may have seen failures for running instances.",
@@ -966,7 +966,7 @@
     "azure20180728-1": {
         "title": "App Service - East US - Mitigated",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "07/28/2018",
         "summary": "Between 08:00 and 12:30 UTC on 28 Jul 2018, a subset of customers using App Services in East US may have received HTTP 500-level response codes, have experienced timeouts or high latency when accessing App Service (Web, Mobile and API Apps) deployments hosted in this region.",
@@ -1034,7 +1034,7 @@
     "azure-20180731-1": {
         "title": "RCA - Storage - North Central US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "07/31/2018",
         "summary": "Between 17:52 UTC and 18:40 UTC on 31 Jul 2018 a subset of customers using Storage in North Central US may have experienced difficulties connecting to resources hosted in this region. Other services that leverage Storage in this region may also have been experiencing impact related to this.",
@@ -1107,7 +1107,7 @@
     "azure-20180801-1": {
         "title": "RCA - Networking Connectivity and Latency - East US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "08/01/2018",
         "summary": "Between 13:18 UTC and 22:40 UTC on 01 Aug 2018, a subset of customers in the East US region may have experienced difficulties or increased latency when connecting to some resources.",
@@ -1180,7 +1180,7 @@
     "azure-20180801-2": {
         "title": "Azure Service Management Failures",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "08/01/2018",
         "summary": "Between 21:14 UTC on 1st Aug and 00:00 UTC 2nd Aug 2018, a subset of customers may have experienced timeouts or failures when attempting to perform service management operations for Azure Resources dependent on management.core.windows.net. ",
@@ -1251,7 +1251,7 @@
     "azure-20180813-1": {
         "title": "RCA - Latency and Slow I/O issues in East US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "08/13/2018",
         "summary": "Between 18:45 and 21:35 UTC on 13 Aug 2018, a subset of customers in East US would have experienced some of the below issues with their Azure services: • Latency and potentially connectivity loss to Virtual Machines and Storage accounts • Latency or failed requests for traffic going over an Express Route circuit • Latency or failures when attempting to Remote Desktop Protocol (RDP) into their Virtual Machines.",
@@ -1324,7 +1324,7 @@
     "azure-20180820-1": {
         "title": "RCA - Storage - West Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "08/20/2018",
         "summary": "Between 08:40 and 13:43 UTC on 20 Aug, 2018, a subset of customers using Azure Storage may have been unable to create ARM storage accounts in West Europe. Customers may have received 400 HTTP Bad Request responses with an error code of “RequestIsNotValidJson” even for valid, well-formed requests. Customers attempting to deploy a new VM in the affected regions may have also encountered failures due to this issue. Other services and operations which rely on the creation of storage accounts would have similarly been impacted. Other storage service management operations were not impacted. Reading and writing data within existing storage accounts was also not affected.",
@@ -1400,7 +1400,7 @@
     "azure20180820-2": {
         "title": "Iot Hub - West Europe and North Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "08/20/2018",
         "summary": "Between 17:30 UTC on 20 Aug 2018 and 16:42 UTC on 21 Aug 2018, a subset of IoT Hub customers in West Europe may experience errors, such as 'InternalServerError', when trying to access IoT Hub devices hosted in these regions. Customers may also experience issues when attempting to delete resources/devices.",
@@ -1465,7 +1465,7 @@
     "azure20180906-1": {
         "title": "Azure Active Directory - Multiple Regions",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "09/06/2018",
         "summary": "Between 16:13 UTC on 06 Sep 2018 and 01:35 UTC on 07 Sep 2018, a subset of Azure Active Directory customers using multiple services may have experienced intermittent authentication request failures when connecting to resources.",
@@ -1534,7 +1534,7 @@
     "azure-20180904-1": {
         "title": "South Central US - Preliminary RCA",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.06.13-09.pdf"
         ],
         "time": "09/04/2018",
         "summary": "In the early morning of September 4, 2018, high energy storms hit southern Texas in the vicinity of Microsoft Azure’s South Central US region. Multiple Azure datacenters in the region saw voltage sags and swells across the utility feeds. At 08:42 UTC, lightning caused electrical activity on the utility supply, which caused significant voltage swells. These swells triggered a portion of one Azure datacenter to transfer from utility power to generator power. Additionally, these power swells shutdown the datacenter’s mechanical cooling systems despite having surge suppressors in place. Initially, the datacenter was able to maintain its operational temperatures through a load dependent thermal buffer that was designed within the cooling system. However, once this thermal buffer was depleted the datacenter temperature exceeded safe operational thresholds, and an automated shutdown of devices was initiated. This shutdown mechanism is intended to preserve infrastructure and data integrity, but in this instance, temperatures increased so quickly in parts of the datacenter that some hardware was damaged before it could shut down. A significant number of storage servers were damaged, as well as a small number of network devices and power units. While storms were still active in the area, onsite teams took a series of actions to prevent further damage – including transferring the rest of the datacenter to generators thereby stabilizing the power supply. To initiate the recovery of infrastructure, the first step was to recover the Azure Software Load Balancers (SLBs) for storage scale units. SLB services are critical in the Azure networking stack, managing the routing of both customer and platform service traffic. The second step was to recover the storage servers and the data on these servers. This involved replacing failed infrastructure components, migrating customer data from the damaged servers to healthy servers, and validating that none of the recovered data was corrupted. This process took time due to the number of servers damaged, and the need to work carefully to maintain customer data integrity above all else. The decision was made to work towards recovery of data and not fail over to another datacenter, since a fail over would have resulted in limited data loss due to the asynchronous nature of geo replication. Despite onsite redundancies, there are scenarios in which a datacenter cooling failure can impact customer workloads in the affected datacenter. Unfortunately, this particular set of issues also caused a cascading impact to services outside of the region, as described below.",

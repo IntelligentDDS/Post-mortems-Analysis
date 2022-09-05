@@ -2,7 +2,7 @@
     "azure-20200429-1": {
         "title": "Issues accessing resources in the Azure Portal - Mitigated (Tracking ID PMN6-7D8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "04/29/2020",
         "summary": "Between 18:41 UTC on 29 Apr 2020 and 11:00 UTC on 30 Apr 2020, a subset of customers may have experienced issues accessing resources in their Azure Portal and received an 'Access Denied' error message. Programmatic methods, such as PowerShell or Azure CLI, could be used to list resources on their subscriptions and access their individual resources via resource ID. ",
@@ -73,7 +73,7 @@
     "azure-20200511-1": {
         "title": "Azure Connectivity - United Kingdom - Mitigated (Tracking ID Z_V3-FC8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "05/11/2020",
         "summary": "Between 13:30 and 13:50 UTC on 11 May 2020, a limited subset of customers in the United Kingdom may have experienced connectivity issues to Azure sites and services. ",
@@ -142,7 +142,7 @@
     "azure-20200518-1": {
         "title": "RCA - Multiple Services - Central India (Tracking ID SLN3 - HD0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "05/18/2020",
         "summary": "Between 12:41 UTC on 18 May 2020 and 08:30 UTC on 19 May 2020, customers may have experienced difficulties connecting to resources hosted in Central India. A number of Storage and Compute scale units had gone offline, impacting Virtual Machines and other Azure services with dependencies on these. ",
@@ -229,7 +229,7 @@
     "azure-20200519-1": {
         "title": "RCA - SQL and Open-Source Database Service Management Issues - East US (Tracking ID 8K760LZ8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "05/19/2020",
         "summary": " Between 13:30 and 16:30 UTC on 19 May 2020, a subset of customers in East US may have intermittently experienced timeouts and latency issues when processing service management operations such as create, update, delete, for Azure SQL Database, Azure SQL Database Managed Instance, Azure Database for MariaDB, Azure Database for MySQL, Azure Database for PostgreSQL, and Azure Synapse Analytics services. Some customers may have also encountered issues or experienced latency when loading database management tools or expanding database resources in SQL Server Management Studio (SSMS). Retries may have been successful. ",
@@ -307,7 +307,7 @@
     "azure-20200604-1": {
         "title": "RCA - Azure Resource Manager - Failures creating or deleting resources (Tracking ID DLZG-7C0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "06/04/2020",
         "summary": "Between 07:45 and 16:57 UTC on 04 Jun 2020, a subset of customers across all Public Azure regions may have experienced deployment failures when attempting to create or delete certain service based resources via Azure Resource Manager (ARM) deployment and management service due to an underlying networking issue. While the related networking resources for the impacted services were actually being created or deleted during this time, ARM was not notified of the deployment status and hence was failing the service creation or deletion. This issue may have impacted some GET or READ action on the resources. Less than .01% of users would have experienced this issue. This issue was initially detected an hour after the impact start time and was identified and escalated by an underlying service experiencing end user impact. Once detected, multiple engineering teams were engaged to investigate the cause of the issue to understand what needed to be fixed. By 11:00 UTC, the appropriate networking team was engaged and began investigating. The underlying cause was identified by 13:00 UTC. We identified the appropriate fix and rolled it out to a single region to validate success. We confirmed success of the roll out and began deploying to other regions in 3 batches. At the end of each batch we validated the success of the fix. By 16:57 UTC, the fix was rolled out to all regions and mitigation was confirmed. ",
@@ -379,7 +379,7 @@
     "azure-20200611-1": {
         "title": "RCA - Storage - East US (Tracking ID 9VHK-J80)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "06/11/2020",
         "summary": "Between 11:57 and 14:20 UTC on 11 Jun 2020, a subset of Storage customers in East US may have experienced connection failures when trying to access some of their resources hosted in this region. Services with dependencies on the impacted storage resources, such as Virtual Machines, may also have experienced downstream impact during this time. ",
@@ -464,7 +464,7 @@
     "azure-20200614-1": {
         "title": "RCA - Azure Active Directory - Authentication Errors (Tracking ID PMHH-NS0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "06/14/2020",
         "summary": "Between 23:00 UTC on 14 Jun 2020 and 01:40 UTC on 15 Jun 2020, a subset of customers using Azure Active Directory may have experienced authentication issues when accessing resources. Customers may have received the following error message “AADSTS90033: A Transient error has occurred. Please try again.” ",
@@ -540,7 +540,7 @@
     "azure-20200701-1": {
         "title": "RCA - Azure SQL Database - Japan East (Tracking ID CLCK-LD0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "07/01/2020",
         "summary": "Between 09:24 and 11:15 UTC on 01 Jul 2020, a subset of customers using Azure SQL Database, Azure SQL Data Warehouse/Synapse Analytics, Azure Database for MySQL, Azure Database for PostgreSQL, and Azure Database for MariaDB in Japan East may have experienced service connection failures or possible timeouts. Services utilizing SQL Databases may have also been impacted. ",
@@ -627,7 +627,7 @@
     "azure-20200704-1": {
         "title": "Azure DevOps - Service Outage - Mitigated (Trackign ID SNDL-NS8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.4.22-7.4.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "07/04/2020",
         "summary": "Between 02:26 am and 03:40 am UTC on 04 Jul 2020, customers using Azure DevOps in multiple regions may have observed connectivity errors to DevOps services. ",

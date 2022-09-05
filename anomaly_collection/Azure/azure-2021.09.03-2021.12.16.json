@@ -2,7 +2,7 @@
     "azure-20210903-1": {
         "title": "Microsoft Azure Portal - Issues while trying to create an application - Mitigated (Tracking ID 4M8X-VTZ)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.09.03-12.16.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "09/03/2021",
         "summary": "Between 15:00 UTC on 03 Sep 2021 and 01:24 UTC on 09 Sep 2021, customers may have experienced issues while trying to create an application on the Azure portal when signed-in with their Microsoft Account (MSA). This issue had no impact on users who have Azure AD tenants. ",
@@ -68,7 +68,7 @@
     "azure-20211013-1": {
         "title": "RCA - Virtual Machines (Tracking ID 0NC_-L9G)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.09.03-12.16.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "10/13/2021",
         "summary": "Between 06:27 UTC and 12:42 UTC on 13 Oct 2021, a subset of customers using Windows-based Virtual Machines (Windows VM) may have received failure notifications when performing service management operations - such as start, create, update, delete. Deployments of new VMs and any updates to extensions may have failed. Management operations on Availability Set, Virtual Machine Scale Set were also impacted.Non-Windows Virtual Machines were unaffected, however services with dependencies on Windows VMs may have also experienced similar failures when creating resources.",
@@ -142,7 +142,7 @@
     "azure-20211027-1": {
         "title": "SMS MFA not being received by multiple tenants (Tracking ID ZKP4-NSG)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.09.03-12.16.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "10/27/2021",
         "summary": "Starting at 10:03 UTC, a subset of customers using SMS for Multi-Factor Authentication in United States are experiencing difficulties signing into Azure resources, such as Azure Active Directory, when Multi-Factor Authentication is required by policy.",
@@ -207,7 +207,7 @@
     "azure-20211109-1": {
         "title": "RCA - Intermittent Failures When Accessing or Using Access Panel (Tracking ID DK83-BDZ)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.09.03-12.16.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "11/09/2021",
         "summary": "Summary of Impact: Between 14:03 UTC and 19:28 UTC on Nov 9 2021, customers using Azure Active Directory’s Access Panel whose traffic was routed through West Central US and Central US may have experienced issues when attempting to access or use Access Panel functionality. Users may have experienced intermittent failures when attempting the following operations: • Launching Single Sign on (SSO) applications from My Apps or when using direct sign-on links • Registering for Multi-Factor authentication (MFA) • Self-Service Password Reset • Performing self-service management of groups • Accepting terms of use agreements This incident had no impact on authentication and MFA scenarios outside of MFA registration, authentication for applications that were not launched through My Apps or through direct sign-on links.",
@@ -282,7 +282,7 @@
     "azure-20211112-1": {
         "title": "Microsoft Graph - Intermittent 400-level errors accessing Graph APIs - Mitigated (Tracking ID PLT7-RTZ)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.09.03-12.16.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "11/12/2021",
         "summary": "Between 02:00 UTC on 12 Nov 2021 and 17:00 UTC on 15 Nov 2021, a subset of customers primarily located in the North America and APAC geographies may have encountered intermittent 400-level errors when attempting to access Microsoft Graph APIs.",
@@ -349,7 +349,7 @@
     "azure-20211116-1": {
         "title": "RCA - Azure Active Directory - Issues when attempting to authenticate (Tracking ID SVT2-VCZ)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.09.03-12.16.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "11/16/2021",
         "summary": "Between 20:20 UTC on 16 Nov 2021 and 05:00 UTC on 17 Nov 2021, a subset of customers using Azure Active Directory B2C in the Australia region may have encountered failures while attempting to authenticate. These attempts may have succeeded on retry.",
@@ -417,7 +417,7 @@
     "azure-20211209-1": {
         "title": "RCA - Azure Active Directory - Issues when attempting to authenticate (Tracking ID SVT2-VCZ)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.09.03-12.16.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "12/09/2021",
         "summary": "Between approximately 21:00 UTC on 09 Dec 2021 and 00:23 UTC on 10 Dec 2021, a subset of customers using App Service and/or Azure Functions may have encountered issues with deployments using web deploy, managing WebJobs, connecting to Web SSH console, executing certain Diagnostic Tools using Azure portal or while accessing SCM endpoint. App Service resources utilizing other deployment methods were not affected. Standard App Service control plane operations and runtime were not impacted. ",
@@ -484,7 +484,7 @@
     "azure-20211213-1": {
         "title": "RCA - Azure Data Factory V2 - West Europe (Tracking ID 8T9M-T9G)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.09.03-12.16.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "12/13/2021",
         "summary": "Between approximately 06:30 UTC and 12:30 UTC on 13 December 2021, you were identified as a customer that may have experienced intermittent errors accessing Azure Data Factory resources (ADF) in West Europe.",
@@ -550,7 +550,7 @@
     "azure-20211216-1": {
         "title": "RCA - Azure Active Directory - Experiencing sign in issues when attempting to access Azure, Dynamics 365, and/or Microsoft 365 Services (Tracking ID S_3MFZZ)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.09.03-12.16.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "12/16/2021",
         "summary": "Between 01:00 UTC and 02:25 UTC on 16 December 2021, Azure Active Directory (Azure AD) users may have experienced impact when accessing Microsoft 365, Dynamics 365 and Azure services. Customers using desktop and mobile applications, such as Microsoft Teams, with their work or school accounts experienced minimal disruption as they were automatically routed to the Azure AD Backup Authentication service. Some Azure AD B2C users may have experienced impact between 01:00 UTC and 02:25 UTC. Some Microsoft Account users, using Outlook on iOS to access their email, may have experienced impact between 00:11 UTC and 02:25 UTC.",
@@ -632,7 +632,7 @@
     "azure-20211216-2": {
         "title": "Mitigated - Microsoft Graph API (Tracking ID ZN7Y-5DG)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.09.03-12.16.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "12/16/2021",
         "summary": "Between 14:00 UTC and 17:30 UTC on 16 December 2021, a subset of users in North America may have experienced performance issues and timeout errors with Microsoft Graph APIs.",

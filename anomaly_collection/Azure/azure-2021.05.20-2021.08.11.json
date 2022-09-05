@@ -2,7 +2,7 @@
     "azure-20210520-1": {
         "title": "RCA - Issues accessing the Azure portal and other Microsoft services (Tracking ID KN22-39Z)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.05.20-08.10.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "05/20/2021",
         "summary": "Between 06:52 UTC and 16:20 UTC on 20 May 2021, a subset of Azure customers may have experienced intermittent errors when attempting to access the Azure portal and other Microsoft and Azure services. Impact was observed across multiple services and regions to varying degree. Recovery time varied by service, and most services fully recovered by 16:20 UTC.",
@@ -71,7 +71,7 @@
     "azure-20210614-1": {
         "title": "RCA - Error notifications for service management operations - West US 2 (Tracking ID LL1H-9CZ)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.05.20-08.10.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "06/14/2021",
         "summary": "Between 22:00 UTC on 14 Jun 2021 and 11:15 UTC on 15 June 2021, a subset of customers with resources hosted in the West US 2 region may have received errors while performing service management operations - such as create, update, delete - for multiple services. On 15 Jun 2021 09:20 UTC mitigation was applied, and services gradually began to recover as load from queued service management requests reduced. Full recovery was confirmed for all impacted services at 11:15 UTC",
@@ -157,7 +157,7 @@
     "azure-20210629-1": {
         "title": "RCA - Azure Resource Manager - Degraded Performance managing resources (Tracking ID 1V9K-PSZ)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.05.20-08.10.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "06/29/2021",
         "summary": "Between as early as 22:24 UTC on 29 Jun 2021 and 14:30 UTC on 30 Jun 2021, a subset of Azure customers may have experienced intermittent errors when attempting to access the Azure portal and other Microsoft and Azure services. Impact was observed across multiple services and regions to varying degrees. Recovery time varied by service, and most services fully recovered by 14:30 UTC. During this time, retries may have succeeded.",
@@ -233,7 +233,7 @@
     "azure-20210707-1": {
         "title": "RCA - Service management operation failures - North Europe (Tracking ID 0_JL-9SG)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.05.20-08.10.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "07/07/2021",
         "summary": "Between 21:19 UTC on 07 Jul 2021 and 12:10 UTC on 08 Jul 2021, a subset of customers in North Europe may have intermittently received errors when performing service management operations for services that rely on compute resources in this region.",
@@ -299,7 +299,7 @@
     "azure-20210712-1": {
         "title": "RCA - Azure Front Door and Azure CDN - Connectivity issues and increased latency (Tracking ID 0TYG-DPG)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.05.20-08.10.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "07/12/2021",
         "summary": "Between approximately 14:55 UTC and 19:50 UTC on July 12th, 2021, a subset of customers primarily in the US and Canada experienced increased latency and connection timeouts when connecting to Azure Front Door and Azure CDN Standard from Microsoft. Retries may have been successful on the resources/environments that experienced issues. The peak failure rate was approximately 70% in some East US metro locations. Aggregate availability drop average across the US and Canada was around 10%. A subset of customers using Windows Virtual Desktop may have experienced connection failures when attempting to access remote applications and resources.",
@@ -384,7 +384,7 @@
     "azure-20210721-1": {
         "title": "RCA - Azure Cognitive Services (Tracking ID 4LRL-V8G)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.05.20-08.10.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "07/21/2021",
         "summary": "Between approximately 03:00 EDT and 09:55 EDT on 21 Jul 2021, customers using Cognitive Services may have experienced difficulties connecting to resources. Impacted customers may have experienced timeouts or 401 authorization errors.",
@@ -458,7 +458,7 @@
     "azure-20210723-1": {
         "title": "RCA - Service availability issue - Brazil South (Tracking ID 5TGJ-1SZ)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.05.20-08.10.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "07/23/2021",
         "summary": "Between 19:00 UTC and 21:28 UTC on 23 Jul 2021, a subset of customers in Brazil South may have experienced issues connecting to a number of Azure services hosted in this region, including, but not limited to, App Service, ExpressRoute, Azure Search, and VPN Gateway.",
@@ -529,7 +529,7 @@
     "azure-20210728-1": {
         "title": "RCA - Azure Network Infrastructure service availability issues - Brazil Southeast (Tracking ID LNZM-TZG)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.05.20-08.10.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "07/28/2021",
         "summary": "Between 13:48 UTC and 15:20 UTC on 27 July 2021, a subset of customers experienced issues connecting to their services in the Brazil Southeast region.",
@@ -605,7 +605,7 @@
     "azure-20210811-1": {
         "title": "RCA - Azure Network Infrastructure service availability issues - Brazil Southeast (Tracking ID LNZM-TZG)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/azure/meta_pdf/2021.05.20-08.10.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "08/11/2021",
         "summary": "Between 06:30 UTC and 09:30 UTC on 11 Aug 2021, a subset of customers leveraging Azure Front Door and Azure CDN Standard from Microsoft in Japan East, Japan West, Korea South, Korea Central and/or West US regions may have experienced intermittent HTTPS request connectivity failures when trying to reach their applications. During the incident, the average global error rate was ~2.5% and the peak global error rate was ~5%.",

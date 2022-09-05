@@ -2,7 +2,7 @@
     "azure-20170411-1": {
         "title": "IoT Suite - Failures Provisioning New Solutions - Germany",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
         ],
         "time": "04/11/2017",
         "summary": "Between 07:15 on 08 Apr 2017 and 04:00 UTC on 11 Apr 2017, customers using Azure IoT Suite may have been unable to provision solutions. Engineers recommended deploying from an MSbuild prompt using code at https://aka.ms/rms_git. Existing resources were not impacted. ",
@@ -65,7 +65,7 @@
     "azure-20170503-1": {
         "title": "Backup - Failure notifications when performing Backup operations ",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
         ],
         "time": "05/03/2017",
         "summary": "Between 10:00 and 19:55 UTC on 03 May 2017, customers using Backup in North Europe and South Central US may have experienced difficulties when creating new and running scheduled Virtual Machine backup jobs in the region. Customers attempting to access these resources may have encountered the following error message: VM Agent is unable to communicate with the Azure Backup Service.",
@@ -127,7 +127,7 @@
     "azure-20170504-1": {
         "title": "RCA - Virtual Machines - Japan East",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
         ],
         "time": "05/04/2017",
         "summary": "Between 20:55 and 21:35 UTC on 04 May 2017, a subset of customers using Virtual Machines in Japan East may have experienced intermittent connection failures when trying to access Virtual Machines in the region. Some Virtual Machines may have also restarted unexpectedly. Engineers detected alerts and engaged promptly. The issue was self-healed by the Azure platform self-heal mechanism, Engineers continued to investigate to establish the full root cause and implemented preventive measures to avoid future occurrences. ",
@@ -206,7 +206,7 @@
     "azure-20170509-1": {
         "title": "Virtual Machines and Storage -West US 2",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
         ],
         "time": "05/09/2017",
         "summary": "Between 21:49 and 22:01 UTC on 08 May 2017, a subset of customers in West US 2 using Virtual Machines may have experienced Virtual Machine reboots as well as Storage customers may have lost connectivity to their premium storage resources. ",
@@ -270,7 +270,7 @@
     "azure-20170510-1": {
         "title": "RCA - Intermittent Authentication Failures due to Underlying Azure Active Directory issues",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
         ],
         "time": "05/10/2017",
         "summary": "Between approximately 19:32 and 20:12 UTC on 10 May 2017, a subset of customers may have experienced difficulties or received failure notifications when attempting to authenticate into their resources that are dependent on Azure Active Directory Service. The issue was caused by a configuration change that was incorrectly deployed to Azure Active Directory production. The change was rolled back promptly, which mitigated the incident at 20:12 UTC.",
@@ -348,7 +348,7 @@
     "azure-20170512-1": {
         "title": "Virtual Machines - North Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
         ],
         "time": "05/12/2017",
         "summary": "Between 09:07 UTC on 11 May 2017 and 03:02 UTC on 12 May 2017, a subset of customers in North Europe may have received intermittent allocation failure notifications when attempting to provision new D-series V2 Virtual Machines. Customers with existing D-Series V2 Virtual Machines may have also experienced failures when attempting to perform scaling or resizing operations. This issue did not impact the availability of existing Virtual Machines. ",
@@ -417,7 +417,7 @@
     "azure-20170512-2": {
         "title": "Virtual Machines - North Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
         ],
         "time": "05/12/2017",
         "summary": "Between 18:33 UTC and 19:08 UTC on 12 May 2017, a subset of customers may have experienced difficulties or received error notifications when connecting to resources hosted in East US. Azure Engineers detected a card failure on a backbone router servicing portions of East US. The router was removed from servicing the network. The backup device exceeded critical parameters due to previously undetected fiber damage on this device, and customers may have observed packet loss and increased latency. ",
@@ -496,7 +496,7 @@
     "azure-20170517-1": {
         "title": "Service Bus - Multiple regions",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
         ],
         "time": "05/17/2017",
         "summary": "Between 21:30 and 23:35 UTC on 16 May 2017, a subset of customers using Service Bus may have experienced errors with SSL validations connecting to resources. This issue only impacted new connections to Service Bus, existing connections were not affected. We recommend customers to restart your processes to complete recovery of the service. ",
@@ -559,7 +559,7 @@
     "azure-20170518-1": {
         "title": "RCA - Storage Latency - West Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.04.11-05.18.pdf"
         ],
         "time": "05/18/2017",
         "summary": "Between 02:45 and 15:59 UTC on 18 May 2017, with most impact occurring between 07:00 and 13:00 UTC, a subset of customers using Virtual Machines (VMs), Storage, HDInsight, or Azure Search in West Europe may have experienced high latency or degraded performance when accessing resources hosted in this region. A subset of customers using VMs in the region may have experienced unexpected restarts of their VM. Engineers investigated and determined that root cause was due to congested links in our network infrastructure resulting in reduced network capacity and subsequent impacts to downstream services. ",

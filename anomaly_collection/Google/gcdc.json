@@ -2,7 +2,7 @@
   "gcdc-16005": {
     "title": "Google Cloud Console Incident #16005",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCDC/Google%20Cloud%20Console%20Incident%20%2316005.pdf"
+      "https://status.cloud.google.com/incident/developers-console/16005"
     ],
     "time": "06/09/2016",
     "summary": "On Thursday 9 June 2016, the Google Cloud Console was unavailable for a duration of 91 minutes, with significant performance degradation in the preceding half hour. Although this did not affect user resources running on the Google Cloud Platform, we appreciate that many of our customers rely on the Cloud Console to manage those resources, and we apologize to everyone who was affected by the incident. This report is to explain to our customers what went wrong, and what we are doing to make sure that it does not happen again.",
@@ -74,7 +74,7 @@
   "gcdc-19001": {
     "title": "Google Cloud Console Incident #19001",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCDC/Google%20Cloud%20Console%20Incident%20%2319001.pdf"
+      "https://status.cloud.google.com/incident/developers-console/19001"
     ],
     "time": "03/11/2019",
     "summary": "On Monday, 11 March 2019, Google Cloud Console was unavailable for a duration of 3 hours and 54 minutes. Although, Google Cloud Platform resources remained unaffected, we understand that a majority of our customers rely on Cloud Console to manage their cloud resources and we sincerely apologize to everyone who was affected by the incident. The issue also affected Firebase console and IAM service account activations.",
@@ -141,7 +141,7 @@
     "verification": "lixy"
   },
   "gcdc-19003": {
-    "title": "Google Cloud Console Incident #19003",
+    "title": "https://status.cloud.google.com/incident/developers-console/19003",
     "link": [
       "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCDC/Google%20Cloud%20Console%20Incident%20%2319003.pdf"
     ],
@@ -215,7 +215,7 @@
   "gcdc-15005": {
     "title": "Google Developers Console Incident #15005",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCDC/Google%20Developers%20Console%20Incident%20%2315005.pdf"
+      "https://status.cloud.google.com/incident/developers-console/15005"
     ],
     "time": "07/27/2015",
     "summary": "On Monday, 27 July 2015, the Google Developers Console was unavailable to all users for a duration of 41 minutes. We apologize for the inconvenience and any impact on your operations that this may have caused. We are urgently working to implement preventative measures to ensure similar incidents do not occur in the future.",
@@ -286,7 +286,7 @@
   "gcdc-21009": {
     "title": "Google Developers Console Incident #21009",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/google/meta_pdf/new/gcc-21009.pdf"
+      "https://status.cloud.google.com/incidents/E18Caoo5X1m6dTa1PVr1"
     ],
     "time": "09/22/2021",
     "summary": "On 22 September 2021 14:10 US/Pacific, Google Cloud, Workspace, and Geo (Maps) customers in the United States (U.S.) incorrectly received alert notifications on the Google Cloud Console user interface and an email regarding an issue with processing automatic payments. The issue persisted for 11 hours, 20 minutes. All customers in the United States who use credit card billing were inadvertently notified via email “Your payment information could not be processed. Visit the payment overview page to make sure your payment information is up to date and to pay any outstanding charges.” Customers also received a notification alert in the Google Cloud Console to update their primary payment method. After customers attempted to update their payment information in the admin console, they received a message that the payment could not be processed. We sincerely apologize for the inconvenience caused by the incorrect notification to our customers. Our engineering team has deployed a fix for this and has ensured that account settings are restored. We are taking additional steps to prevent similar problems in the future, as outlined below.",

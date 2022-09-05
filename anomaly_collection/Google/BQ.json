@@ -1,7 +1,7 @@
 {
     "google-BQ-1": { 
       "title": "Google BigQuery Incident #18012",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318012.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/18012"],
       "time": "11/29/2015",
       "summary": "for an aggregate of 33 minutes occurring between 7:31am and 8:24am PST, 11% of allrequests to the BigQuery API experienced errors. ",
       "details": "On Sunday 29th of November 2015, between 7:31am and 7:41am, 7% of BigQuery API requests were redirected (HTTP 302) to a CAPTCHA service. The issue reoccurred between 8:01am and 8:24am PST, affecting 22% of requests. As the CAPTCHA service is intended to verify that the requester is human, any automated requests that were redirected failed.",
@@ -57,7 +57,7 @@
     },
     "google-BQ-2":{
       "title": "Google BigQuery Incident #18015",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318015.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/18015"],
       "time": "05/18/2016",
       "summary": "On Wednesday 18 May 2016 the BigQuery API was unavailable for two periods totaling 31 minutes. ",
       "details": "On Wednesday 18 May 2016 from 11:50 until 12:15 PDT all non-streaming BigQuery API calls failed, and additionally from 14:41 until 14:47, 70% of calls failed. An error rate of 1% occurred from 11:28 until 15:34. API calls affected by this issue experienced elevated latency and eventually returned an HTTP 500 status with an error message of 'Backend Error'. The BigQuery web console was also unavailable during these periods.",
@@ -115,7 +115,7 @@
     },
     "google-BQ-3":{
       "title": "Google BigQuery Incident #18018",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318018.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/18018"],
       "time": "07/25/2016",
       "summary": "On Monday 25 July 2016, the Google BigQuery Streaming API experienced elevated error rates for a duration of 71 minutes. ",
       "details": "On Monday 25 July 2016 between 17:03 and 18:14 PDT, the BigQuery Streaming API returned HTTP 500 or 503 errors for 35% of streaming insert requests, with a peak error rate of 49% at 17:40. Customers who retried on error were able to mitigate the impact. Calls to the BigQuery jobs API showed an error rate of 3% during the incident but could generally be executed reliably with normal retry behaviour. Other BigQuery API calls were not affected.",
@@ -175,7 +175,7 @@
     },
     "google-BQ-4":{
       "title": "Google BigQuery Incident #18022",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318022.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/18022"],
       "time": "11/08/2016",
       "summary": "On Tuesday 8 November 2016, Google BigQuery’s streaming service, which includes streaming inserts and queries against recently committed streaming buffers, was largely unavailable for a period of 4 hours.",
       "details": "On Tuesday 8 November 2016 from 16:00 to 20:00 US/Pacific, 73% of BigQuery streaming inserts failed with a 503 error code indicating an internal error had occurred during the insertion. At peak, 93% of BigQuery streaming inserts failed. During the incident, queries performed on tables with recently-streamed data returned a result code (400) indicating that the table was unavailable for querying. Queries against tables in which data were not streamed within the 24 hours preceding the incident were unaffected. There were no issues with non-streaming ingestion of data.",
@@ -240,7 +240,7 @@
     },
     "google-BQ-5":{
       "title": "Google BigQuery Incident #18026",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318026.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/18026"],
       "time": "03/13/2017",
       "summary": "On Monday 13 March 2017, the BigQuery streaming API experienced 91% error rate in the US and 63% error rate in the EU for a duration of 30 minutes. ",
       "details": "On Monday 13 March 2017 from 10:22 to 10:52 PDT 91% of streaming API requests to US BigQuery datasets and 63% of streaming API requests to EU BigQuery datasets failed with error code 503 and an HTML message indicating 'We're sorry... but your computer or network may be sending automated queries. To protect our users, we can't process your request right now.'",
@@ -302,7 +302,7 @@
     },
     "google-BQ-6":{
       "title": "Google BigQuery Incident #18029",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318029.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/18029"],
       "time": "06/14/2017",
       "summary": "For 10 minutes on Wednesday 14 June 2017, Google BigQuery experienced increased error rates for both streaming inserts and most API methods due to their dependency on metadata read operations. ",
       "details": "Starting at 10:43am US/Pacific, global error rates for BigQuery streaming inserts and API calls dependent upon metadata began to rapidly increase. The error rate for streaming inserts peaked at 100% by 10:49am. Within that same window, the error rate for metadata operations increased to a height of 80%. By 10:54am the error rates for both streaming inserts and metadata operations returned to normal operating levels.",
@@ -359,7 +359,7 @@
     },
     "google-BQ-7":{
       "title": "Google BigQuery Incident #18030",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318030.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/18030"],
       "time": "06/28/2017",
       "summary": "On Wednesday 28 June 2017, streaming data into Google BigQuery experienced elevated error rates for a period of 57 minutes.",
       "details": "On Wednesday 28 June 2017 from 18:00 to 18:20 and from 18:40 to 19:17 US/Pacific time, BigQuery's streaming insert service returned an increased error rate to clients for all projects. The proportion varied from time to time, but failures peaked at 43% of streaming requests returning HTTP response code 500 or 503. ",
@@ -417,7 +417,7 @@
     },
     "google-BQ-8":{
       "title": "Google BigQuery Incident #18032",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318032.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/18032"],
       "time": "07/26/2017",
       "summary": "On 2017-07-26, BigQuery delivered error messages for 7% of queries and 15% of exports for a duration of two hours and one minute. It also experienced elevated failures for streaming inserts for one hour and 40 minutes.",
       "details": "On 2017-07-26 from 13:45 to 15:45 US/PDT, BigQuery jobs experienced elevated failures at a rate of 7% to 15%, depending on the operation attempted. Overall 7% of queries, 15% of exports, and 9% of streaming inserts failed during this event. These failures occurred in 12% of customer projects The errors for affected projects varied from 2% to 69% of exports, over 50% for queries, and up to 28.5% for streaming inserts. Customers affected saw an error message stating that their project has “not enabled BigQuery”.",
@@ -475,7 +475,7 @@
     },
     "google-BQ-9":{
       "title": "Google BigQuery Incident #18036",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318036.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/18036"],
       "time": "05/16/2018",
       "summary": "On Wednesday 16 May 2018, Google BigQuery experienced failures of import, export and query jobs for a duration of 88 minutes over two time periods (55 minutes initially, and 33 minutes in the second, which was isolated to the EU). ",
       "details": "On Wednesday 16 May 2018 from 16:00 to 16:55 and from to 17:45 to 18:18 PDT, Google BigQuery experienced a failure of some import, export and query jobs. During the first period of impact, there was a 15.26% job failure rate; during the second, which was isolated to the EU, there was a 2.23% error rate. Affected jobs would have failed with INTERNAL_ERROR as the reason.",
@@ -535,7 +535,7 @@
     },
     "google-BQ-18037":{
       "title": "Google BigQuery Incident #18037",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2318037.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/18037"],
       "time": "06/22/2018",
       "summary": "On Friday 22 June 2018, Google BigQuery experienced increased query failures for a duration of 1 hour 6 minutes.",
       "details": "On Friday 22 June 2018 from 12:06 to 13:12 PDT, up to 50% of total requests to the BigQuery API failed with error code 503. Error rates varied during the incident, with some customers experiencing 100% failure rate for their BigQuery table jobs.",
@@ -593,7 +593,7 @@
     },
     "google-BQ-11":{
       "title": "Google BigQuery Incident #19002",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2319002.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/19002"],
       "time": "03/08/2019",
       "summary": "On Friday 8 March 2019, Google BigQuery’s jobs.insert API in the US regions experienced an average elevated error rate of 51.21% for a duration of 45 minutes.",
       "details": "On Friday 8 March 2019 from 00:45 - 01:30 US/Pacific, BigQuery’s jobs.insert [1] API (responsible for import/export, query, and copy jobs) in the US region experienced an average error rate of 51.21%. Affected customers received error responses such as “Error encountered during Execution, retrying may solve the problem” and “Read timed out” when sending requests to BigQuery.",
@@ -658,7 +658,7 @@
     },
     "google-BQ-12":{
       "title": "Google BigQuery Incident #19003",
-      "link": ["http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/BQ/Google%20BigQuery%20Incident%20%2319003.pdf"],
+      "link": ["https://status.cloud.google.com/incident/bigquery/19003"],
       "time": "05/17/2019",
       "summary": "On Friday, May 17 2019, 83% of Google BigQuery insert jobs in the US multi-region failed for a duration of 27 minutes. Query jobs experienced an average error rate of 16.7% for a duration of 2 hours. BigQuery users in the US multi-region also observed elevated latency for a duration of 4 hours and 40 minutes. ",
       "details": "On Friday May 17 2019, from 08:30 to 08:57 US/Pacific, 83% of Google BigQuery insert jobs failed for 27 minutes in the US multi-region. From 07:30 to 09:30 US/Pacific, query jobs in US multi-region returned an average error rate of 16.7%. Other jobs such as list, cancel, get, and getQueryResults in the US multi-region were also affected for 2 hours along with query jobs. Google BigQuery users observed elevated latencies for job completion from 07:30 to 12:10 US/Pacific. ",

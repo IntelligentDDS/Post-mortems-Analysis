@@ -2,7 +2,7 @@
     "azure-20170318-1": {
         "title": "Log Analytics - East US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
         ],
         "time": "03/18/2017",
         "summary": "Between 02:47 and 13:15 UTC on 18 Mar 2017, a subset of customers using Log Analytics in East US may have received intermittent failure notifications - such as internal server errors, or tile or blade not loading - when performing log search operations. ",
@@ -66,7 +66,7 @@
     "azure-20170321-1": {
         "title": "RCA - Storage and Virtual Machines - West Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
         ],
         "time": "03/21/2017",
         "summary": "A line card failure on an Azure Networking optical system caused a loss of network capacity to the West Europe Region. During this event, customers experienced increased latency accessing their services and also sporadic packet loss. Azure Networking Engineers replaced the failed optical card to restore service. ",
@@ -139,7 +139,7 @@
     "azure-20170321-2": {
         "title": "Microsoft Accounts Experiencing Login Failures",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
         ],
         "time": "03/21/2017",
         "summary": "Between 17:30 and 18:55 UTC on 21 Mar 2017, a subset of Azure customers may have experienced intermittent login failures while authenticating with their Microsoft Accounts. This would have impacted the ability for customers to authenticate to their Azure management portal (https://portal.azure.com), PowerShell, or other workflows requiring Microsoft Account authentication. Customers authenticating with Azure Active Directory or organizational accounts were unaffected. Customers who had an active session already authenticated with a Microsoft Account before the impact started would also have been unaffected.",
@@ -197,7 +197,7 @@
     "azure-20170322-1": {
         "title": "RCA - Increased latency accessing Azure resources",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
         ],
         "time": "03/21/2017",
         "summary": "Between 23:52 UTC on 21 Mar 2017 and 01:14 UTC on 22 Mar 2017, a subset of customers around the South East US may have seen latency and failures accessing Microsoft services including Azure resources. This was due to an infrastructure event impacted by a facilities issue at a 3rd party regional routing site located in South East US. Azure Engineering teams executed standard procedures to redirect traffic and isolate the impacted facility restoring expected routing availability. ",
@@ -268,7 +268,7 @@
     "azure-20170323-1": {
         "title": "Azure Active Directory",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
         ],
         "time": "03/23/2017",
         "summary": " Between 22:00 UTC on 22 Mar 2017 and 00:30 UTC on 23 Mar 2017, Azure Active Directory encountered an issue that affected service to service authentication that impacted multiple Azure services. Azure Resource Manager, Logic Apps, Azure Monitor, Azure Data Lake Analytics, and Azure Data Lake Store customers may have experienced intermittent service management issues as downstream impact. AAD customers would not have seen impact. ",
@@ -344,7 +344,7 @@
     "azure-20170323-2": {
         "title": "RCA – Data Lake Analytics and Data Lake Store – East US 2",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
         ],
         "time": "03/23/2017",
         "summary": "Between approximately March 22 15:02 UTC and March 22 17:25 UTC, a subset of customers experienced a number of intermittent failures when accessing Azure Data Lake Store (ADLS) in East US 2. This may have caused Azure Data Lake Analytics job and/or ADLS request failures. This incident was because of a misconfiguration which resulted in one of the ADLS microservices not serving the requests for the customers. Azure Monitoring detected the event and an alert was triggered. Azure engineers engaged immediately and mitigated the issue by reverting the configuration that triggered the incident",
@@ -416,7 +416,7 @@
     "azure-20170325-1": {
         "title": "RCA - Intermittent Authentication Failures due to Underlying Azure Active Directory Issue",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
         ],
         "time": "03/25/2017",
         "summary": "Between 21:23 UTC on 24 Mar 2017 to 00:35 UTC on 25 Mar 2017, a subset of customers using Azure Active Directory (AAD) to authenticate to their Azure resources, or services with dependencies on AAD might have experienced failures. This included authentications using the Management Portal, PowerShell, Command-line interfaces (CLI) and other authentication providers. This incident started with high number of failing authentication requests across multiple regions. Failure rates were significantly higher in the US West and US South Central regions than other Azure regions. Engineering teams identified the issue to be a class of requests resulting in expensive backend queries (long running queries) causing timeouts and requests being dropped. Engineering teams worked on isolating the tenants causing this behavior to restore the service.",
@@ -488,7 +488,7 @@
     "azure-20170327-1": {
         "title": "Visual Studio Team Services",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
         ],
         "time": "03/27/2017",
         "summary": "Between 06:08 and 10:15 UTC on 27 Mar 2017, a subset of customers using Visual Studio Team Services in the Azure Management Portal (https://portal.azure.com) may have experienced difficulties connecting to the following services: VSTS Team Projects, Team Services, Load Testing, Team Service Accounts and Release Management - Continuous Delivery. This would have manifested in the form of continuous loading in the service blade. As a workaround, customers could continue to access these services via their Visual Studio accounts (https://accountname.visualstudio.com). More information is available at https://aka.ms/vstsblog .",
@@ -554,7 +554,7 @@
     "azure-20170327-2": {
         "title": "Multiple Azure Services Impacted by Underlying Network Infrastructure Issue - Japan West - Mitigated",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2017.03.13-03.30.pdf"
         ],
         "time": "03/27/2017",
         "summary": "Between 18:04 and 21:16 UTC on 27 Mar 2017, a subset of customers in Japan West may have experienced degraded performance, network drops or time outs when accessing their Azure resources hosted in this region. ",

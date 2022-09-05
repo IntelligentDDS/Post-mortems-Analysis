@@ -2,7 +2,7 @@
     "google-GCE-#15055": {
         "title": "Google Compute Engine Incident #15055",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315055.pdf"
+            "https://status.cloud.google.com/incident/compute/15055.pdf"
         ],
         "time": "08/04/2015",
         "summary": "On Tuesday 4 August 2015, incoming network traffic to Google Compute Engine (GCE) was interrupted for 5 minutes.",
@@ -82,7 +82,7 @@
     "google-GCE-#15056": {
         "title": "Google Compute Engine Incident #15056",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315056.pdf"
+            "https://status.cloud.google.com/incident/compute/15056.pdf"
         ],
         "time": "08/13/2015",
         "summary": "From Thursday 13 August 2015 to Monday 17 August 2015, errors occurred on a small proportion of Google Compute Engine persistent disks in the europe-west1-b zone.",
@@ -163,7 +163,7 @@
     "google-GCE-#15057": {
         "title": "Google Compute Engine Incident #15057",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315057.pdf"
+            "https://status.cloud.google.com/incident/compute/15057.pdf"
         ],
         "time": "10/27/2015",
         "summary": "On Tuesday 27 October 2015, Google Compute Engine instances created within a 90 minute period in us-central1 and asia-east1 regions took longer than usual to obtain external network connectivity.",
@@ -235,7 +235,7 @@
     "google-GCE-#15058": {
         "title": "Google Compute Engine Incident #15058",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315058.pdf"
+            "https://status.cloud.google.com/incident/compute/15058.pdf"
         ],
         "time": "10/31/2015",
         "summary": "Between Saturday 31 October 2015 and Sunday 1 November 2015, Google Compute Engine networking in the us-central1-b zone was impaired on 3 occasions for an aggregate total of 4 hours 10 minutes.",
@@ -303,7 +303,7 @@
     "google-GCE-#15059": {
         "title": "Google Compute Engine Incident #15059",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315059.pdf"
+            "https://status.cloud.google.com/incident/compute/15059.pdf"
         ],
         "time": "10/31/2019",
         "summary": "On Saturday 31 October 2015, Google Compute Engine (GCE) management operations experienced high latency for a durationof 181 minutes.",
@@ -369,7 +369,7 @@
     "google-GCE-#15062": {
         "title": "Google Compute Engine Incident #15062",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315062.pdf"
+            "https://status.cloud.google.com/incident/compute/15062.pdf"
         ],
         "time": "11/10/2015",
         "summary": "On Tuesday, 10 November 2015, outbound traffic going through one of our European routers from both Google Compute Engine and Google App Engine experienced high latency for a duration of 6h43m minutes",
@@ -445,7 +445,7 @@
     "google-GCE-#15064": {
         "title": "Google Compute Engine Incident #15064",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315064.pdf"
+            "https://status.cloud.google.com/incident/compute/15064.pdf"
         ],
         "time": "11/23/2015",
         "summary": "On Monday 23 November 2015, for a duration of 70 minutes, a subset of Internet destinations was unreachable from the Google Compute Engine europe-west1 region.",
@@ -516,7 +516,7 @@
     "google-GCE-#15065": {
         "title": "Google Compute Engine Incident #15065",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2315065.pdf"
+            "https://status.cloud.google.com/incident/compute/15065.pdf"
         ],
         "time": "12/08/2015",
         "summary": "On Monday 7 December 2015, Google Container Engine customers could not create external load balancers for their services for a duration of 21 hours and 38 minutes.",
@@ -590,7 +590,7 @@
     "google-GCE-#16002": {
         "title": "Google Compute Engine Incident #16002",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316002.pdf"
+            "https://status.cloud.google.com/incident/compute/16002.pdf"
         ],
         "time": "02/03/2016",
         "summary": "On Wednesday 3 February 2016, one third of network connections from external sources to Google Compute Engine instances and network load balancers in the asia-east1 region experienced high rates of network packet loss for 89 minutes. ",
@@ -665,7 +665,7 @@
     "google-GCE-#16003": {
         "title": "Google Compute Engine Incident #16003",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316003.pdf"
+            "https://status.cloud.google.com/incident/compute/16003.pdf"
         ],
         "time": "02/23/2016",
         "summary": "On Tuesday 23 February 2016, for a duration of 10 hours and 6 minutes, 7.8% of Google Compute Engine projects had reduced quotas. ",
@@ -729,7 +729,7 @@
     "google-GCE-#16004": {
         "title": "Google Compute Engine Incident #16004",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316004.pdf"
+            "https://status.cloud.google.com/incident/compute/16004.pdf"
         ],
         "time": "02/23/2016",
         "summary": "On Tuesday 23 February 2015, Google Compute Engine instances in the us-central1-f zone experienced intermittent packet loss for 46 minutes.",
@@ -800,7 +800,7 @@
     "google-GCE-#16005": {
         "title": "Google Compute Engine Incident #16005",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316005.pdf"
+            "https://status.cloud.google.com/incident/compute/16005.pdf"
         ],
         "time": "02/24/2016",
         "summary": "On Wednesday 24 February 2016, some Google Compute Engine instances in the europe-west1-c zone experienced network connectivity loss for a duration of 62 minutes. ",
@@ -876,7 +876,7 @@
     "google-GCE-#16011": {
         "title": "Google Compute Engine Incident #16011",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316011.pdf"
+            "https://status.cloud.google.com/incident/compute/16011.pdf"
         ],
         "time": "06/28/2016",
         "summary": "On Tuesday, 28 June 2016 Google Compute Engine SSD Persistent Disks experienced elevated write latency and errors in one zone for a duration of 211 minutes. ",
@@ -950,7 +950,7 @@
     "google-GCE-#16012": {
         "title": "Google Compute Engine Incident #16012",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316012.pdf"
+            "https://status.cloud.google.com/incident/compute/16012.pdf"
         ],
         "time": "06/29/2016",
         "summary": "On Wednesday 29 June 2016, newly created Google Compute Engine instances and newly created network load balancers in all zones were partially unreachable for a duration of 106 minutes. ",
@@ -1020,7 +1020,7 @@
     "google-GCE-#16015": {
         "title": "Google Compute Engine Incident #16015",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316015.pdf"
+            "https://status.cloud.google.com/incident/compute/16015.pdf"
         ],
         "time": "08/05/2016",
         "summary": "On Friday 5 August 2016, some Google Cloud Platform customers experienced increased network latency and packet loss to Google Compute Engine (GCE), Cloud VPN, Cloud Router and Cloud SQL, for a duration of 99 minutes.",
@@ -1095,7 +1095,7 @@
     "google-GCE-#16017": {
         "title": "Google Compute Engine Incident #16017",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316017.pdf"
+            "https://status.cloud.google.com/incident/compute/16017.pdf"
         ],
         "time": "08/22/2016",
         "summary": "On Monday 22 August 2016, the Google Cloud US-CENTRAL1-F zone lost network connectivity to services outside that zone for a duration of 25 minutes.",
@@ -1177,7 +1177,7 @@
     "google-GCE-#16020": {
         "title": "Google Compute Engine Incident #16020",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2316020.pdf"
+            "https://status.cloud.google.com/incident/compute/16020.pdf"
         ],
         "time": "10/13/2016",
         "summary": "On Thursday 13 October 2016, approximately one-third of requests sent to the Google Compute Engine HTTP(S) Load Balancers between 15:07 and 17:25 PDT received an HTTP 502 error rather than the expected response. ",
@@ -1253,7 +1253,7 @@
     "google-GCE-#17003": {
         "title": "Google Compute Engine Incident #17003",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2317003.pdf"
+            "https://status.cloud.google.com/incident/compute/17003.pdf"
         ],
         "time": "01/30/2017",
         "summary": "On Monday 30 January 2017, newly created Google Compute Engine instances, Cloud VPNs and network load balancers were unavailable for a duration of 2 hours 8 minutes.",
@@ -1318,7 +1318,7 @@
     "google-GCE-#17007": {
         "title": "Google Compute Engine Incident #17007",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2317007.pdf"
+            "https://status.cloud.google.com/incident/compute/17007.pdf"
         ],
         "time": "04/05/2017",
         "summary": "On Wednesday 5 April 2017, requests to the Google Cloud HTTP(S) Load Balancer experienced a 25% error rate for a duration of 22 minutes.",
@@ -1398,7 +1398,7 @@
     "google-GCE-#17008": {
         "title": "Google Compute Engine Incident #17008",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2317008.pdf"
+            "https://status.cloud.google.com/incident/compute/17008.pdf"
         ],
         "time": "06/08/2017",
         "summary": "On Thursday 8 June 2017, from 08:24 to 09:26 US/Pacific Time, datacenters in the asia-northeast1 region experienced a loss ofnetwork connectivity for a total of 62 minutes.",
@@ -1483,7 +1483,7 @@
     "google-GCE-#18012": {
         "title": "Google Compute Engine Incident #18012",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2318012.pdf"
+            "https://status.cloud.google.com/incident/compute/18012.pdf"
         ],
         "time": "11/05/2018",
         "summary": "On Wednesday 5 November 2018, Google Compute Engine (GCE) experienced new instance creation failures or elevated instance creation latency in us-central1-a for a duration of 5 hours. ",
@@ -1565,7 +1565,7 @@
     "google-GCE-#19008": {
         "title": "Google Compute Engine Incident #19008",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCE/Google%20Compute%20Engine%20Incident%20%2319008.pdf"
+            "https://status.cloud.google.com/incident/compute/19008.pdf"
         ],
         "time": "10/31/2019",
         "summary": "On Thursday 31 October, 2019, network administration operations on Google Compute Engine (GCE), such as creating/deleting firewall rules, routes, global load balancers, subnets, or new VPCs, were subject to elevated latency and errors. ",
@@ -1649,7 +1649,7 @@
     "google-GCE-#210922": {
         "title": "Google Compute Engine Incident #210922",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/google/meta_pdf/new/gce-2.pdf"
+            "https://status.cloud.google.com/incidents/QSirAFiyN5yMeeE6GNxq"
         ],
         "time": "09/22/2021",
         "summary": "Incident began at 2021-09-27 10:17 and ended at 2021-09-29 06:52 (all times are US/Pacific). Google Kubernetes Engine, Google Compute Engine, and Google Cloud build experienced connection failures in Docker workloads to Google Cloud Load Balancers (GCLB) and destinations hosted behind content distribution networks (CDN’s) with a specific network configuration, such as debian.org and github.com.",

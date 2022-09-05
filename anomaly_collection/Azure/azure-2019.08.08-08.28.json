@@ -2,7 +2,7 @@
     "azure-20190808-1": {
         "title": "RCA - Azure CDN - Connectivity Issues",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
         ],
         "time": "08/08/2019",
         "summary": "Summary of impact: Between 14:05 and 19:00 UTC on 08 Aug 2019, you were identified as a customer using Akamai CDN who may have experienced HTTP 504 (Gateway Timeout) errors when attempting to connect to resources.",
@@ -71,7 +71,7 @@
     "azure--20190809-1": {
         "title": "RCA - Azure Portal - Issues Loading Dashboard Tiles",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
         ],
         "time": "08/09/2019",
         "summary": "Summary of impact: Between approximately 16:07 and 19:17 UTC on 09 Aug 2019, customers using the Azure portal may have received failure notifications under the following scenarios: Customers who had pinned tiles to their dashboards that provided them with a list of resources such as All Resources, All VMs, etc. would have either seen a 'No resources found' message or just a grey tile. All other tiles on dashboards such as pinned resources continued to function as expected. Access of the following two pages on the Azure Portal. a) 'My permissions' page that enables customers to see what permissions they have in a given subscription and b) 'Resource Providers' option in the resource menu for any given subscription that lets customers view, register and unregister Resource Providers in their subscriptions. Trying to open one of these two pages would have resulted in the page load timing out after 30 seconds.",
@@ -141,7 +141,7 @@
     "azure-20190814-1": {
         "title": "RCA - USGov Iowa - Service Availability and Downstream Impact",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
         ],
         "time": "08/14/2019",
         "summary": "Between 16:25 EDT on 14 Aug 2019 and 01:00 EDT on 15 Aug 2019, a subset of customers in USGov Iowa may have experienced issues accessing services in that region. Engineers determined that an underlying compute issue was impacting SQL, API Management, Azure Site Recovery, Media Services, Service Bus, and StorSimple. A subset of App Service customers may have experienced Service Management issues across these regions: USDoD Central, USDoD East, USGov Arizona, USGov Iowa, USGov Texas, and USGov Virginia.",
@@ -222,7 +222,7 @@
     "azure-20190816": {
         "title": "RCA - Azure Services - South Central US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
         ],
         "time": "08/16/2019",
         "summary": "a subset of customers using resources in South Central US may have experienced difficulties connecting to resources hosted in this region.",
@@ -301,7 +301,7 @@
     "azure-20190823": {
         "title": "RCA - Service Management Operations - West/North Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
         ],
         "time": "08/23/2019",
         "summary": "a subset of customers in North Europe and West Europe may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in these regions.",
@@ -383,7 +383,7 @@
     "azure-20190828": {
         "title": "Azure Email Alerts - Mitigated",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.07.30-08.28.pdf"
         ],
         "time": "08/28/2019",
         "summary": "Between 20:22 UTC on 28 Aug 2019 and 01:35 UTC on 29 Aug 2019, a subset of customers may not have received email alerts sent from a subset of Azure services during the impact window",

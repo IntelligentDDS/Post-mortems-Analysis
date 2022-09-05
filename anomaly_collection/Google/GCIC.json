@@ -2,7 +2,7 @@
   "google-gcic-20003": {
     "title": "Google Cloud Infrastructure Components Incident #20003",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCIC/Google%20Cloud%20Infrastructure%20Components%20Incident%20%2320003.pdf"
+      "https://status.cloud.google.com/incident/zall/20003"
     ],
     "time": "03/26/2020",
     "summary": "On Thursday 26 March, 2020 at 16:14 US/Pacific, Cloud IAM experienced elevated error rates which caused disruption across many services for a duration of 3.5 hours, and stale data (resulting in continued disruption in administrative operations for a subset of services) for a duration of 14 hours. Google's commitment to user privacy and data security means that IAM is a common dependency across many GCP services. To our Cloud customers whose business was impacted during this disruption, we sincerely apologize – this is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability. We have conducted an internal investigation and are taking steps to improve the resiliency of our service.",
@@ -88,7 +88,7 @@
   "google-gcic-20005": {
     "title": "Google Cloud Infrastructure Components Incident #20005",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCIC/Google%20Cloud%20Infrastructure%20Components%20Incident%20%2320005.pdf"
+      "https://status.cloud.google.com/incident/zall/20005"
     ],
     "time": "04/08/2020",
     "summary": "On Wednesday 08 April, 2020 beginning at 06:48 US/Pacific, Google Cloud Identity and Access Management (IAM) experienced significantly elevated error rates for a duration of 54 minutes. IAM is used by several Google services to manage user information, and the elevated IAM error rates resulted in degraded performance that extended beyond 54 minutes for the following Cloud services: - Google BigQuery’s streaming service experienced degraded performance for 116 minutes; - Cloud IAM’s external API returned elevated errors for 102 minutes; - 3% of Cloud SQL HA instances were degraded for durations ranging from 54 to 192 minutes. To our Cloud customers whose businesses were impacted during this disruption, we sincerely apologize – we have conducted a thorough internal investigation and are taking immediate action to improve the resiliency, performance, and availability of our service.",
@@ -281,7 +281,7 @@
   "google-gcic-20011": {
     "title": "Google Cloud Infrastructure Components Incident #20011",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/google/meta_pdf/new/gcici-20011.pdf"
+      "https://status.cloud.google.com/incident/zall/20011"
     ],
     "time": "12/09/2020",
     "summary": "On Wednesday 9 December, 2020, Google Cloud Platform experienced networking unavailability in zone europe-west2-a, resulting in some customers being unable to access their resources, for a duration of 1 hour 24 minutes. The following Google services had degraded service that extended beyond the initial 1 hour 24 minute network disruption: 1.5% of Cloud Memorystore Redis instances were unhealthy for a total duration of 2 hours 24 minutes 4.5% of Classic Cloud VPN tunnels in the europe-west2 region experienced unavailability after the main disruption had recovered and these tunnels remained down for a duration of 8 hours and 10 minutes App Engine Flex experienced increased deployment error rates for a total duration of 1 hour 45 minutes We apologize to our Cloud customers who were impacted during this disruption. We have conducted a thorough internal investigation and are taking immediate action to improve the resiliency and availability of our service.",
@@ -354,7 +354,7 @@
   "google-gcic-201214": {
     "title": "Google Cloud Infrastructure Components Incident #201214",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/-/blob/master/raw-public/google/meta_pdf/new/gcici-20011.pdf"
+      "https://status.cloud.google.com/incident/zall/20013"
     ],
     "time": "12/09/2020",
     "summary": "On Monday 14 December, 2020, for a duration of 47 minutes, customer-facing Google services that required Google OAuth access were unavailable. Cloud Service accounts used by GCP workloads were not impacted and continued to function. We apologize to our customers whose services or businesses were impacted during this incident, and we are taking immediate steps to improve the platform’s performance and availability.",

@@ -2,7 +2,7 @@
     "azure-20180220-1": {
         "title": "RCA - Multiple Services - UK South",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "02/20/2018",
         "summary": "Summary of impact: Between 20:48 UTC on 20 February 2018 and 00:02 UTC on 21 February 2018, a subset of customers in UK South may have experienced difficulties connecting to resources hosted in the region. Impacted services during this time included Azure Search, Virtual Machines, Storage, Azure Site Recovery,\nand Backup. Some virtual machines may have experienced unexpected reboots.",
@@ -72,7 +72,7 @@
     "azure-20180301-1": {
         "title": "RCA - Microsoft Azure Portal",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "03/01/2018",
         "summary": "Summary of impact: Between approximately 08:00 and 15:20 UTC on 01 Mar 2018, a subset of customers in West Europe and North Europe may have experienced degraded performance when navigating the Azure Management Portal and attempting to manage their resources. Some portal blades may have been slow to load. Customers may also have experienced slow execution times when running PowerShell commands using Azure Resource Manager templates.\nRetries may have succeeded.",
@@ -146,7 +146,7 @@
     "azure-20180302-1": {
         "title": "Log Analytics - Data Processing in East US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "03/02/2018",
         "summary": "Summary of impact: Between approximately 08:00 and 19:00 UTC on 02 Mar 2018, customers using Log Analytics in East US may have been unable to view recently uploaded analytics data. Data has processed slower than expected due to a data ingestion queue backlog.",
@@ -209,7 +209,7 @@
     "azure-20180305-1": {
         "title": "Virtual Machines Creation Failure via Azure Portal",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "03/05/2018",
         "summary": "Summary of impact: Between 17:40 and 20:20 UTC on 05 Mar 2018, a subset of customers in all regions may have received failure notifications when performing Virtual Machine create job via Microsoft Azure Portal. Virtual Machines creation using PowerShell was not affected during this time.",
@@ -275,7 +275,7 @@
     "azure-20180313-1": {
         "title": "Automation - West Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "03/13/2018",
         "summary": "Summary of impact: Between 07:00 and 13:39 UTC on 13 Mar 2018, a subset of customers using Automation in West Europe may have observed delays when running new or scheduled jobs in the region. Customers utilizing the update management solution may also have experienced impact.",
@@ -344,7 +344,7 @@
     "azure-20180319-1": {
         "title": "RCA - SQL Database - West Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "03/19/2018",
         "summary": "Summary of impact: Between 11:00 UTC on 19 Mar 2018 and 10:30 UTC on 20 Mar 2018, a subset of customers using SQL Database in West Europe may have experienced difficulties connecting to databases hosted in this region. Service management operations such as scaling Database performance tier were also\nimpacted. During the impact period, some customers using API Management in the region may have also experienced service degradation.",
@@ -425,7 +425,7 @@
     "azure-20180320-1": {
         "title": "RCA - App Service and App Service Linux - Multiple Regions",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "03/20/2018",
         "summary": "Summary of impact: Between 10:32 UTC and 13:30 UTC on 21 March, customers may have experienced HTTP 5xx errors, latencies and timeouts when performing service management requests - such as create, update, delete - for their App Service (Web, Mobile and API Apps) and App Service(Linux) applications. Retries of these operations during the impact window may have succeeded. Autoscaling and loading site metrics may have also been impacted. App Service runtime\noperations were not impacted during this incident.",
@@ -504,7 +504,7 @@
     "azure-20180406-1": {
         "title": "RCA - Azure Active Directory - Authentication Errors",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "04/06/2018",
         "summary": "Summary: Between 08:18 and 11:25 UTC on 06 Apr 2018, a subset of customers may have experienced difficulties when attempting to authenticate into resources with Azure Active Directory (AAD) dependencies, the primary impact being experienced for resources located in Asia, Oceania, and European regions. This stemmed from incorrect data mappings in two scale units which caused degraded authentication service for impacted customers, impacting approximately 2.5% of tenants. Downstream impact was reported by some Azure services during the impact period. Customers may have experienced for the following services:\nBackup: Failures for the registration of new containers and backup/restore operations StorSimple: New device registration failures and StorSimple management/communication failures Azure Bot Service: Bots reporting as unresponsive Visual Studio Team Services: Higher execution times and failures while getting AAD tokens in multiple regions Media Services: Authentication failures Azure Site Recovery: New registrations and VM replications may also have failed Virtual Machines: Failures when starting VMs. Existing VMs were not impacted\nWe are aware that other Microsoft services, outside of Azure, were impacted. Those services will communicate to customers via their appropriate channels.",
@@ -579,7 +579,7 @@
     "azure-20180409-1": {
         "title": "Azure Active Directory B2C - Multiple Regions",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "04/09/2018",
         "summary": "Summary of impact: Between 19:57 and 22:05 UTC on 09 Apr 2018, customers using Azure Active Directory B2C in multiple regions may have experienced client side authorization request failures when connecting to resources. Customers attempting to access services may have received a client side error - \"HTTP Error 503.\nThe service is unavailable\" - when attempting to login.",
@@ -647,7 +647,7 @@
     "azure-20180415-1": {
         "title": "RCA - Issues Performing Service Management Operations - Australia East/Southeast",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "04/15/2018",
         "summary": "Summary of impact: Between 21:00 UTC on 15 Apr 2018 and 03:20 UTC on 16 Apr 2018, customers in Australia Southeast may have been unable to view resources managed by Azure Resource Manager (ARM) via the Azure Portal or programmatically and may have been unable to perform service management operations. After further investigation, customers using ARM in Australia East were not impacted by this issue. Service availability for those resources was not\naffected.",
@@ -713,7 +713,7 @@
     "azure-20180417-1": {
         "title": "Content Delivery Network Connectivity",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "04/17/2018",
         "summary": "Summary of impact: Between approximately 18:30 and 20:50 UTC on 17 Apr 2018, a subset of customers using Verizon CDN may have experienced difficulties connecting to resources within the European region. Additional Azure services, utilizing Azure CDN, may have seen downstream impact.",
@@ -781,7 +781,7 @@
     "azure-20180419-1": {
         "title": "Service Bus - West Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "04/19/2018",
         "summary": "Summary of impact: Between approximately 12:00 and 14:44 UTC on 19 Apr 2018, a subset of customers using Service Bus in West Europe may have experienced intermittent timeouts or errors when connecting to Service Bus queues and topics in this region.",
@@ -849,7 +849,7 @@
     "azure-20180426-1": {
         "title": "Traffic Manager - Connectivity Issues",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "04/26/2018",
         "summary": "Between 02:45 to 3:28 UTC and 11:53 to 13:30 UTC on April 26, 2018, customers using App Service in Canada Central may have intermittently received HTTP 500-level response codes, experience timeouts or high latencies when accessing App Service deployments hosted in this region.",
@@ -919,7 +919,7 @@
     "azure-20180426-2": {
         "title": "RCA - App Service - Canada Central",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "04/26/2018",
         "summary": "Between 02:45 to 3:28 UTC and 11:53 to 13:30 UTC on April 26, 2018, customers using App Service in Canada Central may have intermittently received HTTP 500-level response codes, experience timeouts or high latencies when accessing App Service deployments hosted in this region.",
@@ -990,7 +990,7 @@
     "azure-20180503-1": {
         "title": "RCA - Multiple Services - West Central US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "05/03/2018",
         "summary": "Summary of impact: Between 19:47 and 22:05 UTC on 03 May 2018, customers in West Central US may have experienced difficulties connecting to resources hosted in this region. The incident was caused by a configuration change deployed to update Management Access Control Lists (ACLs). The change was deployed\nto network switches in a subset of clusters in the West Central US Region. The configuration was rolled back to mitigate the incident.",
@@ -1060,7 +1060,7 @@
     "azure-20180515-1": {
         "title": "Japan East - Service Management Operations Issues with Virtual Machines",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "05/15/2018",
         "summary": "Summary of impact: Between 17:15 and 20:00 UTC on 15 May 2018, a subset of customers using Visual Studio App Center may have received error notifications when attempting to use the distribute feature in Distribution Center.",
@@ -1122,7 +1122,7 @@
     "azure-20180517-1": {
         "title": "Japan East - Service Management Operations Issues with Virtual Machines",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.02.20-05.17.pdf"
         ],
         "time": "05/17/2018",
         "summary": "Summary of impact: Between 23:06 UTC on 17 May 2018 and 01:30 UTC on 18 May 2018, a subset of customers using Virtual Machines in Japan East may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in this region.",

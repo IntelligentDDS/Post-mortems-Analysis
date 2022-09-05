@@ -2,7 +2,7 @@
     "azure-20190925-1": {
         "title": "RCA - Azure Kubernetes Service (AKS) - Provisioning Failures (Tracking ID GK3M-5D8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "09/25/2019",
         "summary": "Summary of Impact: Between 20:50 UTC on 25 Sep 2019 and 04:25 UTC on 26 Sep 2019, a subset of customers using Azure Kubernetes Service (AKS) may have received failure notifications when performing create and/or update operations for their resources.",
@@ -74,7 +74,7 @@
     "azure-20190930-1": {
         "title": "RCA - Storage - Unable to access Azure file share with Azure Active Directory Domain Services joined machines (Tracking ID HSXX-1P8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "09/30/2019",
         "summary": "Between 18:00 UTC on 30 Sep 2019, and 05:00 UTC on 03 Oct 2019, customers may have experienced failures when accessing Azure file shares from Azure Active Directory Domain Services (AAD DS) joined machines.",
@@ -135,7 +135,7 @@
     "azure-20191002-1": {
         "title": "Log Analytics - USGov Virginia - Mitigated (Tracking ID 1KNJ-LD8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "10/02/2019",
         "summary": "Summary of Impact: Between 19:45 EDT on 02 Oct 2019 and 23:45 EDT on 03 Oct 2019 a subset of customers using Log Analytics in USGov Virginia may have received 500-level errors when performing queries on log analytics data.",
@@ -201,7 +201,7 @@
     "azure-20191016-1": {
         "title": "RCA - Azure Portal (Tracking ID 0_0D-VP8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "10/16/2019",
         "summary": "Summary of Impact: Between 13:45 and 14:59 UTC (approx.) on 16 Oct 2019, a subset of customers may have experienced latency issues with the Azure Portal, Command Line, and Azure PowerShell. Services already running would not have experienced impact during this issue.",
@@ -279,7 +279,7 @@
     "azure-20201018-1": {
         "title": "RCA - Authentication issues with Azure MFA in North America (Tracking ID 1TP8-PS0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "10/18/2019",
         "summary": "Summary of impact: Between 13:30 UTC and 15:57 UTC on 18 October 2019, customers in North America experienced issues receiving multi-factor authentication (MFA) challenges. Users who had valid MFA claims during the incident were not impacted. However, users who were required to perform an MFA challenge during this incident were unable to complete the challenge. This represented 0.51% of users in North American tenants using the service during the incident.",
@@ -362,7 +362,7 @@
     "azure-20201021-1": {
         "title": "RCA - Service Management Errors - East US 2 (Tracking ID 4_69-3D8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "03/14/2019",
         "summary": "Summary of Impact: Between 10:08 and 23:37 UTC on 21 Oct 2019, a subset of customers in East US 2 may have received error notifications or experienced high latency when performing service management operations - such as create, update, or delete - for resources hosted in this region. Additionally, customers using Azure Databricks and/or Data Factory v2 may have encountered service management errors in multiple regions. A very limited subset of customers using Virtual Machines with SQL Server images, or other SQL IaaS offerings, may have also encountered errors performing service management operations on resources hosted in East US 2.",
@@ -437,7 +437,7 @@
     "azure-20191021-2": {
         "title": "RCA - Storage - West Europe (Tracking ID GV6D-998)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "10/21/2019",
         "summary": "Summary of impact: Between 23:20 UTC on 21 Oct 2019 and 04:32 UTC on 22 Oct 2019, a subset of customers using Storage in West Europe may have experienced service availability issues. In addition, resources with dependencies on the impacted storage unit may have experienced downstream impact in the form of availability issues or high latency.",
@@ -510,7 +510,7 @@
     "azure-20191022-1": {
         "title": "Azure Portal Sign In Failure - West Europe - Mitigated (Tracking ID 5S38-5P0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "10/22/2019",
         "summary": "Summary of Impact: Between 06:40 UTC and 09:54 UTC on 22 Oct 2019 a subset of customers were identified as having experienced issues signing in to the Azure Portal in West Europe. Customers would have seen failure notifications when trying to sign in. Accessing the preview Portal here would have been successful.",
@@ -592,7 +592,7 @@
     "azure-20191022-2": {
         "title": "RCA - Service Availability - West Europe (Tracking ID 0_N8-DT8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "10/22/2019",
         "summary": "Summary of impact: Between 21:15 UTC on 22 Oct 2019 and 00:23 UTC on 23 Oct 2019, a subset of customers using Storage in West Europe may have experienced service availability issues. In addition, resources with dependencies on the impacted storage unit may have experienced downstream impact in the form of availability issues or high latency.",
@@ -666,7 +666,7 @@
     "azure-20191025-1": {
         "title": "Azure Databricks and Data Factory v2 - Workspace and Data Flow Errors (Tracking ID KNQ8-BP0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "03/14/2019",
         "summary": "Summary of impact: Between approximately 11:00 and 14:40 UTC on 25 Oct 2019, a subset of customers using Azure Databricks may have received 'No Web App available' error notifications when logging into a Databricks workspace. Related API calls may have also not returned a response. Additionally, a very limited subset of customers using Data Factory v2 may have received failure notifications for Data Flow jobs.",
@@ -734,7 +734,7 @@
     "azure-20191029-1": {
         "title": "RCA - Virtual Machines and Azure Databricks (Tracking ID 1V2C-NZ0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "10/29/2019",
         "summary": "Summary of Impact: Between 23:40 UTC on 29 Oct 2019 and 06:15 UTC on 30 Oct 2019, a limited subset of customers using Virtual Machines and/or Azure Databricks may have received failure notifications or experienced increased latency when performing service management operations - such as create, update, delete - for these resources. ",
@@ -805,7 +805,7 @@
     "azure-20191030-1": {
         "title": "RCA - Storage - West Europe (Tracking ID GKXC-PP8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "10/30/2019",
         "summary": "Summary of Impact: Between 10:17 and 13:52 UTC on 30 Oct 2019, a subset of customers using Storage, or Azure services with Storage dependencies, in West Europe may have experienced difficulties connecting to resources hosted in this region. ",
@@ -882,7 +882,7 @@
     "azure-20191104-1": {
         "title": "RCA - Azure SQL Database - West Europe (Tracking ID 1S1W-F88)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "11/04/2019",
         "summary": "Summary of Impact: Between 05:00 UTC and 11:30 UTC on 04 Nov 2019 you were identified as a customer using SQL Database/ MySQL Database/ PostgresSQL Database and / or SQL Data Warehouse in West Europe who may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in this region. Existing databases would not have been impacted by this issue.",
@@ -956,7 +956,7 @@
     "azure-20191105-1": {
         "title": "RCA - Virtual Machines and Storage - West US 2 (Tracking ID LVGX-DP0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "11/05/2019",
         "summary": "Summary of Impact: Between 02:33 and 05:30 UTC on 05 Nov 2019, a subset of customers in West US 2 may have experienced service availability issues for resources hosted in this region due to an underlying Storage issue.",
@@ -1021,7 +1021,7 @@
     "azure-20191105-2": {
         "title": "RCA - Azure Databricks - Unable to connect to workspaces (Tracking ID KM9W-1T0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "11/05/2019",
         "summary": "Summary of Impact Between 14:19 and 15:34 UTC on 05 Nov 2019, you were identified as a customer using Azure Databricks who may have intermittently experienced the error 'This URL is temporarily unavailable. Please try again later.' when connecting to Databricks workspaces. ",
@@ -1091,7 +1091,7 @@
     "azure-20191107-1": {
         "title": "RCA - Storage - West Europe (Tracking ID 1_TX-5D8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "11/07/2019",
         "summary": "Summary of Impact: Between 02:40 and 10:55 UTC on 07 Nov 2019, a subset of customers using Storage in West Europe experienced service availability issues. In addition, resources with dependencies on the impacted storage scale units may have experienced downstream impact in the form of availability issues, connection failures, or high latency. ",
@@ -1160,7 +1160,7 @@
     "azure-20191120-1": {
         "title": "RCA - Multiple Services - Downstream impact from Azure Front Door (Tracking ID HLMF-R88)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/anomalystudy/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.09.25-12.pdf"
         ],
         "time": "11/20/2019",
         "summary": "Summary of Impact: Between 00:56 and 03:40 UTC on 20 Nov 2019, multiple services across Microsoft including Azure, Microsoft 365 and Microsoft Power Platform leveraging the Azure Front Door (AFD) service experienced availability issues resulting from high request failure rates. During this event, some impacted services were able to divert traffic away from the AFD service to mitigate impact for them. One of the impacted services was the Azure Status Page at https://status.azure.com. Engineering executed the failover plan to the secondary hosting location, but this resulted in a delay in status communication changes. Communications were successfully delivered via Azure Service Health, available within the Azure management portal. ",

@@ -2,7 +2,7 @@
     "azure-20191211-1": {
         "title": "RCA - Azure CDN and Azure Kubernetes Service - Service Availability Issue (Tracking ID LTPP-R98)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "12/11/2019",
         "summary": "Between 17:24 and 18:48 UTC on 11 Dec 2019, clients of customers attempting to reach Azure CDN from Verizon endpoints would intermittently receive HTTP (5XX) errors or connection failures instead of expected content.​",
@@ -157,7 +157,7 @@
     "azure-20191227-1": {
         "title": "RCA - Unable to create new resources in Azure Portal (Tracking ID 4_6S-NC8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "12/27/2019",
         "summary": "Between 15:02 UTC and 16:22 UTC on 27 Dec 2019, customers using the Azure Portal may have received failure notifications or 404 errors when attempting to create new resources through the Azure Portal due to the Marketplace Blade not loading. Programmatic deployments, such as CLI, PowerShell, and template deployments would have been successful.",
@@ -224,7 +224,7 @@
     "azure-20200120-1": {
         "title": "RCA - Azure connectivity issues (Tracking ID 0TSQ-TT0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "01/20/2020",
         "summary": "Between 15:01 and 16:30 UTC on 20 Jan 2020, a subset of customers in Sweden, Finland, Norway, and Russia may have experienced increased latency or difficulties connecting to Azure services. Impact to customers was based on the location of the customer. Customers in other geographic regions would have continued to be able to access resources during this time.",
@@ -296,7 +296,7 @@
     "azure-20200122-1": {
         "title": "Service Management Failures for Application Gateway, Azure Bastion, and Azure Firewall (Tracking ID HT3R-990)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "01/22/2019",
         "summary": "Between 05:55 UTC on 22 Jan and 00:56 UTC on 23 Jan 2020, a subset of customers using Application Gateway/WAF V2 SKU, Azure Firewall, and Azure Bastion services may have received failure notifications when performing service management operations—such as create/scale, update, and delete.",
@@ -366,7 +366,7 @@
     "azure-20200124-1": {
         "title": "RCA - Cross-Region Connectivity Issue - North America (Tracking ID 4_YR-FC8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "01/24/2020",
         "summary": "Between 21:03 and 22:28 UTC on 24 Jan 2020, a programming error caused network congestion, dropping around 10% of traffic, and causing high latency for services traversing the network between data centers. A software update on the SWAN (Software enabled Wide Area Network)—Microsoft's backbone network that connects large data center regions together—caused the router forwarding tables to become mis-programmed.",
@@ -448,7 +448,7 @@
     "azure-20200125-1": {
         "title": "RCA - SQL Database and dependent services - Service Availability Issues (Tracking ID 5TYQ-DC0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "01/25/2020",
         "summary": "Between 22:00 EST on 24 Jan 2020 and 08:15 EST on 25 Jan 2020, customers in the Azure Government regions may have experienced failures when trying to access Azure SQL Database and Data Warehouse resources or dependent services. Specifically, new connections to databases in these regions may have resulted in an error or timeout, but already established pooled connections continued to work. Some manageability operations such as failovers to geo-redundant regions were also impacted.",
@@ -519,7 +519,7 @@
     "azure-20200130-1": {
         "title": "RCA - Authentication issues for Microsoft Government Cloud resources (Tracking ID 0KYQ-PP8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.12.11-2020.2.5.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "01/30/2020",
         "summary": "Between 14:12 and 19:10 EST on 30 Jan 2020, approximately 6% of customers in US Government service regions experienced sign-in failures when attempting to access their resources for Azure Government & Office 365 Government services. Customers outside of US Government service regions were not impacted.",

@@ -2,7 +2,7 @@
     "azure-20190108-1": {
         "title": "Azure DevTest Labs - Virtual Machine Error Message",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.4-1.10.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.4-1.10.pdf"
         ],
         "time": "01/08/2019",
         "summary": "Between 16:30 UTC on 08 Jan 2019 and 00:52 UTC on 10 Jan 2019, a subset of customers using Azure DevTest Labs may have experienced issues creating Virtual Machines from Formulas in lab. Impacted customers may have also experienced incorrect error messages when connecting to Virtual Machines.",
@@ -69,7 +69,7 @@
     "azure-20190110-1": {
         "title": "RCA - Storage and Dependent Services - UK South",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "01/10/2019",
         "summary": "Between 13:19 UTC on 10 Jan 2019 and approximately 05:30 UTC on 11 Jan 2019, a subset of customers leveraging Storage in UK South may have experienced intermittent service availability issues. Other resources with dependencies on the affected Storage scale unit may have also experienced impact related to this event. ",
@@ -151,7 +151,7 @@
     "azure-20190129-1": {
         "title": "RCA - Network Infrastructure Event",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "01/29/2019",
         "summary": "Between 21:00 UTC on 29 Jan 2019 and 00:10 UTC on 30 Jan 2019, customers may have experienced issues accessing Microsoft Cloud resources, as well as intermittent authentication issues across multiple Azure services affecting the Azure Cloud, US Government Cloud, and German Cloud. This issue was mitigated for the Azure Cloud at 23:05 UTC on 29 Jan 2019. Residual impact to the Azure Government Cloud was mitigated at 00:00 UTC on 30 Jan 2019 and to the German Cloud at 00:10 UTC on 30 Jan 2019.",
@@ -221,7 +221,7 @@
     "azure-20190130-1": {
         "title": "RCA - Intermittent Network Related Timeouts - West US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "01/30/2019",
         "summary": "Between 00:53 UTC and 03:33 UTC on 30 Jan 2019, a subset of customers in West US may have experienced degraded performance, network drops or time outs when accessing Azure resources hosted in this region. Applications and resources that retried connections or requests may have succeeded due to multiple redundant network devices and routes available within Azure data centers.",
@@ -303,7 +303,7 @@
     "azure-20190208-1": {
         "title": "RCA - Azure IoT Hub",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "02/08/2019",
         "summary": "Between 08:16 and 14:12 UTC on 08 Feb 2019, a subset of customers using Azure IoT Hub may have received failure notifications or high latency when performing service management operations via the Azure Portal or other programmatic methods.",
@@ -376,7 +376,7 @@
     "azure-20190211-1": {
         "title": "RCA - Azure Kubernetes Service - East US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "02/11/2019",
         "summary": "Between 15:00 and 22:05 UTC on 11 Feb 2019, a subset of customers using Azure Kubernetes Service (AKS) in East US may have experienced the following symptoms: Intermittent failures with cluster service management operations - such as create, update, delete, and scaling. Issues performing workload management operations. Brief cluster downtime. During this time, cluster etcd state may have been rolled back and restored from the previous backup (AKS makes these backups automatically every 30 minutes). Additionally, between 15:00 and 17:45 UTC, new clusters could not be created in this region.",
@@ -453,7 +453,7 @@
     "azure-20190218-1": {
         "title": "RCA - Erroneous Browser Warning - Azure Germany Portal",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "02/18/2019",
         "summary": "Between 14:10 and 17:20 UTC on 18 Feb 2019, customers attempting to login to the Azure Germany portal (portal.microsoftazure.de via login.microsoftonline.de) may have received erroneous warnings stating Deceptive site ahead. This message was erroneous and the site and user credentials were fully secure. The URLs were accidentally marked as malicious in a high-usage URL reputation feed.",
@@ -512,7 +512,7 @@
     "azure-20190220-1": {
         "title": "RCA - SQL Services - West Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "02/20/2019",
         "summary": "Between 09:40 UTC and 17:15 UTC on 20 Feb 2019 a subset of customers using SQL Services (inclusive of Azure DB for MariaDB, MySQL, and PostgreSQL, SQL DB, and SQL Data Warehouse) in West Europe experienced issues performing service management operations and/or experienced service availability issues following scaling operations. Symptoms may have included but were not limited to: • Service management operations returning failure notifications • Server and database create, drop & scale operations may result in 'deployment failed' errors • Failures when creating databases through SQL Script • Databases may become unavailable after performing scaling operations.",
@@ -587,7 +587,7 @@
     "azure-20190222-1": {
         "title": "RCA - Virtual Machines (Classic)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "02/22/2019",
         "summary": "Between 7:18 UTC and 10:50 UTC on 22 Feb 2019 a subset of customers using Virtual Machines (Classic) or Cloud Services (Classic) may have experienced failures or high latency when attempting service management operations. Retries would have been successful for customers. Some customers may also have experienced downstream impact to API Management and Backup.",
@@ -656,7 +656,7 @@
     "azure-20190227-1": {
         "title": "RCA - USGov Virginia - Service Availability",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "02/27/2019",
         "summary": "Between 07:38 and 09:50 EST on 27 Feb 2019, a subset of customers may have experienced degraded performance or timeouts while accessing Azure resources.",
@@ -738,7 +738,7 @@
     "azure-20190327-1": {
         "title": "RCA - Service Management Failures - West Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "03/27/2019",
         "summary": "Between approximately 15:20 UTC on 27 Mar 2019 and 17:30 UTC on 28 Mar 2019, a subset of customers may have received failure notifications when performing service management operations such as create, update, deploy, scale, and delete for resources hosted in the West Europe region.",
@@ -813,7 +813,7 @@
     "azure-20190328-1": {
         "title": "RCA - Data Lake Storage / Data Lake Analytics",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "03/28/2019",
         "summary": "Between 22:10 on 28 Mar 2019 and 03:23 UTC on 29 Mar 2019, a subset of customers using Data Lake Storage and/or Data Lake Analytics may have experienced impact in three regions: East US 2 experienced impact from 23:40 UTC on 28 Mar to 03:23 UTC on 29 Mar 2019. West Europe and Japan East experienced impact from 22:10 to 23:50 UTC on 28 Mar 2019. Impact symptoms would have been the same for all regions: Customers using Azure Data Lake Storage may have experienced difficulties accessing Data Lake Storage accounts hosted in the region. In addition, data ingress or egress operations may have timed out or failed. Customers using Azure Data Lake Analytics may have seen U-SQL job failures.",
@@ -889,7 +889,7 @@
     "azure-20190329-1": {
         "title": "RCA - SQL Database",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2019.1.10-03.29.pdf"
         ],
         "time": "03/29/2019",
         "summary": "Between 16:45 and 22:05 UTC on 29 Mar 2019, a subset of customers may have experienced the following: Difficulties connecting to SQL Database resources in the East US, UK South, and West US 2 regions Difficulties connecting to Service Bus and Event Hubs resources in the East US and UK South regions Failures when attempting service management operations for App Service resources in the UK South and East US regions Failures when attempting service management operations for Azure IoT Hub resources ",

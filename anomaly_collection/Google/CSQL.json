@@ -2,7 +2,7 @@
   "google-CSQL-#17009": {
     "title": "google-CSQL-#17009",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/CSQL/Google%20Cloud%20SQL%20Incident%20%2317009.pdf"
+      "https://status.cloud.google.com/incident/cloud-sql/17009"
     ],
     "time": "08/14/2015",
     "summary": "On Friday, 14 August 2015, Google Cloud SQL instances in the US Central region experienced intermittent connectivity issues over an interval of 6 hours 50 minutes. If your service or application was a!ected, we apologize — this is not the level of quality and reliability we strive to o!er you, and we are taking immediate steps to improve the platform’s performance and availability.",
@@ -78,7 +78,7 @@
   "google-CSQL-#17010": {
     "title": "google-CSQL-#17010",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/CSQL/Google%20Cloud%20SQL%20Incident%20%2317010.pdf"
+      "https://status.cloud.google.com/incident/cloud-sql/17010"
     ],
     "time": "05/17/2016",
     "summary": "On Tuesday 17 May 2016, connections to Cloud SQL instances in the Central United States region experienced an elevated error rate for 130 minutes.",
@@ -157,7 +157,7 @@
   "google-CSQL-#17012": {
     "title": "google-CSQL-#17012",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/qqmeta_pdf/CSQL/Google%20Cloud%20SQL%20Incident%20%2317012.pdf"
+      "https://status.cloud.google.com/incident/cloud-sql/17012"
     ],
     "time": "10/31/2016",
     "summary": "On Monday, 31 October 2016, 73% of requests to create new subscriptions for Google Cloud Pub/Sub failed for a duration of 124 minutes. Creation of new Cloud SQL Second Generation instances also failed during this incident.",
@@ -233,7 +233,7 @@
   "google-CSQL-#17017": {
     "title": "google-CSQL-#17017",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/CSQL/Google%20Cloud%20SQL%20Incident%20%2317017.pdf"
+      "https://status.cloud.google.com/incident/cloud-sql/17017"
     ],
     "time": "08/15/2017",
     "summary": "On Tuesday 15 August 2017, Google Cloud SQL experienced issues in the europe-west1 zones for a duration of 3 hours and 35 minutes. During this time, new connections from Google App Engine (GAE) or Cloud SQL Proxy would timeout and return an error. In addition, Cloud SQL connections with ephemeral certs that had been open for more than one hour timed out and returned an error.",

@@ -2,7 +2,7 @@
   "google-gciam-18001": {
     "title": "Identity and Access Management Incident #18001",
     "link": [
-      "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/google/meta_pdf/GCIAM/Identity%20and%20Access%20Management%20Incident%20%2318001.pdf"
+      "https://status.cloud.google.com/incident/cloud-iam/18001"
     ],
     "time": "06/27/2018",
     "summary": "On Wednesday 27 June 2018, Google Cloud Console and Google Cloud Resource Manager API experienced a significant performance degradation for a duration of 51 minutes. Although, this did not alect user resources running on the Google Cloud Platform, we understand that our customers rely heavily on Google Cloud Console to manage their resources and we sincerely apologize to everyone who was a!ected by the incident.",

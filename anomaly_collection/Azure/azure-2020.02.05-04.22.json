@@ -2,7 +2,7 @@
     "azure-20200205-1": {
         "title": "Connectivity errors with Azure Portal - Mitigated (Tracking ID LN__-JC0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.2.5-4.22.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "02/05/2020",
         "summary": "Between 20:25 and 22:10 UTC on 05 Feb 2020, a subset of customers may have experienced difficulties connecting to the Azure Portal.",
@@ -63,7 +63,7 @@
     "azure-20200221-1": {
         "title": "RCA - Networking - Intermittent Connectivity (Tracking ID CTH0-HZ8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.2.5-4.22.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "02/21/2020",
         "summary": "Between 22:17 UTC on 21 Feb 2020 and 00:53 UTC on 22 Feb 2020 Azure customers may have experienced network connection failures for IPv4 traffic. During this time: Network connections that originated from or were destined to West Europe (Amsterdam) or Southeast Asia (Singapore) regions may have resulted in a connection failure. Two-thirds of the new connection attempts would have been impacted; previously established connections between these two regions were unaffected. Any traffic going to or from the Internet was not impacted. IPv6 traffic was not impacted.",
@@ -134,7 +134,7 @@
     "azure20200222-1": {
         "title": "RCA - MSA Login Failures (Tracking ID CT05-PC0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.2.5-4.22.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "02/22/2020",
         "summary": "Between 00:00 UTC and 04:41 UTC on Feb 22, 2020, a subset of our customers may have been unable to sign in with their Microsoft Service accounts (MSA) to access their Azure resources. Users signing in with non-Microsoft accounts would have been unaffected. Users may also have been unable to create new Microsoft accounts.",
@@ -207,7 +207,7 @@
     "azure-20200224-1": {
         "title": "503 errors accessing the Azure Portal - Mitigated (Tracking ID 8_K4-TD0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.2.5-4.22.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "02/24/2020",
         "summary": "Between approximately 19:45 and 22:15 UTC on 24 Feb 2020, a limited subset of customers may have encountered HTTP 503 error codes when attempting to access the Azure Portal. The availability of individual resources (Virtual Machines, Web Apps, databases, etc.) was not impacted.",
@@ -275,7 +275,7 @@
     "azure-20200228-1": {
         "title": "RCA - Networking Issue in South Central US (Tracking ID DMP0-HT8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.2.5-4.22.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "02/28/2020",
         "summary": "Between 12:48 and 19:10 UTC on 28 Feb 2020, a subset of customers in South Central US may have encountered failure notifications when performing service management operations on resources hosted in this region. Additionally, some customers using Azure Data Factory V2 may have seen errors when running pipelines and job executions for dataflow activities as well as seeing errors when attempting to provision SQL Server Integration Services (SSIS) and Integration Runtime for Azure Data Factory SSIS packages.",
@@ -350,7 +350,7 @@
     "azure-20200303-1": {
         "title": "RCA- Issues connecting to resources in East US (Tracking ID 9SS0-VT8)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.2.5-4.22.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "03/03/2020",
         "summary": "Between 15:30 and 22:00 UTC on 03 March 2020, a subset of customers in East US may have experienced issues connecting to resources in this region. ",
@@ -435,7 +435,7 @@
     "azure-20200304-1": {
         "title": "Intermittent latency in US Government Cloud - Mitigated (Tracking ID DLS5-TZ0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.2.5-4.22.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "03/04/2020",
         "summary": "Between 14:00 and 17:15 EST on 04 Mar 2020, a limited subset of customers in US Gov Texas and US Gov Arizona may have experienced intermittent issues or latency connecting to resources hosted in these regions. A smaller subset of customers in other US Gov regions may have also experienced issues connecting to resources.",
@@ -509,7 +509,7 @@
     "azure-20200305-1": {
         "title": "RCA - Service Management/Authentication Errors - Azure China (Tracking ID SND4-L80) ",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.2.5-4.22.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "03/05/2020",
         "summary": "Between 21:03 CST (UTC+8) on 05 Mar 2020 and 16:03 CST on 06 Mar 2020, a subset of customers in the Azure China regions may have encountered failures when performing service management operations on resources hosted in these regions. Customers may also have experienced authentication failures when attempting to access the Azure portal or other Azure resources in the Azure China regions.",
@@ -579,7 +579,7 @@
     "azure-2020315-1": {
         "title": "RCA - Service Availability Issue in West Central US (Tracking ID SMR4-D90)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.2.5-4.22.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "03/15/2020",
         "summary": "Between approximately 20:30 UTC on 15 Mar 2020 and 00:30 UTC on 16 Mar 2020, a subset of customers in West Central US may have experienced issues connecting to resources hosted in this region.",
@@ -655,7 +655,7 @@
     "azure-20200422-1": {
         "title": "RCA - Managed Database services - UK South (Tracking ID TS66-1C0)",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2020.2.5-4.22.pdf"
+            "https://status.azure.com/en-us/status/history/"
         ],
         "time": "04/22/2020",
         "summary": "Between 09:37 and 13:54 UTC on 22 Apr 2020, a subset of customers may have seen issues affecting service management operations for Azure SQL Database, Azure SQL Database Managed Instance, Azure Database for MariaDB, Azure Database for MySQL, Azure Database for PostgreSQL, Azure Database for MySQL, and Azure Synapse Analytics services in UK South. Service management operations including create, rename, update and delete may have been impacted. Connectivity to database resources was not impacted.",

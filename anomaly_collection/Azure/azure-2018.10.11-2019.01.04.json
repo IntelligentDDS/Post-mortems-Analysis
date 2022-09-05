@@ -2,7 +2,7 @@
     "azure-20181011-1": {
         "title": "App Service - East Asia",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "10/11/2018",
         "summary": "Between 09:32 and 09:58 UTC on 11 Oct 2018, a subset of customers using App Service in East Asia may have received HTTP 500-level response codes and experienced timeouts or high latency when accessing App Service (Web, Mobile and API Apps) deployments hosted in this region. ",
@@ -78,7 +78,7 @@
     "azure-20181011-2": {
         "title": "Azure Portal and DevOps Accessibility",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "10/11/2018",
         "summary": "Between 15:59 UTC and 18:35 UTC on 11 Oct 2018, A subset of customers may have experienced intermittent issues when attempting to sign-in to the Azure Portal and DevOps services. ",
@@ -148,7 +148,7 @@
     "azure-20181013-1": {
         "title": "Storage - East US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "10/13/2018",
         "summary": "Between 01:00 and 06:50 UTC on 13th Oct 2018, a subset of customers in the East US region may have experienced difficulties connecting to resources hosted in this region. This would include Storage accounts and Virtual Machines. Some customers would have seen improvement starting at around 03:30 UTC, with the vast majority of impact mitigated by 06:00 UTC. Full Storage recovery occurred by 06:50 UTC. Limited impact may have been observed for a small number of customers using Azure Log Analytics, App Services, Logic Apps, HDInsight, Azure Site Recovery, Application Insights, Azure Data Factory, Azure Automation, PostgreSQL, MySQL and Azure Backup in East US. ",
@@ -236,7 +236,7 @@
     "azure-20181016-1": {
         "title": "RCA - Azure Service Availability - France Central",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "10/16/2018",
         "summary": "Between 13:57 and 16:45 UTC on 16 Oct 2018, a subset of customers may have experienced difficulties connecting to resources in the France Central region. This impact was related to a number of Storage and Compute resources that experienced an unexpected power-down during this time. ",
@@ -313,7 +313,7 @@
     "azure-20181017-1": {
         "title": "Latency between North Europe and North America",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "10/17/2019",
         "summary": "Between 14:30 and 16:35 UTC on 17 Oct 2018, a subset of customers with traffic going between the North Europe datacenter and North America regions may have intermittently experienced degraded performance, and in some rare instances network drops or timeouts, when accessing Azure resources. ",
@@ -392,7 +392,7 @@
     "azure-20181024-1": {
         "title": "RCA - Networking in West US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "03/14/2019",
         "summary": "Between 22:40 UTC on 24 Oct 2018 and 00:03 UTC on 25 Oct 2018, a subset of customers may have experienced degraded network performance and/or difficulties connecting to resources in the West US region",
@@ -464,7 +464,7 @@
     "azure-20181027-1": {
         "title": "Virtual Machines/VM Scale Sets - West US 2",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "10/27/2018",
         "summary": "Between 02:50 and 10:37 UTC on 27 Oct 2018, a subset of customers using Virtual Machines and/or Virtual Machine Scale Sets in West US 2 may have received failure notifications when performing service management operations - such as create, update, delete - for resources hosted in this region. ",
@@ -531,7 +531,7 @@
     "azure-20181102-1": {
         "title": "Azure Portal Timeouts and Latency",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "11/02/2018",
         "summary": "Between 23:05 UTC on 02 Nov 2018 and 00:21 UTC on 03 Nov 2018, some customers may have experienced high latency or timeouts when viewing resources or loading blades through the Azure Portal (https://portal.azure.com). ",
@@ -612,7 +612,7 @@
     "azure-20181109-1": {
         "title": "App Service and Azure Functions",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "11/09/2018",
         "summary": "Between 22:48 UTC on 08 Nov 2018 and 13:30 UTC on 09 Nov 2018, a subset of customers using App Services may have experienced errors when accessing the Azure Functions blade, or experienced issues when accessing App settings in the Azure portal (https://portal.azure.com) ",
@@ -680,7 +680,7 @@
     "azure-20181111-1": {
         "title": "Storage - West US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "11/11/2018",
         "summary": "Between 07:12 and 17:19 UTC on 11 Nov 2018, you were identified as a customer using Storage in West US who may have experienced difficulties reading from a subset of blob storage accounts hosted in this region. ",
@@ -753,7 +753,7 @@
     "azure-20181113-1": {
         "title": "App Service and Function Apps",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "11/13/2018",
         "summary": "Between 11:10 and 12:25 UTC on 13 Nov 2018, you were identified as a customer using App Service and/or Function Apps who may have received intermittent HTTP 500-level response codes, have experienced timeouts or high latency when accessing App Service (Web, Mobile and API Apps) deployments hosted in these regions. Impacted customers may have also seen issues with their Azure App Service Scaling settings. ",
@@ -828,7 +828,7 @@
     "azure-20181114-1": {
         "title": "Azure DevTest Labs - Mitigated",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "11/14/2018",
         "summary": "Between 20:29 and 22:28 UTC on 14 Nov 2018, a subset of customers using Azure DevTest Labs may have received failure notifications when attempting to access their Labs via the Azure Portal. ",
@@ -899,7 +899,7 @@
     "azure-20181119-1": {
         "title": "RCA - Multi-Factor Authentication",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "11/19/2018",
         "summary": "Between 04:39 UTC and 18:38 UTC on 19 November 2018, Microsoft Azure AD Multi-Factor Authentication (MFA) services experienced an outage. Users of Azure Active Directory authentication services - including users of Office 365, Azure, Dynamics and other services which use Azure Active Directory for authentication – were unable to log in if MFA was required as determined by their organization’s policy.  The event was mitigated on Monday, 19 November 2018 at 18:38 UTC. Furthermore, engineers kept the event open and confirmed through extensive monitoring that​the root causes identified were correct, incorporated immediate telemetry and processed changes to close the incident​on​Wednesday, 21 November 2018 at 03:00 UTC.​​​",
@@ -998,7 +998,7 @@
     "azure-20181126-1": {
         "title": "RCA - Virtual Network - UK South and UK West",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "11/26/2019",
         "summary": "Between 11:19 and 16:56 UTC on 26 Nov 2018, a subset of customers using Virtual Networks in UK South and UK West may have experienced difficulties connecting to resources hosted in these regions. Some customers using Global VNET peering or replication between these regions may have experienced latency or connectivity issues. This issue may have also impacted connections to other Azure services. ",
@@ -1068,7 +1068,7 @@
     "azure-20181127-1": {
         "title": "RCA - Multi-Factor Authentication",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "11/27/2018",
         "summary": "At 14:20 UTC on November 27th, the Azure Multi-Factor Authentication (MFA) service experienced an outage that impacted cloud-based MFA customers worldwide. Service was partially restored at 14:40 UTC and fully restored at 17:39 UTC. Login scenarios requiring MFA using SMS, voice, phone app, or OATH tokens-based logins were blocked during that time. Password-based and Windows Hello-based logins were not impacted, nor were valid unexpired MFA sessions. From 14:20 to 14:40 UTC, any user required to perform MFA using cloud-based Azure MFA was unable to complete the MFA process and so could not sign-in. These users were shown a browser page or client app that contained an error ID. From 14:40 to 17:39 UTC, the problem was resolved for some users but continued for the majority. This subset of users continued to experience difficulties in authenticating via MFA. When experienced, the user would appear to begin the MFA authentication but never receive a code from the service. This affected all Azure MFA methods (e.g. SMS, Phone, or Authenticator) and occurred whether MFA was triggered by Conditional Access policy or per-user MFA. Conditional access policies not requiring MFA were not impacted. Windows Hello authentication was not impacted. ​​​",
@@ -1157,7 +1157,7 @@
     "azure-20181128-1": {
         "title": "Storage - West US 2",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "11/28/2018",
         "summary": "Between 04:20 and 12:30 UTC on 28 Nov 2018, a subset of Storage customers in West US 2 may have experienced difficulties connecting to resources hosted in this region. Customers using resources dependent on Storage may have also seen impact.",
@@ -1229,7 +1229,7 @@
     "azure-20181129-1": {
         "title": "Azure Data Lake Store/Data Lake Analytics - North Europe",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "11/29/2018",
         "summary": "Between 08:00 and 13:39 UTC on 29 Nov 2018, a subset of customers using Azure Data Lake Store and/or Data Lake Analytics may have experienced difficulties accessing resources hosted in this region. Data ingress or egress operations may have also timed-out or failed. Azure Data Lake Analytics customers may have experienced job failures. In addition, customers using other services with dependencies upon Azure Data Lake Store resources in this region such as Databricks, Data Catalog, HDInsight and Data Factory - may also have experienced downstream impact.",
@@ -1305,7 +1305,7 @@
     "azure-20181204-1": {
         "title": "RCA - Networking - South Central US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "12/04/2018",
         "summary": "Between 02:48 UTC and 04:52 UTC on 04 Dec 2018, a subset of customers in South Central US may have experienced degraded performance, network drops, or timeouts when accessing Azure resources hosted in this region. Applications and resources that retried connections or requests may have succeeded due to multiple redundant network devices and routes available within Azure datacenters. ",
@@ -1376,7 +1376,7 @@
     "azure-20181212-1": {
         "title": "Log Analytics - East US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "12/12/2018",
         "summary": "Between 08:00 and 15:50 UTC on 12 Dec 2018, customers using Log Analytics in East US may have experienced delays in metrics data ingestion",
@@ -1443,7 +1443,7 @@
     "azure-20181212-2": {
         "title": "Azure Analysis Services - West Central US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "12/12/2018",
         "summary": "Between 21:55 UTC on 12 Dec 2018 and 09:55 UTC on 13 Dec 2018, a subset of customers using Azure Analysis Services in West Central US may have experienced issues accessing existing servers, provisioning new servers, resuming new servers, or performing SKU changes for active servers. ",
@@ -1515,7 +1515,7 @@
     "azure-20181214-1": {
         "title": "RCA - Networking - UK West",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "12/14/2018",
         "summary": "Between 03:30 and 12:25 UTC on 14 Dec 2018, a subset of customers with resources in UK West may have intermittently experienced degraded performance, latency, network drops or time outs when accessing Azure resources hosted in this region. Customers with resources in UK West attempting to access resources outside of the region may have also experienced similar symptoms. ",
@@ -1597,7 +1597,7 @@
     "azure-20190104-1": {
         "title": "Log Analytics - East US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.10.11-2019.1.4.pdf"
         ],
         "time": "01/04/2019",
         "summary": "Between 09:30 and 18:00 UTC on 04 Jan 2019, a subset of customers using Log Analytics in East US may have received intermittent failure notifications and/or experienced latency when attempting to ingest and/or access data. Tiles and blades may have failed to load and display data. Customers may have experienced issues creating queries, log alerts, or metric alerts on logs. Additionally, customers may have experienced false positive alerts or missed alerts. ",

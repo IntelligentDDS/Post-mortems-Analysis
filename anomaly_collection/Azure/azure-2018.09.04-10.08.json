@@ -2,7 +2,7 @@
     "azure-20180904-1": {
         "title": "RCA - South Central US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "9/4/2018",
         "summary": "In the early morning of September 4, 2018, high energy storms hit southern Texas in the vicinity of Microsoft Azure’s South Central US region. Multiple Azure datacenters in the region saw voltage sags and swells across utility feeds. At 08:42 UTC, lightning caused a large swell which was immediately followed by a large sag in one of the region’s datacenters, which fell below the required voltage specification for the chiller plant. By design this sag triggered the chillers to power down and lock out, to protect this equipment. The expected behavior in this occurrence is for the Mechanical Electrical Plumbing (MEP) management control system to invoke one of the redundant cooling systems in the facility until the chiller plant is able to recover. This is an automated operating procedure and is the standard design in many Microsoft datacenters around the world, having withstood similar situations without any issues. In the impacted datacenter, the redundant cooling system had been switched to manual mode for invoking the failover of cooling. It was set to a manual failover following the installation of new equipment in the facility where all testing had not been completed. The manual procedure for failing over the cooling mechanisms is part of our statement of operations and this was executed successfully in one of the other datacenters in the South Central US region, 30 mins prior to this event. Onsite engineers in the impacted datacenter received multiple alarms so were investigating several situations reported in the facility. Cooling alerts which should have been manually actioned were not. Consequently, temperatures began to rise, eventually reaching temperatures that triggered infrastructure devices and servers to shutdown. This shutdown mechanism is intended to protect infrastructure from overheating but, in this instance, temperatures increased so quickly in parts of the datacenter that a number of storage servers were damaged, as well as a small number of network devices. While storms were still active in the area, onsite teams took a series of actions to prevent further issues – including transferring the datacenter to generators, thereby stabilizing the power supply. Initial focus of recovery was the Azure networking infrastructure. The second focus was to recover the storage servers and the data on these servers. The decision was made to work towards recovery of data and not fail over to another datacenter, since a failover would have resulted in limited data loss due to the asynchronous nature of geo replication. Recovering the storage services involved replacing failed infrastructure components, migrating customer data from damaged servers to healthy servers, and validating the integrity of the recovered data. This process took time due to the number of servers that required manual intervention, and the need to work carefully to maintain customer data integrity above all else.",
@@ -107,7 +107,7 @@
     "azure-20180905-1": {
         "title": "RCA - Azure Active Directory - Multiple Regions",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "09/05/2018",
         "summary": "Between as early as 09:00 UTC on 05 Sept 2018 and as late as 05:50 UTC on 10 Sept 2018, a small subset of Azure Active Directory (AAD) customers may have experienced intermittent authentication failures when connecting to resources in the following regions: Japan, India, Australia, South Brazil, and East US 2.",
@@ -177,7 +177,7 @@
     "azure-20180915-1": {
         "title": "Metrics Missing - Germany",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "09/15/2018",
         "summary": "Summary of impact: Between 06:30 UTC on 15 Sep 2018 and 22:35 UTC on 17 Sep 2018, a subset of customers may have experienced difficulties viewing Virtual Machines and/or other compute resource metrics. Metric graphs including CPU (average), Network (total), Disk Bytes (total) and Disk operations/sec (average) may have appeared empty within the Management Portal. Auto-scaling operations were potentially impacted as well.",
@@ -244,7 +244,7 @@
     "azure-20180919-1": {
         "title": "Log Analytics - Latency, Timeouts and Service Management Failures",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "09/19/2018",
         "summary": "Between 10:54 and 18:45 UTC on 19 Sep 2018, a subset of customers using Log Analytics and/or other downstream services may have experienced latency, timeouts or service management failures.",
@@ -314,7 +314,7 @@
     "azure-20180926-1": {
         "title": "RCA - Multiple Services - Southeast Asia",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "09/26/2018",
         "summary": "Between 09:52 and 12:28 UTC on 26 Sep 2018, a subset of customers in Southeast Asia may have experienced latency or difficulties connecting to Virtual Machines and/or Cloud Service resources hosted in this region. Customers using a number of related services including: App Services, Redis Cache, Application Insights, Stream Analytics, and API Management may have also experienced latency or difficulties connecting to these services in the region.",
@@ -395,7 +395,7 @@
     "azure-20180930-1": {
         "title": "Multiple Services - Korea South",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "09/30/2018",
         "summary": "Between 13:50 and 19:10 UTC on 30 Sep 2018, a subset of Storage customers in Korea South may have experienced difficulties connecting to resources hosted in this region. Some services with dependencies on Storage in the region were also impacted. ",
@@ -454,7 +454,7 @@
     "azure-20181002-1": {
         "title": "ExpressRoute Circuit - Australia Southeast",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "10/02/2018",
         "summary": "Between 01:00 UTC and 04:45 UTC on 02 Oct 2018, a subset of customers began facing intermittent packet loss in the Melbourne ExpressRoute location for Australia Southeast region. During the period of degradation, customers may have experienced intermittent packet loss when using an ExpressRoute circuit hosted on the Microsoft Enterprise Edge device (MSEE) experiencing this issue. Access to a Virtual Network and the corresponding resources using a Virtual Network Gateway and services hosted on public and Microsoft peering were also affected when connecting using the ExpressRoute service.",
@@ -523,7 +523,7 @@
     "azure-20181003-1": {
         "title": "Azure DevOps",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "10/03/2018",
         "summary": "Between 16:45 and 18:15 UTC on 03 Oct 2018, a subset of customers using Azure DevOps may have been unable to access DevOps resources. Additional information can be found at https://aka.ms/vstsblog .",
@@ -588,7 +588,7 @@
     "azure-20181004-1": {
         "title": "Azure DevOps",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "10/04/2018",
         "summary": "Between 17:47 and 18:40 UTC on 04 Oct 2018, users with Azure DevOps organizations in South Central US may have experienced errors while using the service.",
@@ -655,7 +655,7 @@
     "azure-20181008-1": {
         "title": "Azure DevOps",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "10/08/2018",
         "summary": "Between 11:40 and 13:30 UTC on 08 Oct 2018, a subset of Azure DevOps customers may have experienced error messages, latency, and/or authentication issues. For more information regarding this issue, please refer to: https://aka.ms/devopsincident. In addition, a small subset of Azure Portal customers may have experienced issues logging into the Azure portal.",
@@ -732,7 +732,7 @@
     "azure-20181008-2": {
         "title": "RCA - Service Bus - East US and West US",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "10/08/2018",
         "summary": "Summary of impact: Between 21:00 UTC on 08 Oct 2018 and 01:00 UTC on 10 Oct 2018, a subset of customers using Service Bus in East US 2 and West US may have experienced intermittent timeouts on runtime and management operations. Retries may have been successful for some customers.",
@@ -795,7 +795,7 @@
     "azure-20181008-3": {
         "title": "Availability Issues with Application Insights Portal",
         "link": [
-            "http://gitlab.dds-sysu.tech/wallemit/AnomalyStudy/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
+            "https://github.com/IntelligentDDS/Post-mortems-Analysis/blob/master/raw-public/azure/meta_pdf/2018.09.4-11.27.pdf"
         ],
         "time": "10/08/2018",
         "summary": "Between 23:20 on 08 Oct 2018 and 00:20 UTC on 09 Oct 2018, a subset of customers using Application Insights may have experienced issues connecting to their Application Insights resources. Application Insight portal blades may have not loaded for some customers.",
